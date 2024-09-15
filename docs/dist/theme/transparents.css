@@ -450,6 +450,7 @@ html * {
 }
 
 .reveal .lang {
+  color: #fdf6e3;
   background-color: #586e75;
   position: absolute;
   top: 0;

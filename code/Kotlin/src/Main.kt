@@ -2,7 +2,7 @@ fun main() {
 
     println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) { it % 2 == 0 })
     println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), { it % 2 == 0 }))
-    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), { int -> int % 2 == 0 }))
+    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), { someInt -> someInt % 2 == 0 }))
 
     val sieve: (Int) -> Boolean = parametricSieve(3)
     println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieve))
