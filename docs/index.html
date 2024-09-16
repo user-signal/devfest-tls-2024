@@ -86,6 +86,26 @@
         </section>
 
         <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+                fun filter(list: List&lt;Int&gt;, <span class="ch">predicate: (Int) -> Boolean</span>): List&lt;Int&gt; {
+                    fun filterAux(list: List&lt;Int&gt;, predicate: (Int) -> Boolean, acc: List&lt;Int&gt;): List&lt;Int&gt; =
+                        when (list.isEmpty()) {
+                            true -> acc
+                            false -> {
+                                val first = list.first()
+                                if (<span class="ch">predicate(first)</span>) {
+                                    filterAux(list.drop(1), predicate, acc + first)
+                                } else {
+                                    filterAux(list.drop(1), predicate, acc)
+                                }
+                            }
+                        }
+                    return filterAux(list, predicate, emptyList())
+                }
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
                         filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) { it % 2 == 0 }
             </code><div class="lang">Kotlin</div></pre>
@@ -162,7 +182,7 @@
 <script src="./dist/reveal.js"></script>
 <script src="./plugin/notes/notes.js"></script>
 <script src="./plugin/markdown/markdown.js"></script>
-<script src="./plugin/highlight/highlight.js"></script>
+<script src="./plugin/highlight-old/highlight.js"></script>
 <script src="./plugin/math/math.js"></script>
 
 <script>
