@@ -6,12 +6,25 @@ fun main() {
 
     val sieve: (Int) -> Boolean = parametricSieve(3)
     println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieve))
+
+    val sieveCurried: (Int) -> Boolean = parametricSieveCurried(3)
+    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieveCurried))
 }
 
 fun parametricSieve(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y: Int -> c % y == 0 }
+    return { y -> c % y == 0 }
 }
+
+val parametricSieveCurried: (Int) -> (Int) -> Boolean = { x ->
+    val c = longComputation(x);
+    { y -> c % y == 0 }
+}
+
+//fun parametricSieve(x: Int): (Int) -> Boolean {
+//    val c = longComputation(x)
+//    return { c % it == 0 }
+//}
 
 //val sieve: (Int) -> Boolean = parametricSieve(longComputation(3))
 //fun parametricSieve(p: Int): (Int) -> Boolean {
