@@ -1,14 +1,18 @@
 fun main() {
 
-    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) { it % 2 == 0 })
-    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), { it % 2 == 0 }))
-    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), { someInt -> someInt % 2 == 0 }))
+    val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+    println(aList.filter { it % 2 == 0 })
+
+    println(filter(aList) { it % 2 == 0 })
+    println(filter(aList, { it % 2 == 0 }))
+    println(filter(aList, { someInt -> someInt % 2 == 0 }))
 
     val sieve: (Int) -> Boolean = parametricSieve(3)
-    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieve))
+    println(filter(aList, sieve))
 
     val sieveCurried: (Int) -> Boolean = parametricSieveCurried(3)
-    println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieveCurried))
+    println(filter(aList, sieveCurried))
 }
 
 fun parametricSieve(x: Int): (Int) -> Boolean {
