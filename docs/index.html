@@ -39,6 +39,23 @@
         </section>
 
         <section>
+            <div style="margin-top: 5em; margin-bottom: 100%;  display: grid; grid-template-columns: 3fr 2fr">
+                <div style="justify-self: center">$x$</div>
+                <div style="justify-self: start"> Variable</div>
+                <div style="justify-self: center">$\lambda x.\,M$</div>
+                <div style="justify-self: start"> Abstraction</div>
+                <div style="justify-self: center; margin-bottom: 2.5em">$M\,N$</div>
+                <div style="margin-bottom: 2.5em; justify-self: start"> Application</div>
+                <div style="justify-self: center">$\lambda x.\,(f\,x) \rightarrow f$</div>
+                <div style="justify-self: start">$\eta$-reduction</div>
+                <div style="justify-self: center">$\lambda x.\,M[x] \rightarrow \lambda y.\,M[y]$</div>
+                <div style="justify-self: start">$\alpha$-conversion</div>
+                <div class="yellow" style="justify-self: center">$(\lambda x.\,M)\:E \rightarrow M[x:=E]$</div>
+                <div class="yellow" style="justify-self: start">$\beta$-reduction</div>
+            </div>
+        </section>
+
+        <section>
             <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto">
                 <div>
                     <div style="grid-column: 1; grid-row: 1">
