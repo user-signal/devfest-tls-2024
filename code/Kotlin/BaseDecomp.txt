@@ -1,0 +1,330 @@
+❯ javap -c -p BaseKt.class
+Compiled from "Base.kt"
+public final class BaseKt {
+  private static final kotlin.jvm.functions.Function1<java.lang.Integer, kotlin.jvm.functions.Function1<java.lang.Integer, java.lang.Boolean>> parametricSieveCurried;
+
+  public static final void main();
+    Code:
+       0: bipush        10
+       2: anewarray     #8                  // class java/lang/Integer
+       5: astore_1
+       6: aload_1
+       7: iconst_0
+       8: iconst_1
+       9: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      12: aastore
+      13: aload_1
+      14: iconst_1
+      15: iconst_2
+      16: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      19: aastore
+      20: aload_1
+      21: iconst_2
+      22: iconst_3
+      23: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      26: aastore
+      27: aload_1
+      28: iconst_3
+      29: iconst_4
+      30: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      33: aastore
+      34: aload_1
+      35: iconst_4
+      36: iconst_5
+      37: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      40: aastore
+      41: aload_1
+      42: iconst_5
+      43: bipush        6
+      45: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      48: aastore
+      49: aload_1
+      50: bipush        6
+      52: bipush        7
+      54: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      57: aastore
+      58: aload_1
+      59: bipush        7
+      61: bipush        8
+      63: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      66: aastore
+      67: aload_1
+      68: bipush        8
+      70: bipush        9
+      72: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      75: aastore
+      76: aload_1
+      77: bipush        9
+      79: bipush        10
+      81: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      84: aastore
+      85: aload_1
+      86: invokestatic  #18                 // Method kotlin/collections/CollectionsKt.listOf:([Ljava/lang/Object;)Ljava/util/List;
+      89: astore_0
+      90: aload_0
+      91: checkcast     #20                 // class java/lang/Iterable
+      94: astore_1
+      95: iconst_0
+      96: istore_2
+      97: aload_1
+      98: astore_3
+      99: new           #22                 // class java/util/ArrayList
+     102: dup
+     103: invokespecial #25                 // Method java/util/ArrayList."<init>":()V
+     106: checkcast     #27                 // class java/util/Collection
+     109: astore        4
+     111: iconst_0
+     112: istore        5
+     114: aload_3
+     115: invokeinterface #31,  1           // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+     120: astore        6
+     122: aload         6
+     124: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     129: ifeq          182
+     132: aload         6
+     134: invokeinterface #41,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     139: astore        7
+     141: aload         7
+     143: checkcast     #43                 // class java/lang/Number
+     146: invokevirtual #47                 // Method java/lang/Number.intValue:()I
+     149: istore        8
+     151: iconst_0
+     152: istore        9
+     154: iload         8
+     156: iconst_2
+     157: irem
+     158: ifne          165
+     161: iconst_1
+     162: goto          166
+     165: iconst_0
+     166: ifeq          122
+     169: aload         4
+     171: aload         7
+     173: invokeinterface #51,  2           // InterfaceMethod java/util/Collection.add:(Ljava/lang/Object;)Z
+     178: pop
+     179: goto          122
+     182: aload         4
+     184: checkcast     #53                 // class java/util/List
+     187: nop
+     188: astore_1
+     189: getstatic     #59                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     192: aload_1
+     193: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+     196: aload_0
+     197: invokedynamic #85,  0             // InvokeDynamic #0:invoke:()Lkotlin/jvm/functions/Function1;
+     202: invokestatic  #89                 // Method filter:(Ljava/util/List;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+     205: getstatic     #59                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     208: swap
+     209: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+     212: aload_0
+     213: invokedynamic #94,  0             // InvokeDynamic #1:invoke:()Lkotlin/jvm/functions/Function1;
+     218: invokestatic  #89                 // Method filter:(Ljava/util/List;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+     221: getstatic     #59                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     224: swap
+     225: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+     228: aload_0
+     229: invokedynamic #99,  0             // InvokeDynamic #2:invoke:()Lkotlin/jvm/functions/Function1;
+     234: invokestatic  #89                 // Method filter:(Ljava/util/List;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+     237: getstatic     #59                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     240: swap
+     241: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+     244: iconst_3
+     245: invokestatic  #103                // Method parametricSieve:(I)Lkotlin/jvm/functions/Function1;
+     248: astore_1
+     249: aload_0
+     250: aload_1
+     251: invokestatic  #89                 // Method filter:(Ljava/util/List;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+     254: getstatic     #59                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     257: swap
+     258: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+     261: getstatic     #107                // Field parametricSieveCurried:Lkotlin/jvm/functions/Function1;
+     264: iconst_3
+     265: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     268: invokeinterface #111,  2          // InterfaceMethod kotlin/jvm/functions/Function1.invoke:(Ljava/lang/Object;)Ljava/lang/Object;
+     273: checkcast     #109                // class kotlin/jvm/functions/Function1
+     276: astore_2
+     277: aload_0
+     278: aload_2
+     279: invokestatic  #89                 // Method filter:(Ljava/util/List;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+     282: getstatic     #59                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     285: swap
+     286: invokevirtual #65                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+     289: return
+
+  public static final kotlin.jvm.functions.Function1<java.lang.Integer, java.lang.Boolean> parametricSieve(int);
+    Code:
+       0: iload_0
+       1: invokestatic  #133                // Method longComputation:(I)I
+       4: istore_1
+       5: iload_1
+       6: invokedynamic #140,  0            // InvokeDynamic #3:invoke:(I)Lkotlin/jvm/functions/Function1;
+      11: areturn
+
+  public static final kotlin.jvm.functions.Function1<java.lang.Integer, kotlin.jvm.functions.Function1<java.lang.Integer, java.lang.Boolean>> getParametricSieveCurried();
+    Code:
+       0: getstatic     #107                // Field parametricSieveCurried:Lkotlin/jvm/functions/Function1;
+       3: areturn
+
+  public static final kotlin.jvm.functions.Function1<java.lang.Integer, java.lang.Boolean> parametricSieve(int, int);
+    Code:
+       0: iload_1
+       1: invokedynamic #151,  0            // InvokeDynamic #4:invoke:(I)Lkotlin/jvm/functions/Function1;
+       6: areturn
+
+  public static final int longComputation(int);
+    Code:
+       0: iload_0
+       1: iload_0
+       2: imul
+       3: ireturn
+
+  public static final java.util.List<java.lang.Integer> filter(java.util.List<java.lang.Integer>, kotlin.jvm.functions.Function1<? super java.lang.Integer, java.lang.Boolean>);
+    Code:
+       0: aload_0
+       1: ldc           #155                // String list
+       3: invokestatic  #161                // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+       6: aload_1
+       7: ldc           #163                // String predicate
+       9: invokestatic  #161                // Method kotlin/jvm/internal/Intrinsics.checkNotNullParameter:(Ljava/lang/Object;Ljava/lang/String;)V
+      12: aload_0
+      13: aload_1
+      14: invokestatic  #167                // Method kotlin/collections/CollectionsKt.emptyList:()Ljava/util/List;
+      17: invokestatic  #171                // Method filter$filterAux:(Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/util/List;)Ljava/util/List;
+      20: areturn
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: invokestatic  #174                // Method main:()V
+       3: return
+
+  private static final boolean main$lambda$1(int);
+    Code:
+       0: iload_0
+       1: iconst_2
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  private static final boolean main$lambda$2(int);
+    Code:
+       0: iload_0
+       1: iconst_2
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  private static final boolean main$lambda$3(int);
+    Code:
+       0: iload_0
+       1: iconst_2
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  private static final boolean parametricSieve$lambda$4(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  private static final boolean parametricSieveCurried$lambda$6$lambda$5(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  private static final kotlin.jvm.functions.Function1 parametricSieveCurried$lambda$6(int);
+    Code:
+       0: iload_0
+       1: invokestatic  #133                // Method longComputation:(I)I
+       4: istore_1
+       5: iload_1
+       6: invokedynamic #185,  0            // InvokeDynamic #5:invoke:(I)Lkotlin/jvm/functions/Function1;
+      11: areturn
+
+  private static final boolean parametricSieve$lambda$7(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  private static final java.util.List<java.lang.Integer> filter$filterAux(java.util.List<java.lang.Integer>, kotlin.jvm.functions.Function1<? super java.lang.Integer, java.lang.Boolean>, java.util.List<java.lang.Integer>);
+    Code:
+       0: aload_0
+       1: invokeinterface #190,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+       6: istore_3
+       7: iload_3
+       8: iconst_1
+       9: if_icmpne     16
+      12: aload_2
+      13: goto          103
+      16: iload_3
+      17: ifne          95
+      20: aload_0
+      21: invokestatic  #194                // Method kotlin/collections/CollectionsKt.first:(Ljava/util/List;)Ljava/lang/Object;
+      24: checkcast     #43                 // class java/lang/Number
+      27: invokevirtual #47                 // Method java/lang/Number.intValue:()I
+      30: istore        4
+      32: aload_1
+      33: iload         4
+      35: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      38: invokeinterface #111,  2          // InterfaceMethod kotlin/jvm/functions/Function1.invoke:(Ljava/lang/Object;)Ljava/lang/Object;
+      43: checkcast     #196                // class java/lang/Boolean
+      46: invokevirtual #199                // Method java/lang/Boolean.booleanValue:()Z
+      49: ifeq          79
+      52: aload_0
+      53: checkcast     #20                 // class java/lang/Iterable
+      56: iconst_1
+      57: invokestatic  #203                // Method kotlin/collections/CollectionsKt.drop:(Ljava/lang/Iterable;I)Ljava/util/List;
+      60: aload_1
+      61: aload_2
+      62: checkcast     #27                 // class java/util/Collection
+      65: iload         4
+      67: invokestatic  #12                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      70: invokestatic  #207                // Method kotlin/collections/CollectionsKt.plus:(Ljava/util/Collection;Ljava/lang/Object;)Ljava/util/List;
+      73: invokestatic  #171                // Method filter$filterAux:(Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/util/List;)Ljava/util/List;
+      76: goto          103
+      79: aload_0
+      80: checkcast     #20                 // class java/lang/Iterable
+      83: iconst_1
+      84: invokestatic  #203                // Method kotlin/collections/CollectionsKt.drop:(Ljava/lang/Iterable;I)Ljava/util/List;
+      87: aload_1
+      88: aload_2
+      89: invokestatic  #171                // Method filter$filterAux:(Ljava/util/List;Lkotlin/jvm/functions/Function1;Ljava/util/List;)Ljava/util/List;
+      92: goto          103
+      95: new           #209                // class kotlin/NoWhenBranchMatchedException
+      98: dup
+      99: invokespecial #210                // Method kotlin/NoWhenBranchMatchedException."<init>":()V
+     102: athrow
+     103: areturn
+
+  static {};
+    Code:
+       0: invokedynamic #218,  0            // InvokeDynamic #6:invoke:()Lkotlin/jvm/functions/Function1;
+       5: putstatic     #107                // Field parametricSieveCurried:Lkotlin/jvm/functions/Function1;
+       8: return
+}
