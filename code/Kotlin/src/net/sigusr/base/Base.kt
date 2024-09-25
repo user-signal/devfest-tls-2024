@@ -6,24 +6,24 @@ fun main() {
 
     println(aList.filter { it % 2 == 0 })
 
-    println(net.sigusr.baseFunction1.filter(aList) { it % 2 == 0 })
-    println(net.sigusr.baseFunction1.filter(aList, { it % 2 == 0 }))
-    println(net.sigusr.baseFunction1.filter(aList, { someInt -> someInt % 2 == 0 }))
+    println(net.sigusr.base1b.filter(aList) { it % 2 == 0 })
+    println(net.sigusr.base1b.filter(aList, { it % 2 == 0 }))
+    println(net.sigusr.base1b.filter(aList, { someInt -> someInt % 2 == 0 }))
 
-    val sieve: (Int) -> Boolean = net.sigusr.baseFunction1.parametricSieve(3)
-    println(net.sigusr.baseFunction1.filter(aList, sieve))
+    val sieve: (Int) -> Boolean = net.sigusr.base1b.parametricSieve(3)
+    println(net.sigusr.base1b.filter(aList, sieve))
 
     val sieveCurried: (Int) -> Boolean = parametricSieveCurried(3)
-    println(net.sigusr.baseFunction1.filter(aList, sieveCurried))
+    println(net.sigusr.base1b.filter(aList, sieveCurried))
 }
 
 fun parametricSieve(x: Int): (Int) -> Boolean {
-    val c = net.sigusr.baseFunction1.longComputation(x)
+    val c = net.sigusr.base1b.longComputation(x)
     return { y -> c % y == 0 }
 }
 
 val parametricSieveCurried: (Int) -> (Int) -> Boolean = { x ->
-    val c = net.sigusr.baseFunction1.longComputation(x);
+    val c = net.sigusr.base1b.longComputation(x);
     { y -> c % y == 0 }
 }
 

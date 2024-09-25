@@ -1,4 +1,4 @@
-package net.sigusr.baseSimplified
+package net.sigusr.base2a
 
 fun main() {
 
@@ -9,7 +9,9 @@ fun main() {
 
 fun parametricSieve(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return object : Function1<Int, Boolean> {
+        override fun invoke(y: Int) = c % y == 0
+    }
 }
 
 fun longComputation(x: Int): Int {

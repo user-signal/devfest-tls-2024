@@ -1,4 +1,4 @@
-package net.sigusr.baseFunction1
+package net.sigusr.base1b
 
 fun main() {
 
