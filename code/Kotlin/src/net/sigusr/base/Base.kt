@@ -23,7 +23,7 @@ fun parametricSieve(x: Int): (Int) -> Boolean {
 }
 
 val parametricSieveCurried: (Int) -> (Int) -> Boolean = { x ->
-    val c = net.sigusr.base1b.longComputation(x);
+    val c = longComputation(x);
     { y -> c % y == 0 }
 }
 

@@ -148,6 +148,23 @@
         </section>
 
         <section>
+            <div style="margin-top: 3em; display: grid; grid: 'left right' / 0.75fr 1.25fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 1.1ex; margin-bottom: 100%; margin-top: 0"><code class="Kotlin" data-noescape>
+        <span>Main</span>
+        <span>  Fact(2)</span>
+        <span>    Fact(1)</span>
+        <span>      Fact(0)</span>
+                    </code><div class="lang">Kotlin</div></pre>
+                </div>
+                <div style="grid-area: right">
+                    <object data-fragment-index="4" data="./images/pile/4.svg"></object>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
                 fun filter(list: List&lt;Int&gt;, <span class="ch">predicate: (Int) -> Boolean</span>): List&lt;Int&gt; {
                     fun filterAux(list: List&lt;Int&gt;, predicate: (Int) -> Boolean, acc: List&lt;Int&gt;): List&lt;Int&gt; =
