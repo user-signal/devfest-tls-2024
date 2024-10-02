@@ -1,0 +1,243 @@
+Classfile /home/fred/Projets/Présentations/devfest-tls-2024/code/Kotlin/out/production/Kotlin/net/sigusr/c1/ClosuresKt.class
+  Last modified 2 oct. 2024; size 2074 bytes
+  SHA-256 checksum 9b2c08e9af092451962adc5b298461b160f72a9e4173c175d724f49f109910ac
+  Compiled from "Closures.kt"
+public final class net.sigusr.c1.ClosuresKt
+  minor version: 0
+  major version: 52
+  flags: (0x0031) ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+  this_class: #2                          // net/sigusr/c1/ClosuresKt
+  super_class: #4                         // java/lang/Object
+  interfaces: 0, fields: 0, methods: 5, attributes: 3
+Constant pool:
+    #1 = Utf8               net/sigusr/c1/ClosuresKt
+    #2 = Class              #1            // net/sigusr/c1/ClosuresKt
+    #3 = Utf8               java/lang/Object
+    #4 = Class              #3            // java/lang/Object
+    #5 = Utf8               longComputation
+    #6 = Utf8               (I)I
+    #7 = Utf8               x
+    #8 = Utf8               I
+    #9 = Utf8               parametricSieve
+   #10 = Utf8               (I)Lkotlin/jvm/functions/Function1;
+   #11 = Utf8               (I)Lkotlin/jvm/functions/Function1<Ljava/lang/Integer;Ljava/lang/Boolean;>;
+   #12 = Utf8               Lorg/jetbrains/annotations/NotNull;
+   #13 = NameAndType        #5:#6         // longComputation:(I)I
+   #14 = Methodref          #2.#13        // net/sigusr/c1/ClosuresKt.longComputation:(I)I
+   #15 = Utf8               (Ljava/lang/Object;)Ljava/lang/Object;
+   #16 = MethodType         #15           //  (Ljava/lang/Object;)Ljava/lang/Object;
+   #17 = Utf8               parametricSieve$lambda$0
+   #18 = Utf8               (II)Z
+   #19 = NameAndType        #17:#18       // parametricSieve$lambda$0:(II)Z
+   #20 = Methodref          #2.#19        // net/sigusr/c1/ClosuresKt.parametricSieve$lambda$0:(II)Z
+   #21 = MethodHandle       6:#20         // REF_invokeStatic net/sigusr/c1/ClosuresKt.parametricSieve$lambda$0:(II)Z
+   #22 = Utf8               (Ljava/lang/Integer;)Ljava/lang/Boolean;
+   #23 = MethodType         #22           //  (Ljava/lang/Integer;)Ljava/lang/Boolean;
+   #24 = Utf8               java/lang/invoke/LambdaMetafactory
+   #25 = Class              #24           // java/lang/invoke/LambdaMetafactory
+   #26 = Utf8               metafactory
+   #27 = Utf8               (Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #28 = NameAndType        #26:#27       // metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #29 = Methodref          #25.#28       // java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #30 = MethodHandle       6:#29         // REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #31 = Utf8               invoke
+   #32 = NameAndType        #31:#10       // invoke:(I)Lkotlin/jvm/functions/Function1;
+   #33 = InvokeDynamic      #0:#32        // #0:invoke:(I)Lkotlin/jvm/functions/Function1;
+   #34 = Utf8               c
+   #35 = Utf8               main
+   #36 = Utf8               ()V
+   #37 = NameAndType        #9:#10        // parametricSieve:(I)Lkotlin/jvm/functions/Function1;
+   #38 = Methodref          #2.#37        // net/sigusr/c1/ClosuresKt.parametricSieve:(I)Lkotlin/jvm/functions/Function1;
+   #39 = Utf8               java/lang/Integer
+   #40 = Class              #39           // java/lang/Integer
+   #41 = Utf8               valueOf
+   #42 = Utf8               (I)Ljava/lang/Integer;
+   #43 = NameAndType        #41:#42       // valueOf:(I)Ljava/lang/Integer;
+   #44 = Methodref          #40.#43       // java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+   #45 = Utf8               kotlin/jvm/functions/Function1
+   #46 = Class              #45           // kotlin/jvm/functions/Function1
+   #47 = NameAndType        #31:#15       // invoke:(Ljava/lang/Object;)Ljava/lang/Object;
+   #48 = InterfaceMethodref #46.#47       // kotlin/jvm/functions/Function1.invoke:(Ljava/lang/Object;)Ljava/lang/Object;
+   #49 = Utf8               java/lang/Boolean
+   #50 = Class              #49           // java/lang/Boolean
+   #51 = Utf8               booleanValue
+   #52 = Utf8               ()Z
+   #53 = NameAndType        #51:#52       // booleanValue:()Z
+   #54 = Methodref          #50.#53       // java/lang/Boolean.booleanValue:()Z
+   #55 = Utf8               Ok
+   #56 = String             #55           // Ok
+   #57 = Utf8               java/lang/System
+   #58 = Class              #57           // java/lang/System
+   #59 = Utf8               out
+   #60 = Utf8               Ljava/io/PrintStream;
+   #61 = NameAndType        #59:#60       // out:Ljava/io/PrintStream;
+   #62 = Fieldref           #58.#61       // java/lang/System.out:Ljava/io/PrintStream;
+   #63 = Utf8               java/io/PrintStream
+   #64 = Class              #63           // java/io/PrintStream
+   #65 = Utf8               println
+   #66 = Utf8               (Ljava/lang/Object;)V
+   #67 = NameAndType        #65:#66       // println:(Ljava/lang/Object;)V
+   #68 = Methodref          #64.#67       // java/io/PrintStream.println:(Ljava/lang/Object;)V
+   #69 = Utf8               Ko
+   #70 = String             #69           // Ko
+   #71 = Utf8               sieve
+   #72 = Utf8               Lkotlin/jvm/functions/Function1;
+   #73 = Utf8               ([Ljava/lang/String;)V
+   #74 = NameAndType        #35:#36       // main:()V
+   #75 = Methodref          #2.#74        // net/sigusr/c1/ClosuresKt.main:()V
+   #76 = Utf8               args
+   #77 = Utf8               [Ljava/lang/String;
+   #78 = Utf8               $c
+   #79 = Utf8               y
+   #80 = Utf8               Lkotlin/Metadata;
+   #81 = Utf8               mv
+   #82 = Integer            2
+   #83 = Integer            0
+   #84 = Utf8               k
+   #85 = Utf8               xi
+   #86 = Integer            48
+   #87 = Utf8               d1
+   #88 = Utf8               \u0000\u001a\n\u0000\n\u0002\u0010\b\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u000b\n\u0000\n\u0002\u0010\u0002\n\u0000\u001a\u000e\u0010\u0000\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u0001\u001a\u001a\u0010\u0003\u001a\u000e\u0012\u0004\u0012\u00020\u0001\u0012\u0004\u0012\u00020\u00050\u00042\u0006\u0010\u0002\u001a\u00020\u0001\u001a\u0006\u0010\u0006\u001a\u00020\u0007¨\u0006\b
+   #89 = Utf8               d2
+   #90 = Utf8
+   #91 = Utf8               Lkotlin/Function1;
+   #92 = Utf8               Kotlin
+   #93 = Utf8               Closures.kt
+   #94 = Utf8               Code
+   #95 = Utf8               LineNumberTable
+   #96 = Utf8               LocalVariableTable
+   #97 = Utf8               Signature
+   #98 = Utf8               RuntimeInvisibleAnnotations
+   #99 = Utf8               StackMapTable
+  #100 = Utf8               SourceFile
+  #101 = Utf8               RuntimeVisibleAnnotations
+  #102 = Utf8               BootstrapMethods
+{
+  public static final int longComputation(int);
+    descriptor: (I)I
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    Code:
+      stack=2, locals=1, args_size=1
+         0: iload_0
+         1: iload_0
+         2: imul
+         3: ireturn
+      LineNumberTable:
+        line 4: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       4     0     x   I
+
+  public static final kotlin.jvm.functions.Function1<java.lang.Integer, java.lang.Boolean> parametricSieve(int);
+    descriptor: (I)Lkotlin/jvm/functions/Function1;
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    Code:
+      stack=1, locals=2, args_size=1
+         0: iload_0
+         1: invokestatic  #14                 // Method longComputation:(I)I
+         4: istore_1
+         5: iload_1
+         6: invokedynamic #33,  0             // InvokeDynamic #0:invoke:(I)Lkotlin/jvm/functions/Function1;
+        11: areturn
+      LineNumberTable:
+        line 8: 0
+        line 9: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            5       7     1     c   I
+            0      12     0     x   I
+    Signature: #11                          // (I)Lkotlin/jvm/functions/Function1<Ljava/lang/Integer;Ljava/lang/Boolean;>;
+    RuntimeInvisibleAnnotations:
+      0: #12()
+        org.jetbrains.annotations.NotNull
+
+  public static final void main();
+    descriptor: ()V
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    Code:
+      stack=2, locals=1, args_size=0
+         0: iconst_3
+         1: invokestatic  #38                 // Method parametricSieve:(I)Lkotlin/jvm/functions/Function1;
+         4: astore_0
+         5: aload_0
+         6: iconst_3
+         7: invokestatic  #44                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        10: invokeinterface #48,  2           // InterfaceMethod kotlin/jvm/functions/Function1.invoke:(Ljava/lang/Object;)Ljava/lang/Object;
+        15: checkcast     #50                 // class java/lang/Boolean
+        18: invokevirtual #54                 // Method java/lang/Boolean.booleanValue:()Z
+        21: ifeq          36
+        24: ldc           #56                 // String Ok
+        26: getstatic     #62                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        29: swap
+        30: invokevirtual #68                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+        33: goto          45
+        36: ldc           #70                 // String Ko
+        38: getstatic     #62                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        41: swap
+        42: invokevirtual #68                 // Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+        45: return
+      StackMapTable: number_of_entries = 2
+        frame_type = 252 /* append */
+          offset_delta = 36
+          locals = [ class kotlin/jvm/functions/Function1 ]
+        frame_type = 8 /* same */
+      LineNumberTable:
+        line 14: 0
+        line 16: 5
+        line 16: 36
+        line 17: 45
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            5      41     0 sieve   Lkotlin/jvm/functions/Function1;
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: (0x1009) ACC_PUBLIC, ACC_STATIC, ACC_SYNTHETIC
+    Code:
+      stack=0, locals=1, args_size=1
+         0: invokestatic  #75                 // Method main:()V
+         3: return
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       4     0  args   [Ljava/lang/String;
+
+  private static final boolean parametricSieve$lambda$0(int, int);
+    descriptor: (II)Z
+    flags: (0x001a) ACC_PRIVATE, ACC_STATIC, ACC_FINAL
+    Code:
+      stack=2, locals=2, args_size=2
+         0: iload_0
+         1: iload_1
+         2: irem
+         3: ifne          10
+         6: iconst_1
+         7: goto          11
+        10: iconst_0
+        11: ireturn
+      StackMapTable: number_of_entries = 2
+        frame_type = 10 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+      LineNumberTable:
+        line 9: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      12     0    $c   I
+            0      12     1     y   I
+}
+SourceFile: "Closures.kt"
+RuntimeVisibleAnnotations:
+  0: #80(#81=[I#82,I#83,I#83],#84=I#82,#85=I#86,#87=[s#88],#89=[s#5,s#90,s#7,s#9,s#91,s#90,s#35,s#90,s#92])
+    kotlin.Metadata(
+      mv=[2,0,0]
+      k=2
+      xi=48
+      d1=["\u0000\u001a\n\u0000\n\u0002\u0010\b\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u000b\n\u0000\n\u0002\u0010\u0002\n\u0000\u001a\u000e\u0010\u0000\u001a\u00020\u00012\u0006\u0010\u0002\u001a\u00020\u0001\u001a\u001a\u0010\u0003\u001a\u000e\u0012\u0004\u0012\u00020\u0001\u0012\u0004\u0012\u00020\u00050\u00042\u0006\u0010\u0002\u001a\u00020\u0001\u001a\u0006\u0010\u0006\u001a\u00020\u0007¨\u0006\b"]
+      d2=["longComputation","","x","parametricSieve","Lkotlin/Function1;","","main","","Kotlin"]
+    )
+BootstrapMethods:
+  0: #30 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #16 (Ljava/lang/Object;)Ljava/lang/Object;
+      #21 REF_invokeStatic net/sigusr/c1/ClosuresKt.parametricSieve$lambda$0:(II)Z
+      #23 (Ljava/lang/Integer;)Ljava/lang/Boolean;
