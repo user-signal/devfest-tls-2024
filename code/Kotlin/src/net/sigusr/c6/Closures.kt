@@ -4,18 +4,18 @@ fun longComputation(x: Int): Int {
     return x * x
 }
 
-fun parametricSieve_lambda(c: Int, yy: Int): Boolean = c % yy == 0
+fun parametricPredicateLambda(c: Int, yy: Int): Boolean = c % yy == 0
 
-fun parametricSieve(x: Int): Function1<Int, Boolean> {
+fun parametricPredicate(x: Int): Function1<Int, Boolean> {
     val c = longComputation(x)
     return object : Function1<Int, Boolean> {
-        override fun invoke(y: Int) = parametricSieve_lambda(c, y)
+        override fun invoke(y: Int) = parametricPredicateLambda(c, y)
     }
 }
 
 fun main() {
 
-    val sieve: Function1<Int, Boolean> = parametricSieve(3)
+    val predicate: Function1<Int, Boolean> = parametricPredicate(3)
 
-    if (sieve.invoke(3)) println("Ok") else println("Ko")
+    if (predicate.invoke(3)) println("Ok") else println("Ko")
 }

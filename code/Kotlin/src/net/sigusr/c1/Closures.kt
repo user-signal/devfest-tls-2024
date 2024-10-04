@@ -4,14 +4,14 @@ fun longComputation(x: Int): Int {
     return x * x
 }
 
-fun parametricSieve(x: Int): (Int) -> Boolean {
+fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
     return { y -> c % y == 0 }
 }
 
 fun main() {
 
-    val sieve: (Int) -> Boolean = parametricSieve(3)
+    val predicate: (Int) -> Boolean = parametricPredicate(3)
 
-    if (sieve(3)) println("Ok") else println("Ko")
+    if (predicate(3)) println("Ok") else println("Ko")
 }
