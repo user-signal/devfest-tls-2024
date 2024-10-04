@@ -8,13 +8,27 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="0.svg"
+   sodipodi:docname="5.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
      id="defs5">
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path1288" />
+    </marker>
     <rect
        x="260"
        y="570"
@@ -71,7 +85,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.5300023"
-     inkscape:cx="758.16879"
+     inkscape:cx="1197.057"
      inkscape:cy="321.89494"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
@@ -123,7 +137,7 @@
        sodipodi:role="line"
        id="tspan845-54-7"
        x="812.42926"
-       y="189.45378">c: _</tspan></text>
+       y="189.45378">c: 42</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;line-height:1.25;font-family:Iosevka;-inkscape-font-specification:'Iosevka, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none"
@@ -133,7 +147,7 @@
        sodipodi:role="line"
        id="tspan845-54-7-1"
        x="812.42926"
-       y="224.95413">predicate: _</tspan></text>
+       y="224.95413">predicate: @Lambda0</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32px;line-height:1.25;font-family:Iosevka;-inkscape-font-specification:'Iosevka, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
@@ -164,4 +178,8 @@
        x="668.45264"
        y="523.83728"
        id="tspan45540">Lambda0: { y -&gt; c % y == 0}</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.13385832;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:1.13385832, 1.13385832;stroke-dashoffset:0;marker-end:url(#Arrow1Lend)"
+     d="m 1075.326,216.46842 h 33.9931 v 298.2921 h -103.598"
+     id="path1283" />
 </svg>

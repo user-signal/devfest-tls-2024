@@ -14,8 +14,7 @@ fun parametricPredicate(x: Int): Closure<Int, Int, Boolean> {
 }
 
 fun main() {
-
+    val c = 42
     val predicate: Closure<Int, Int, Boolean> = parametricPredicate(3)
-
-    if (predicate.lambda(predicate.capture, 3)) println("Ok") else println("Ko")
+    if (predicate.lambda(predicate.capture, 81)) println("Ok") else println("Ko")
 }
