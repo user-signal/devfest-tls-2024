@@ -177,7 +177,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/1.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/1.svg"></object>
                 </div>
             </div>
         </section>
@@ -212,7 +212,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/2.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/2.svg"></object>
                 </div>
             </div>
         </section>
@@ -247,7 +247,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/2.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/2.svg"></object>
                 </div>
             </div>
         </section>
@@ -282,7 +282,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/3.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/3.svg"></object>
                 </div>
             </div>
         </section>
@@ -317,7 +317,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/4.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/4.svg"></object>
                 </div>
             </div>
         </section>
@@ -352,7 +352,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/5.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/5.svg"></object>
                 </div>
             </div>
         </section>
@@ -387,7 +387,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/5.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/5.svg"></object>
                 </div>
             </div>
         </section>
@@ -422,7 +422,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/6.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/6.svg"></object>
                 </div>
             </div>
         </section>
@@ -457,7 +457,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/6.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/6.svg"></object>
                 </div>
             </div>
         </section>
@@ -492,7 +492,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/7.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/7.svg"></object>
                 </div>
             </div>
         </section>
@@ -643,6 +643,146 @@ fun longComputation(x: Int): Int {
 
             <aside class="notes">
             </aside>
+        </section>
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = <span class="ch">parametricPredicate(3)</span>
+    if (predicate(81)) println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return <span class="ch">{ y -> c % y == 0 }</span>
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem-solved/5.svg"></object>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = <span class="ch">parametricPredicate(3)</span>
+    if (predicate(81)) println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return { y -> c % y == 0 }
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem-solved/6.svg"></object>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = <span class="ch">parametricPredicate(3)</span>
+    if (predicate(81)) println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return { y -> c % y == 0 }
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem-solved/7.svg"></object>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = parametricPredicate(3)
+    if <span class="ch">(predicate(81))</span> println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return { y -> c % y == 0 }
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem-solved/8.svg"></object>
+                </div>
+            </div>
         </section>
 
         <section>
