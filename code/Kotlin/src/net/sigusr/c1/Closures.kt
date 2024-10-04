@@ -10,8 +10,7 @@ fun parametricPredicate(x: Int): (Int) -> Boolean {
 }
 
 fun main() {
-
+    val c = 42
     val predicate: (Int) -> Boolean = parametricPredicate(3)
-
     if (predicate(3)) println("Ok") else println("Ko")
 }

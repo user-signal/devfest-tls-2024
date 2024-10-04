@@ -148,51 +148,33 @@
         </section>
 
         <section>
-            <div style="margin-top: 3em; display: grid; grid: 'left right' / 0.75fr 1.25fr">
-                <div style="grid-area: left">
-                    <pre style="max-height: 800px; font-size: 1.1ex; margin-bottom: 100%; margin-top: 0"><code class="Kotlin" data-noescape>
-                    Main
-                      Fact(2)
-                        Fact(1)
-                          Fact(0)
-                    </code><div class="lang">Kotlin</div></pre>
-                </div>
-                <div style="grid-area: right">
-                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/1.svg"></object>
-                </div>
-            </div>
-        </section>
-
-
-        <section>
             <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
                 <div style="grid-area: left">
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun main() {
-    val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    val sieve: (Int) -> Boolean = parametricSieve(3)
-    println(aList.filter(sieve))
+    val predicate: (Int) -> Boolean = parametricPredicate(3)
+    if (predicate(3)) println("Ok") else println("Ko")
 }
                     </code></pre>
                 </div>
                 <div style="grid-area: center">
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
- fun parametricSieve(x: Int): (Int) -> Boolean {
+fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
     return { y -> c % y == 0 }
-}                   </code></pre>
-                </div>
-                <div style="grid-area: right">
-                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
-fun filter2(list: List<Int>, predicate: (Int) -> Boolean): List<Int> {
-    val destination = mutableListOf<Int>()
-    list.forEach { if (predicate(it)) destination.add(it)}
-    return destination
 }
                     </code></pre>
                 </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+                    </code></pre>
+                </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="images/sieve-funarg/1b.svg"></object>
+                    <object data-fragment-index="4" data="./images/sieve-funarg-problem/1.svg"></object>
                 </div>
             </div>
         </section>
@@ -371,8 +353,6 @@ fun filter2(list: List<Int>, predicate: (Int) -> Boolean): List<Int> {
 <script src="./plugin/math/math.js"></script>
 
 <script>
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
     Reveal.initialize({
         controls: false,
         progress: false,
