@@ -39,68 +39,44 @@
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
                         val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-            </code><div class="lang">Kotlin</div></pre>
-            <pre class="fragment" style="font-size: 1.1ex; margin-top: 3em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
-                        aList.filter { it % 2 == 0 }
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
 
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 3em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
-                        aList.filter <span class="ch">{ it % 2 == 0 }</span>
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 3em"><code class="kotlin" style="max-height: 800px">
-                        aList.filter { it % 2 == 0 }
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
-                        aList.filter<span class="ch">({ it % 2 == 0 })</span>
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 3em"><code class="kotlin" style="max-height: 800px">
-                        aList.filter { it % 2 == 0 }
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex"><code class="kotlin" style="max-height: 800px">
-                        aList.filter({ it % 2 == 0 })
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
                         aList.filter({ anInt -> anInt % 2 == 0 })
             </code><div class="lang">Kotlin</div></pre>
         </section>
 
         <section>
-            <div style="margin-top: 5em; margin-bottom: 100%;  display: grid; grid-template-columns: 3fr 2fr">
-                <div style="justify-self: center">$x$</div>
-                <div style="justify-self: start"> Variable</div>
-                <div style="justify-self: center">$\lambda x.\,M$</div>
-                <div style="justify-self: start"> Abstraction</div>
-                <div style="justify-self: center; margin-bottom: 2.5em">$M\,N$</div>
-                <div style="margin-bottom: 2.5em; justify-self: start"> Application</div>
-                <div style="justify-self: center">$\lambda x.\,(f\,x) \rightarrow f$</div>
-                <div style="justify-self: start">$\eta$-reduction</div>
-                <div style="justify-self: center">$\lambda x.\,M[x] \rightarrow \lambda y.\,M[y]$</div>
-                <div style="justify-self: start">$\alpha$-conversion</div>
-                <div class="yellow" style="justify-self: center">$(\lambda x.\,M)\:E \rightarrow M[x:=E]$</div>
-                <div class="yellow" style="justify-self: start">$\beta$-reduction</div>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+                        val aList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+                        aList.filter(<span class="ch">{ anInt -> anInt % 2 == 0 }</span>)
+            </code><div class="lang">Kotlin</div></pre>
+            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex"><code class="kotlin" style="max-height: 800px" data-noescape="">
+                        aList.filter({ <span class="ch">it</span> % 2 == 0 })
+            </code><div class="lang">Kotlin</div></pre>
+            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+                        aList.filter { it % 2 == 0 }
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <div style="margin-top: 5em; margin-bottom: 100%;  display: grid; grid-template-rows: 2fr 1fr">
+                <div style="margin-top: .5em; font-size: 2.11em">$f: (A, B) \rightarrow C$</div>
+                <div class="fragment" style="margin-top: .25em; font-size: 2.11em">$f: A \rightarrow (B \rightarrow C)$</div>
             </div>
         </section>
 
         <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+                        val sieve: (Int) -> Boolean = parametricSieve(3)
+                        println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieve))
+            </code><div class="lang">Kotlin</div></pre>
+            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
+                        val sieveCurried: (Int) -> Boolean = parametricSieveCurried(3)
+                        println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieveCurried))
+            </code><div class="lang">Kotlin</div></pre>
+        </section>        <section>
             <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto">
                 <div>
                     <div style="grid-column: 1; grid-row: 1">
@@ -128,23 +104,31 @@
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
-                fun filter(list: List&lt;Int&gt;, predicate: (Int) -> Boolean): List&lt;Int&gt; {
-                    fun filterAux(list: List&lt;Int&gt;, predicate: (Int) -> Boolean, acc: List&lt;Int&gt;): List&lt;Int&gt; =
-                        when (list.isEmpty()) {
-                            true -> acc
-                            false -> {
-                                val first = list.first()
-                                if (predicate(first)) {
-                                    filterAux(list.drop(1), predicate, acc + first)
-                                } else {
-                                    filterAux(list.drop(1), predicate, acc)
+            <img style="border: thin solid; margin-bottom: 100%; margin-top: 3em" src="./images/funarg-problem.png" alt="">
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
+                                fun longComputation(x: Int): Int {
+                                    return x * x
                                 }
-                            }
-                        }
-                    return filterAux(list, predicate, emptyList())
-                }
+
+                                fun parametricPredicate(x: Int): (Int) -> Boolean {
+                                    val c = longComputation(x)
+                                    return { y -> c % y == 0 }
+                                }
+
+                                fun main() {
+                                    val c = 42
+                                    val predicate: (Int) -> Boolean = parametricPredicate(3)
+                                    if (predicate(81)) println("Ok") else println("Ko")
+                                }
             </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <h2>Les fonctions <span class="green">(récursives)</span> décortiquées</h2>
+            <a style="margin-bottom: 100%" href="https://www.youtube.com/watch?v=aTDSZtHCIGU"><img src="./images/Devoxx-2022.png" alt=""></a>
         </section>
 
         <section>
@@ -498,116 +482,6 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
-                fun filter(list: List&lt;Int&gt;, <span class="ch">predicate: (Int) -> Boolean</span>): List&lt;Int&gt; {
-                    fun filterAux(list: List&lt;Int&gt;, predicate: (Int) -> Boolean, acc: List&lt;Int&gt;): List&lt;Int&gt; =
-                        when (list.isEmpty()) {
-                            true -> acc
-                            false -> {
-                                val first = list.first()
-                                if (<span class="ch">predicate(first)</span>) {
-                                    filterAux(list.drop(1), predicate, acc + first)
-                                } else {
-                                    filterAux(list.drop(1), predicate, acc)
-                                }
-                            }
-                        }
-                    return filterAux(list, predicate, emptyList())
-                }
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) { it % 2 == 0 }
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) <span class="ch">{ it % 2 == 0 }</span>
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) { it % 2 == 0 }
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), <span class="ch">{ it % 2 == 0 }</span>)
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) { it % 2 == 0 }
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex"><code class="kotlin" style="max-height: 800px">
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), { it % 2 == 0 })
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
-                        filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), <span class="ch">{ anInt -> anInt % 2 == 0 }</span>)
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <h2>Les fonctions <span class="green">(récursives)</span> décortiquées</h2>
-            <a style="margin-bottom: 100%" href="https://www.youtube.com/watch?v=aTDSZtHCIGU"><img src="./images/Devoxx-2022.png" alt=""></a>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
-                        fun longComputation(x: Int): Int {
-                            ...
-                        }
-
-                        fun parametricSieve(x: Int): (Int) -> Boolean {
-                            val c = longComputation(x)
-                            return { y: Int -> c % y == 0 }
-                        }
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <h2 style="margin-bottom: 1.5em">Curryfication</h2>
-
-            <div style="margin-bottom: 100%;  display: grid; grid-template-rows: 2fr 1fr">
-                <div style="margin-top: .5em; font-size: 2.11em">$f: (A, B) \rightarrow C$</div>
-                <div class="fragment" style="margin-top: .25em; font-size: 2.11em">$f: A \rightarrow (B \rightarrow C)$</div>
-            </div>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        fun longComputation(x: Int): Int {
-                            ...
-                        }
-
-                        fun parametricSieve(x: Int): (Int) -> Boolean {
-                            val c = longComputation(x)
-                            return { y: Int -> c % y == 0 }
-                        }
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
-                        val parametricSieveCurried: (Int) -> (Int) -> Boolean = { x ->
-                            val c = longComputation(x);
-                            { y -> c % y == 0 }
-                        }
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
-                        val sieve: (Int) -> Boolean = parametricSieve(3)
-                        println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieve))
-            </code><div class="lang">Kotlin</div></pre>
-            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
-                        val sieveCurried: (Int) -> Boolean = parametricSieveCurried(3)
-                        println(filter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), sieveCurried))
-            </code><div class="lang">Kotlin</div></pre>
-        </section>
-
-        <section>
             <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto">
                 <div>
                     <div style="grid-column: 1; grid-row: 1">
@@ -643,6 +517,27 @@ fun longComputation(x: Int): Int {
 
             <aside class="notes">
             </aside>
+        </section>
+
+        <section>
+            <div style="margin-top: 5em; margin-bottom: 100%;  display: grid; grid-template-columns: 3fr 2fr">
+                <div style="justify-self: center">$x$</div>
+                <div style="justify-self: start"> Variable</div>
+                <div style="justify-self: center">$\lambda x.\,M$</div>
+                <div style="justify-self: start"> Abstraction</div>
+                <div style="justify-self: center; margin-bottom: 2.5em">$M\,N$</div>
+                <div style="margin-bottom: 2.5em; justify-self: start"> Application</div>
+                <div style="justify-self: center">$\lambda x.\,(f\,x) \rightarrow f$</div>
+                <div style="justify-self: start">$\eta$-reduction</div>
+                <div style="justify-self: center">$\lambda x.\,M[x] \rightarrow \lambda y.\,M[y]$</div>
+                <div style="justify-self: start">$\alpha$-conversion</div>
+                <div class="yellow" style="justify-self: center">$(\lambda x.\,M)\:E \rightarrow M[x:=E]$</div>
+                <div class="yellow" style="justify-self: start">$\beta$-reduction</div>
+            </div>
+        </section>
+
+        <section>
+            <img style="border: thin solid; margin-bottom: 100%; margin-top: 3em" src="./images/Landin.png" alt="">
         </section>
 
         <section>
@@ -783,10 +678,6 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem-solved/8.svg"></object>
                 </div>
             </div>
-        </section>
-
-        <section>
-            <img src="./images/Landin.png" alt="">
         </section>
 
         <section>
