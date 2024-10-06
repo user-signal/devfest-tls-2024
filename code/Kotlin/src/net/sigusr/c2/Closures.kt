@@ -4,13 +4,13 @@ fun longComputation(x: Int): Int {
     return x * x
 }
 
-val parametricPredicateCurried: (Int) -> (Int) -> Boolean = { x ->
-    val c = longComputation(x);
-    { y -> c % y == 0 }
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return { y -> y % c == 0 }
 }
 
 fun main() {
-    val c = 42
-    val predicate: (Int) -> Boolean = parametricPredicateCurried(3)
-    if (predicate(81)) println("Ok") else println("Ko")
+    val aList = 1..100
+    val predicate = parametricPredicate(3)
+    println(aList.filter(predicate))
 }
