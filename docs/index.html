@@ -801,6 +801,104 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
+
+                        fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> parametricPredicateLambda(c, y) }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        data class Closure&lt;C, I, O&gt;(val capture:C, val code: (C, I) -> O)
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
+
+                        fun parametricPredicate(x: Int): Closure&lt;Int, Int, Boolean&gt; {
+                            val c = longComputation(x)
+                            return Closure(c, ::parametricPredicateLambda)
+                        }
+
+                        fun main() {
+                            val c = 42
+                            val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
+                            if (predicate.code(predicate.capture, 81)) println("Ok") else println("Ko")
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <img style="border: thin solid" src="./images/JSR335.png" alt="">
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+  public static final kotlin.jvm.functions.Function1&lt;java.lang.Integer, java.lang.Boolean&gt; parametricSieve(int);
+    descriptor: (I)Lkotlin/jvm/functions/Function1;
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    Code:
+      stack=1, locals=2, args_size=1
+         0: iload_0
+         1: invokestatic  #14                 // Method longComputation:(I)I
+         4: istore_1
+         5: iload_1
+         6: invokedynamic #33,  0             // InvokeDynamic #0:invoke:(I)Lkotlin/jvm/functions/Function1;
+        11: areturn
+      LineNumberTable:
+        line 8: 0
+        line 9: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            5       7     1     c   I
+            0      12     0     x   I
+    Signature: #11                          // (I)Lkotlin/jvm/functions/Function1&lt;Ljava/lang/Integer;Ljava/lang/Boolean;&gt;
+    RuntimeInvisibleAnnotations:
+      0: #12()
+        org.jetbrains.annotations.NotNull
+
+            </code></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+  public static final kotlin.jvm.functions.Function1&lt;java.lang.Integer, java.lang.Boolean&gt; parametricSieve(int);
+    descriptor: (I)Lkotlin/jvm/functions/Function1;
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    Code:
+      stack=1, locals=2, args_size=1
+         0: iload_0
+         1: invokestatic  #14                 // Method longComputation:(I)I
+         4: istore_1
+         5: iload_1
+         6: <span class="ch">invokedynamic</span> #33,  0             // InvokeDynamic #0:invoke:(I)Lkotlin/jvm/functions/Function1;
+        11: areturn
+      LineNumberTable:
+        line 8: 0
+        line 9: 5
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            5       7     1     c   I
+            0      12     0     x   I
+    Signature: #11                          // (I)Lkotlin/jvm/functions/Function1&lt;Ljava/lang/Integer;Ljava/lang/Boolean;&gt;
+    RuntimeInvisibleAnnotations:
+      0: #12()
+        org.jetbrains.annotations.NotNull
+
+            </code></pre>
+        </section>
+
+        <section>
             <div style="display: flex; justify-content: space-between">
                 <div style="margin-left: 2em; display: flex; flex-direction: column">
                     <div style="margin-top: 1em; text-align: left" class="green">Frédéric Cabestre</div>
