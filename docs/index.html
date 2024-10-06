@@ -104,7 +104,7 @@
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
 
                         fun longComputation(x: Int): Int {
-                            return x * x
+                            return x * x // 🤡
                         }
 
                         fun parametricPredicate(x: Int, y: Int): Boolean {
@@ -131,6 +131,50 @@
                 <div style="margin-top: .5em; font-size: 2.11em">$f: (A, B) \rightarrow C$</div>
                 <div class="fragment" style="margin-top: .25em; font-size: 2.11em">$f: A \rightarrow (B \rightarrow C)$</div>
             </div>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> y % c == 0 }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = parametricPredicate(3)
+                            println(aList.filter(predicate))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        val parametricPredicateCurried: (Int) -> (Int) -> Boolean = { x ->
+                            val c = longComputation(x);
+                            { y -> y % c == 0 }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = parametricPredicate(3)
+                            println(aList.filter(predicate))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
         </section>
 
         <section>
@@ -735,6 +779,25 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem-solved/8.svg"></object>
                 </div>
             </div>
+        </section>
+
+        <section>
+            <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto">
+                <div>
+                    <div style="grid-column: 1; grid-row: 1">
+                        <img src="./images/Hickey.png" alt="">
+                    </div>
+                    <div class="fragment" style="grid-column: 1; grid-row: 2">Rich Hickey</div>
+                </div>
+                <div class="fragment">
+                    <div style="grid-column: 2; grid-row: 1/2">
+                        <img style="border: thin solid" src="./images/Clojure.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <aside class="notes">
+            </aside>
         </section>
 
         <section>
