@@ -1,0 +1,132 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Runnable [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Runnable"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Known Subinterfaces:  </dt>
+<dd> 
+<a href="../../java/util/concurrent/RunnableFuture.html" title="interface in java.util.concurrent" target="_parent">RunnableFuture</a>&lt;V&gt;, <a href="../../java/util/concurrent/RunnableScheduledFuture.html" title="interface in java.util.concurrent" target="_parent">RunnableScheduledFuture</a>&lt;V&gt;  </dd> 
+</dl>
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../javax/swing/text/AsyncBoxView.ChildState.html" title="class in javax.swing.text" target="_parent">AsyncBoxView.ChildState</a>, <a href="../../java/util/concurrent/ForkJoinWorkerThread.html" title="class in java.util.concurrent" target="_parent">ForkJoinWorkerThread</a>, <a href="../../java/util/concurrent/FutureTask.html" title="class in java.util.concurrent" target="_parent">FutureTask</a>, <a href="../../java/awt/image/renderable/RenderableImageProducer.html" title="class in java.awt.image.renderable" target="_parent">RenderableImageProducer</a>, <a href="../../javax/swing/SwingWorker.html" title="class in javax.swing" target="_parent">SwingWorker</a>, <a href="../../java/lang/Thread.html" title="class in java.lang" target="_parent">Thread</a>, <a href="../../java/util/TimerTask.html" title="class in java.util" target="_parent">TimerTask</a>       
+</dd> 
+</dl>
+<dl> 
+<dt>Functional Interface: </dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.                    </dd> 
+</dl> 
+<hr> 
+<br>
+<pre>
+<a href="../../java/lang/FunctionalInterface.html" title="annotation in java.lang" target="_parent">@FunctionalInterface</a>
+public interface <span class="typeNameLabel">Runnable</span>
+</pre>
+<div class="block">The <code>Runnable</code> interface should be implemented by any class whose instances are intended to be executed by a thread. The class must define a method of no arguments called <code>run</code>.<p> This interface is designed to provide a common protocol for objects that wish to execute code while they are active. For example, <code>Runnable</code> is implemented by class <code>Thread</code>. Being active simply means that a thread has been started and has not yet been stopped.                                            </p>
+<p> In addition, <code>Runnable</code> provides the means for a class to be active while not subclassing <code>Thread</code>. A class that implements <code>Runnable</code> can run without subclassing <code>Thread</code> by instantiating a <code>Thread</code> instance and passing itself in as the target. In most cases, the <code>Runnable</code> interface should be used if you are only planning to override the <code>run()</code> method and no other <code>Thread</code> methods. This is important because classes should not be subclassed unless the programmer intends on modifying or enhancing the fundamental behavior of the class.                                                                                     </p>                             
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.0</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Thread.html" title="class in java.lang" target="_parent"><code>Thread</code></a>, <a href="../../java/util/concurrent/Callable.html" title="interface in java.util.concurrent" target="_parent"><code>Callable</code></a>  
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:run-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:run--"></a><a name="run--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>run</h4>
+<pre>void&nbsp;run()</pre>
+<div class="block">When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes the object's <code>run</code> method to be called in that separately executing thread.<p> The general contract of the method <code>run</code> is that it may take any action whatsoever.               </p>                           
+</div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Thread.html#run--" target="_parent"><code>Thread.run()</code></a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

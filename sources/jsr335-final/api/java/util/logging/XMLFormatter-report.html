@@ -1,0 +1,224 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:XMLFormatter [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:XMLFormatter"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">XMLFormatter</span>
+extends <a href="../../../java/util/logging/Formatter.html" title="class in java.util.logging" target="_parent">Formatter</a>
+</pre>
+<div class="block">Format a LogRecord into a standard XML format.<p> The DTD specification is provided as Appendix A to the Java Logging APIs specification.              </p>
+<p> The XMLFormatter can be used with arbitrary character encodings, but it is recommended that it normally be used with UTF-8. The character encoding can be set on the output Handler.                              </p>       
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.4</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:XMLFormatter-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:XMLFormatter--"></a><a name="XMLFormatter--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>XMLFormatter</h4>
+<pre>public&nbsp;XMLFormatter()</pre>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:format-java.util.logging.LogRecord- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:format-java.util.logging.LogRecord-"></a><a name="format-java.util.logging.LogRecord-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>format</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;format(<a href="../../../java/util/logging/LogRecord.html" title="class in java.util.logging" target="_parent">LogRecord</a>&nbsp;record)</pre>
+<div class="block">Format the given message to XML.<p> This method can be overridden in a subclass. It is recommended to use the <a href="../../../java/util/logging/Formatter.html#formatMessage-java.util.logging.LogRecord-" target="_parent"><code>Formatter.formatMessage(java.util.logging.LogRecord)</code></a> convenience method to localize and format the message field.                        </p>     
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/logging/Formatter.html#format-java.util.logging.LogRecord-" target="_parent">format</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/logging/Formatter.html" title="class in java.util.logging" target="_parent">Formatter</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>record</code> - the log record to be formatted.        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a formatted log record   </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getHead-java.util.logging.Handler- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getHead-java.util.logging.Handler-"></a><a name="getHead-java.util.logging.Handler-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getHead</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getHead(<a href="../../../java/util/logging/Handler.html" title="class in java.util.logging" target="_parent">Handler</a>&nbsp;h)</pre>
+<div class="block">Return the header string for a set of XML formatted records.          </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/logging/Formatter.html#getHead-java.util.logging.Handler-" target="_parent">getHead</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/logging/Formatter.html" title="class in java.util.logging" target="_parent">Formatter</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>h</code> - The target handler (can be null)        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a valid XML string   </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getTail-java.util.logging.Handler- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getTail-java.util.logging.Handler-"></a><a name="getTail-java.util.logging.Handler-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getTail</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getTail(<a href="../../../java/util/logging/Handler.html" title="class in java.util.logging" target="_parent">Handler</a>&nbsp;h)</pre>
+<div class="block">Return the tail string for a set of XML formatted records.          </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/logging/Formatter.html#getTail-java.util.logging.Handler-" target="_parent">getTail</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/logging/Formatter.html" title="class in java.util.logging" target="_parent">Formatter</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>h</code> - The target handler (can be null)        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a valid XML string   </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

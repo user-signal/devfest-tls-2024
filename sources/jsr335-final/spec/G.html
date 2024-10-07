@@ -1,0 +1,803 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part G: Type Inference</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_G_Type_Inference skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part G: Type Inference</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#G18">18</a>&nbsp;- <a href="#G18.1">18.1</a>&nbsp;- <a href="#G18.1.1">18.1.1</a>&nbsp;- <a href="#G18.1.2">18.1.2</a>&nbsp;- <a href="#G18.1.3">18.1.3</a>&nbsp;- <a href="#G18.2">18.2</a>&nbsp;- <a href="#G18.2.1">18.2.1</a>&nbsp;- <a href="#G18.2.1.1">18.2.1.1</a>&nbsp;- <a href="#G18.2.1.2">18.2.1.2</a>&nbsp;- <a href="#G18.2.2">18.2.2</a>&nbsp;- <a href="#G18.2.3">18.2.3</a>&nbsp;- <a href="#G18.2.4">18.2.4</a>&nbsp;- <a href="#G18.2.5">18.2.5</a>&nbsp;- <a href="#G18.3">18.3</a>&nbsp;- <a href="#G18.4">18.4</a>&nbsp;- <a href="#G18.5">18.5</a>&nbsp;- <a href="#G18.5.1">18.5.1</a>&nbsp;- <a href="#G18.5.2">18.5.2</a>&nbsp;- <a href="#G18.5.3">18.5.3</a>&nbsp;- <a href="#G18.5.4">18.5.4</a>&nbsp;- <a href="#G4.10.4">4.10.4</a>&nbsp;- <a href="#G15.12.2.7">15.12.2.7</a>&nbsp;- <a href="#G15.12.2.8">15.12.2.8</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>A variety of compile-time analyses require reasoning about types that are not yet known.  Principal among these are generic method applicability testing and generic method invocation type inference.  In general, we refer to the process of reasoning about unknown types as <i>type inference</i>.
+</p><p>At a high level, type inference consists of <i>reducing</i> compatibility assertions about expressions or types, called <i>constraint formulas</i>, to a set of <i>bounds</i> on <i>inference variables</i>.  For example, given inference variable <em>α</em>, it might be determined that the constraint formula <em>⟨<code style="background-color:inherit;font-size:medium">String[]</code> &lt;: α<code style="background-color:inherit;font-size:medium">[]</code>⟩</em> reduces to the lower bound <em><code style="background-color:inherit;font-size:medium">String</code> &lt;: α</em>.  As bounds are inferred, they are <i>incorporated</i> into a <i>bound set</i>.  Ultimately, this bound set is <i>resolved</i> to produce an instantiation for each of the inference variables.
+</p><p>To infer a generic method's applicability, we assert that the arguments to the method are compatible with their corresponding formal parameter types, and reduce these constraints to a bound set.  We then check that there exists a resolution of the resulting bounds.
+</p><p>To infer the type of a generic method invocation, we re-use the inferred bound set from method applicability testing, augmenting it with the results of asserting the compatibility of the method's return type with its target type.  If any invocation arguments are implicitly-typed lambda expressions or inexact method references, we resolve their targeted parameter types as necessary in order to allow their compatibility constraints to be safely reduced.  We also assert that any exceptions thrown by lambda expression bodies are contained by the <code style="background-color:inherit;font-size:medium">throws</code> clauses of their target function types.  After reduction, we resolve the inference variables and use them as type arguments to determine the invocation type of the method.
+</p><p>Type inference is also used to determine: i) a target functional interface type for a lambda expression that is assigned to a wildcard-parameterized functional interface; and ii) whether an applicable method is more specific than another applicable, generic method.
+</p><p>The following details of reduction are especially noteworthy:
+</p><p>When a generic method invocation or diamond constructor invocation appears as the argument to another invocation, the target type of the nested invocation is the targeted formal parameter type.  If the target type contains inference variables, the inference variables and bounds from the nested invocation are "lifted" into the outer inference analysis, and dependencies between the outer and inner inference variables are inferred.  Ultimately, information from an outermost invocation can be "pushed down" to nested invocations via these dependencies.
+</p><p>When a lambda expression appears as the argument to a generic invocation, and its target type includes inference variables, we proceed by:
+</p>
+<ul><li> Checking that the target type is a functional interface type and deriving a target function type.
+</li><li> If the lambda parameters' types are implicit, ensuring that the target function type has proper types as its parameter types (allowing the lambda body to be type-checked).
+</li><li> If the lambda parameters' types are explicit, asserting that these types match the target type's parameter types.
+</li><li> Asserting that each result expression in the lambda body is compatible with the target type's return type.
+</li></ul>
+<p>Thus, lambda bodies can influence the instantiation of inference variables appearing in the targeted function type's return type, and lambda parameter types, if explicit, can influence the instantiation of inference variables appearing in the targeted function type's parameter types.
+</p><p>A method reference appearing as the argument to a generic invocation is handled in much the same way.
+</p>
+<div id="G18"></div>
+<h3> <span class="mw-headline" id="18_Type_Inference_.5BNew.5D"> 18 Type Inference [New] </span></h3>
+<p>A variety of compile-time analyses require reasoning about types that are not yet known.  Principal among these are generic method applicability testing (<a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>) and generic method invocation type inference (<a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>).  In general, we refer to the process of reasoning about unknown types as <i>type inference</i>.
+</p><p>At a high level, type inference can be decomposed into three processes:
+</p>
+<ul><li> <i>Reduction</i> takes a compatibility assertion about an expression or type, called a <i>constraint formula</i>, and reduces it to a set of <i>bounds</i> on <i>inference variables</i>.  Often, a constraint formula reduces to <i>other</i> constraint formulas, which must be recursively reduced.  A procedure is followed to identify these additional constraint formulas and, ultimately, to express via a bound set the conditions under which the choices for inferred types would render each constraint formula true.
+</li></ul>
+<ul><li> <i>Incorporation</i> maintains a set of inference variable bounds, ensuring that these are consistent as new bounds are added.  Because the bounds on one variable can sometimes impact the possible choices for another variable, this process propagates bounds between such interdependent variables.
+</li></ul>
+<ul><li> <i>Resolution</i> examines the bounds on an inference variable and determines an <i>instantiation</i> that is compatible with those bounds.  It also decides the order in which interdependent inference variables are to be resolved.
+</li></ul>
+<p>These processes interact closely: reduction can trigger incorporation; incorporation may lead to further reduction; and resolution may cause further incorporation.
+</p><p>We elaborate in the following sections.
+</p>
+<ul><li> Section <a href="G.html#G18.1" title="Lambda G" class="mw-redirect">18.1</a> more precisely defines the concepts used as intermediate results and the notation used to express them.
+</li><li> Section <a href="G.html#G18.2" title="Lambda G" class="mw-redirect">18.2</a> describes reduction in detail.
+</li><li> Section <a href="G.html#G18.3" title="Lambda G" class="mw-redirect">18.3</a> describes incorporation in detail.
+</li><li> Section <a href="G.html#G18.4" title="Lambda G" class="mw-redirect">18.4</a> describes resolution in detail.
+</li><li> Section <a href="G.html#G18.5" title="Lambda G" class="mw-redirect">18.5</a> defines how these inference tools are used to solve certain compile-time analysis problems.
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> This section introduces a new chapter to replace the current specification's definition of type argument inference in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.7" class="external text" rel="nofollow">15.12.2.7</a> and <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.8" class="external text" rel="nofollow">15.12.2.8</a>.
+<p>In comparison to JLS 7, important changes to inference include:
+</p>
+<ul><li> Adding support for lambda expressions and method references as method invocation arguments.
+</li><li> Generalizing to define inference in terms of poly expressions, which may not have well-defined types until <i>after</i> inference is complete.  This has the notable effect of improving inference for nested generic method and diamond constructor invocations.
+</li><li> Describing how inference is used to handle wildcard-parameterized functional interface target types and most-specific method analysis.
+</li><li> Clarifying the distinction between invocation applicability testing (which involves only the invocation arguments) and invocation type inference (which incorporates a target type).
+</li><li> Delaying resolution of all inference variables, even those with lower bounds, until invocation type inference, in order to get better results.
+</li><li> Improving inference behavior for interdependent (or self-dependent) variables.
+</li><li> Eliminating bugs and potential sources of confusion.  This revision more carefully and precisely handles the distinction between specific conversion contexts and subtyping, and describes reduction by paralleling the corresponding non-inference relations.  Where there are intentional departures from the non-inference relations, these are explicitly identified as such.
+</li><li> Laying a foundation for future evolution: enhancements to or new applications of inference will be easier to integrate into the specification.
+</li></ul>
+</div></li>
+<li style="margin-bottom:12px;"><div> When reading this material for the first time, section <a href="G.html#G18.1" title="Lambda G" class="mw-redirect">18.1</a> is useful for establishing the proper vocabulary; but then it may be useful for context to skip ahead to <a href="G.html#G18.5" title="Lambda G" class="mw-redirect">18.5</a> and save the details of the algorithm (<a href="G.html#G18.2" title="Lambda G" class="mw-redirect">18.2</a>, <a href="G.html#G18.3" title="Lambda G" class="mw-redirect">18.3</a>, and <a href="G.html#G18.4" title="Lambda G" class="mw-redirect">18.4</a>) for last.
+</div></li></ol></div></blockquote>
+<div id="G18.1"></div>
+<h3> <span class="mw-headline" id="18.1_Concepts_and_Notation_.5BNew.5D"> 18.1 Concepts and Notation [New] </span></h3>
+<p>This section defines <i>inference variables</i>, <i>constraint formulas</i>, and <i>bounds</i>, as the terms will be used throughout this chapter.  It also presents the notation we will use.
+</p>
+<div id="G18.1.1"></div>
+<h3> <span class="mw-headline" id="18.1.1_Inference_Variables_.5BNew.5D"> 18.1.1 Inference Variables [New] </span></h3>
+<p><i>Inference variables</i> are <i>meta-variables</i> for types—that is, they are special names that allow us to reason about types abstractly.  To distinguish them from <i>type variables</i>, we represent inference variables with Greek letters, principally <em>α</em>.
+</p><p>We'll loosely use the term "type" in this chapter to include type-like syntax that contains inference variables.  We use the term <i>proper type</i> to exclude such "types" that mention inference variables.  Assertions that involve inference variables are assertions about every proper type that can be produced by replacing each inference variable with a proper type.
+</p>
+<div id="G18.1.2"></div>
+<h3> <span class="mw-headline" id="18.1.2_Constraint_Formulas_.5BNew.5D"> 18.1.2 Constraint Formulas [New] </span></h3>
+<p><span class="norm-static">
+<i>Constraint formulas</i> are assertions of compatibility or subtyping that may involve inference variables.  The formulas may take one of the following forms:<span class="assertion-id"> [jsr335-18.1.2-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>⟨Expression &rarr; T⟩</em>: An expression is compatible in a loose invocation context with type <em>T</em> (<a href="D.html#D5" title="Lambda D" class="mw-redirect">5</a>).<span class="assertion-id"> [jsr335-18.1.2-10-A]</span></span>
+</li><li> <span class="norm-static"> <em>⟨S &rarr; T⟩</em>: A type <em>S</em> is compatible in a loose invocation context with type <em>T</em> (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>).<span class="assertion-id"> [jsr335-18.1.2-10-B]</span></span>
+</li><li> <span class="norm-static"> <em>⟨S &lt;: T⟩</em>: A reference type <em>S</em> is a subtype of a reference type <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>).<span class="assertion-id"> [jsr335-18.1.2-10-C]</span></span>
+</li><li> <span class="norm-static"> <em>⟨S &lt;= T⟩</em>: A type argument <em>S</em> is contained by a type argument <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.5.1" class="external text" rel="nofollow">4.5.1</a>).<span class="assertion-id"> [jsr335-18.1.2-10-D]</span></span>
+</li><li> <span class="norm-static"> <em>⟨S = T⟩</em>: A reference type <em>S</em> is the same as a reference type <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.3.4" class="external text" rel="nofollow">4.3.4</a>), or a type argument <em>S</em> is the same as type argument <em>T</em>.<span class="assertion-id"> [jsr335-18.1.2-10-E]</span></span>
+</li><li> <span class="norm-static"> <em>⟨LambdaExpression &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T⟩</em>: The checked exceptions thrown by the lambda body are declared by the <code style="background-color:inherit;font-size:medium">throws</code> clause of the function type derived from <em>T</em>.<span class="assertion-id"> [jsr335-18.1.2-10-F]</span></span>
+</li><li> <span class="norm-static"> <em>⟨MethodReference &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T⟩</em>: The checked exceptions thrown by the referenced method are declared by the <code style="background-color:inherit;font-size:medium">throws</code> clause of the function type of <em>T</em>.<span class="assertion-id"> [jsr335-18.1.2-10-F]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div> Examples of constraint formulas:
+<ul><li> From <code style="background-color:inherit;font-size:medium">Collections.singleton("hi")</code>, we have the constraint <blockquote><em>⟨<code style="background-color:inherit;font-size:medium">"hi"</code> &rarr; α⟩</em></blockquote>  Through reduction, this will become the constraint<blockquote><em>⟨<code style="background-color:inherit;font-size:medium">String</code> &lt;: α⟩</em></blockquote>
+</li><li> From <code style="background-color:inherit;font-size:medium">Arrays.asList(1, 2.0)</code>, we have the constraints <blockquote><em>⟨<code style="background-color:inherit;font-size:medium">1</code> &rarr; α⟩</em><br /><em>⟨<code style="background-color:inherit;font-size:medium">2.0</code> &rarr; α⟩</em></blockquote> Through reduction, these will become the constraints <blockquote><em>⟨<code style="background-color:inherit;font-size:medium">int</code> &rarr; α⟩</em><br /><em>⟨<code style="background-color:inherit;font-size:medium">double</code> &rarr; α⟩</em></blockquote> and then <blockquote><em>⟨<code style="background-color:inherit;font-size:medium">Integer</code> &lt;: α⟩</em><br /><em>⟨<code style="background-color:inherit;font-size:medium">Double</code> &lt;: α⟩</em></blockquote>
+</li><li> From the target type of the constructor invocation <code style="background-color:inherit;font-size:medium">List&lt;Thread&gt; lt = new ArrayList&lt;&gt;()</code>, we have the constraint <blockquote><em>⟨<code style="background-color:inherit;font-size:medium">ArrayList&lt;</code>α<code style="background-color:inherit;font-size:medium">&gt;</code> &rarr; <code style="background-color:inherit;font-size:medium">List&lt;Thread&gt;</code>⟩</em></blockquote>  Through reduction, this eventually becomes the constraint <blockquote><em>⟨α &lt;= <code style="background-color:inherit;font-size:medium">Thread</code>⟩</em></blockquote> and then <blockquote><em>⟨α = <code style="background-color:inherit;font-size:medium">Thread</code>⟩</em></blockquote>
+</li></ul>
+</div></blockquote>
+<div id="G18.1.3"></div>
+<h3> <span class="mw-headline" id="18.1.3_Bounds_.5BNew.5D"> 18.1.3 Bounds [New] </span></h3>
+<p><span class="norm-static">
+During the inference process, a set of <i>bounds</i> on inference variables is maintained.  A single bound has one of the following forms:<span class="assertion-id"> [jsr335-18.1.3-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>S = T</em>, where at least one of <em>S</em> or <em>T</em> is an inference variable: <em>S</em> is the same as <em>T</em>.<span class="assertion-id"> [jsr335-18.1.3-10-A]</span></span>
+</li><li> <span class="norm-static"> <em>S &lt;: T</em>, where at least one of <em>S</em> or <em>T</em> is an inference variable: <em>S</em> is a subtype of <em>T</em>.<span class="assertion-id"> [jsr335-18.1.3-10-B]</span></span>
+</li><li> <span class="norm-static"> <em>false</em>: No valid choice of inference variables exists.<span class="assertion-id"> [jsr335-18.1.3-10-C]</span></span>
+</li><li> <span class="norm-static"> <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>α<sub>1</sub>, ..., α<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code>)</em>: The variables <em>α<sub>1</sub></em>, ..., <em>α<sub>n</sub></em> represent the result of capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) applied to <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> (where <em>A<sub>1</sub></em>, ..., <em>A<sub>n</sub></em> may be types or wildcards and may mention inference variables).<span class="assertion-id"> [jsr335-18.1.3-10-D]</span></span>
+</li><li> <span class="norm-static"> <em><code style="background-color:inherit;font-size:medium">throws</code> α</em>: The inference variable <em>α</em> appears in a <code style="background-color:inherit;font-size:medium">throws</code> clause.<span class="assertion-id"> [jsr335-18.1.3-10-E]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A bound is <i>satisfied</i> by an inference variable substitution if, after applying the substitution, the assertion is true.  (The bound <em>false</em> can never be satisfied.)<span class="assertion-id"> [jsr335-18.1.3-20]</span></span>
+</p><p><span class="norm-static">
+Some bounds relate an inference variable to a proper type.  Let <em>T</em> be a proper type.  Given a bound of the form <em>α = T</em> or <em>T = α</em>, we say <em>T</em> as an <i>instantiation</i> of <em>α</em>.  Similarly, given a bound of the form <em>α &lt;: T</em>, we say <em>T</em> is a <i>proper upper bound</i> of <em>α</em>, and given a bound of the form <em>T &lt;: α</em>, we say <em>T</em> is a <i>proper lower bound</i> of <em>α</em>.<span class="assertion-id"> [jsr335-18.1.3-30]</span></span>
+</p><p><span class="norm-static">
+Other bounds relate two inference variables, or an inference variable to a type that contains inference variables.  Such bounds, of the form <em>S = T</em> or <em>S &lt;: T</em>, are called <i>dependencies</i>.<span class="assertion-id"> [jsr335-18.1.3-40]</span></span>
+</p><p>A bound of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>α<sub>1</sub>, ..., α<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code>)</em> indicates that <em>α<sub>1</sub></em>, ..., <em>α<sub>n</sub></em> are placeholders for the results of capture.  This is necessary because capture conversion can only be performed on a proper type, and the inference variables in <em>A<sub>1</sub></em>, ..., <em>A<sub>n</sub></em> may not yet be resolved.
+</p><p>A bound of the form <em><code style="background-color:inherit;font-size:medium">throws</code> α</em> is purely informational: it directs resolution to optimize the instantiation of <em>α</em> so that, if possible, it is not a checked exception.
+</p><p>An important intermediate result of inference is a <i>bound set</i>.  It is sometimes convenient to refer to an <i>empty</i> bound set with the literal <em>true</em>; this is merely out of convenience, and the two are interchangeable.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div> Examples of bound sets:
+<ul><li> <em>{ α = <code style="background-color:inherit;font-size:medium">String</code> }</em> contains a single bound, instantiating <em>α</em> as <code style="background-color:inherit;font-size:medium">String</code>.
+</li><li> <em>{ <code style="background-color:inherit;font-size:medium">Integer</code> &lt;: α, <code style="background-color:inherit;font-size:medium">Double</code> &lt;: α, α &lt;: <code style="background-color:inherit;font-size:medium">Object</code> }</em> describes two proper lower bounds and one proper upper bound for <em>α</em>.
+</li><li> <em>{ α &lt;: <code style="background-color:inherit;font-size:medium">Iterable&lt;?&gt;</code>, β &lt;: <code style="background-color:inherit;font-size:medium">Object</code>, α &lt;: <code style="background-color:inherit;font-size:medium">List&lt;</code>β<code style="background-color:inherit;font-size:medium">&gt;</code> }</em> describes a proper upper bound for each of <em>α</em> and <em>β</em>, along with a dependency between them.
+</li><li> <em>{ }</em> contains no bounds nor dependencies, and can be referred to as <em>true</em>.
+</li><li> <em>{ false }</em> expresses the fact that no satisfactory instantiation exists.
+</li></ul>
+</div></blockquote>
+<p><span class="norm-static">
+When inference begins, a bound set is typically generated from a list of type parameter declarations <em>P<sub>1</sub>, ..., P<sub>p</sub></em> and associated inference variables <em>α<sub>1</sub>, ..., α<sub>p</sub></em>.  Such a bound set is constructed as follows.  For each <em>l</em> (<em>1 ≤ l ≤ p</em>):<span class="assertion-id"> [jsr335-18.1.4-80]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>P<sub>l</sub></em> has no <i>TypeBound</i>, the bound <em>α<sub>l</sub> &lt;: <code style="background-color:inherit;font-size:medium">Object</code></em> appears in the set.<span class="assertion-id"> [jsr335-18.1.4-80-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, for each type <em>T</em> delimited by <code style="background-color:inherit;font-size:medium">&amp;</code> in the <i>TypeBound</i>, the bound <em>α<sub>l</sub> &lt;: T [P<sub>1</sub>:=α<sub>1</sub>, ..., P<sub>p</sub>:=α<sub>p</sub>]</em> appears in the set; if this results in no proper upper bounds for <em>α<sub>l</sub></em> (only dependencies), then the bound <em>α<sub>l</sub> &lt;: <code style="background-color:inherit;font-size:medium">Object</code></em> also appears in the set.<span class="assertion-id"> [jsr335-18.1.4-80-B]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The strategy described here of decomposing a <i>TypeBound</i> into individual types separated by <code style="background-color:inherit;font-size:medium">&amp;</code>, allowing some components to be treated as proper bounds and others as dependencies, is a slight enhancement to the JLS 7 behavior, which treats the bound as a monolithic intersection type.</div></blockquote>
+<div id="G18.2"></div>
+<h3> <span class="mw-headline" id="18.2_Reduction_.5BNew.5D"> 18.2 Reduction [New] </span></h3>
+<p><i>Reduction</i> is the process by which a set of constraint formulas (<a href="G.html#G18.1.2" title="Lambda G" class="mw-redirect">18.1.2</a>) is simplified to produce a bound set (<a href="G.html#G18.1.3" title="Lambda G" class="mw-redirect">18.1.3</a>).
+</p><p>Each constraint formula is considered in turn.  A "current" bound set is initially empty.  The rules in this section outline how the formula is reduced to one or both of:
+</p>
+<ul><li> A bound or bound set, which is to be incorporated with the current bound set
+</li><li> Further constraint formulas, which are to be reduced recursively
+</li></ul>
+<p>Reduction completes when no further constraint formulas remain to be reduced.
+</p><p>The results of a reduction step are always <i>soundness-preserving</i>: if an inference variable instantiation satisfies the reduced constraints and bounds, it will also satisfy the original constraint.  On the other hand, reduction is not <i>completeness-preserving</i>: there may exist inference variable instantiations that satisfy the original constraint but <i>do not</i> satisfy a reduced constraint or bound.  This is due to inherent limitations of the algorithm, along with a desire to avoid undue complexity.  One effect is that there are expressions for which type argument inference fails to find a solution, but that can be well-typed if the programmer explicitly inserts appropriate types.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>The reduction rules defined in JLS 7 are neither soundness- nor completeness-preserving.  The reduction rules described here improve upon this by guaranteeing soundness and reducing the set of invocations which inference is unable to handle.  The rules are also, of course, expanded to support the new language features.
+</p><p>Unsoundness in JLS 7 arises, among other things, out of the fact that <em>false</em> and <em>true</em> results are treated interchangeably—neither has any impact on the current bound set.  It is not a fundamental type safety problem, because the results of inference are checked for validity before an expression is considered well-typed.  But it has the unfortunate effect of covering up bugs: if the spec misses an important constraint, there's not a hard line that says that's "wrong."  The claim of soundness here raises the bar: if the rules miss a constraint that is necessary to guarantee that the initial constraint formula is true, that is a failing of the rules, and it must be corrected to make the spec internally consistent.
+</p>
+In addition, a soundness-preserving approach avoids the potential confusion that could arise if, say, inference unsoundly ignored certain difficult-to-analyze lambda expression arguments.  (The effect might be that inference gets "lucky" in guessing valid type arguments in one scenario, only to fail when a seemingly unrelated adjustment changes the results.)</div></blockquote>
+<div id="G18.2.1"></div>
+<h3> <span class="mw-headline" id="18.2.1_Expression_Compatibility_Constraints_.5BNew.5D"> 18.2.1 Expression Compatibility Constraints [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨Expression &rarr; T⟩</em> is reduced as follows:<span class="assertion-id"> [jsr335-18.2.1-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is a proper type, the constraint reduces to <em>true</em> if the expression is compatible in a loose invocation context with <em>T</em> (<a href="D.html#D5" title="Lambda D" class="mw-redirect">5</a>), and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.2.1-10-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the expression is a standalone expression (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) of type <em>S</em>, the constraint reduces to <em>⟨S &rarr; T⟩</em>.<span class="assertion-id"> [jsr335-18.2.1-10-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the expression is a poly expression (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>).  The result depends on the form of the expression:<span class="assertion-id"> [jsr335-18.2.1-10-C]</span></span>
+<ul><li> <span class="norm-static"> If the expression is a parenthesized expression of the form <em><code style="background-color:inherit;font-size:medium">(</code> Expression' <code style="background-color:inherit;font-size:medium">)</code></em>, the constraint reduces to <em>⟨Expression' &rarr; T⟩</em>.<span class="assertion-id"> [jsr335-18.2.1-10-C1]</span></span>
+</li><li> <span class="norm-static"> If the expression is a class instance creation expression or a method invocation, the constraint reduces to the bound set <em>B<sub>3</sub></em> which would be used to determine the expression's invocation type when targeting <em>T</em>, as defined in <a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a> (in the case of a class instance creation, the corresponding "method" used for inference is defined in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.3" class="external text" rel="nofollow">15.9.3</a>).<span class="assertion-id"> [jsr335-18.2.1-10-C2]</span></span><p>This bound set may contain new inference variables, as well as dependencies between these new variables and the inference variables in <em>T</em>.</p>
+</li><li> <span class="norm-static"> If the expression is a conditional operator expression of the form <em>Expression<sub>1</sub> <code style="background-color:inherit;font-size:medium">?</code> Expression<sub>2</sub> <code style="background-color:inherit;font-size:medium">:</code> Expression<sub>3</sub></em>, the constraint reduces to two constraint formulas, <em>⟨Expression<sub>2</sub> &rarr; T⟩</em> and <em>⟨Expression<sub>3</sub> &rarr; T⟩</em>.<span class="assertion-id"> [jsr335-18.2.1-10-C3]</span></span>
+</li><li> <span class="norm-static"> If the expression is a lambda expression, the result is defined in section <a href="G.html#G18.2.1.1" title="Lambda G" class="mw-redirect">18.2.1.1</a>.<span class="assertion-id"> [jsr335-18.2.1-10-C4]</span></span>
+</li><li> <span class="norm-static"> If the expression is a method reference, the result is defined in section <a href="G.html#G18.2.1.2" title="Lambda G" class="mw-redirect">18.2.1.2</a>.<span class="assertion-id"> [jsr335-18.2.1-10-C5]</span></span>
+</li></ul>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> By treating nested generic method invocations as poly expressions, we improve the behavior of inference for nested invocations.  For example, the following is illegal in Java 7 but legal in Java 8:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">ProcessBuilder b = new ProcessBuilder(Collections.emptyList());
+// Constructor expects a List&lt;String&gt;</pre>
+<p>When <i>both</i> the outer and the nested invocation require inference, the problem is more difficult.  For example:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">List&lt;String&gt; ls = new ArrayList&lt;&gt;(Collections.emptyList());</pre>
+<p>Our approach is to "lift" the bounds inferred for the nested invocation (simply <em>{ α &lt;: <code style="background-color:inherit;font-size:medium">Object</code> }</em> in the case of <code style="background-color:inherit;font-size:medium">emptyList</code> here) into the outer inference process (in this case, trying to infer <em>β</em> where the constructor is for type <em><code style="background-color:inherit;font-size:medium">ArrayList&lt;</code>β<code style="background-color:inherit;font-size:medium">&gt;</code></em>).  We also infer dependencies between the nested inference variables and the outer inference variables (the constraint <em>⟨<code style="background-color:inherit;font-size:medium">List&lt;</code>α<code style="background-color:inherit;font-size:medium">&gt;</code> &rarr; <code style="background-color:inherit;font-size:medium">Collection&lt;</code>β<code style="background-color:inherit;font-size:medium">&gt;</code>⟩</em> would reduce to the dependency <em>α = β</em>).  In this way, resolution of the inference variables in the nested invocation can wait until additional information can be inferred from the outer invocation (based on the assignment target, <em>β = <code style="background-color:inherit;font-size:medium">String</code></em>).
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> An alternative strategy for handling nested invocations was considered and rejected: in certain cases, the inference variables of the outer call are resolved before considering the nested call; typing of the nested call is delayed until a proper target type can be provided.  In other cases, the nested call is treated as a standalone invocation.
+<p>This has the advantage of avoiding the extra complexity involved with reduction producing new inference variables and dependencies.  But there are two problems with this approach:
+</p>
+<ul><li> It is not powerful enough to handle situations in which information from both the outer and inner calls needs to be synthesized in order to choose an appropriate inference variable instantiation.
+</li><li> There's not an obvious rule for choosing whether the outer or the inner call should be resolved first, and so the resulting behavior is very ad hoc.
+</li></ul>
+</div></li></ol></div></blockquote>
+<div id="G18.2.1.1"></div>
+<h3> <span class="mw-headline" id="18.2.1.1_Lambda_Expression_Compatibility_.5BNew.5D"> 18.2.1.1 Lambda Expression Compatibility [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨LambdaExpression &rarr; T⟩</em>, where <em>T</em> mentions at least one inference variable, is reduced as follows, following the compatibility rules outlined in <a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>.<span class="assertion-id"> [jsr335-18.2.1.2-10]</span></span>
+</p><p><span class="norm-static">
+If <em>T</em> is not a functional interface type (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>), the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-14]</span></span>
+</p><p><span class="norm-static">
+Otherwise, a ground target type, <em>T'</em>, must be derived from <em>T</em>, as described in <a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>.  If <a href="G.html#G18.5.3" title="Lambda G" class="mw-redirect">18.5.3</a> is used to derive a functional interface parameterization, then the test that <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A'<sub>1</sub>, ..., A'<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> is a subtype of <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> is not performed (this is instead asserted with a constraint formula below).  If no valid type can be found, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-20]</span></span>
+</p><p><span class="norm-static">
+Otherwise, the congruence of the <em>LambdaExpression</em> with the function type of <em>T'</em> is asserted as follows:<span class="assertion-id"> [jsr335-18.2.1.2-30]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the number of lambda parameters differs from the number of parameter types of the function type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-A]</span></span>
+</li><li> <span class="norm-static"> If the lambda expression is implicitly-typed and one or more of the function type's parameter types is not a proper type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-H]</span></span>
+</li><li> <span class="norm-static"> If the function type's return type is <code style="background-color:inherit;font-size:medium">void</code> and the lambda body is neither a statement expression nor a void-compatible block, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-D]</span></span>
+</li><li> <span class="norm-static"> If the function type's return type is not <code style="background-color:inherit;font-size:medium">void</code> and the lambda body is a block that is not value-compatible, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-E]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to all of the following simplified constraints:<span class="assertion-id"> [jsr335-18.2.1.2-30-F]</span></span>
+<ul><li> <span class="norm-static"> If the lambda parameters have explicitly-declared types <em>F<sub>1</sub>, ..., F<sub>n</sub></em> and the targeted function type has parameter types <em>G<sub>1</sub>, ..., G<sub>n</sub></em>, then for all <em>i</em>, <em>1 ≤ i ≤ n</em>, <em>⟨F<sub>i</sub> = G<sub>i</sub>⟩</em>; in addition, <em>⟨T' &lt;: T⟩</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-F1]</span></span>
+</li><li> <span class="norm-static"> If the function type's return type is a (non-<code style="background-color:inherit;font-size:medium">void</code>) type <em>R</em>, assume the lambda's parameter types are the same as the function type's parameter types.  Then:<span class="assertion-id"> [jsr335-18.2.1.2-30-F2]</span></span>
+<ul><li> <span class="norm-static"> If <em>R</em> is a proper type, and if the lambda body or some result expression in the lambda body is not compatible in an assignment context with <em>R</em>, <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-F21]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R</em> is not a proper type, then where the lambda body has the form <em>Expression</em>, the constraint <em>⟨Expression &rarr; R⟩</em>; or where the lambda body is a block with result expressions <em>Expression<sub>1</sub>, ..., Expression<sub>m</sub></em>, for all <em>i</em>, <em>1 ≤ i ≤ m</em>, <em>⟨Expression<sub>i</sub> &rarr; R⟩</em>.<span class="assertion-id"> [jsr335-18.2.1.2-30-F22]</span></span>
+</li></ul>
+</li></ul>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The key piece of information to derive from a compatibility constraint involving a lambda expression is the set of bounds on inference variables appearing in the target function type's return type.  This is crucial, because functional interfaces are often generic, and many methods operating on these types are generic, too.
+<p>In the simplest case, a lambda expression may simply provide a lower bound for an inference variable:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+&lt;T&gt; List&lt;T&gt; makeThree(Factory&lt;T&gt; factory) { ... }
+String s = makeThree(() -&gt; &quot;abc&quot;).get(2);
+</pre>
+<p>In more complex cases, a result expression may be a poly expression—perhaps even another lambda expression—and so the inference variable might be passed through multiple constraint formulas with different target types before a bound is produced.
+</p><p>Most of the work described in this section precedes assertions about the result expressions; its purpose is to derive the lambda expression's function type, and to check for expressions that are clearly disqualified from compatibility.
+</p><p>We do <i>not</i> attempt to produce bounds on inference variables that appear in the target function type's <code style="background-color:inherit;font-size:medium">throws</code> clause.  This is because exception containment is not part of compatibility (<a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>)—in particular, it must not influence method applicability (<a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>).  However, we <i>do</i> get bounds on these variables later, because invocation type inference (<a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>) produces exception containment constraint formulas (<a href="G.html#G18.2.5" title="Lambda G" class="mw-redirect">18.2.5</a>).
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> If the target type is an inference variable, or if the target type's parameter types contain inference variables, we produce <em>false</em>.  During invocation type inference (<a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>), extra substitutions are performed in order to instantiate these inference variables, thus avoiding this scenario.  (In other words, reduction will, in practice, never be "invoked" with a target type of one of these forms.)
+</div></li>
+<li style="margin-bottom:12px;"><div> The result expressions of a lambda expression are required to be compatible in an <i>assignment</i> context with the target return type (see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.27.3" class="external text" rel="nofollow">15.27.3</a>).  Consider a targeted return type, <em>R</em>.  If <em>R</em> is a proper type (e.g., <code style="background-color:inherit;font-size:medium">Byte</code> derived from <code style="background-color:inherit;font-size:medium">Function&lt;<em>α</em>,Byte&gt;</code>), assignability is easy enough to test, and we do so.  If <em>R</em> is <i>not</i> a proper type (e.g., <em>α</em> derived from <code style="background-color:inherit;font-size:medium">Function&lt;String,<em>α</em>&gt;</code>), we make the simplifying assumption that <i>loose invocation</i> compatibility will be sufficient.
+<p>The difference between assignment compatibility and loose invocation compatibility is that assignment allows narrowing of constant expressions (e.g., <code style="background-color:inherit;font-size:medium">Byte b = 100</code>).  So this simplifying assumption is not completeness-preserving: given target return type <em>α</em> and an integer literal return expression, <code style="background-color:inherit;font-size:medium">100</code>, it is possible that <em>α</em> could be instantiated to <code style="background-color:inherit;font-size:medium">Byte</code>; however, reduction will not produce such a bound.
+</p>
+</div></li></ol></div></blockquote>
+<div id="G18.2.1.2"></div>
+<h3> <span class="mw-headline" id="18.2.1.2_Method_Reference_Compatibility_.5BNew.5D"> 18.2.1.2 Method Reference Compatibility [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨MethodReference &rarr; T⟩</em>, where <em>T</em> mentions at least one inference variable, is reduced as follows, following the compatibility rules outlined in <a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>.<span class="assertion-id"> [jsr335-18.2.1.3-10]</span></span>
+</p><p><span class="norm-static">
+If <em>T</em> is not a functional interface type (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>), or if <em>T</em> <i>is</i> a functional interface type but does not have a function type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.3-12]</span></span>
+</p><p><span class="norm-static">
+Otherwise, if there does not exist a potentially-applicable method for the method reference when targeting <em>T</em> (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>), the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.3-20]</span></span>
+</p><p><span class="norm-static">
+Otherwise, there are two cases.  If the method reference is <i>exact</i> (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>), then let <em>P<sub>1</sub>, ..., P<sub>n</sub></em> be the parameter types of the function type of <em>T</em>; let <em>P'<sub>1</sub>, ..., P'<sub>k</sub></em> be the parameter types of the potentially-applicable method.  The compatibility constraint reduces to a new set of constraints, as follows:<span class="assertion-id"> [jsr335-18.2.1.3-30]</span></span>
+</p>
+<ul><li> <span class="norm-static"> For the special case in which <em>n = k+1</em> (that is, the parameter of type <em>P<sub>1</sub></em> is to act as the target reference of the invocation), <em>⟨P<sub>1</sub> &lt;: ReferenceType⟩</em> and, for all <em>i</em>, <em>2 ≤ i ≤ n</em>, <em>⟨P<sub>i</sub> &rarr; P'<sub>i-1</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.2.1.3-30-A]</span></span>
+</li><li> <span class="norm-static"> In all other cases, <em>n = k</em>.  The constraints include, for all <em>i</em>, <em>1 ≤ i ≤ n</em>, <em>⟨P<sub>i</sub> &rarr; P'<sub>i</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.2.1.3-30-B]</span></span>
+</li><li> <span class="norm-static"> If the function type's return type is not <code style="background-color:inherit;font-size:medium">void</code>, let <em>R</em> be this type.  Then if the return type of the potentially-applicable compile-time declaration is <code style="background-color:inherit;font-size:medium">void</code>, the constraint reduces to <em>false</em>.  Otherwise, where <em>R'</em> is the result of applying capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) to the return type of the potentially-applicable compile-time declaration, <em>⟨R' &rarr; R⟩</em>.<span class="assertion-id"> [jsr335-18.2.1.3-30-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If, instead, the method reference is <i>inexact</i> (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>), then if one or more of the function type's parameter types is not a proper type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.3-35]</span></span>
+</p><p><span class="norm-static">
+Otherwise, a search for a compile-time declaration is performed, as defined in <a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>.  If there does not exist a compile-time declaration for the method reference, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.1.3-16]</span></span>
+</p><p><span class="norm-static">
+If a compile-time declaration can be found then there are three cases:<span class="assertion-id"> [jsr335-18.2.1.3-40]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the return type of the function type is <code style="background-color:inherit;font-size:medium">void</code>, the constraint reduces to is <em>true</em>.<span class="assertion-id"> [jsr335-18.2.1.3-40-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if i) the method reference elides <em>NonWildTypeArguments</em>, ii) the compile-time declaration is a generic method, and iii) the return type of the compile-time declaration mentions at least one of the method's type parameters; then the constraint reduces to the bound set <em>B<sub>3</sub></em> which would be used to determine the method reference's invocation type when targeting the return type of the function type, as defined in <a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>.<span class="assertion-id"> [jsr335-18.2.1.3-40-C]</span></span><p>This bound set may contain new inference variables, as well as dependencies between these new variables and the inference variables in <em>T</em>.</p>
+</li><li> <span class="norm-static"> Otherwise, let <em>R</em> be the return type of the function type, and let <em>R'</em> be the result of applying capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) to the return type of the invocation type (<a href="F.html#F15.12.2.6" title="Lambda F" class="mw-redirect">15.12.2.6</a>) of the chosen declaration.  If <em>R'</em> is <code style="background-color:inherit;font-size:medium">void</code>, the constraint reduces to <em>false</em>; otherwise, the constraint reduces to <em>⟨R' &rarr; R⟩</em>.<span class="assertion-id"> [jsr335-18.2.1.3-40-B]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The strategy used to determine a return type for a generic referenced method follows the same pattern as for generic method invocations (<a href="G.html#G18.2.1" title="Lambda G" class="mw-redirect">18.2.1</a>).  This may involve "lifting" bounds into the outer context and inferring dependencies between the two sets of inference variables.</div></blockquote>
+<div id="G18.2.2"></div>
+<h3> <span class="mw-headline" id="18.2.2_Type_Compatibility_Constraints_.5BNew.5D"> 18.2.2 Type Compatibility Constraints [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨S &rarr; T⟩</em> is reduced as follows:<span class="assertion-id"> [jsr335-18.2.2-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>S</em> and <em>T</em> are proper types, the constraint reduces to <em>true</em> if <em>S</em> is compatible in a loose invocation context with <em>T</em> (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>), and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.2.2-10-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>S</em> is a primitive type, let <em>S'</em> be the result of applying boxing conversion (<a href="G.html#G5.1.7" title="Lambda G" class="mw-redirect">5.1.7</a>) to <em>S</em>.  Then the constraint reduces to <em>⟨S' &rarr; T⟩</em>.<span class="assertion-id"> [jsr335-18.2.2-10-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> is a primitive type, let <em>T'</em> be the result of applying boxing conversion (<a href="G.html#G5.1.7" title="Lambda G" class="mw-redirect">5.1.7</a>) to <em>T</em>.  Then the constraint reduces to <em>⟨S = T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.2-10-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> is a parameterized type of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>T<sub>1</sub>, ..., T<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, and there exists no type of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code></em> that is a supertype (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>) of <em>S</em>, but the raw type <em>G</em> is a supertype of <em>S</em>, then the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.2-10-E]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> is an array type of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>T<sub>1</sub>, ..., T<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code><code style="background-color:inherit;font-size:medium">[]</code><sup>k</sup></em>, and there exists no type of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code><code style="background-color:inherit;font-size:medium">[]</code><sup>k</sup></em> that is a supertype of <em>S</em>, but the raw type <em>G<code style="background-color:inherit;font-size:medium">[]</code><sup>k</sup></em> is a supertype of <em>S</em>, then the constraint reduces to <em>true</em>.  (The notation <em><code style="background-color:inherit;font-size:medium">[]</code><sup>k</sup></em> indicates an array type of <em>k</em> dimensions.)<span class="assertion-id"> [jsr335-18.2.2-10-F]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to <em>⟨S &lt;: T⟩</em>.<span class="assertion-id"> [jsr335-18.2.2-10-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The fourth and fifth cases are considered uses of unchecked conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.9" class="external text" rel="nofollow">5.1.9</a>).  These, along with any use of unchecked conversion in the first case, may result in unchecked warnings, and may influence a method's invocation type (<a href="F.html#F15.12.2.6" title="Lambda F" class="mw-redirect">15.12.2.6</a>).<span class="assertion-id"> [jsr335-18.2.2-12]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> Boxing <em>T</em> to <em>T'</em> is not completeness-preserving: for example, if <em>T</em> were <code style="background-color:inherit;font-size:medium">long</code>, <em>S</em> might be instantiated to <code style="background-color:inherit;font-size:medium">Integer</code>, which is not a subtype of <code style="background-color:inherit;font-size:medium">Long</code>, but could be unboxed and then widened to <code style="background-color:inherit;font-size:medium">long</code>.  We avoid this problem in most cases by giving special treatment to inference-variable return types that we know are already constrained to be certain boxed primitive types.  See <a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>.
+</div></li>
+<li style="margin-bottom:12px;"><div> Similarly, the treatment of unchecked conversion sacrifices completeness in cases in which <em>T</em> is not a parameterized type (for example, if <em>T</em> is an inference variable).  It is not usually clear in such situations whether the unchecked conversion is necessary or not.  Since unchecked conversions introduce unchecked warnings, inference prefers to avoid them unless it is clearly necessary.
+</div></li></ol></div></blockquote>
+<div id="G18.2.3"></div>
+<h3> <span class="mw-headline" id="18.2.3_Subtyping_Constraints_.5BNew.5D"> 18.2.3 Subtyping Constraints [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨S &lt;: T⟩</em> is reduced as follows:<span class="assertion-id"> [jsr335-18.2.3-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>S</em> and <em>T</em> are proper types, the constraint reduces to <em>true</em> if <em>S</em> is a subtype of <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>), and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.2.3-10-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>S</em> is the null type, the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.3-10-D]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> is the null type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E6]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>S</em> is an inference variable, <em>α</em>, the constraint reduces to the bound <em>α &lt;: T</em>.<span class="assertion-id"> [jsr335-18.2.3-10-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> is an inference variable, <em>α</em>, the constraint reduces to the bound <em>S &lt;: α</em>.<span class="assertion-id"> [jsr335-18.2.3-10-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint is reduced according to the form of <em>T</em>:<span class="assertion-id"> [jsr335-18.2.3-10-E]</span></span>
+<ul><li> <span class="norm-static"> If <em>T</em> is a parameterized class or interface type, or an inner class type of a parameterized class or interface type (directly or indirectly), let <em>A<sub>1</sub>, ..., A<sub>n</sub></em> be the type arguments appearing in <em>T</em>; among the supertypes (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>) of <em>S</em>, a corresponding class or interface type is identified, with type arguments <em>B<sub>1</sub>, ..., B<sub>n</sub></em>.  If no such type exists, the constraint reduces to <em>false</em>.  Otherwise, the constraint reduces to the following new constraints: for all <em>i</em>, <em>1 ≤ i ≤ n</em>, <em>⟨B<sub>i</sub> &lt;= A<sub>i</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E2]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is any other class or interface type, then the constraint reduces to <em>true</em> if <em>T</em> is among the supertypes of <em>S</em>, and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.2.3-10-E1]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is an array type, <em>T'<code style="background-color:inherit;font-size:medium">[]</code></em>, then among the supertypes of <em>S</em> that are array types, a most-specific type is identified: <em>S'<code style="background-color:inherit;font-size:medium">[]</code></em> (this may be <em>S</em> itself).  If no such array type exists, the constraint reduces to <em>false</em>.  Otherwise:<span class="assertion-id"> [jsr335-18.2.3-10-E3]</span></span>
+<ul><li> <span class="norm-static"> If neither <em>S'</em> nor <em>T'</em> is a primitive type, the constraint reduces to <em>⟨S' &lt;: T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E31]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to <em>true</em> if <em>S'</em> and <em>T'</em> are the same primitive type, and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.2.3-10-E32]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>T</em> is a type variable, there are three cases:<span class="assertion-id"> [jsr335-18.2.3-10-E4]</span></span>
+<ul><li> <span class="norm-static"> If <em>S</em> is an intersection type of which <em>T</em> is an element, the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E41]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> has a lower bound, <em>B</em>, the constraint reduces to <em>⟨S &lt;: B⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E42]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E43]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>T</em> is an intersection type, <em>I<sub>1</sub><code style="background-color:inherit;font-size:medium"> &amp; </code>...<code style="background-color:inherit;font-size:medium"> &amp; </code>I<sub>n</sub></em>, the constraint reduces to the following new constraints: for all <em>i</em>, <em>1 ≤ i ≤ n</em>, <em>⟨S &lt;: I<sub>i</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-10-E5]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨S &lt;= T⟩</em>, where <em>S</em> and <em>T</em> are type arguments (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.5.1" class="external text" rel="nofollow">4.5.1</a>), is reduced as follows:<span class="assertion-id"> [jsr335-18.2.3-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is a type:<span class="assertion-id"> [jsr335-18.2.3-20-A]</span></span>
+<ul><li> <span class="norm-static"> If <em>S</em> is a type, the constraint reduces to <em>⟨S = T⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-A1]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> is a wildcard, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.3-20-A2]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>T</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">?</code></em>, the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.3-20-B]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">? extends </code>T'</em>:<span class="assertion-id"> [jsr335-18.2.3-20-C]</span></span>
+<ul><li> <span class="norm-static"> If <em>S</em> is a type, the constraint reduces to <em>⟨S &lt;: T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-C1]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">?</code></em>, the constraint reduces to <em>⟨<code style="background-color:inherit;font-size:medium">Object</code> &lt;: T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-C4]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">? extends </code>S'</em>, the constraint reduces to <em>⟨S' &lt;: T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-C2]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">? super </code>S'</em>, the constraint reduces to <em>⟨<code style="background-color:inherit;font-size:medium">Object</code> = T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-C3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>T</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">? super </code>T'</em>:<span class="assertion-id"> [jsr335-18.2.3-20-D]</span></span>
+<ul><li> <span class="norm-static"> If <em>S</em> is a type, the constraint reduces to <em>⟨T' &lt;: S⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-D1]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> is a wildcard of the form <em><code style="background-color:inherit;font-size:medium">? super </code>S'</em>, the constraint reduces to <em>⟨T' &lt;: S'⟩</em>.<span class="assertion-id"> [jsr335-18.2.3-20-D2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.3-20-D3]</span></span>
+</li></ul>
+</li></ul>
+<div id="G18.2.4"></div>
+<h3> <span class="mw-headline" id="18.2.4_Type_Equality_Constraints_.5BNew.5D"> 18.2.4 Type Equality Constraints [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨S = T⟩</em>, where <em>S</em> and <em>T</em> are types, is reduced as follows:<span class="assertion-id"> [jsr335-18.2.4-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>S</em> and <em>T</em> are proper types, the constraint reduces to <em>true</em> if <em>S</em> is the same as <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.3.4" class="external text" rel="nofollow">4.3.4</a>), and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.2.4-10-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>S</em> is an inference variable, <em>α</em>, the constraint reduces to the bound <em>α = T</em>.<span class="assertion-id"> [jsr335-18.2.4-10-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>T</em> is an inference variable, <em>α</em>, the constraint reduces to the bound <em>S = α</em>.<span class="assertion-id"> [jsr335-18.2.4-10-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>S</em> and <em>T</em> are class or interface types with the same erasure, where <em>S</em> has type arguments <em>B<sub>1</sub>, ..., B<sub>n</sub></em> and <em>T</em> has type arguments <em>A<sub>1</sub>, ..., A<sub>n</sub></em>, the constraint reduces to the following new constraints: for all <em>i</em>, <em>1 ≤ i ≤ n</em>, <em>⟨B<sub>i</sub> = A<sub>i</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.2.4-10-D]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>S</em> and <em>T</em> are array types, <em>S'<code style="background-color:inherit;font-size:medium">[]</code></em> and <em>T'<code style="background-color:inherit;font-size:medium">[]</code></em>, the constraint reduces to <em>⟨S' = T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.4-10-E]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.4-10-G]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A constraint formula of the form <em>⟨S = T⟩</em>, where <em>S</em> and <em>T</em> are type arguments (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.5.1" class="external text" rel="nofollow">4.5.1</a>), is reduced as follows:<span class="assertion-id"> [jsr335-18.2.4-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>S</em> and <em>T</em> are types, the constraint is reduced as described above.<span class="assertion-id"> [jsr335-18.2.4-20-A]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> has the form <em><code style="background-color:inherit;font-size:medium">?</code></em> and <em>T</em> has the form <em><code style="background-color:inherit;font-size:medium">?</code></em>, the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.4-20-B]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> has the form <em><code style="background-color:inherit;font-size:medium">?</code></em> and <em>T</em> has the form <em><code style="background-color:inherit;font-size:medium">? extends </code>T'</em>, the constraint reduces to <em>⟨<code style="background-color:inherit;font-size:medium">Object</code> = T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.4-20-F]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> has the form <em><code style="background-color:inherit;font-size:medium">? extends </code>S'</em> and <em>T</em> has the form <em><code style="background-color:inherit;font-size:medium">?</code></em>, the constraint reduces to <em>⟨S' = <code style="background-color:inherit;font-size:medium">Object</code>⟩</em>.<span class="assertion-id"> [jsr335-18.2.4-20-G]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> has the form <em><code style="background-color:inherit;font-size:medium">? extends </code>S'</em> and <em>T</em> has the form <em><code style="background-color:inherit;font-size:medium">? extends </code>T'</em>, the constraint reduces to <em>⟨S' = T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.4-20-C]</span></span>
+</li><li> <span class="norm-static"> If <em>S</em> has the form <em><code style="background-color:inherit;font-size:medium">? super </code>S'</em> and <em>T</em> has the form <em><code style="background-color:inherit;font-size:medium">? super </code>T'</em>, the constraint reduces to <em>⟨S' = T'⟩</em>.<span class="assertion-id"> [jsr335-18.2.4-20-D]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.4-20-E]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+Note that we do not address intersection types here, because it is impossible for reduction to encounter an intersection type that is not a proper type.</div></blockquote>
+<div id="G18.2.5"></div>
+<h3> <span class="mw-headline" id="18.2.5_Checked_Exception_Constraints_.5BNew.5D"> 18.2.5 Checked Exception Constraints [New] </span></h3>
+<p><span class="norm-static">
+A constraint formula of the form <em>LambdaExpression &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T</em> is reduced as follows:<span class="assertion-id"> [jsr335-18.2.5-14]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is not a functional interface type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.5-14-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, a target function type for the expression must be determined, as described in <a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>.  If no valid function type can be found, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.5-14-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the lambda expression is implicitly-typed and one or more of the function type's parameter types is not a proper type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.5-14-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the function type's return type is neither <code style="background-color:inherit;font-size:medium">void</code> nor a proper type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.5-14-C2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, let <em>E<sub>1</sub>, ..., E<sub>n</sub></em> be the types in the function type's <code style="background-color:inherit;font-size:medium">throws</code> clause that are <i>not</i> proper types.  If the <em>LambdaExpression</em> is implicitly-typed, let the expression's parameter types be the function type's parameter types; if the lambda body is a poly expression or a block containing a poly result expression, let the targeted return type by the function type's return type.  Then let <em>E'<sub>1</sub>, ..., E'<sub>m</sub></em> be the checked exceptions that the lambda body can throw (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-11.html#jls-11.2" class="external text" rel="nofollow">11.2</a>).<span class="assertion-id"> [jsr335-18.2.5-14-D]</span></span>
+</li><li> <span class="norm-static"> Then there are two cases:<span class="assertion-id"> [jsr335-18.2.5-14-E]</span></span>
+<ul><li> <span class="norm-static"> If <em>n = 0</em> (the function type's <code style="background-color:inherit;font-size:medium">throws</code> clause consists only of proper types), then if there exists some <em>i</em> (<em>1 ≤ i ≤ m</em>) such that <em>E'<sub>i</sub></em> is not a subtype of any proper type in the <code style="background-color:inherit;font-size:medium">throws</code> clause, the constraint reduces to <em>false</em>; otherwise, the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.5-14-E1]</span></span>
+</li><li> <span class="norm-static"> If <em>n &gt; 0</em>, the constraint reduces to a set of subtyping constraints: for all <em>i</em> (<em>1 ≤ i ≤ m</em>), if <em>E'<sub>i</sub></em> is not a subtype of any proper type in the <code style="background-color:inherit;font-size:medium">throws</code> clause, then the constraints include, for all <em>j</em> (<em>1 ≤ j ≤ n</em>), ⟨E'<sub>i</sub> &lt;: E<sub>j</sub>⟩.  In addition, for all <em>j</em> (<em>1 ≤ j ≤ n</em>), the constraint also reduces to the bound <em><code style="background-color:inherit;font-size:medium">throws</code> E<sub>j</sub></em>.<span class="assertion-id"> [jsr335-18.2.5-14-E2]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-static">
+A constraint formula of the form <em>MethodReference &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T</em> is reduced as follows:<span class="assertion-id"> [jsr335-18.2.5-15]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is not a functional interface type, or if <em>T</em> is a functional interface type but does not have a function type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.5-15-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the method reference is inexact and either i) one or more of the function type's parameter types is not a proper type, or ii) the function type's result is neither <code style="background-color:inherit;font-size:medium">void</code> nor a proper type, the constraint reduces to <em>false</em>.<span class="assertion-id"> [jsr335-18.2.5-15-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, let <em>E<sub>1</sub>, ..., E<sub>n</sub></em> be the types in the function type's <code style="background-color:inherit;font-size:medium">throws</code> clause that are <i>not</i> proper types; and let <em>E'<sub>1</sub>, ..., E'<sub>m</sub></em> be the checked exceptions in the <code style="background-color:inherit;font-size:medium">throws</code> clause of the invocation type of the method reference's compile-time declaration (<a href="E.html#E15.13.2" title="Lambda E" class="mw-redirect">15.13.2</a>) (derived based on the target function type's parameter types and return type).<span class="assertion-id"> [jsr335-18.2.5-15-D]</span></span>
+</li><li> <span class="norm-static"> Then there are two cases:<span class="assertion-id"> [jsr335-18.2.5-15-E]</span></span>
+<ul><li> <span class="norm-static"> If <em>n = 0</em> (the function type's <code style="background-color:inherit;font-size:medium">throws</code> clause consists only of proper types), then if there exists some <em>i</em> (<em>1 ≤ i ≤ m</em>) such that <em>E'<sub>i</sub></em> is not a subtype of any proper type in the <code style="background-color:inherit;font-size:medium">throws</code> clause, the constraint reduces to <em>false</em>; otherwise, the constraint reduces to <em>true</em>.<span class="assertion-id"> [jsr335-18.2.5-15-E1]</span></span>
+</li><li> <span class="norm-static"> If <em>n &gt; 0</em>, the constraint reduces to a set of subtyping constraints: for all <em>i</em> (<em>1 ≤ i ≤ m</em>), if <em>E'<sub>i</sub></em> is not a subtype of any proper type in the <code style="background-color:inherit;font-size:medium">throws</code> clause, then the constraints include, for all <em>j</em> (<em>1 ≤ j ≤ n</em>), ⟨E'<sub>i</sub> &lt;: E<sub>j</sub>⟩.  In addition, for all <em>j</em> (<em>1 ≤ j ≤ n</em>), the constraint also reduces to the bound <em><code style="background-color:inherit;font-size:medium">throws</code> E<sub>j</sub></em>.<span class="assertion-id"> [jsr335-18.2.5-15-E2]</span></span>
+</li></ul>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> Constraints on checked exceptions are handled separately from constraints on return types, because return type compatibility influences applicability of methods (<a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>), while exceptions only influence the invocation type after overload resolution is complete (<a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>).  This could be simplified by including exception compatibility in the definition of lambda expression compatibility (<a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>), but this would lead to possibly-surprising cases in which exceptions that can be thrown by an explicitly-typed lambda body change overload resolution.
+</div></li>
+<li style="margin-bottom:12px;"><div> The exceptions thrown by a lambda body cannot be determined until i) the parameter types of the lambda are known, and ii) the target type of result expressions in the body is known.  (The second requirement is to account for generic method invocations in which, for example, the same type parameter appears in the return type and the <code style="background-color:inherit;font-size:medium">throws</code> clause.)  Hence, we require both of these, as derived from the target type <em>T</em>, to be proper types.
+<p>One consequence is that lambda expressions returned from <i>other</i> lambda expressions cannot generate constraints from their thrown exceptions.  These constraints can only be generated from top-level lambda expressions.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The handling of the case in which more than one inference variable appears in a function type's <code style="background-color:inherit;font-size:medium">throws</code> clause is not completeness-preserving.  Either variable may, on its own, satisfy the constraint that each checked exception be declared, but we can't be sure which one is intended.  So, for predictability, we constrain them both.
+</div></li></ol></div></blockquote>
+<div id="G18.3"></div>
+<h3> <span class="mw-headline" id="18.3_Incorporation_.5BNew.5D"> 18.3 Incorporation [New] </span></h3>
+<p><span class="norm-static">
+Whenever a bound set contains two or more bounds, it is possible that new bounds can be inferred based on the assertions of the original bounds.  As bound sets are constructed and grown during inference, new bounds are <i>incorporated</i> by identifying complementary pairs of bounds and inferring further information in this way.<span class="assertion-id"> [jsr335-18.3-10]</span></span>
+</p><p><span class="norm-static">
+Specifically, for any pair of bounds in a bound set matching one of the following rules, a new constraint formula is inferred.  In the rules, <em>S</em> and <em>T</em> are inference variables or types, and <em>U</em> is a proper type.  For conciseness, a bound of the form <em>α = T</em> may also match a bound of the form <em>T = α</em>.<span class="assertion-id"> [jsr335-18.3-12]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>α = S</em> and <em>α = T</em> imply <em>⟨S = T⟩</em><span class="assertion-id"> [jsr335-18.3-12-A]</span></span>
+</li><li> <span class="norm-static"> <em>α = S</em> and <em>α &lt;: T</em> imply <em>⟨S &lt;: T⟩</em><span class="assertion-id"> [jsr335-18.3-12-B]</span></span>
+</li><li> <span class="norm-static"> <em>α = S</em> and <em>T &lt;: α</em> imply <em>⟨T &lt;: S⟩</em><span class="assertion-id"> [jsr335-18.3-12-C]</span></span>
+</li><li> <span class="norm-static"> <em>S &lt;: α</em> and <em>α &lt;: T</em> imply <em>⟨S &lt;: T⟩</em><span class="assertion-id"> [jsr335-18.3-12-D]</span></span>
+</li><li> <span class="norm-static"> <em>α = U</em> and <em>S = T</em> imply <em>⟨S[α:=U] = T[α:=U]⟩</em><span class="assertion-id"> [jsr335-18.3-12-E]</span></span>
+</li><li> <span class="norm-static"> <em>α = U</em> and <em>S &lt;: T</em> imply <em>⟨S[α:=U] &lt;: T[α:=U]⟩</em><span class="assertion-id"> [jsr335-18.3-12-F]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If two bounds have the form <em>α &lt;: S</em> and <em>α &lt;: T</em>, and if for some generic class or interface, <em>G</em>, there exists a supertype (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>) of <em>S</em> of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>S<sub>1</sub>, ..., S<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> and a supertype of <em>T</em> of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>T<sub>1</sub>, ..., T<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, then for all <em>i</em>, <em>1 ≤ i ≤ n</em>, if <em>S<sub>i</sub></em> and <em>T<sub>i</sub></em> are types (not wildcards), the constraint <em>⟨S<sub>i</sub> = T<sub>i</sub>⟩</em> is implied.<span class="assertion-id"> [jsr335-18.3-14]</span></span>
+</p><p><span class="norm-static">
+Additionally, when a bound set contains a bound of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>α<sub>1</sub>, ..., α<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code>)</em>, further bounds or constraints may be inferred.  Let <em>P<sub>1</sub></em>, ..., <em>P<sub>n</sub></em> represent the type parameters of <em>G</em>, <em>B<sub>1</sub></em>, ..., <em>B<sub>n</sub></em> represent the bounds (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.4" class="external text" rel="nofollow">4.4</a>) of these type parameters, and <em>θ</em> represent the substitution <em>[P<sub>1</sub>:=α<sub>1</sub>, ..., P<sub>n</sub>:=α<sub>n</sub>]</em>.  Let <em>R</em> be a type that is <i>not</i> an inference variable (but is not necessarily a proper type).  Then for all <em>i</em> (<em>1 ≤ i ≤ n</em>):<span class="assertion-id"> [jsr335-18.3-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> A set of bounds on <em>α<sub>1</sub>, ..., α<sub>n</sub></em>, constructed from the declared bounds of <em>P<sub>1</sub>, ..., P<sub>n</sub></em> as described in <a href="G.html#G18.1.3" title="Lambda G" class="mw-redirect">18.1.3</a>, is immediately implied.<span class="assertion-id"> [jsr335-18.3-20-A]</span></span>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a wildcard of the form <code style="background-color:inherit;font-size:medium">?</code>:<span class="assertion-id"> [jsr335-18.3-20-B]</span></span>
+<ul><li> <span class="norm-static"> <em>α<sub>i</sub> = R</em> implies <em>false</em><span class="assertion-id"> [jsr335-18.3-20-B1]</span></span>
+</li><li> <span class="norm-static"> <em>α<sub>i</sub> &lt;: R</em> implies <em>⟨B<sub>i</sub> θ &lt;: R⟩</em><span class="assertion-id"> [jsr335-18.3-20-B2]</span></span>
+</li><li> <span class="norm-static"> <em>R &lt;: α<sub>i</sub></em> implies <em>false</em><span class="assertion-id"> [jsr335-18.3-20-B3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a wildcard of the form <code style="background-color:inherit;font-size:medium">? extends </code><em>T</em>:<span class="assertion-id"> [jsr335-18.3-20-C]</span></span>
+<ul><li> <span class="norm-static"> <em>α<sub>i</sub> = R</em> implies <em>false</em><span class="assertion-id"> [jsr335-18.3-20-C1]</span></span>
+</li><li> <span class="norm-static"> If <em>B<sub>i</sub></em> is <code style="background-color:inherit;font-size:medium">Object</code>, <em>α<sub>i</sub> &lt;: R</em> implies <em>⟨T &lt;: R⟩</em><span class="assertion-id"> [jsr335-18.3-20-C2]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is <code style="background-color:inherit;font-size:medium">Object</code>, <em>α<sub>i</sub> &lt;: R</em> implies <em>⟨B<sub>i</sub> θ &lt;: R⟩</em><span class="assertion-id"> [jsr335-18.3-20-C2]</span></span>
+</li><li> <span class="norm-static"> <em>R &lt;: α<sub>i</sub></em> implies <em>false</em><span class="assertion-id"> [jsr335-18.3-20-C3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a wildcard of the form <code style="background-color:inherit;font-size:medium">? super </code><em>T</em>:<span class="assertion-id"> [jsr335-18.3-20-D]</span></span>
+<ul><li> <span class="norm-static"> <em>α<sub>i</sub> = R</em> implies <em>false</em><span class="assertion-id"> [jsr335-18.3-20-D1]</span></span>
+</li><li> <span class="norm-static"> <em>α<sub>i</sub> &lt;: R</em> implies <em>⟨B<sub>i</sub> θ &lt;: R⟩</em><span class="assertion-id"> [jsr335-18.3-20-D2]</span></span>
+</li><li> <span class="norm-static"> <em>R &lt;: α<sub>i</sub></em> implies <em>⟨R &lt;: T⟩</em><span class="assertion-id"> [jsr335-18.3-20-D3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is not a wildcard, the bound <em>α<sub>i</sub> = A<sub>i</sub></em> is immediately implied.<span class="assertion-id"> [jsr335-18.3-20-E]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The resulting constraint formulas are then reduced, and any new bounds are added to the bound set.  This may trigger further incorporation; ultimately, the set will reach a fixed point and no further bounds can be inferred.<span class="assertion-id"> [jsr335-18.3-14]</span></span>
+</p><p>A bound set that is fully incorporated, if it does not contain the bound <em>false</em>, has the following properties:
+</p>
+<ul><li> For each combination of a proper lower bound <em>L</em> and a proper upper bound <em>U</em> of an inference variable, <em>L &lt;: U</em>.
+</li><li> If every inference variable mentioned by a bound has an instantiation, the bound is satisfied by the corresponding substitution.
+</li><li> Given a dependency <em>α = β</em>, every bound of <em>α</em> matches a bound of <em>β</em>, and vice versa.
+</li><li> Given a dependency <em>α &lt;: β</em>, every lower bound of <em>α</em> is a lower bound of <em>β</em>, and every upper bound of <em>β</em> is an upper bound of <em>α</em>.
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>The assertion that incorporation reaches a fixed point oversimplifies the matter slightly.  Building on the work of Kennedy and Pierce, <i><a href="http://research.microsoft.com/apps/pubs/default.aspx?id=64041" class="external text" rel="nofollow">On Decidability of Nominal Subtyping with Variance</a></i>, this property can be proven by making the argument that the set of types that may appear in the bound set is finite.  The argument relies on two assumptions:
+</p>
+<ul><li> New capture variables are not generated when reducing subtyping constraints (<a href="G.html#G18.2.3" title="Lambda G" class="mw-redirect">18.2.3</a>).
+</li><li> Expansive inheritance paths are not pursued.
+</li></ul>
+<p>The specification does not currently guarantee these properties (it is vague about the handling of wildcards when reducing subtyping constraints, and does not detect expansive inheritance paths), but is likely to do so in a future version.
+</p>
+(Notably, this is not a new problem: the existing subtyping algorithm is similarly at risk of non-termination.)</div></blockquote>
+<div id="G18.4"></div>
+<h3> <span class="mw-headline" id="18.4_Resolution_.5BNew.5D"> 18.4 Resolution [New] </span></h3>
+<p><span class="norm-static">
+Given a bound set that does not contain the bound <em>false</em>, a subset of the inference variables mentioned by the bound set may be <i>resolved</i>.  This means that a satisfactory instantiation may be added to the set for each inference variable, until all the requested variables have instantiations.  Dependencies in the bound set may require that the variables be resolved in a particular order, or that additional variables be resolved.<span class="assertion-id"> [jsr335-18.4-10]</span></span>
+</p><p><span class="norm-static">
+Consider a bound of one of the following forms, where <em>T</em> is either an inference variable <em>β</em> or a type that mentions <em>β</em>:<span class="assertion-id"> [jsr335-18.4-22]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>α = T</em><span class="assertion-id"> [jsr335-18.4-22-A]</span></span>
+</li><li> <span class="norm-static"> <em>α &lt;: T</em><span class="assertion-id"> [jsr335-18.4-22-B]</span></span>
+</li><li> <span class="norm-static"> <em>T = α</em><span class="assertion-id"> [jsr335-18.4-22-C]</span></span>
+</li><li> <span class="norm-static"> <em>T &lt;: α</em><span class="assertion-id"> [jsr335-18.4-22-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Given such a bound, if <em>α</em> appears on the left-hand side of another bound of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>..., α, ...<code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code>)</em>, then <em>β</em> <i>depends on the resolution of</i> <em>α</em>.  Otherwise, <em>α</em> depends on the resolution of <em>β</em>.<span class="assertion-id"> [jsr335-18.4-22]</span></span>
+</p><p><span class="norm-static">
+An inference variable <em>α</em> appearing on the left-hand side of a bound of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>..., α, ...<code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code>)</em> depends on the resolution of every other inference variable mentioned in this bound (on both sides of the <em>=</em> sign).<span class="assertion-id"> [jsr335-18.4-20]</span></span>
+</p><p><span class="norm-static">
+An inference variable <em>α</em> also depends on the resolution of itself, as well as the resolution of an inference variable <em>β</em> if there exists an inference variable <em>γ</em> such that <em>α</em> depends on the resolution of <em>γ</em> and <em>γ</em> depends on the resolution of <em>β</em>.<span class="assertion-id"> [jsr335-18.4-24]</span></span>
+</p><p><span class="norm-static">
+Given a set of inference variables to resolve, let <em>V</em> be the union of this set and all variables upon which the resolution of at least one variable in this set depends.<span class="assertion-id"> [jsr335-18.4-30]</span></span>
+</p><p><span class="norm-static">
+If every variable in <em>V</em> has an instantiation, then the resolution procedure terminates.  Otherwise, let <em>{ α<sub>1</sub>, ..., α<sub>n</sub> }</em> be a non-empty subset of uninstantiated variables in <em>V</em> such that i) for all <em>i</em>, <em>1 ≤ i ≤ n</em>, if <em>α<sub>i</sub></em> depends on the resolution of a variable <em>β</em>, then either <em>β</em> has an instantiation or there is some <em>j</em> such that <em>β = α<sub>j</sub></em>; and ii) there exists no non-empty proper subset of <em>{ α<sub>1</sub>, ..., α<sub>n</sub> }</em> with this property.<span class="assertion-id"> [jsr335-18.4-32]</span></span>
+</p><p><span class="norm-static">
+Then resolution proceeds by generating an instantiation for each of <em>α<sub>1</sub>, ..., α<sub>n</sub></em>.<span class="assertion-id"> [jsr335-18.4-34]</span></span>
+</p><p><span class="norm-static">
+If, for all <em>i</em> (<em>1 ≤ i ≤ n</em>), the bound set does not contain a bound of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>..., α<sub>i</sub>, ...<code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code>)</em>, we first define candidate instantiations, <em>T<sub>1</sub></em>, ..., <em>T<sub>n</sub></em>.  For all <em>i</em> (<em>1 ≤ i ≤ n</em>), define <em>T<sub>i</sub></em> as follows:<span class="assertion-id"> [jsr335-18.4-40]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>α<sub>i</sub></em> has one or more <i>proper</i> lower bounds, <em>L<sub>1</sub>, ..., L<sub>k</sub></em>, then <em>T<sub>i</sub> = lub(L<sub>1</sub>, ..., L<sub>k</sub>)</em> (<a href="G.html#G4.10.4" title="Lambda G" class="mw-redirect">4.10.4</a>).<span class="assertion-id"> [jsr335-18.4-40-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the bound set contains <em><code style="background-color:inherit;font-size:medium">throws</code> α<sub>i</sub></em>, and the proper upper bounds of <em>α<sub>i</sub></em> are, at most, <code style="background-color:inherit;font-size:medium">Exception</code>, <code style="background-color:inherit;font-size:medium">Throwable</code>, and <code style="background-color:inherit;font-size:medium">Object</code>, then <em>T<sub>i</sub> = <code style="background-color:inherit;font-size:medium">RuntimeException</code></em>.<span class="assertion-id"> [jsr335-18.4-40-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, where <em>α<sub>i</sub></em> has <i>proper</i> upper bounds <em>U<sub>1</sub>, ..., U<sub>k</sub></em>, <em>T<sub>i</sub> = glb(U<sub>1</sub>, ..., U<sub>k</sub>)</em>.<span class="assertion-id"> [jsr335-18.4-40-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If incorporating the bounds <em>α<sub>1</sub> = T<sub>1</sub>, ..., α<sub>n</sub> = T<sub>n</sub></em> with the current bound set produces a set that does not include <em>false</em>, then this is the new bound set; resolution proceeds by selecting a new set of variables to instantiate (if necessary), as described above.<span class="assertion-id"> [jsr335-18.4-42]</span></span>
+</p><p><span class="norm-static">
+Otherwise, a second attempt is made to instantiate <em>{ α<sub>1</sub>, ..., α<sub>n</sub> }</em>, as follows:<span class="assertion-id"> [jsr335-18.4-50]</span></span>
+</p>
+<ul><li> <span class="norm-static"> Let <em>Z<sub>1</sub>, ..., Z<sub>n</sub></em> be fresh type variables, and <em>θ</em> be the substitution <em>[α<sub>1</sub>:=Z<sub>1</sub>, ..., α<sub>n</sub>:=Z<sub>n</sub>]</em>.<span class="assertion-id"> [jsr335-18.4-50-A]</span></span>
+</li><li> <span class="norm-static"> For all <em>i</em>, (<em>1 ≤ i ≤ n</em>), if <em>α<sub>i</sub></em> has one or more <i>proper</i> lower bounds, <em>L<sub>1</sub>, ..., L<sub>k</sub></em>, then define the lower bound of <em>Z<sub>i</sub></em> as <em>lub(L<sub>1</sub>, ..., L<sub>k</sub>)</em>; if not, then <em>Z<sub>i</sub></em> has no lower bound.<span class="assertion-id"> [jsr335-18.4-50-B]</span></span>
+</li><li> <span class="norm-static"> For all <em>i</em>, (<em>1 ≤ i ≤ n</em>), where <em>α<sub>i</sub></em> has upper bounds <em>U<sub>1</sub>, ..., U<sub>k</sub></em>, define the upper bound of <em>Z<sub>i</sub></em> as <em>glb(U<sub>1</sub>θ, ..., U<sub>k</sub>θ)</em>.<span class="assertion-id"> [jsr335-18.4-50-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If the resulting type variables <em>Z<sub>1</sub>, ..., Z<sub>n</sub></em> do not have well-formed bounds (that is, a lower bound is not a subtype of an upper bound), then resolution fails.  Otherwise, the new bound set is produced by <i>removing</i> all bounds of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>..., α<sub>i</sub>, ...<code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code>)</em> (for all <em>i</em>, <em>1 ≤ i ≤ n</em>) and incorporating <em>α<sub>1</sub> = Z<sub>1</sub>, ..., α<sub>n</sub> = Z<sub>n</sub></em>.  If the result contains the bound <em>false</em>, resolution fails.  Otherwise, resolution proceeds by selecting a new set of variables to instantiate (if necessary), as described above.<span class="assertion-id"> [jsr335-18.4-52]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The first attempt at instantiating an inference variable derives the instantiation from that variable's bounds.  Sometimes, however, complex dependencies mean that the result is not within the variable's bounds.  In case of failure, a second attempt is performed, analogous to capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>): fresh type variables are introduced, with bounds derived from the bounds of the inference variables.  (Note that the lower bounds of these "capture" variables are computed using only proper types: this is important in order to avoid attempts to perform typing computations on uninstantiated type variables.)</div></blockquote>
+<div id="G18.5"></div>
+<h3> <span class="mw-headline" id="18.5_Uses_of_Inference_.5BNew.5D"> 18.5 Uses of Inference [New] </span></h3>
+<p>Using the inference processes defined above, the following analyses are performed at compile-time.
+</p>
+<div id="G18.5.1"></div>
+<h3> <span class="mw-headline" id="18.5.1_Invocation_Applicability_Inference_.5BNew.5D"> 18.5.1 Invocation Applicability Inference [New] </span></h3>
+<p><span class="norm-static">
+Given a method invocation that provides no explicit type arguments, the following process, modeled after the applicability rules in <a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>, <a href="F.html#F15.12.2.3" title="Lambda F" class="mw-redirect">15.12.2.3</a>, &amp; <a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>, determines whether a potentially-applicable generic method <em>m</em> is applicable:<span class="assertion-id"> [jsr335-18.5.1-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> Where <em>P<sub>1</sub>, ..., P<sub>p</sub></em> (<em>p ≥ 1</em>) are the type parameters of <em>m</em>, let <em>α<sub>1</sub>, ..., α<sub>p</sub></em> be inference variables, and let <em>θ</em> be the substitution <em>[P<sub>1</sub>:=α<sub>1</sub>, ..., P<sub>p</sub>:=α<sub>p</sub>]</em>.<span class="assertion-id"> [jsr335-18.5.1-10-A]</span></span>
+</li><li> <span class="norm-static"> An initial bound set <em>B<sub>0</sub></em> is constructed from the declared bounds of <em>P<sub>1</sub>, ..., P<sub>p</sub></em>, as described in <a href="G.html#G18.1.3" title="Lambda G" class="mw-redirect">18.1.3</a>.<span class="assertion-id"> [jsr335-18.5.1-10-B]</span></span>
+</li><li> <span class="norm-static"> For all <em>i</em> (<em>1 ≤ i ≤ p</em>), if <em>P<sub>i</sub></em> appears in the <code style="background-color:inherit;font-size:medium">throws</code> clause of <em>m</em>, then the bound <em><code style="background-color:inherit;font-size:medium">throws</code> α<sub>i</sub></em> is incorporated with <em>B<sub>0</sub></em>, producing the set <em>B<sub>1</sub></em>.<span class="assertion-id"> [jsr335-18.5.1-10-F]</span></span>
+</li><li> <span class="norm-static"> Let <em>F<sub>1</sub>, ..., F<sub>n</sub></em> be the types of the formal parameters of <em>m</em>, and let <em>e<sub>1</sub>, ..., e<sub>k</sub></em> be the actual argument expressions of the invocation.  These are used to construct a set of constraint formulas; the contents of this set depends on the type of applicability being tested:<span class="assertion-id"> [jsr335-18.5.1-10-C]</span></span>
+<ul><li> <span class="norm-static"> To test for <i>applicability by strict invocation</i>: if <em>k ≠ n</em>, or if there exists an <em>i</em> (<em>1 ≤ i ≤ n</em>) such that either i) e<sub>i</sub> is a standalone expression of a primitive type but F<sub>i</sub> is a reference type, or ii) F<sub>i</sub> is a primitive type but e<sub>i</sub> is not a standalone expression of a primitive type; then the method is not applicable and there is no need to proceed with inference.  Otherwise, the initial constraint formula set includes, for all <em>i</em> (<em>1 ≤ i ≤ k</em>), if <em>e<sub>i</sub></em> is pertinent to applicability (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>), <em>⟨e<sub>i</sub> &rarr; F<sub>i</sub> θ⟩</em>.<span class="assertion-id"> [jsr335-18.5.1-10-C1]</span></span>
+</li><li> <span class="norm-static"> To test for <i>applicability by loose invocation</i>: if <em>k ≠ n</em>, the method is not applicable and there is no need to proceed with inference.  Otherwise, the initial constraint formula set includes, for all <em>i</em> (<em>1 ≤ i ≤ k</em>), if <em>e<sub>i</sub></em> is pertinent to applicability, <em>⟨e<sub>i</sub> &rarr; F<sub>i</sub> θ⟩</em>.<span class="assertion-id"> [jsr335-18.5.1-10-C2]</span></span>
+</li><li> <span class="norm-static"> To test for <i>applicability by variable-arity invocation</i>: Let <em>F'<sub>1</sub>, ..., F'<sub>k</sub></em> be the first <em>k</em> variable-arity parameter types of <em>m</em> (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>).  The initial constraint formula set includes, for all <em>i</em> (<em>1 ≤ i ≤ k</em>), if <em>e<sub>i</sub></em> is pertinent to applicability, <em>⟨e<sub>i</sub> &rarr; F'<sub>i</sub> θ⟩</em>.<span class="assertion-id"> [jsr335-18.5.1-10-C3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> The constraint formula set is reduced (<a href="G.html#G18.2" title="Lambda G" class="mw-redirect">18.2</a>) and the resulting bounds are incorporated with <em>B<sub>1</sub></em> (<a href="G.html#G18.3" title="Lambda G" class="mw-redirect">18.3</a>) to produce a bound set <em>B<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.1-10-D]</span></span>
+</li><li> <span class="norm-static"> Finally, the method <em>m</em> is applicable if a resolution of all inference variables in <em>B<sub>2</sub></em> can be found following the process in <a href="G.html#G18.4" title="Lambda G" class="mw-redirect">18.4</a>.<span class="assertion-id"> [jsr335-18.5.1-10-E]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>Consider the following method invocation and assignment:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">List&lt;Number&gt; ln = Arrays.asList(1, 2.0);</pre>
+<p>A most-specific applicable method for the invocation must be identified as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>.  The only potentially-applicable method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.1" class="external text" rel="nofollow">15.12.2.1</a>) is declared as follows:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">public static &lt;T&gt; List&lt;T&gt; asList(T... a)</pre>
+<p>Trivially (because of its arity), this method is neither applicable by strict invocation (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>) nor applicable by loose invocation (<a href="F.html#F15.12.2.3" title="Lambda F" class="mw-redirect">15.12.2.3</a>).  But since there are no other candidates, in a third phase the method is checked for applicability by variable-arity invocation.
+</p><p>The initial bound set, <em>B</em>, is a trivial upper bound for a single inference variable, <em>α</em>:
+</p>
+<blockquote><em>{ α &lt;: <code style="background-color:inherit;font-size:medium">Object</code> }</em></blockquote>
+<p>The initial constraint formula set is as follows:
+</p>
+<blockquote><em>{ ⟨<code style="background-color:inherit;font-size:medium">1</code> &rarr; α⟩, ⟨<code style="background-color:inherit;font-size:medium">2.0</code> &rarr; α⟩ }</em></blockquote>
+<p>These are reduced to a new bound set, <em>B<sub>1</sub></em>:
+</p>
+<blockquote><em>{ α &lt;: <code style="background-color:inherit;font-size:medium">Object</code>, <code style="background-color:inherit;font-size:medium">Integer</code> &lt;: α, <code style="background-color:inherit;font-size:medium">Double</code> &lt;: α }</em></blockquote>
+<p>Then, to test whether the method is applicable, we attempt to resolve these bounds.  We succeed, producing the rather complex instantiation
+</p>
+<blockquote><em>α = <code style="background-color:inherit;font-size:medium">Number &amp; Comparable&lt;? extends Number &amp; Comparable&lt;?&gt;&gt;</code></em></blockquote>
+We have thus demonstrated that the method is applicable; since no other candidates exist, it is the most-specific applicable method.  The <i>type</i> of the method invocation, and its compatibility with the target type in the assignment, is not determined until further inference can occur, as described in the next section.</div></blockquote>
+<div id="G18.5.2"></div>
+<h3> <span class="mw-headline" id="18.5.2_Invocation_Type_Inference_.5BNew.5D"> 18.5.2 Invocation Type Inference [New] </span></h3>
+<p><span class="norm-static">
+Consider a method invocation that provides no explicit type arguments, and a corresponding most-specific applicable generic method <em>m</em>.  The following process is used to infer the invocation type (<a href="F.html#F15.12.2.6" title="Lambda F" class="mw-redirect">15.12.2.6</a>) of the chosen method.<span class="assertion-id"> [jsr335-18.5.2-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> Let <em>θ</em> be the substitution <em>[P<sub>1</sub>:=α<sub>1</sub>, ..., P<sub>p</sub>:=α<sub>p</sub>]</em> defined in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>, used to replace the type parameters of <em>m</em> with inference variables.<span class="assertion-id"> [jsr335-18.5.2-10-A]</span></span>
+</li><li> <span class="norm-static"> Let <em>B<sub>2</sub></em> be the bound set produced by reduction in order to demonstrate that <em>m</em> is applicable in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>. (While, as a final step in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>, it was necessary to demonstrate that the inference variables in <em>B<sub>2</sub></em> could be resolved in order to establish applicability, an instantiation produced by this resolution step is not considered part of <em>B<sub>2</sub></em>.)<span class="assertion-id"> [jsr335-18.5.2-10-B]</span></span>
+</li><li> <span class="norm-static"> If the invocation is a poly expression, let <em>R</em> be the return type of <em>m</em>, and let <em>T</em> be the invocation's target type.  Then one of the following cases applies, producing a new bound set, <em>B<sub>3</sub></em>:<span class="assertion-id"> [jsr335-18.5.2-10-C2]</span></span>
+<ul><li> <span class="norm-static"> If unchecked conversion was necessary for the method to be applicable in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>, then, where <em>|R|</em> is the erasure (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.6" class="external text" rel="nofollow">4.6</a>) of <em>R</em>, the constraint formula <em>⟨|R| &rarr; T⟩</em> is reduced and incorporated with <em>B<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.2-10-C18]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R θ</em> is a parameterized type, <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, and one of <em>A<sub>1</sub></em>, ..., <em>A<sub>n</sub></em> is a wildcard, then, for fresh inference variables <em>β<sub>1</sub></em>, ..., <em>β<sub>n</sub></em>, the constraint formula <em>⟨G<code style="background-color:inherit;font-size:medium">&lt;</code>β<sub>1</sub>, ..., β<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code> &rarr; T⟩</em> is reduced and incorporated, along with the bound <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>β<sub>1</sub>, ..., β<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code> = capture(G<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code>)</em>, with <em>B<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.2-10-C14]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R θ</em> is an inference variable <em>α</em>, and one of the following conditions are true, then <em>α</em> is resolved in <em>B<sub>2</sub></em>, and where the capture of the resulting instantiation of <em>α</em> is <em>U</em>, the constraint formula <em>⟨U &rarr; T⟩</em> is reduced and incorporated.<span class="assertion-id"> [jsr335-18.5.2-10-C15]</span></span>
+<ul><li> <span class="norm-static"> <em>T</em> is a reference type, but is not a wildcard-parameterized type, and either i) <em>B<sub>2</sub></em> contains a bound of one of the forms <em>α = S</em> or <em>S &lt;: α</em>, where <em>S</em> is a wildcard-parameterized type, or ii) <em>B<sub>2</sub></em> contains two bounds of the forms <em>S<sub>1</sub> &lt;: α</em> and <em>S<sub>2</sub> &lt;: α</em>, where <em>S<sub>1</sub></em> and <em>S<sub>2</sub></em> have supertypes (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>) that are two different parameterizations of the same generic class or interface.<span class="assertion-id"> [jsr335-18.5.2-10-C16]</span></span>
+</li><li> <span class="norm-static"> <em>T</em> is a parameterization of a generic class or interface, <em>G</em>, and <em>B<sub>2</sub></em> contains a bound of one of the forms <em>α = S</em> or <em>S &lt;: α</em>, where there exists no type of the form <em>G<code style="background-color:inherit;font-size:medium">&lt;</code>...<code style="background-color:inherit;font-size:medium">&gt;</code></em> that is a supertype of <em>S</em>, but the raw type <em>G</em> is a supertype of <em>S</em>.<span class="assertion-id"> [jsr335-18.5.2-10-C17]</span></span>
+</li><li> <span class="norm-static"> <em>T</em> is a primitive type, and one of the primitive wrapper classes mentioned in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.7" class="external text" rel="nofollow">5.1.7</a> is an instantiation, upper bound, or lower bound for <em>α</em> in <em>B<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.2-10-C12]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> Otherwise, the constraint formula <em>⟨R θ &rarr; T⟩</em> is reduced and incorporated with <em>B<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.2-10-C13]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If the invocation is not a poly expression, <em>B<sub>3</sub></em> is the same as <em>B<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.2-10-C2-1]</span></span>
+</li><li> <span class="norm-static"> Let <em>e<sub>1</sub>, ..., e<sub>k</sub></em> be the actual argument expressions of the invocation; if <em>m</em> is applicable by strict or loose invocation, let <em>F<sub>1</sub>, ..., F<sub>k</sub></em> be the types of the formal parameters of <em>m</em>, and if <em>m</em> is instead applicable by variable-arity invocation, let <em>F<sub>1</sub>, ..., F<sub>k</sub></em> the first <em>k</em> variable-arity parameter types of <em>m</em> (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>).  A set, <em>C</em>, of additional constraint formulas is constructed as follows:<span class="assertion-id"> [jsr335-18.5.2-10-G]</span></span>
+<ul><li> <span class="norm-static"> For all <em>i</em> (<em>1 ≤ i ≤ k</em>), if <em>e<sub>i</sub></em> is <i>not</i> pertinent to applicability, the set contains <em>⟨e<sub>i</sub> &rarr; F<sub>i</sub> θ⟩</em>.<span class="assertion-id"> [jsr335-18.5.2-10-G1]</span></span>
+</li><li> <span class="norm-static"> For all <em>i</em> (<em>1 ≤ i ≤ k</em>), additional constraints may be included, according to the form of <em>e<sub>i</sub></em>:<span class="assertion-id"> [jsr335-18.5.2-10-G2]</span></span>
+<ul><li> <span class="norm-static"> If the expression is a <em>LambdaExpression</em>, the set contains <em>⟨LambdaExpression &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> F<sub>i</sub> θ⟩</em>.<span class="assertion-id"> [jsr335-18.5.2-10-G21]</span></span>
+</li><li> <span class="norm-static"> If the expression is a <em>MethodReference</em>, the set contains <em>⟨MethodReference &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> F<sub>i</sub> θ⟩</em>.<span class="assertion-id"> [jsr335-18.5.2-10-G22]</span></span>
+</li><li> <span class="norm-static"> If the expression is a poly class instance creation expression (<a href="D.html#D15.9" title="Lambda D" class="mw-redirect">15.9</a>) or a poly method invocation expression (<a href="D.html#D15.12" title="Lambda D" class="mw-redirect">15.12</a>), the set contains all constraint formulas that would appear in the set <em>C</em> when determining the poly expression's invocation type.<span class="assertion-id"> [jsr335-18.5.2-10-G25]</span></span>
+</li><li> <span class="norm-static"> If the expression is a parenthesized expression, these rules are applied recursively to the contained expression.<span class="assertion-id"> [jsr335-18.5.2-10-G23]</span></span>
+</li><li> <span class="norm-static"> If the expression is a conditional expression, these rules are applied recursively to the second and third operands.<span class="assertion-id"> [jsr335-18.5.2-10-G24]</span></span>
+</li></ul>
+</li></ul>
+</li><li> <span class="norm-static"> While <em>C</em> is not empty, the following process is repeated, accumulating new bounds into a "current" bound set and ultimately producing a new bound set, <em>B<sub>4</sub></em> (the initial value of the current bound set is <em>B<sub>3</sub></em>):<span class="assertion-id"> [jsr335-18.5.2-10-H]</span></span>
+<ul><li> <span class="norm-static"> A subset of constraints is selected, satisfying the property that, for each constraint, no input variable depends on an output variable of another constraint in <em>C</em> (<i>input variable</i> and <i>output variable</i> are defined below; dependencies between inference variable are defined in <a href="G.html#G18.4" title="Lambda G" class="mw-redirect">18.4</a>).  If this subset is empty, then there is a cycle (or cycles) in the graph of dependencies between constraints, and we instead select a single constraint that i) participates in a dependency cycle (or cycles), ii) does not depend on any constraints outside of the cycle (or cycles), iii) has the form <em>⟨Expression &rarr; T⟩</em>, if any such constraints satisfy the previous two requirements, and iv) contains an expression that appears to the left of the expression of every other constraint satisfying the previous three requirements.<span class="assertion-id"> [jsr335-18.5.2-10-H1]</span></span>
+</li><li> <span class="norm-static"> The selected constraints are removed from <em>C</em>.<span class="assertion-id"> [jsr335-18.5.2-10-H2]</span></span>
+</li><li> <span class="norm-static"> The union of the input variables of all the selected constraints, <em>α<sub>1</sub>, ..., α<sub>m</sub></em>, is resolved.<span class="assertion-id"> [jsr335-18.5.2-10-H3]</span></span>
+</li><li> <span class="norm-static"> Where <em>T<sub>1</sub>, ..., T<sub>m</sub></em> are the instantiations of <em>α<sub>1</sub>, ..., α<sub>m</sub></em>, the substitution <em>[α<sub>1</sub>:=T<sub>1</sub>, ..., α<sub>m</sub>:=T<sub>m</sub>]</em> is applied to each constraint.<span class="assertion-id"> [jsr335-18.5.2-10-H4]</span></span>
+</li><li> <span class="norm-static"> The constraints resulting from substitution are reduced and incorporated with the current bound set.<span class="assertion-id"> [jsr335-18.5.2-10-H5]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> The inference variables in <em>B<sub>4</sub></em> are resolved, following the process in <a href="G.html#G18.4" title="Lambda G" class="mw-redirect">18.4</a>.  Where this results in instantiations <em>T<sub>1</sub>, ..., T<sub>p</sub></em> for inference variables <em>α<sub>1</sub>, ..., α<sub>p</sub></em>, let <em>θ'</em> be the substitution <em>[P<sub>1</sub>:=T<sub>1</sub>, ..., P<sub>p</sub>:=T<sub>p</sub>]</em>.  It is a compile-time error if no resolution of the inference variables in <em>B<sub>4</sub></em> can be found.<span class="assertion-id"> [jsr335-18.5.2-10-E]</span></span>
+</li><li> <span class="norm-static"> Then apply <em>θ'</em> to the type of <em>m</em>.  If unchecked conversion was not necessary for the method to be applicable in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>, then this is the invocation type of <em>m</em>; if unchecked conversion <i>was</i> necessary, then this substitution provides the parameter types of the invocation type, while the return type and thrown types are given by the erasure of <em>m</em>'s type (without applying <em>θ'</em>).<span class="assertion-id"> [jsr335-18.5.2-10-F]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Invocation type inference may require carefully sequencing the reduction of constraint formulas of the forms <em>⟨Expression &rarr; T⟩</em>, <em>⟨LambdaExpression &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T⟩</em>, and <em>⟨MethodReference &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T⟩</em>.  To facilitate this sequencing, the <i>input variables</i> of these constraints are defined as follows:<span class="assertion-id"> [jsr335-18.5.2-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> For <em>⟨LambdaExpression &rarr; T⟩</em>:<span class="assertion-id"> [jsr335-18.5.2-20-A]</span></span>
+<ul><li> <span class="norm-static"> If <em>T</em> is an inference variable, it is the (only) input variable.<span class="assertion-id"> [jsr335-18.5.2-20-A1]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a functional interface type, and a function type can be derived, as described in <a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>, the input variables include i) if the lambda expression is implicitly-typed (<a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a>), the inference variables mentioned by the function type's parameter types; and ii) if the function type's return type, <em>R</em>, is not <code style="background-color:inherit;font-size:medium">void</code>, then for each result expression, <em>Expression'</em>, in the lambda body (or for the body itself if it is an expression), the input variables of <em>⟨Expression' &rarr; R⟩</em>.<span class="assertion-id"> [jsr335-18.5.2-20-A2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, there are no input variables.<span class="assertion-id"> [jsr335-18.5.2-20-A3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> For <em>⟨LambdaExpression &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T⟩</em>:<span class="assertion-id"> [jsr335-18.5.2-20-B]</span></span>
+<ul><li> <span class="norm-static"> If <em>T</em> is an inference variable, it is the (only) input variable.<span class="assertion-id"> [jsr335-18.5.2-20-B1]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a functional interface type, and a function type can be derived, as described in <a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>, the input variables include i) if the lambda expression is implicitly-typed (<a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a>), the inference variables mentioned by the function type's parameter types; and ii) the inference variables mentioned by the function type's return type.<span class="assertion-id"> [jsr335-18.5.2-20-B2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, there are no input variables.<span class="assertion-id"> [jsr335-18.5.2-20-B3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> For <em>⟨MethodReference &rarr; T⟩</em>:<span class="assertion-id"> [jsr335-18.5.2-20-C]</span></span>
+<ul><li> <span class="norm-static"> If <em>T</em> is an inference variable, it is the (only) input variable.<span class="assertion-id"> [jsr335-18.5.2-20-C1]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a functional interface type with a function type, and if the method reference is inexact (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>), the input variables are the inference variables mentioned by the function type's parameter types.<span class="assertion-id"> [jsr335-18.5.2-20-C2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, there are no input variables.<span class="assertion-id"> [jsr335-18.5.2-20-C3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> For <em>⟨MethodReference &rarr;<sub><code style="background-color:inherit;font-size:medium">throws</code></sub> T⟩</em>:<span class="assertion-id"> [jsr335-18.5.2-20-D]</span></span>
+<ul><li> <span class="norm-static"> If <em>T</em> is an inference variable, it is the (only) input variable.<span class="assertion-id"> [jsr335-18.5.2-20-D1]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a functional interface type with a function type, and if the method reference is inexact (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>), the input variables are the inference variables mentioned by the function type's parameter types and the function type's return type.<span class="assertion-id"> [jsr335-18.5.2-20-D2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, there are no input variables.<span class="assertion-id"> [jsr335-18.5.2-20-D3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> For <em>⟨ParenthesizedExpression &rarr; T⟩</em>: Where <em>Expression'</em> is the contained expression, the input variables are the input variables of <em>⟨Expression' &rarr; T⟩</em>.<span class="assertion-id"> [jsr335-18.5.2-20-E]</span></span>
+</li><li> <span class="norm-static"> For <em>⟨ConditionalExpression &rarr; T⟩</em>: Where the expression has the form <em>Expression<sub>1</sub> <code style="background-color:inherit;font-size:medium">?</code> Expression<sub>2</sub> <code style="background-color:inherit;font-size:medium">:</code> Expression<sub>3</sub></em>, the input variables are the input variables of <em>⟨Expression<sub>2</sub> &rarr; T⟩</em> and <em>⟨Expression<sub>3</sub> &rarr; T⟩</em>.<span class="assertion-id"> [jsr335-18.5.2-20-F]</span></span>
+</li><li> <span class="norm-static"> For all other constraint formulas, there are no input variables.<span class="assertion-id"> [jsr335-18.5.2-20-G]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The <i>output variables</i> of these constraints are all inference variables mentioned by the type on the right-hand side of the constraint, <em>T</em>, that are not input variables.<span class="assertion-id"> [jsr335-18.5.2-22]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> It is important to note that two "rounds" of inference are involved in finding the type of a method invocation.  This is necessary to allow a target type to influence the type of the invocation <i>without</i> allowing it to influence the choice of an applicable method.  The first round produces a bound set and tests that a resolution exists, but does not commit to that resolution.  The second round reduces additional constraints and then performs a second resolution, this time "for real."
+<p>The distinction between these two rounds of inference was confused in previous iterations of the JLS (compare the discussion of inference in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.2" class="external text" rel="nofollow">15.12.2.2</a> vs. <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.6" class="external text" rel="nofollow">15.12.2.6</a>; also see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.8" class="external text" rel="nofollow">15.12.2.8</a>, which makes ambiguous use of the term "now").
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Let's revisit the example from the previous section:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">List&lt;Number&gt; ln = Arrays.asList(1, 2.0);</pre>
+<p>The most-specific applicable method is declared as follows:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">public static &lt;T&gt; List&lt;T&gt; asList(T... a)</pre>
+<p>In order to complete type-checking of the method invocation, we must determine whether it is compatible with its target type, <code style="background-color:inherit;font-size:medium">List&lt;Number&gt;</code>.
+</p><p>The bound set used to demonstrate applicability in the previous section, <em>B<sub>2</sub></em>, was:
+</p>
+<blockquote><em>{ α &lt;: <code style="background-color:inherit;font-size:medium">Object</code>, <code style="background-color:inherit;font-size:medium">Integer</code>&lt;: α , <code style="background-color:inherit;font-size:medium">Double</code> &lt;: α }</em></blockquote>
+<p>The new constraint formula set is as follows:
+</p>
+<blockquote><em>{ ⟨<code style="background-color:inherit;font-size:medium">List&lt;α&gt;</code> &rarr; <code style="background-color:inherit;font-size:medium">List&lt;Number&gt;</code>⟩ }</em></blockquote>
+<p>This compatibility constraint produces an equality bound for <em>α</em>, which is included in the new bound set, <em>B<sub>3</sub></em>:
+</p>
+<blockquote><em>{ α &lt;: <code style="background-color:inherit;font-size:medium">Object</code>, <code style="background-color:inherit;font-size:medium">Integer</code>&lt;: α , <code style="background-color:inherit;font-size:medium">Double</code> &lt;: α, α = <code style="background-color:inherit;font-size:medium">Number</code> }</em></blockquote>
+<p>These bounds are trivially resolved:
+</p>
+<blockquote><em>α = <code style="background-color:inherit;font-size:medium">Number</code></em></blockquote>
+<p>Finally, we perform a substitution on the declared return type of <code style="background-color:inherit;font-size:medium">asList</code> to determine that the invocation expression has type <code style="background-color:inherit;font-size:medium">List&lt;Number&gt;</code>; clearly, this is compatible with the target type.
+</p><p>Note that this strategy for inference is different than JLS 7, which would have instantiated <em>α</em> based on its lower bounds (before even considering the invocation's target type), as we did in the previous section.  This would result in a type error, since the resulting type is not a subtype of <code style="background-color:inherit;font-size:medium">List&lt;Number&gt;</code>.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The use of capture when comparing a method result type to its target type is new, and allows for more precise inference.
+</div></li>
+<li style="margin-bottom:12px;"><div> Under various special circumstances, based on the bounds appearing in <em>B<sub>2</sub></em>, we eagerly resolve an inference variable that appears as the return type of the invocation.  This is to avoid unfortunate situations in which the usual constraint, <em>⟨R θ &rarr; T⟩</em>, is not completeness-preserving.  It is, unfortunately, possible that by eagerly resolving the variable, we are unable to make use of bounds that would be inferred later.  It is also possible that, in some cases, bounds that will later be inferred from the invocation arguments (such as implicitly-typed lambda expressions) would have caused a different outcome if they had been present in <em>B<sub>2</sub></em>.  Despite these limitations, the strategy allows for reasonable outcomes in typical use cases, and preserves backwards-compatibility with the JLS 7 algorithm.
+</div></li></ol></div></blockquote>
+<div id="G18.5.3"></div>
+<h3> <span class="mw-headline" id="18.5.3_Functional_Interface_Parameterization_Inference_.5BNew.5D"> 18.5.3 Functional Interface Parameterization Inference [New] </span></h3>
+<p><span class="norm-static">
+Where a lambda expression with explicit parameter types <em>P<sub>1</sub>, ..., P<sub>n</sub></em> targets a wildcard-parameterized functional interface, <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, a parameterization of <em>F</em> may be derived as the ground target type of the expression, according to the following process.<span class="assertion-id"> [jsr335-18.5.3-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> Let <em>Q<sub>1</sub>, ..., Q<sub>k</sub></em> be the parameter types of the function type of <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>α<sub>1</sub>, ..., α<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, where <em>α<sub>1</sub>, ..., α<sub>m</sub></em> are new inference variables.  If <em>n ≠ k</em>, no valid parameterization exists.<span class="assertion-id"> [jsr335-18.5.3-20-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, a set of constraint formulas is formed with, for all <em>i</em> (<em>1 ≤ i ≤ n</em>), <em>⟨P<sub>i</sub> = Q<sub>i</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.5.3-20-C]</span></span>
+</li><li> <span class="norm-static"> This constraint formula set is reduced to form the bound set <em>B</em>.  If <em>B</em> contains the bound <em>false</em>, no valid parameterization exists.<span class="assertion-id"> [jsr335-18.5.3-20-D]</span></span>
+</li><li> <span class="norm-static"> Otherwise, a new parameterization of the functional interface, <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A'<sub>1</sub>, ..., A'<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, is constructed as follows, for <em>1 ≤ i ≤ m</em>:<span class="assertion-id"> [jsr335-18.5.3-20-E]</span></span>
+<ul><li> <span class="norm-static"> If <em>B</em> contains an instantiation, <em>T</em>, for <em>α<sub>i</sub></em>, then <em>A'<sub>i</sub> = T</em>.<span class="assertion-id"> [jsr335-18.5.3-20-E1]</span></span>
+</li><li> <span class="norm-static"> Otherwise, <em>A'<sub>i</sub> = A<sub>i</sub></em>.<span class="assertion-id"> [jsr335-18.5.3-20-E2]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A'<sub>1</sub>, ..., A'<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> is not a well-formed type (that is, the type arguments are not within their bounds), or if <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A'<sub>1</sub>, ..., A'<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> is not a subtype of <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>, ..., A<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, no valid parameterization exists.<span class="assertion-id"> [jsr335-18.5.3-20-F]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the inferred parameterization is either <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A'<sub>1</sub>, ..., A'<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, if all the type arguments are types, or the non-wildcard parameterization (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>) of <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A'<sub>1</sub>, ..., A'<sub>m</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> if one or more type arguments are still wildcards.<span class="assertion-id"> [jsr335-18.5.3-20-F1]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> In order to determine the function type of a wildcard-parameterized functional interface, we have to "instantiate" the wildcard type arguments with specific types.  The "default" approach is to simply replace the wildcards with their bounds, as described in <a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>.  But this produces spurious errors in cases in which a lambda expression has explicit parameter types that do <i>not</i> correspond to the wildcard bounds.  For example:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">Predicate&lt;? super Integer&gt; p = (Number n) -&gt; n.equals(23);</pre>
+<p>The lambda expression in this example is a <code style="background-color:inherit;font-size:medium">Predicate&lt;Number&gt;</code>, which is a subtype of <code style="background-color:inherit;font-size:medium">Predicate&lt;? super Integer&gt;</code> but not <code style="background-color:inherit;font-size:medium">
+Predicate&lt;Integer&gt;</code>.  The analysis in this section is used to infer that <code style="background-color:inherit;font-size:medium">Number</code> is an appropriate choice for the type argument to <code style="background-color:inherit;font-size:medium">Predicate</code>.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The analysis here, while described in terms of general type inference, is intentionally quite simple.  The only constraints are equality constraints, which means that reduction amounts to simple pattern matching.
+<p>A more powerful strategy might also infer constraints from the body of the lambda expression.  But, given possible interactions with inference for surrounding and/or nested generic method invocations, this would introduce a lot of extra complexity.
+</p>
+</div></li></ol></div></blockquote>
+<div id="G18.5.4"></div>
+<h3> <span class="mw-headline" id="18.5.4_More_Specific_Method_Inference_.5BNew.5D"> 18.5.4 More Specific Method Inference [New] </span></h3>
+<p><span class="norm-static">
+When testing that one applicable method is <i>more specific</i> than another (<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>), where the second method is generic, it is necessary to test whether some instantiation of the second method's type parameters can be inferred to make the first method more specific than the second.<span class="assertion-id"> [jsr335-18.5.4-10]</span></span>
+</p><p><span class="norm-static">
+Let <em>m<sub>1</sub></em> be the first method and <em>m<sub>2</sub></em> be the second.  Let <em>exp<sub>1</sub>, ..., exp<sub>k</sub></em> be the argument expressions of the corresponding invocation.<span class="assertion-id"> [jsr335-18.5.4-12]</span></span>
+</p><p><span class="norm-static">
+Where <em>m<sub>2</sub></em> has type parameters <em>P<sub>1</sub>, ..., P<sub>p</sub></em>, let <em>α<sub>1</sub>, ..., α<sub>p</sub></em> be inference variables.  Let <em>θ</em> be the substitution <em>[P<sub>1</sub>:=α<sub>1</sub>, ..., P<sub>p</sub>:=α<sub>p</sub>]</em>.<span class="assertion-id"> [jsr335-18.5.4-14]</span></span>
+</p><p><span class="norm-static">
+If <em>m<sub>1</sub></em> and <em>m<sub>2</sub></em> are applicable by strict or loose invocation (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>, <a href="F.html#F15.12.2.3" title="Lambda F" class="mw-redirect">15.12.2.3</a>), then let <em>S<sub>1</sub>, ..., S<sub>k</sub></em> be the parameter types of <em>m<sub>1</sub></em>, and let <em>T<sub>1</sub>, ..., T<sub>k</sub></em> be the result of <em>θ</em> applied to the parameter types of <em>m<sub>2</sub></em>.  If <em>m<sub>1</sub></em> and <em>m<sub>2</sub></em> are applicable by variable arity invocation (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>), then let <em>S<sub>1</sub>, ..., S<sub>k</sub></em> be the first <em>k</em> variable-arity parameter types of <em>m<sub>1</sub></em>, and let <em>T<sub>1</sub>, ..., T<sub>k</sub></em> be the result of <em>θ</em> applied to the first <em>k</em> variable-arity parameter types of <em>m<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.4-16]</span></span>
+</p><p>Note that no substitution is applied to <em>S<sub>1</sub>, ..., S<sub>k</sub></em>; even if <em>m<sub>1</sub></em> is generic, the type parameters of <em>m<sub>1</sub></em> are treated as type variables, not inference variables.
+</p><p><span class="norm-static">
+First, an initial bound set <em>B</em> is constructed from the declared bounds of <em>P<sub>1</sub>, ..., P<sub>p</sub></em>, as described in <a href="G.html#G18.1.3" title="Lambda G" class="mw-redirect">18.1.3</a>.<span class="assertion-id"> [jsr335-18.5.4-20]</span></span>
+</p><p><span class="norm-static">
+Second, for all <em>i</em>, <em>1 ≤ i ≤ k</em>, a set of constraint formulas or bounds is generated.<span class="assertion-id"> [jsr335-18.5.4-30]</span></span>
+</p><p><span class="norm-static">
+If <em>S<sub>i</sub></em> and <em>T<sub>i</sub></em> are proper types, the result is <em>true</em> if <em>S<sub>i</sub></em> is more specific than <em>T<sub>i</sub></em> for <em>exp<sub>i</sub></em> (<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>), and <em>false</em> otherwise.<span class="assertion-id"> [jsr335-18.5.4-32]</span></span>
+</p><p><span class="norm-static">
+Otherwise, if <em>S<sub>i</sub></em> is a functional interface type and <em>T<sub>i</sub></em> is a parameterization of functional interface, <em>I</em>, and none of the following is true:<span class="assertion-id"> [jsr335-18.5.4-33]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>S<sub>i</sub></em> is a superinterface of <em>I</em>, or a parameterization of a superinterface of <em>I</em>.<span class="assertion-id"> [jsr335-18.5.4-33-A]</span></span>
+</li><li> <span class="norm-static"> <em>S<sub>i</sub></em> is subinterface of <em>I</em>, or a parameterization of a subinterface of <em>I</em>.<span class="assertion-id"> [jsr335-18.5.4-33-B]</span></span>
+</li><li> <span class="norm-static"> <em>S<sub>i</sub></em> is an intersection type and each element of the intersection is a superinterface of <em>I</em>, or a parameterization of a superinterface of <em>I</em>.<span class="assertion-id"> [jsr335-18.5.4-33-C]</span></span>
+</li><li> <span class="norm-static"> <em>S<sub>i</sub></em> is an intersection type and some element of the intersection is a subinterface of <em>I</em>, or a parameterization of a subinterface of <em>I</em>.<span class="assertion-id"> [jsr335-18.5.4-33-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Then let <em>U<sub>1</sub>, ..., U<sub>k</sub></em> and <em>R<sub>1</sub></em> be the parameter types and return type, respectively, of the function type of <i>the capture of</i> <em>S<sub>i</sub></em>, and let <em>V<sub>1</sub>, ..., V<sub>k</sub></em> and <em>R<sub>2</sub></em> be the parameter types and return type, respectively, of the function type of <em>T<sub>i</sub></em>.  The following constraints or bounds are generated:<span class="assertion-id"> [jsr335-18.5.4-34]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>exp<sub>i</sub></em> is an explicitly-typed lambda expression:<span class="assertion-id"> [jsr335-18.5.4-34-A]</span></span>
+<ul><li> <span class="norm-static"> If <em>R<sub>2</sub></em> is <code style="background-color:inherit;font-size:medium">void</code>, <em>true</em>.<span class="assertion-id"> [jsr335-18.5.4-34-A1]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R<sub>1</sub></em> and <em>R<sub>2</sub></em> are functional interface types, and neither interface is a subinterface of the other, then these rules are applied recursively to <em>R<sub>1</sub></em> and <em>R<sub>2</sub></em>, for each result expression in <em>exp<sub>i</sub></em>.<span class="assertion-id"> [jsr335-18.5.4-34-A2]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R<sub>1</sub></em> is a primitive type and <em>R<sub>2</sub></em> is not, and each result expression is a standalone expression (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) of a primitive type, <em>true</em>.<span class="assertion-id"> [jsr335-18.5.4-34-A3]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R<sub>2</sub></em> is a primitive type and <em>R<sub>1</sub></em> is not, and each result expression is either a standalone expression of a reference type or a poly expression, <em>true</em>.<span class="assertion-id"> [jsr335-18.5.4-34-A4]</span></span>
+</li><li> <span class="norm-static"> Otherwise, <em>⟨R<sub>1</sub> &lt;: R<sub>2</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.5.4-34-A5]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>exp<sub>i</sub></em> is an exact method reference:<span class="assertion-id"> [jsr335-18.5.4-34-B]</span></span>
+<ul><li> <span class="norm-static"> For all <em>j</em>, <em>1 ≤ j ≤ k</em>, <em>⟨U<sub>j</sub> = V<sub>j</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.5.4-34-B5]</span></span>
+</li><li> <span class="norm-static"> If <em>R<sub>2</sub></em> is <code style="background-color:inherit;font-size:medium">void</code>, <em>true</em>.<span class="assertion-id"> [jsr335-18.5.4-34-B1]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if <em>R<sub>1</sub></em> is a primitive type and <em>R<sub>2</sub></em> is not, and the compile-time declaration for the method reference has a primitive return type, <em>true</em>.<span class="assertion-id"> [jsr335-18.5.4-34-B2]</span></span>
+</li><li> <span class="norm-static"> Otherwise if <em>R<sub>2</sub></em> is a primitive type and <em>R<sub>1</sub></em> is not, and the compile-time declaration for the method reference has a reference return type, <em>true</em>.<span class="assertion-id"> [jsr335-18.5.4-34-B3]</span></span>
+</li><li> <span class="norm-static"> Otherwise, <em>⟨R<sub>1</sub> &lt;: R<sub>2</sub>⟩</em>.<span class="assertion-id"> [jsr335-18.5.4-34-B4]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If <em>exp<sub>i</sub></em> is a parenthesized expression, these rules are applied recursively to the contained expression.<span class="assertion-id"> [jsr335-18.5.4-34-C]</span></span>
+</li><li> <span class="norm-static"> If <em>exp<sub>i</sub></em> is a conditional expression, these rules are applied recursively to each of the second and third operands.<span class="assertion-id"> [jsr335-18.5.4-34-D]</span></span>
+</li><li> <span class="norm-static"> Otherwise, <em>false</em>.<span class="assertion-id"> [jsr335-18.5.4-34-E]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Otherwise, the constraint <em>⟨S<sub>i</sub> &lt;: T<sub>i</sub>⟩</em> is generated.<span class="assertion-id"> [jsr335-18.5.4-36]</span></span>
+</p><p><span class="norm-static">
+Third, if <em>m<sub>2</sub></em> is applicable by variable arity invocation and has <em>k+1</em> parameters, then where <em>S<sub>k+1</sub></em> is the <em>k+1</em>th variable-arity parameter type of <em>m<sub>1</sub></em> and <em>T<sub>k+1</sub></em> is <em>θ</em> applied to the <em>k+1</em>th variable-arity parameter type of <em>m<sub>2</sub></em>, the constraint <em>⟨S<sub>k+1</sub> &lt;: T<sub>k+1</sub>⟩</em> is generated.<span class="assertion-id"> [jsr335-18.5.4-40]</span></span>
+</p><p><span class="norm-static">
+Fourth, the generated bounds and constraint formulas are reduced and incorporated with <em>B</em> to produce a bound set <em>B'</em>.<span class="assertion-id"> [jsr335-18.5.4-50]</span></span>
+</p><p><span class="norm-static">
+If <em>B'</em> does not contain the bound <em>false</em>, and the inference variables in <em>B'</em> can be resolved, then <em>m<sub>1</sub></em> is more specific than <em>m<sub>2</sub></em>.  Otherwise, <em>m<sub>1</sub></em> is <i>not</i> more specific than <em>m<sub>2</sub></em>.<span class="assertion-id"> [jsr335-18.5.4-52]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The use of inference to compare methods during the more-specific test is not new, but it has been "lifted" out of <a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a> into this new section.  The special treatment of functional interfaces is new, mirroring the changes to <a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a> for non-generic methods.</div></blockquote>
+<div id="G4.10.4"></div>
+<h3> <span class="mw-headline" id="4.10.4_Least_Upper_Bound_of_Reference_Types_.5BNew.5D"> 4.10.4 Least Upper Bound of Reference Types [New] </span></h3>
+<p><span class="norm-static">
+The <i>least upper bound</i>, or <em>lub</em>, of a set of reference types is a shared supertype that is more specific than any other shared supertype (that is, no other shared supertype is a subtype of the least upper bound).  This type, <em>lub(U<sub>1</sub>, ..., U<sub>k</sub>)</em>, is determined as follows.<span class="assertion-id"> [jsr335-4.10.4-10]</span></span>
+</p><p><span class="norm-static">
+If <em>k = 1</em>, then the <em>lub</em> is the type itself: <em>lub(U) = U</em>.<span class="assertion-id"> [jsr335-4.10.4-20]</span></span>
+</p><p><span class="norm-static">
+Otherwise, for each <em>U<sub>i</sub></em> (<em>1 ≤ i ≤ k</em>), we write <em>ST(U<sub>i</sub>)</em> for the set of supertypes of <em>U<sub>i</sub></em>, and define the erased supertype set of <em>U<sub>i</sub></em>:<span class="assertion-id"> [jls-15.12.2.7-430]</span></span>
+</p><p><span class="norm-static">
+<em>EST(U<sub>i</sub>) = { V | W in ST(U<sub>i</sub>) and V = |W| } </em> where <em>|W|</em> is the erasure of <em>W</em>.<span class="assertion-id"> [jls-15.12.2.7-440]</span></span>
+</p><p>The reason for computing the set of erased supertypes is to deal with situations where the set of types includes several distinct invocations of a generic type declaration.
+</p><p>For example, given <code style="background-color:inherit;font-size:medium">List&lt;String&gt;</code> and <code style="background-color:inherit;font-size:medium">List&lt;Object&gt;</code>, simply intersecting the sets <em>ST(<code style="background-color:inherit;font-size:medium">List&lt;String&gt;</code>) = { <code style="background-color:inherit;font-size:medium">List&lt;String&gt;</code>, <code style="background-color:inherit;font-size:medium">Collection&lt;String&gt;</code>, <code style="background-color:inherit;font-size:medium">Object</code> } </em> and <em>ST(<code style="background-color:inherit;font-size:medium">List&lt;Object&gt;</code>) = { <code style="background-color:inherit;font-size:medium">List&lt;Object&gt;</code>, <code style="background-color:inherit;font-size:medium">Collection&lt;Object&gt;</code>, <code style="background-color:inherit;font-size:medium">Object</code> } </em> would yield a set <em>{ <code style="background-color:inherit;font-size:medium">Object</code> } </em>, and we would have lost track of the fact that <em>T</em> can safely be assumed to be a <code style="background-color:inherit;font-size:medium">List</code>.
+</p><p>In contrast, intersecting <em>EST(<code style="background-color:inherit;font-size:medium">List&lt;String&gt;</code>) = { <code style="background-color:inherit;font-size:medium">List</code>, <code style="background-color:inherit;font-size:medium">Collection</code>, <code style="background-color:inherit;font-size:medium">Object</code> } </em> and <em>EST(<code style="background-color:inherit;font-size:medium">List&lt;Object&gt;</code>) = { <code style="background-color:inherit;font-size:medium">List</code>, <code style="background-color:inherit;font-size:medium">Collection</code>, <code style="background-color:inherit;font-size:medium">Object</code> } </em> yields <em>{ <code style="background-color:inherit;font-size:medium">List</code>, <code style="background-color:inherit;font-size:medium">Collection</code>, <code style="background-color:inherit;font-size:medium">Object</code> } </em>, which will eventually enable us to produce <code style="background-color:inherit;font-size:medium">List&lt;?&gt;</code> as described below.
+</p><p><span class="norm-static">
+The erased candidate set for a set of types, <em>EC</em>, is the intersection of all the sets <em>EST(U<sub>i</sub>)</em> for each <em>U<sub>i</sub></em> in <em>U<sub>1</sub>, ..., U<sub>k</sub></em>.<span class="assertion-id"> [jls-15.12.2.7-450]</span></span>
+</p><p><span class="norm-static">
+The minimal erased candidate set for <em>U<sub>1</sub>, ..., U<sub>k</sub></em> is:<span class="assertion-id"> [jls-15.12.2.7-460]</span></span>
+</p><p><span class="norm-static">
+<em>MEC = { V | V in EC, and for all W ≠ V in EC, it is not the case that W &lt;: V } </em><span class="assertion-id"> [jls-15.12.2.7-470]</span></span>
+</p><p>Because we are seeking to infer more precise types, we wish to filter out any candidates that are supertypes of other candidates.  This is what computing <em>MEC</em> accomplishes.
+</p><p>In our running example, we had <em>EC = { <code style="background-color:inherit;font-size:medium">List</code>, <code style="background-color:inherit;font-size:medium">Collection</code>, <code style="background-color:inherit;font-size:medium">Object</code> } </em>, and now <em>MEC = { <code style="background-color:inherit;font-size:medium">List</code> } </em>.
+</p><p>The next step will be to recover type arguments for the erased types in <em>MEC</em>.
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The definition of the <em>lci</em> and <em>lcta</em> functions from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.7" class="external text" rel="nofollow">15.12.2.7</a> in JLS 7 should be inserted here.</div></blockquote>
+<p>...
+</p><p>Finally, we define the least upper bound based on all the elements of the minimal erased candidate set of <em>U<sub>1</sub>, ..., U<sub>k</sub></em>.  If any of these elements are generic, we use the <em>CandidateInvocation</em> function to recover the type argument information.
+</p><p><span class="norm-static">
+Define <em>Candidate(W) = CandidateInvocation(W)</em> if <em>W</em> is generic, <em>W</em> otherwise.<span class="assertion-id"> [jls-15.12.2.7-530]</span></span>
+</p><p><span class="norm-static">
+Then <em>lub(U<sub>1</sub>, ..., U<sub>k</sub>)</em> is <em>Candidate(W<sub>1</sub>) <code style="background-color:inherit;font-size:medium">&amp;</code> ... <code style="background-color:inherit;font-size:medium">&amp;</code> Candidate(W<sub>r</sub>)</em>, where <em>W<sub>i</sub></em> (<em>1 ≤ i ≤ r</em>) are the elements of <em>MEC</em>.<span class="assertion-id"> [jls-15.12.2.7-540]</span></span>
+</p><p><span class="norm-static">
+Strictly speaking, the <em>lub</em> function defined here only approximates a <i>least</i> upper bound.  Formally, there may exist some other type <em>T</em> such that all of <em>U<sub>1</sub>, ..., U<sub>k</sub></em> are subtypes of <em>T</em> and <em>T</em> is a subtype of <em>lub(U<sub>1</sub>, ..., U<sub>k</sub>)</em>.  However, a Java compiler's implementation of <em>lub</em> must be consistent with the above definition.<span class="assertion-id"> [jsr335-4.10.4-90]</span></span>
+</p><p><span class="norm-static">
+It is possible that the <em>lub</em> computation yields an infinite type.  This is permissible, and a Java compiler must recognize such situations and represent them appropriately using cyclic data structures.<span class="assertion-id"> [jls-15.12.2.7-600]</span></span>
+</p><p>The possibility of an infinite type stems from the recursive calls to <em>lub</em>.  Readers familiar with recursive types should note that an infinite type is not the same as a recursive type.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This section is almost entirely lifted from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.7" class="external text" rel="nofollow">15.12.2.7</a>, with only minor changes to eliminate references to type inference (such as the inference variable <em>T<sub>j</sub></em>).</div></blockquote>
+<div id="G15.12.2.7"></div>
+<h3> <span class="mw-headline" id="15.12.2.7_Inferring_Type_Arguments_Based_on_Actual_Arguments_.5BModified.5D"> 15.12.2.7 Inferring Type Arguments Based on Actual Arguments [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.7" class="external text" rel="nofollow">JLS 15.12.2.7</a></small>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>This section is deleted; it has been replaced by Chapter 18, principally <a href="G.html#G18.2" title="Lambda G" class="mw-redirect">18.2</a> and <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>.</div></blockquote>
+<div id="G15.12.2.8"></div>
+<h3> <span class="mw-headline" id="15.12.2.8_Inferring_Unresolved_Type_Arguments_.5BModified.5D"> 15.12.2.8 Inferring Unresolved Type Arguments [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.8" class="external text" rel="nofollow">JLS 15.12.2.8</a></small>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>This section is deleted; it has been replaced by Chapter 18, principally <a href="G.html#G18.3" title="Lambda G" class="mw-redirect">18.3</a>, <a href="G.html#G18.4" title="Lambda G" class="mw-redirect">18.4</a>, and <a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>.</div></blockquote>
+
+
+
+</body></html>

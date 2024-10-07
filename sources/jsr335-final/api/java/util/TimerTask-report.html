@@ -1,0 +1,228 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:TimerTask [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:TimerTask"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/lang/Runnable.html" title="interface in java.lang" target="_parent">Runnable</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">TimerTask</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+implements <a href="../../java/lang/Runnable.html" title="interface in java.lang" target="_parent">Runnable</a>
+</pre>
+<div class="block">A task that can be scheduled for one-time or repeated execution by a Timer.             </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.3</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Timer.html" title="class in java.util" target="_parent"><code>Timer</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:TimerTask-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:TimerTask--"></a><a name="TimerTask--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>TimerTask</h4>
+<pre>protected&nbsp;TimerTask()</pre>
+<div class="block">Creates a new timer task.    </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:run-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:run--"></a><a name="run--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>run</h4>
+<pre>public abstract&nbsp;void&nbsp;run()</pre>
+<div class="block">The action to be performed by this timer task.        </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Runnable.html#run--" target="_parent">run</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Runnable.html" title="interface in java.lang" target="_parent">Runnable</a></code>  
+</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Thread.html#run--" target="_parent"><code>Thread.run()</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:cancel-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:cancel--"></a><a name="cancel--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cancel</h4>
+<pre>public&nbsp;boolean&nbsp;cancel()</pre>
+<div class="block">Cancels this timer task. If the task has been scheduled for one-time execution and has not yet run, or has not yet been scheduled, it will never run. If the task has been scheduled for repeated execution, it will never run again. (If the task is running when this call occurs, the task will run to completion, but will never run again.)<p>Note that calling this method from within the <tt>run</tt> method of a repeating timer task absolutely guarantees that the timer task will not run again.                        </p>
+<p>This method may be called repeatedly; the second and subsequent calls have no effect.             </p>                                                             
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>true if this task is scheduled for one-time execution and has not yet run, or this task is scheduled for repeated execution. Returns false if the task was scheduled for one-time execution and has already run, or if the task was never scheduled, or if the task was already cancelled. (Loosely speaking, this method returns <tt>true</tt> if it prevents one or more scheduled executions from taking place.)                                                                  </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:scheduledExecutionTime-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:scheduledExecutionTime--"></a><a name="scheduledExecutionTime--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>scheduledExecutionTime</h4>
+<pre>public&nbsp;long&nbsp;scheduledExecutionTime()</pre>
+<div class="block">Returns the <i>scheduled</i> execution time of the most recent <i>actual</i> execution of this task. (If this method is invoked while task execution is in progress, the return value is the scheduled execution time of the ongoing task execution.)<p>This method is typically invoked from within a task's run method, to determine whether the current execution of the task is sufficiently timely to warrant performing the scheduled activity:<pre>
+<code>
+   public void run() {
+       if (System.currentTimeMillis() - scheduledExecutionTime() &gt;=
+           MAX_TARDINESS)
+               return;  // Too late; skip this execution.
+       // Perform the task
+   }
+ </code>
+</pre> This method is typically <i>not</i> used in conjunction with <i>fixed-delay execution </i> repeating tasks, as their scheduled execution times are allowed to drift over time, and so are not terribly significant.                                                         </p>                                     
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the time at which the most recent execution of this task was scheduled to occur, in the format returned by Date.getTime(). The return value is undefined if the task has yet to commence its first execution.                                   </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Date.html#getTime--" target="_parent"><code>Date.getTime()</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

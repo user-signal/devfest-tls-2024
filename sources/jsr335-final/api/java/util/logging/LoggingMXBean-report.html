@@ -1,0 +1,249 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:LoggingMXBean [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:LoggingMXBean"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">LoggingMXBean</span>
+</pre>
+<div class="block">The management interface for the logging facility. It is recommended to use the <a href="../../../java/lang/management/PlatformLoggingMXBean.html" title="interface in java.lang.management" target="_parent"><code>PlatformLoggingMXBean</code></a> management interface that implements all attributes defined in this <code>LoggingMXBean</code>. The <a href="../../../java/lang/management/ManagementFactory.html#getPlatformMXBean-java.lang.Class-" target="_parent"><code>ManagementFactory.getPlatformMXBean</code></a> method can be used to obtain the <code>PlatformLoggingMXBean</code> object representing the management interface for logging.<p>There is a single global instance of the <tt>LoggingMXBean</tt>. This instance is an <a href="../../../javax/management/MXBean.html" title="annotation in javax.management" target="_parent"><code>MXBean</code></a> that can be obtained by calling the <a href="../../../java/util/logging/LogManager.html#getLoggingMXBean--" target="_parent"><code>LogManager.getLoggingMXBean()</code></a> method or from the <a href="../../../java/lang/management/ManagementFactory.html#getPlatformMBeanServer--" target="_parent">platform <tt>MBeanServer</tt> </a>.                          </p>
+<p> The <a href="../../../javax/management/ObjectName.html" title="class in javax.management" target="_parent"><code>ObjectName</code></a> that uniquely identifies the management interface for logging within the <code>MBeanServer</code> is:<pre>
+    
+
+<a href="../../../java/util/logging/LogManager.html#LOGGING_MXBEAN_NAME" target="_parent"><code>java.util.logging:type=Logging</code></a>
+ 
+
+</pre>              
+</p>
+<p> The instance registered in the platform <code>MBeanServer</code> is also a <a href="../../../java/lang/management/PlatformLoggingMXBean.html" title="interface in java.lang.management" target="_parent"><code>PlatformLoggingMXBean</code></a>.           </p>                                        
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/lang/management/PlatformLoggingMXBean.html" title="interface in java.lang.management" target="_parent"><code>PlatformLoggingMXBean</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getLoggerNames-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getLoggerNames--"></a><a name="getLoggerNames--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLoggerNames</h4>
+<pre>
+<a href="../../../java/util/List.html" title="interface in java.util" target="_parent">List</a>&lt;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&gt;&nbsp;getLoggerNames()</pre>
+<div class="block">Returns the list of currently registered logger names. This method calls <a href="../../../java/util/logging/LogManager.html#getLoggerNames--" target="_parent"><code>LogManager.getLoggerNames()</code></a> and returns a list of the logger names.                   </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A list of <tt>String</tt> each of which is a currently registered <tt>Logger</tt> name.            </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getLoggerLevel-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getLoggerLevel-java.lang.String-"></a><a name="getLoggerLevel-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLoggerLevel</h4>
+<pre>
+<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getLoggerLevel(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;loggerName)</pre>
+<div class="block">Gets the name of the log level associated with the specified logger. If the specified logger does not exist, <tt>null</tt> is returned. This method first finds the logger of the given name and then returns the name of the log level by calling:<blockquote> 
+<a href="../../../java/util/logging/Logger.html#getLevel--" target="_parent"><code>Logger.getLevel()</code></a>.<a href="../../../java/util/logging/Level.html#getName--" target="_parent"><code>getName()</code></a>; </blockquote>
+<p> If the <tt>Level</tt> of the specified logger is <tt>null</tt>, which means that this logger's effective level is inherited from its parent, an empty string will be returned.                           </p>                                          
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>loggerName</code> - The name of the <tt>Logger</tt> to be retrieved.          </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The name of the log level of the specified logger; or an empty string if the log level of the specified logger is <tt>null</tt>. If the specified logger does not exist, <tt>null</tt> is returned.                                 </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/logging/Logger.html#getLevel--" target="_parent"><code>Logger.getLevel()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setLoggerLevel-java.lang.String-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setLoggerLevel-java.lang.String-java.lang.String-"></a><a name="setLoggerLevel-java.lang.String-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLoggerLevel</h4>
+<pre>void&nbsp;setLoggerLevel(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;loggerName,
+                    <a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;levelName)</pre>
+<div class="block">Sets the specified logger to the specified new level. If the <tt>levelName</tt> is not <tt>null</tt>, the level of the specified logger is set to the parsed <tt>Level</tt> matching the <tt>levelName</tt>. If the <tt>levelName</tt> is <tt>null</tt>, the level of the specified logger is set to <tt>null</tt> and the effective level of the logger is inherited from its nearest ancestor with a specific (non-null) level value.                                                               </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>loggerName</code> - The name of the <tt>Logger</tt> to be set. Must be non-null.             </dd>
+<dd> 
+<code>levelName</code> - The name of the level to set on the specified logger, or <tt>null</tt> if setting the level to inherit from its nearest ancestor.                         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the specified logger does not exist, or <tt>levelName</tt> is not a valid level name.                 </dd>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have LoggingPermission("control").               </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/logging/Logger.html#setLevel-java.util.logging.Level-" target="_parent"><code>Logger.setLevel(java.util.logging.Level)</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getParentLoggerName-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getParentLoggerName-java.lang.String-"></a><a name="getParentLoggerName-java.lang.String-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getParentLoggerName</h4>
+<pre>
+<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getParentLoggerName(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;loggerName)</pre>
+<div class="block">Returns the name of the parent for the specified logger. If the specified logger does not exist, <tt>null</tt> is returned. If the specified logger is the root <tt>Logger</tt> in the namespace, the result will be an empty string.                                     </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>loggerName</code> - The name of a <tt>Logger</tt>.       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the name of the nearest existing parent logger; an empty string if the specified logger is the root logger. If the specified logger does not exist, <tt>null</tt> is returned.                            </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

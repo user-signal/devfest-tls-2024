@@ -1,0 +1,1829 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:PrintWriter [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:PrintWriter"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/io/Closeable.html" title="interface in java.io" target="_parent">Closeable</a>, <a href="../../java/io/Flushable.html" title="interface in java.io" target="_parent">Flushable</a>, <a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a>, <a href="../../java/lang/AutoCloseable.html" title="interface in java.lang" target="_parent">AutoCloseable</a>    
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">PrintWriter</span>
+extends <a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>
+</pre>
+<div class="block">Prints formatted representations of objects to a text-output stream. This class implements all of the <tt>print</tt> methods found in <a href="../../java/io/PrintStream.html" title="class in java.io" target="_parent"><code>PrintStream</code></a>. It does not contain methods for writing raw bytes, for which a program should use unencoded byte streams.<p> Unlike the <a href="../../java/io/PrintStream.html" title="class in java.io" target="_parent"><code>PrintStream</code></a> class, if automatic flushing is enabled it will be done only when one of the <tt>println</tt>, <tt>printf</tt>, or <tt>format</tt> methods is invoked, rather than whenever a newline character happens to be output. These methods use the platform's own notion of line separator rather than the newline character.                                                  </p>
+<p> Methods in this class never throw I/O exceptions, although some of its constructors may. The client may inquire as to whether any errors have occurred by invoking <a href="../../java/io/PrintWriter.html#checkError--" target="_parent"><code>checkError()</code></a>.                            </p>                                     
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.1</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:out [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:out"></a><a name="out"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>out</h4>
+<pre>protected&nbsp;<a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a> out</pre>
+<div class="block">The underlying character-output stream of this <code>PrintWriter</code>.      </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.2</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.io.Writer- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.io.Writer-"></a><a name="PrintWriter-java.io.Writer-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>&nbsp;out)</pre>
+<div class="block">Creates a new PrintWriter, without automatic line flushing.       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - A character-output stream     </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.io.Writer-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.io.Writer-boolean-"></a><a name="PrintWriter-java.io.Writer-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>&nbsp;out,
+                   boolean&nbsp;autoFlush)</pre>
+<div class="block">Creates a new PrintWriter.   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - A character-output stream     </dd>
+<dd> 
+<code>autoFlush</code> - A boolean; if true, the <tt>println</tt>, <tt>printf</tt>, or <tt>format</tt> methods will flush the output buffer                 </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.io.OutputStream- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.io.OutputStream-"></a><a name="PrintWriter-java.io.OutputStream-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/io/OutputStream.html" title="class in java.io" target="_parent">OutputStream</a>&nbsp;out)</pre>
+<div class="block">Creates a new PrintWriter, without automatic line flushing, from an existing OutputStream. This convenience constructor creates the necessary intermediate OutputStreamWriter, which will convert characters into bytes using the default character encoding.                              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - An output stream     </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/io/OutputStreamWriter.html#OutputStreamWriter-java.io.OutputStream-" target="_parent"><code>OutputStreamWriter.OutputStreamWriter(java.io.OutputStream)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.io.OutputStream-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.io.OutputStream-boolean-"></a><a name="PrintWriter-java.io.OutputStream-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/io/OutputStream.html" title="class in java.io" target="_parent">OutputStream</a>&nbsp;out,
+                   boolean&nbsp;autoFlush)</pre>
+<div class="block">Creates a new PrintWriter from an existing OutputStream. This convenience constructor creates the necessary intermediate OutputStreamWriter, which will convert characters into bytes using the default character encoding.                          </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - An output stream     </dd>
+<dd> 
+<code>autoFlush</code> - A boolean; if true, the <tt>println</tt>, <tt>printf</tt>, or <tt>format</tt> methods will flush the output buffer                 </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/io/OutputStreamWriter.html#OutputStreamWriter-java.io.OutputStream-" target="_parent"><code>OutputStreamWriter.OutputStreamWriter(java.io.OutputStream)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.lang.String-"></a><a name="PrintWriter-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;fileName)
+            throws <a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a>
+</pre>
+<div class="block">Creates a new PrintWriter, without automatic line flushing, with the specified file name. This convenience constructor creates the necessary intermediate <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent"><code>OutputStreamWriter</code></a>, which will encode characters using the <a href="../../java/nio/charset/Charset.html#defaultCharset--" target="_parent">default charset </a> for this instance of the Java virtual machine.                                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fileName</code> - The name of the file to use as the destination of this writer. If the file exists then it will be truncated to zero size; otherwise, a new file will be created. The output will be written to the file and is buffered.                                             </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a></code> - If the given string does not denote an existing, writable regular file and a new regular file of that name cannot be created, or if some other error occurs while opening or creating the file                                     </dd>
+<dd> 
+<code><a href="../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - If a security manager is present and <a href="../../java/lang/SecurityManager.html#checkWrite-java.io.FileDescriptor-" target="_parent"><code>checkWrite(fileName)</code></a> denies write access to the file                </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.lang.String-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.lang.String-java.lang.String-"></a><a name="PrintWriter-java.lang.String-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;fileName,
+                   <a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;csn)
+            throws <a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a>,
+                   <a href="../../java/io/UnsupportedEncodingException.html" title="class in java.io" target="_parent">UnsupportedEncodingException</a>
+</pre>
+<div class="block">Creates a new PrintWriter, without automatic line flushing, with the specified file name and charset. This convenience constructor creates the necessary intermediate <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent"><code>OutputStreamWriter</code></a>, which will encode characters using the provided charset.                              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fileName</code> - The name of the file to use as the destination of this writer. If the file exists then it will be truncated to zero size; otherwise, a new file will be created. The output will be written to the file and is buffered.                                             </dd>
+<dd> 
+<code>csn</code> - The name of a supported <a href="../../java/nio/charset/Charset.html" title="class in java.nio.charset" target="_parent">charset</a>        
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a></code> - If the given string does not denote an existing, writable regular file and a new regular file of that name cannot be created, or if some other error occurs while opening or creating the file                                     </dd>
+<dd> 
+<code><a href="../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - If a security manager is present and <a href="../../java/lang/SecurityManager.html#checkWrite-java.io.FileDescriptor-" target="_parent"><code>checkWrite(fileName)</code></a> denies write access to the file                </dd>
+<dd> 
+<code><a href="../../java/io/UnsupportedEncodingException.html" title="class in java.io" target="_parent">UnsupportedEncodingException</a></code> - If the named charset is not supported         </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.io.File- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.io.File-"></a><a name="PrintWriter-java.io.File-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/io/File.html" title="class in java.io" target="_parent">File</a>&nbsp;file)
+            throws <a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a>
+</pre>
+<div class="block">Creates a new PrintWriter, without automatic line flushing, with the specified file. This convenience constructor creates the necessary intermediate <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent"><code>OutputStreamWriter</code></a>, which will encode characters using the <a href="../../java/nio/charset/Charset.html#defaultCharset--" target="_parent">default charset </a> for this instance of the Java virtual machine.                                  </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>file</code> - The file to use as the destination of this writer. If the file exists then it will be truncated to zero size; otherwise, a new file will be created. The output will be written to the file and is buffered.                                          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a></code> - If the given file object does not denote an existing, writable regular file and a new regular file of that name cannot be created, or if some other error occurs while opening or creating the file                                      </dd>
+<dd> 
+<code><a href="../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - If a security manager is present and <a href="../../java/lang/SecurityManager.html#checkWrite-java.io.FileDescriptor-" target="_parent"><code>checkWrite(file.getPath())</code></a> denies write access to the file                </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PrintWriter-java.io.File-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PrintWriter-java.io.File-java.lang.String-"></a><a name="PrintWriter-java.io.File-java.lang.String-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>PrintWriter</h4>
+<pre>public&nbsp;PrintWriter(<a href="../../java/io/File.html" title="class in java.io" target="_parent">File</a>&nbsp;file,
+                   <a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;csn)
+            throws <a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a>,
+                   <a href="../../java/io/UnsupportedEncodingException.html" title="class in java.io" target="_parent">UnsupportedEncodingException</a>
+</pre>
+<div class="block">Creates a new PrintWriter, without automatic line flushing, with the specified file and charset. This convenience constructor creates the necessary intermediate <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent"><code>OutputStreamWriter</code></a>, which will encode characters using the provided charset.                             </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>file</code> - The file to use as the destination of this writer. If the file exists then it will be truncated to zero size; otherwise, a new file will be created. The output will be written to the file and is buffered.                                          </dd>
+<dd> 
+<code>csn</code> - The name of a supported <a href="../../java/nio/charset/Charset.html" title="class in java.nio.charset" target="_parent">charset</a>        
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/FileNotFoundException.html" title="class in java.io" target="_parent">FileNotFoundException</a></code> - If the given file object does not denote an existing, writable regular file and a new regular file of that name cannot be created, or if some other error occurs while opening or creating the file                                      </dd>
+<dd> 
+<code><a href="../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - If a security manager is present and <a href="../../java/lang/SecurityManager.html#checkWrite-java.io.FileDescriptor-" target="_parent"><code>checkWrite(file.getPath())</code></a> denies write access to the file                </dd>
+<dd> 
+<code><a href="../../java/io/UnsupportedEncodingException.html" title="class in java.io" target="_parent">UnsupportedEncodingException</a></code> - If the named charset is not supported         </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:flush-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:flush--"></a><a name="flush--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flush</h4>
+<pre>public&nbsp;void&nbsp;flush()</pre>
+<div class="block">Flushes the stream.  </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Flushable.html#flush--" target="_parent">flush</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/io/Flushable.html" title="interface in java.io" target="_parent">Flushable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#flush--" target="_parent">flush</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/io/PrintWriter.html#checkError--" target="_parent"><code>checkError()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:close-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:close--"></a><a name="close--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>close</h4>
+<pre>public&nbsp;void&nbsp;close()</pre>
+<div class="block">Closes the stream and releases any system resources associated with it. Closing a previously closed stream has no effect.                  </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Closeable.html#close--" target="_parent">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/io/Closeable.html" title="interface in java.io" target="_parent">Closeable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/AutoCloseable.html#close--" target="_parent">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/AutoCloseable.html" title="interface in java.lang" target="_parent">AutoCloseable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#close--" target="_parent">close</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/io/PrintWriter.html#checkError--" target="_parent"><code>checkError()</code></a> 
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:checkError-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:checkError--"></a><a name="checkError--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>checkError</h4>
+<pre>public&nbsp;boolean&nbsp;checkError()</pre>
+<div class="block">Flushes the stream if it's not closed and checks its error state.           </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if the print stream has encountered an error, either on the underlying output stream or during a format conversion.                    </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setError-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setError--"></a><a name="setError--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setError</h4>
+<pre>protected&nbsp;void&nbsp;setError()</pre>
+<div class="block">Indicates that an error has occurred.<p> This method will cause subsequent invocations of <a href="../../java/io/PrintWriter.html#checkError--" target="_parent"><code>checkError()</code></a> to return <tt>true</tt> until <a href="../../java/io/PrintWriter.html#clearError--" target="_parent"><code>clearError()</code></a> is invoked.               </p>     
+</div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:clearError-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:clearError--"></a><a name="clearError--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearError</h4>
+<pre>protected&nbsp;void&nbsp;clearError()</pre>
+<div class="block">Clears the error state of this stream.<p> This method will cause subsequent invocations of <a href="../../java/io/PrintWriter.html#checkError--" target="_parent"><code>checkError()</code></a> to return <tt>false</tt> until another write operation fails and invokes <a href="../../java/io/PrintWriter.html#setError--" target="_parent"><code>setError()</code></a>.                   </p>      
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-int-"></a><a name="write-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(int&nbsp;c)</pre>
+<div class="block">Writes a single character.   </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#write-int-" target="_parent">write</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - int specifying a character to be written.         </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-char:A-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-char:A-int-int-"></a><a name="write-char:A-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(char[]&nbsp;buf,
+                  int&nbsp;off,
+                  int&nbsp;len)</pre>
+<div class="block">Writes A Portion of an array of characters.       </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#write-char:A-int-int-" target="_parent">write</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>buf</code> - Array of characters     </dd>
+<dd> 
+<code>off</code> - Offset from which to start writing characters         </dd>
+<dd> 
+<code>len</code> - Number of characters to write       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-char:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-char:A-"></a><a name="write-char:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(char[]&nbsp;buf)</pre>
+<div class="block">Writes an array of characters. This method cannot be inherited from the Writer class because it must suppress I/O exceptions.                   </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#write-char:A-" target="_parent">write</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>buf</code> - Array of characters to be written        </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-java.lang.String-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-java.lang.String-int-int-"></a><a name="write-java.lang.String-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;s,
+                  int&nbsp;off,
+                  int&nbsp;len)</pre>
+<div class="block">Writes a portion of a string.     </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#write-java.lang.String-int-int-" target="_parent">write</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - A String    </dd>
+<dd> 
+<code>off</code> - Offset from which to start writing characters         </dd>
+<dd> 
+<code>len</code> - Number of characters to write       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-java.lang.String-"></a><a name="write-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;s)</pre>
+<div class="block">Writes a string. This method cannot be inherited from the Writer class because it must suppress I/O exceptions.                 </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#write-java.lang.String-" target="_parent">write</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - String to be written      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-boolean-"></a><a name="print-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(boolean&nbsp;b)</pre>
+<div class="block">Prints a boolean value. The string produced by <code><a href="../../java/lang/String.html#valueOf-boolean-" target="_parent"><code>String.valueOf(boolean)</code></a></code> is translated into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>b</code> - The <code>boolean</code> to be printed       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-char-"></a><a name="print-char-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(char&nbsp;c)</pre>
+<div class="block">Prints a character. The character is translated into one or more bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                               </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - The <code>char</code> to be printed       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-int-"></a><a name="print-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(int&nbsp;i)</pre>
+<div class="block">Prints an integer. The string produced by <code><a href="../../java/lang/String.html#valueOf-int-" target="_parent"><code>String.valueOf(int)</code></a></code> is translated into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                               </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>i</code> - The <code>int</code> to be printed       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Integer.html#toString-int-" target="_parent"><code>Integer.toString(int)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-long-"></a><a name="print-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(long&nbsp;l)</pre>
+<div class="block">Prints a long integer. The string produced by <code><a href="../../java/lang/String.html#valueOf-long-" target="_parent"><code>String.valueOf(long)</code></a></code> is translated into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>l</code> - The <code>long</code> to be printed       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Long.html#toString-long-" target="_parent"><code>Long.toString(long)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-float- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-float-"></a><a name="print-float-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(float&nbsp;f)</pre>
+<div class="block">Prints a floating-point number. The string produced by <code><a href="../../java/lang/String.html#valueOf-float-" target="_parent"><code>String.valueOf(float)</code></a></code> is translated into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>f</code> - The <code>float</code> to be printed       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Float.html#toString-float-" target="_parent"><code>Float.toString(float)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-double- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-double-"></a><a name="print-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(double&nbsp;d)</pre>
+<div class="block">Prints a double-precision floating-point number. The string produced by <code><a href="../../java/lang/String.html#valueOf-double-" target="_parent"><code>String.valueOf(double)</code></a></code> is translated into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                                 </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>d</code> - The <code>double</code> to be printed       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Double.html#toString-double-" target="_parent"><code>Double.toString(double)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-char:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-char:A-"></a><a name="print-char:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(char[]&nbsp;s)</pre>
+<div class="block">Prints an array of characters. The characters are converted into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - The array of chars to be printed         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If <code>s</code> is <code>null</code>      
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-java.lang.String-"></a><a name="print-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;s)</pre>
+<div class="block">Prints a string. If the argument is <code>null</code> then the string <code>"null"</code> is printed. Otherwise, the string's characters are converted into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                                         </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - The <code>String</code> to be printed       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:print-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:print-java.lang.Object-"></a><a name="print-java.lang.Object-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>print</h4>
+<pre>public&nbsp;void&nbsp;print(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;obj)</pre>
+<div class="block">Prints an object. The string produced by the <code><a href="../../java/lang/String.html#valueOf-java.lang.Object-" target="_parent"><code>String.valueOf(Object)</code></a></code> method is translated into bytes according to the platform's default character encoding, and these bytes are written in exactly the manner of the <code><a href="../../java/io/PrintWriter.html#write-int-" target="_parent"><code>write(int)</code></a></code> method.                                 </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>obj</code> - The <code>Object</code> to be printed       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Object.html#toString--" target="_parent"><code>Object.toString()</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println--"></a><a name="println--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println()</pre>
+<div class="block">Terminates the current line by writing the line separator string. The line separator string is defined by the system property <code>line.separator</code>, and is not necessarily a single newline character (<code>'\n'</code>).                             </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-boolean-"></a><a name="println-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(boolean&nbsp;x)</pre>
+<div class="block">Prints a boolean value and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-boolean-" target="_parent"><code>print(boolean)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>boolean</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-char-"></a><a name="println-char-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(char&nbsp;x)</pre>
+<div class="block">Prints a character and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-char-" target="_parent"><code>print(char)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                  </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>char</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-int-"></a><a name="println-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(int&nbsp;x)</pre>
+<div class="block">Prints an integer and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-int-" target="_parent"><code>print(int)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                  </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>int</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-long-"></a><a name="println-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(long&nbsp;x)</pre>
+<div class="block">Prints a long integer and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-long-" target="_parent"><code>print(long)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>long</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-float- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-float-"></a><a name="println-float-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(float&nbsp;x)</pre>
+<div class="block">Prints a floating-point number and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-float-" target="_parent"><code>print(float)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>float</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-double- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-double-"></a><a name="println-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(double&nbsp;x)</pre>
+<div class="block">Prints a double-precision floating-point number and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-double-" target="_parent"><code>print(double)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>double</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-char:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-char:A-"></a><a name="println-char:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(char[]&nbsp;x)</pre>
+<div class="block">Prints an array of characters and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-char:A-" target="_parent"><code>print(char[])</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the array of <code>char</code> values to be printed          </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-java.lang.String-"></a><a name="println-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;x)</pre>
+<div class="block">Prints a String and then terminates the line. This method behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-java.lang.String-" target="_parent"><code>print(String)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                  </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the <code>String</code> value to be printed        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:println-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:println-java.lang.Object-"></a><a name="println-java.lang.Object-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>println</h4>
+<pre>public&nbsp;void&nbsp;println(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;x)</pre>
+<div class="block">Prints an Object and then terminates the line. This method calls at first String.valueOf(x) to get the printed object's string value, then behaves as though it invokes <code><a href="../../java/io/PrintWriter.html#print-java.lang.String-" target="_parent"><code>print(String)</code></a></code> and then <code><a href="../../java/io/PrintWriter.html#println--" target="_parent"><code>println()</code></a></code>.                              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - The <code>Object</code> to be printed.       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:printf-java.lang.String-java.lang.Object...- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:printf-java.lang.String-java.lang.Object...-"></a><a name="printf-java.lang.String-java.lang.Object...-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>printf</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;printf(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;format,
+                          <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>...&nbsp;args)</pre>
+<div class="block">A convenience method to write a formatted string to this writer using the specified format string and arguments. If automatic flushing is enabled, calls to this method will flush the output buffer.<p> An invocation of this method of the form <tt>out.printf(format, args) </tt> behaves in exactly the same way as the invocation<pre>
+     out.format(format, args) </pre>                  
+</p>                               
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>format</code> - A format string as described in <a href="../util/Formatter.html#syntax" target="_parent">Format string syntax  </a>.         </dd>
+<dd> 
+<code>args</code> - Arguments referenced by the format specifiers in the format string. If there are more arguments than format specifiers, the extra arguments are ignored. The number of arguments is variable and may be zero. The maximum number of arguments is limited by the maximum dimension of a Java array as defined by <cite>The Java&trade; Virtual Machine Specification    </cite>. The behaviour on a <tt>null</tt> argument depends on the <a href="../util/Formatter.html#syntax" target="_parent">conversion</a>.                                                                </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/IllegalFormatException.html" title="class in java.util" target="_parent">IllegalFormatException</a></code> - If a format string contains an illegal syntax, a format specifier that is incompatible with the given arguments, insufficient arguments given the format string, or other illegal conditions. For specification of all possible formatting errors, see the <a href="../util/Formatter.html#detail" target="_parent">Details</a> section of the formatter class specification.                                              </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If the <tt>format</tt> is <tt>null</tt>       
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:printf-java.util.Locale-java.lang.String-java.lang.Object...- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:printf-java.util.Locale-java.lang.String-java.lang.Object...-"></a><a name="printf-java.util.Locale-java.lang.String-java.lang.Object...-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>printf</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;printf(<a href="../../java/util/Locale.html" title="class in java.util" target="_parent">Locale</a>&nbsp;l,
+                          <a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;format,
+                          <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>...&nbsp;args)</pre>
+<div class="block">A convenience method to write a formatted string to this writer using the specified format string and arguments. If automatic flushing is enabled, calls to this method will flush the output buffer.<p> An invocation of this method of the form <tt>out.printf(l, format, args)  </tt> behaves in exactly the same way as the invocation<pre>
+     out.format(l, format, args) </pre>                  
+</p>                               
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>l</code> - The <a href="../../java/util/Locale.html" title="class in java.util" target="_parent">locale</a> to apply during formatting. If <tt>l</tt> is <tt>null</tt> then no localization is applied.                 </dd>
+<dd> 
+<code>format</code> - A format string as described in <a href="../util/Formatter.html#syntax" target="_parent">Format string syntax  </a>.         </dd>
+<dd> 
+<code>args</code> - Arguments referenced by the format specifiers in the format string. If there are more arguments than format specifiers, the extra arguments are ignored. The number of arguments is variable and may be zero. The maximum number of arguments is limited by the maximum dimension of a Java array as defined by <cite>The Java&trade; Virtual Machine Specification    </cite>. The behaviour on a <tt>null</tt> argument depends on the <a href="../util/Formatter.html#syntax" target="_parent">conversion</a>.                                                                </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/IllegalFormatException.html" title="class in java.util" target="_parent">IllegalFormatException</a></code> - If a format string contains an illegal syntax, a format specifier that is incompatible with the given arguments, insufficient arguments given the format string, or other illegal conditions. For specification of all possible formatting errors, see the <a href="../util/Formatter.html#detail" target="_parent">Details</a> section of the formatter class specification.                                              </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If the <tt>format</tt> is <tt>null</tt>       
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:format-java.lang.String-java.lang.Object...- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:format-java.lang.String-java.lang.Object...-"></a><a name="format-java.lang.String-java.lang.Object...-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>format</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;format(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;format,
+                          <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>...&nbsp;args)</pre>
+<div class="block">Writes a formatted string to this writer using the specified format string and arguments. If automatic flushing is enabled, calls to this method will flush the output buffer.<p> The locale always used is the one returned by <a href="../../java/util/Locale.html#getDefault--" target="_parent"><code>Locale.getDefault()</code></a>, regardless of any previous invocations of other formatting methods on this object.                      </p>                           
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>format</code> - A format string as described in <a href="../util/Formatter.html#syntax" target="_parent">Format string syntax  </a>.         </dd>
+<dd> 
+<code>args</code> - Arguments referenced by the format specifiers in the format string. If there are more arguments than format specifiers, the extra arguments are ignored. The number of arguments is variable and may be zero. The maximum number of arguments is limited by the maximum dimension of a Java array as defined by <cite>The Java&trade; Virtual Machine Specification    </cite>. The behaviour on a <tt>null</tt> argument depends on the <a href="../util/Formatter.html#syntax" target="_parent">conversion</a>.                                                                </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/IllegalFormatException.html" title="class in java.util" target="_parent">IllegalFormatException</a></code> - If a format string contains an illegal syntax, a format specifier that is incompatible with the given arguments, insufficient arguments given the format string, or other illegal conditions. For specification of all possible formatting errors, see the <a href="../util/Formatter.html#detail" target="_parent">Details</a> section of the Formatter class specification.                                              </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If the <tt>format</tt> is <tt>null</tt>       
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:format-java.util.Locale-java.lang.String-java.lang.Object...- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:format-java.util.Locale-java.lang.String-java.lang.Object...-"></a><a name="format-java.util.Locale-java.lang.String-java.lang.Object...-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>format</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;format(<a href="../../java/util/Locale.html" title="class in java.util" target="_parent">Locale</a>&nbsp;l,
+                          <a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;format,
+                          <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>...&nbsp;args)</pre>
+<div class="block">Writes a formatted string to this writer using the specified format string and arguments. If automatic flushing is enabled, calls to this method will flush the output buffer.                           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>l</code> - The <a href="../../java/util/Locale.html" title="class in java.util" target="_parent">locale</a> to apply during formatting. If <tt>l</tt> is <tt>null</tt> then no localization is applied.                 </dd>
+<dd> 
+<code>format</code> - A format string as described in <a href="../util/Formatter.html#syntax" target="_parent">Format string syntax  </a>.         </dd>
+<dd> 
+<code>args</code> - Arguments referenced by the format specifiers in the format string. If there are more arguments than format specifiers, the extra arguments are ignored. The number of arguments is variable and may be zero. The maximum number of arguments is limited by the maximum dimension of a Java array as defined by <cite>The Java&trade; Virtual Machine Specification    </cite>. The behaviour on a <tt>null</tt> argument depends on the <a href="../util/Formatter.html#syntax" target="_parent">conversion</a>.                                                                </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/IllegalFormatException.html" title="class in java.util" target="_parent">IllegalFormatException</a></code> - If a format string contains an illegal syntax, a format specifier that is incompatible with the given arguments, insufficient arguments given the format string, or other illegal conditions. For specification of all possible formatting errors, see the <a href="../util/Formatter.html#detail" target="_parent">Details</a> section of the formatter class specification.                                              </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If the <tt>format</tt> is <tt>null</tt>       
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-java.lang.CharSequence- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-java.lang.CharSequence-"></a><a name="append-java.lang.CharSequence-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;append(<a href="../../java/lang/CharSequence.html" title="interface in java.lang" target="_parent">CharSequence</a>&nbsp;csq)</pre>
+<div class="block">Appends the specified character sequence to this writer.<p> An invocation of this method of the form <tt>out.append(csq)</tt> behaves in exactly the same way as the invocation<pre>
+     out.write(csq.toString()) </pre>                  
+</p>
+<p> Depending on the specification of <tt>toString</tt> for the character sequence <tt>csq</tt>, the entire sequence may not be appended. For instance, invoking the <tt>toString</tt> method of a character buffer will return a subsequence whose content depends upon the buffer's position and limit.                                         </p>       
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Appendable.html#append-java.lang.CharSequence-" target="_parent">append</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#append-java.lang.CharSequence-" target="_parent">append</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csq</code> - The character sequence to append. If <tt>csq</tt> is <tt>null</tt>, then the four characters <tt>"null"</tt> are appended to this writer.                     </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-java.lang.CharSequence-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-java.lang.CharSequence-int-int-"></a><a name="append-java.lang.CharSequence-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;append(<a href="../../java/lang/CharSequence.html" title="interface in java.lang" target="_parent">CharSequence</a>&nbsp;csq,
+                          int&nbsp;start,
+                          int&nbsp;end)</pre>
+<div class="block">Appends a subsequence of the specified character sequence to this writer.<p> An invocation of this method of the form <tt>out.append(csq, start, end)  </tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in exactly the same way as the invocation<pre>
+     out.write(csq.subSequence(start, end).toString()) </pre>                       
+</p>          
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Appendable.html#append-java.lang.CharSequence-int-int-" target="_parent">append</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#append-java.lang.CharSequence-int-int-" target="_parent">append</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csq</code> - The character sequence from which a subsequence will be appended. If <tt>csq</tt> is <tt>null</tt>, then characters will be appended as if <tt>csq</tt> contained the four characters <tt>"null"</tt>.                             </dd>
+<dd> 
+<code>start</code> - The index of the first character in the subsequence           </dd>
+<dd> 
+<code>end</code> - The index of the character following the last character in the subsequence              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IndexOutOfBoundsException.html" title="class in java.lang" target="_parent">IndexOutOfBoundsException</a></code> - If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt> is greater than <tt>end</tt>, or <tt>end</tt> is greater than <tt>csq.length()</tt>                   
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>      
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-char-"></a><a name="append-char-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>append</h4>
+<pre>public&nbsp;<a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>&nbsp;append(char&nbsp;c)</pre>
+<div class="block">Appends the specified character to this writer.<p> An invocation of this method of the form <tt>out.append(c)</tt> behaves in exactly the same way as the invocation<pre>
+     out.write(c) </pre>                  
+</p>      
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Appendable.html#append-char-" target="_parent">append</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Writer.html#append-char-" target="_parent">append</a></code>&nbsp;in class&nbsp;<code><a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - The 16-bit character to append       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

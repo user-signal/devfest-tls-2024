@@ -1,0 +1,264 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Exchanger [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Exchanger"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>V</code> - The type of objects that may be exchanged          </dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">Exchanger&lt;V&gt;</span>
+extends <a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">A synchronization point at which threads can pair and swap elements within pairs. Each thread presents some object on entry to the <a href="../../../java/util/concurrent/Exchanger.html#exchange-V-" target="_parent"><code>exchange</code></a> method, matches with a partner thread, and receives its partner's object on return. An Exchanger may be viewed as a bidirectional form of a <a href="../../../java/util/concurrent/SynchronousQueue.html" title="class in java.util.concurrent" target="_parent"><code>SynchronousQueue</code></a>. Exchangers may be useful in applications such as genetic algorithms and pipeline designs.<p> 
+<b>Sample Usage: </b> Here are the highlights of a class that uses an <code>Exchanger</code> to swap buffers between threads so that the thread filling the buffer gets a freshly emptied one when it needs it, handing off the filled one to the thread emptying the buffer.<pre> 
+
+<code>
+ class FillAndEmpty {
+   Exchanger&lt;DataBuffer&gt; exchanger = new Exchanger&lt;DataBuffer&gt;();
+   DataBuffer initialEmptyBuffer = ... a made-up type
+   DataBuffer initialFullBuffer = ...
+
+   class FillingLoop implements Runnable {
+     public void run() {
+       DataBuffer currentBuffer = initialEmptyBuffer;
+       try {
+         while (currentBuffer != null) {
+           addToBuffer(currentBuffer);
+           if (currentBuffer.isFull())
+             currentBuffer = exchanger.exchange(currentBuffer);
+         }
+       } catch (InterruptedException ex) { ... handle ... }
+     }
+   }
+
+   class EmptyingLoop implements Runnable {
+     public void run() {
+       DataBuffer currentBuffer = initialFullBuffer;
+       try {
+         while (currentBuffer != null) {
+           takeFromBuffer(currentBuffer);
+           if (currentBuffer.isEmpty())
+             currentBuffer = exchanger.exchange(currentBuffer);
+         }
+       } catch (InterruptedException ex) { ... handle ...}
+     }
+   }
+
+   void start() {
+     new Thread(new FillingLoop()).start();
+     new Thread(new EmptyingLoop()).start();
+   }
+ }</code>
+</pre>                                            
+</p>
+<p>Memory consistency effects: For each pair of threads that successfully exchange objects via an <code>Exchanger</code>, actions prior to the <code>exchange()</code> in each thread <a href="package-summary.html#MemoryVisibility" target="_parent"><i>happen-before</i></a> those subsequent to a return from the corresponding <code>exchange()</code> in the other thread.                                    </p>                                                            
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Exchanger-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Exchanger--"></a><a name="Exchanger--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Exchanger</h4>
+<pre>public&nbsp;Exchanger()</pre>
+<div class="block">Creates a new Exchanger.   </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:exchange-V- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"><a name="method:exchange-V-"></a><a name="exchange-V-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>exchange</h4>
+<pre>public&nbsp;<a href="../../../java/util/concurrent/Exchanger.html" title="type parameter in Exchanger" target="_parent">V</a>&nbsp;exchange(<a href="../../../java/util/concurrent/Exchanger.html" title="type parameter in Exchanger" target="_parent">V</a>&nbsp;x)
+           throws <a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a>
+</pre>
+<div class="block">Waits for another thread to arrive at this exchange point (unless the current thread is <a href="../../../java/lang/Thread.html#interrupt--" target="_parent">interrupted</a>), and then transfers the given object to it, receiving its object in return.<p>If another thread is already waiting at the exchange point then it is resumed for thread scheduling purposes and receives the object passed in by the current thread. The current thread returns immediately, receiving the object passed to the exchange by that other thread.                                           </p>
+<p>If no other thread is already waiting at the exchange then the current thread is disabled for thread scheduling purposes and lies dormant until one of two things happens:<ul>
+<li>Some other thread enters the exchange; or      </li>
+<li>Some other thread <a href="../../../java/lang/Thread.html#interrupt--" target="_parent">interrupts</a> the current thread.      </li>
+</ul>                            
+</p>
+<p>If the current thread:<ul>
+<li>has its interrupted status set on entry to this method; or          </li>
+<li>is <a href="../../../java/lang/Thread.html#interrupt--" target="_parent">interrupted</a> while waiting for the exchange,      </li>
+</ul> then <a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent"><code>InterruptedException</code></a> is thrown and the current thread's interrupted status is cleared.               </p>                            
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the object to exchange      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the object provided by the other thread      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a></code> - if the current thread was interrupted while waiting          </dd>   
+</dl>
+</li>
+</ul> 
+<a name="exchange-java.lang.Object-long-java.util.concurrent.TimeUnit-"></a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:exchange-V-long-java.util.concurrent.TimeUnit- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:exchange-V-long-java.util.concurrent.TimeUnit-"></a><a name="exchange-V-long-java.util.concurrent.TimeUnit-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>exchange</h4>
+<pre>public&nbsp;<a href="../../../java/util/concurrent/Exchanger.html" title="type parameter in Exchanger" target="_parent">V</a>&nbsp;exchange(<a href="../../../java/util/concurrent/Exchanger.html" title="type parameter in Exchanger" target="_parent">V</a>&nbsp;x,
+                  long&nbsp;timeout,
+                  <a href="../../../java/util/concurrent/TimeUnit.html" title="enum in java.util.concurrent" target="_parent">TimeUnit</a>&nbsp;unit)
+           throws <a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a>,
+                  <a href="../../../java/util/concurrent/TimeoutException.html" title="class in java.util.concurrent" target="_parent">TimeoutException</a>
+</pre>
+<div class="block">Waits for another thread to arrive at this exchange point (unless the current thread is <a href="../../../java/lang/Thread.html#interrupt--" target="_parent">interrupted</a> or the specified waiting time elapses), and then transfers the given object to it, receiving its object in return.<p>If another thread is already waiting at the exchange point then it is resumed for thread scheduling purposes and receives the object passed in by the current thread. The current thread returns immediately, receiving the object passed to the exchange by that other thread.                                           </p>
+<p>If no other thread is already waiting at the exchange then the current thread is disabled for thread scheduling purposes and lies dormant until one of three things happens:<ul>
+<li>Some other thread enters the exchange; or      </li>
+<li>Some other thread <a href="../../../java/lang/Thread.html#interrupt--" target="_parent">interrupts</a> the current thread; or       </li>
+<li>The specified waiting time elapses.    </li>
+</ul>                            
+</p>
+<p>If the current thread:<ul>
+<li>has its interrupted status set on entry to this method; or          </li>
+<li>is <a href="../../../java/lang/Thread.html#interrupt--" target="_parent">interrupted</a> while waiting for the exchange,      </li>
+</ul> then <a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent"><code>InterruptedException</code></a> is thrown and the current thread's interrupted status is cleared.               </p>
+<p>If the specified waiting time elapses then <a href="../../../java/util/concurrent/TimeoutException.html" title="class in java.util.concurrent" target="_parent"><code>TimeoutException</code></a> is thrown. If the time is less than or equal to zero, the method will not wait at all.                          </p>                                  
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the object to exchange      </dd>
+<dd> 
+<code>timeout</code> - the maximum time to wait       </dd>
+<dd> 
+<code>unit</code> - the time unit of the <code>timeout</code> argument         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the object provided by the other thread      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a></code> - if the current thread was interrupted while waiting          </dd>
+<dd> 
+<code><a href="../../../java/util/concurrent/TimeoutException.html" title="class in java.util.concurrent" target="_parent">TimeoutException</a></code> - if the specified waiting time elapses before another thread enters the exchange              </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

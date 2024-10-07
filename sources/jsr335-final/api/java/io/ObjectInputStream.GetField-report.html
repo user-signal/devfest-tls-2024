@@ -1,0 +1,605 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ObjectInputStream.GetField [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ObjectInputStream.GetField"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>Enclosing class: </dt>
+<dd> 
+<a href="../../java/io/ObjectInputStream.html" title="class in java.io" target="_parent">ObjectInputStream</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract static class <span class="typeNameLabel">ObjectInputStream.GetField</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">Provide access to the persistent fields read from the input stream.          </div>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:GetField-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:GetField--"></a><a name="GetField--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>GetField</h4>
+<pre>public&nbsp;GetField()</pre>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getObjectStreamClass-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getObjectStreamClass--"></a><a name="getObjectStreamClass--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectStreamClass</h4>
+<pre>public abstract&nbsp;<a href="../../java/io/ObjectStreamClass.html" title="class in java.io" target="_parent">ObjectStreamClass</a>&nbsp;getObjectStreamClass()</pre>
+<div class="block">Get the ObjectStreamClass that describes the fields in the stream.         </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the descriptor class that describes the serializable fields       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:defaulted-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:defaulted-java.lang.String-"></a><a name="defaulted-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>defaulted</h4>
+<pre>public abstract&nbsp;boolean&nbsp;defaulted(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)
+                           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Return true if the named field is defaulted and has no value in this stream.              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>true, if and only if the named field is defaulted         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not correspond to a serializable field           </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-boolean-"></a><a name="get-java.lang.String-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;boolean&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                            boolean&nbsp;val)
+                     throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named boolean field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>boolean</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-byte- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-byte-"></a><a name="get-java.lang.String-byte-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;byte&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         byte&nbsp;val)
+                  throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named byte field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>byte</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-char-"></a><a name="get-java.lang.String-char-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;char&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         char&nbsp;val)
+                  throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named char field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>char</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-short- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-short-"></a><a name="get-java.lang.String-short-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;short&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                          short&nbsp;val)
+                   throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named short field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>short</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-int-"></a><a name="get-java.lang.String-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;int&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                        int&nbsp;val)
+                 throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named int field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>int</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-long-"></a><a name="get-java.lang.String-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;long&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         long&nbsp;val)
+                  throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named long field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>long</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-float- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-float-"></a><a name="get-java.lang.String-float-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;float&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                          float&nbsp;val)
+                   throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named float field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>float</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-double- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-double-"></a><a name="get-java.lang.String-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;double&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                           double&nbsp;val)
+                    throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named double field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>double</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.String-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.String-java.lang.Object-"></a><a name="get-java.lang.String-java.lang.Object-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;get(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                           <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;val)
+                    throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Get the value of the named Object field from the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the field       </dd>
+<dd> 
+<code>val</code> - the default value to use if <code>name</code> does not have a value              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value of the named <code>Object</code> field      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if there are I/O errors while reading from the underlying <code>InputStream</code>             
+</dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if type of <code>name</code> is not serializable or if the field type is incorrect                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

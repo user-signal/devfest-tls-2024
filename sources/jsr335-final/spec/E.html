@@ -1,0 +1,522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part E: Typing and Evaluation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_E_Typing_and_Evaluation skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part E: Typing and Evaluation</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#E15.27">15.27</a>&nbsp;- <a href="#E15.27.3">15.27.3</a>&nbsp;- <a href="#E15.27.4">15.27.4</a>&nbsp;- <a href="#E15.13">15.13</a>&nbsp;- <a href="#E15.13.1">15.13.1</a>&nbsp;- <a href="#E15.13.2">15.13.2</a>&nbsp;- <a href="#E15.13.3">15.13.3</a>&nbsp;- <a href="#E6.6.2.1">6.6.2.1</a>&nbsp;- <a href="#E6.6.2.2">6.6.2.2</a>&nbsp;- <a href="#E11.2.1">11.2.1</a>&nbsp;- <a href="#E11.2.3">11.2.3</a>&nbsp;- <a href="#E12.5">12.5</a>&nbsp;- <a href="#E13.1">13.1</a>&nbsp;- <a href="#E15.7.5">15.7.5</a>&nbsp;- <a href="#ESerialization">Serialization</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>Lambda expressions and method references are always poly expressions. It is a compile-time error if one of these occurs in a program in someplace other than an assignment context, an invocation context, or a casting context.
+</p><p>The type of a lambda expression or method reference is a functional interface type, derived from its target type.  To be compatible with the target type, the expression must be <i>congruent</i> with the function type of this functional interface type.
+</p><p>To test that a lambda expression is congruent, the function type's parameter and return types are compared to the expression.  The lambda parameter types (if given) must exactly match those of the function type, while the body must be assignment-compatible with the function type's return type.  The lambda's expression body (or each result expression of its block body) may be a poly expression.
+</p><p>To test that a method reference is congruent, a <i>compile-time declaration</i> is determined following the process used for method <i>invocations</i>. The function type's parameter types are used as argument types in this search, where the first parameter type may sometimes act as the receiver for an instance method. The selected declaration's return type is then checked to be assignment-compatible with the function type's return type.
+</p><p>For some method references, there is only one possible compile-time declaration with only one possible invocation type, regardless of the targeted function type. These are referred to as <i>exact method references</i>.
+</p><p>In addition to the compatibility requirement, lambda bodies and referenced methods must not throw exceptions that are incompatible with the function type's <code style="background-color:inherit;font-size:medium">throws</code> clause.
+</p><p>Evaluation of a lambda expression or method reference produces an instance of a functional interface.  Evaluation does not cause the execution of a lambda body or the invocation of a referenced method; instead, this may occur at a later time when an appropriate method of the interface is invoked.
+</p><p>To evaluate the expression, either a new instance of an appropriate class is allocated and initialized, or an existing instance of an appropriate class is referenced.  The evaluation rules are minimally restrictive, thus allowing VMs freedom for optimization.  For example, a separate class need not be defined for each distinct expression, nor must a new object be allocated on every evaluation.
+</p>
+<div id="E15.27"></div>
+<h3> <span class="mw-headline" id="15.27_Lambda_Expressions_.5BAddendum.5D"> 15.27 Lambda Expressions [Addendum] </span></h3>
+<p><small>See <a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a></small>
+</p><p><span class="norm-static">
+Lambda expressions are always poly expressions (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>).<span class="assertion-id"> [jsr335-15.27-10]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a lambda expression occurs in a program in someplace other than an assignment context (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>), an invocation context (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>), or a casting context (<a href="D.html#D5.5" title="Lambda D" class="mw-redirect">5.5</a>).<span class="assertion-id"> [jsr335-15.27-20]</span></span>
+</p><p>Evaluation of a lambda expression produces an instance of a functional interface (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>).  Lambda expression evaluation does <i>not</i> cause the execution of the expression's body; instead, this may occur at a later time when an appropriate method of the functional interface is invoked.
+</p>
+<div id="E15.27.3"></div>
+<h3> <span class="mw-headline" id="15.27.3_Type_of_a_Lambda_Expression_.5BNew.5D"> 15.27.3 Type of a Lambda Expression [New] </span></h3>
+<p><span class="norm-static">
+A lambda expression is compatible in an assignment, invocation, or casting context with type <em>T</em> if <em>T</em> is a functional interface type (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>) and the expression is <i>congruent</i> with the function type of a <i>ground target type</i> derived from <em>T</em>.<span class="assertion-id"> [jsr335-15.27.3-15]</span></span>
+</p><p><span class="norm-static">
+If a lambda expression is compatible with its target type, <em>T</em>, then the type of the expression is the ground target type derived from <em>T</em>.<span class="assertion-id"> [jsr335-15.27.3-10]</span></span>
+</p><p><span class="norm-static">
+The <i>ground target type</i> is derived from <em>T</em> as follows:<span class="assertion-id"> [jsr335-15.27.3-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is a wildcard-parameterized functional interface type and the lambda expression is explicitly-typed, then the ground target type is inferred as described in <a href="G.html#G18.5.3" title="Lambda G" class="mw-redirect">18.5.3</a>.<span class="assertion-id"> [jsr335-15.27.3-20-A]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a wildcard-parameterized functional interface type and the lambda expression is implicitly-typed, then the ground target type is the non-wildcard parameterization (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>) of the target type.<span class="assertion-id"> [jsr335-15.27.3-20-F]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the ground target type is the target type.<span class="assertion-id"> [jsr335-15.27.3-20-E]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A lambda expression is <i>congruent</i> with a function type if all of the following are true:<span class="assertion-id"> [jsr335-15.27.3-30]</span></span>
+</p>
+<ul><li> <span class="norm-static"> The function type has no type parameters.  (The functional interface from which the function type is derived may, of course, have type parameters.)<span class="assertion-id"> [jsr335-15.27.3-30-H]</span></span>
+</li><li> <span class="norm-static"> The number of lambda parameters is the same as the number of parameter types of the function type.<span class="assertion-id"> [jsr335-15.27.3-30-A]</span></span>
+</li><li> <span class="norm-static"> If the lambda expression is explicitly-typed, its parameter types are the same as the parameter types of the function type.<span class="assertion-id"> [jsr335-15.27.3-30-B]</span></span>
+</li><li> <span class="norm-static"> Where the lambda parameters are assumed to have the same types as the function type's parameter types:<span class="assertion-id"> [jsr335-15.27.3-30-G]</span></span>
+<ul><li> <span class="norm-static"> If the function type's return type is <code style="background-color:inherit;font-size:medium">void</code>, then the lambda body is either a statement expression or a <code style="background-color:inherit;font-size:medium">void</code>-compatible block.<span class="assertion-id"> [jsr335-15.27.3-30-E]</span></span>
+</li><li> <span class="norm-static">If the function type's return type is a (non-<code style="background-color:inherit;font-size:medium">void</code>) type <em>R</em>, then either i) the lambda body is an expression that is compatible with <em>R</em> in an assignment context, or ii) the lambda body is a value-compatible block, and each result expression is compatible with <em>R</em> in an assignment context.<span class="assertion-id"> [jsr335-15.27.3-30-F]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-error"> Where <em>T'</em> is the type of the lambda expression, it is a compile-time error if any class or interface mentioned by either <em>T'</em> or the function type of <em>T'</em> is not accessible from the class or interface in which the lambda expression appears.<span class="assertion-id"> [jsr335-15.27.3-50]</span></span>
+</p><p><span class="norm-error"> Where <em>T'</em> is the type of the lambda expression, for each non-<code style="background-color:inherit;font-size:medium">static</code> member method <em>m</em> of <em>T'</em>, if the function type of <em>T'</em> has a subsignature of the signature of <em>m</em>, then a notional method with the function type is said to override <em>m</em>, and any error or warning specified in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.3" class="external text" rel="nofollow">8.4.8.3</a> may occur.<span class="assertion-id"> [jsr335-15.27.3-55]</span></span>
+</p><p>In addition, a checked exception that can be thrown in the body of the lambda may cause an error, as specified in <a href="E.html#E11.2.3" title="Lambda E" class="mw-redirect">11.2.3</a>.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>
+<p>There is some flexibility in the design of lambda expression compatibility: a well-formedness check may either occur as part of the definition, or as an extra check after compatibility is established.  Since overload resolution of explicitly-typed lambdas depends on compatibility but not subsequent checks (see <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>), this distinction is important.  In one extreme, every check could be part of compatibility—in that case, subtle differences in, say, the exceptions thrown by the lambda body, could trigger different overloading choices.  In the other extreme, the expressions could always be "compatible," and then overload resolution would be entirely unable to distinguish between appropriate and inappropriate target types.
+</p><p>The approach we've chosen is to check the parameter and return types, but <i>not</i> the <code style="background-color:inherit;font-size:medium">throws</code> clause.  We avoid exception checking for two reasons:
+</p>
+<ul><li> Exception checking is subtle, and the common practice is to refine <code style="background-color:inherit;font-size:medium">throws</code> clauses based on compiler feedback.  We would not want this "feedback" to take the form of subtle overload resolution changes (by making the lambda compatible with different sets of target types depending on the body's exceptions).
+</li><li> Inference may influence the target type's <code style="background-color:inherit;font-size:medium">throws</code> clause and the exceptions thrown by result expressions in the body.  It is easiest to cope with these dependencies by avoiding exception checking until after overload resolution and inference are complete.
+</li></ul>
+<p>Matters are complicated further by implicitly-typed lambdas.  Hence, while the compatibility rules for implicitly-typed lambdas are the same, the compatibility check itself is almost entirely sidestepped by overload resolution (see <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>).
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>We require the parameter types of explicitly-typed lambdas to exactly match those of the function type.  While it would be possible to be more flexible—allow boxing or contravariance, for example—this kind of generality seems unnecessary, and is inconsistent with the way overriding works in class declarations.  A programmer ought to know exactly what function type is being targeted when writing a lambda expression, so he should thus know exactly what signature must be overridden.  (In contrast, this is not the case for method references, and so more flexibility is allowed when they are used.)  In addition, more flexibility with parameter types would add to the complexity of type inference and overload resolution.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>While boxing is not allowed in a strict invocation context, boxing of lambda result expressions is <i>always</i> allowed—that is, the result expression appears in an assignment context, regardless of the context enclosing the lambda expression.
+</p><p>However, if an explicitly-typed lambda expression is an argument to an overloaded method, a method signature that avoids boxing or unboxing the lambda result is preferred by the most-specific check (<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">see 15.12.2.5</a>).
+</p><p>Similarly, lambda returns are allowed to perform narrowing of constant expressions, as in all assignment contexts.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>If the body of a lambda is a statement expression (that is, an expression that would be allowed to stand alone as a statement), it is compatible with a <code style="background-color:inherit;font-size:medium">void</code>-producing function type; any result is simply discarded.  So, for example, both of the following are legal:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+// Predicate has a boolean return
+Predicate&lt;String&gt; p = s -&gt; list.add(s);
+// Consumer has a void return
+Consumer&lt;String&gt; c = s -&gt; list.add(s);
+</pre>
+<p>Generally speaking, a lambda of the form <em><code style="background-color:inherit;font-size:medium">() -&gt;</code> expr</em>, where <em>expr</em> is a statement expression, is interpreted as either <em><code style="background-color:inherit;font-size:medium">() -&gt; { return </code>expr<code style="background-color:inherit;font-size:medium">; }</code></em> or <em><code style="background-color:inherit;font-size:medium">() -&gt; { </code>expr<code style="background-color:inherit;font-size:medium">; }</code></em>, depending on the target type.
+</p>
+</div></li></ol></div></blockquote>
+<div id="E15.27.4"></div>
+<h3> <span class="mw-headline" id="15.27.4_Run-time_Evaluation_of_Lambda_Expressions_.5BNew.5D"> 15.27.4 Run-time Evaluation of Lambda Expressions [New] </span></h3>
+<p><span class="norm-dynamic">
+At run time, the evaluation of a lambda expression (distinct from execution of a lambda body) either produces a reference to an object of the targeted functional interface type or completes abruptly, as described below.<span class="assertion-id"> [jsr335-15.27.4-10]</span></span>
+</p><p><span class="norm-dynamic">
+The value of a lambda expression is a reference to an instance of a class with the following properties:<span class="assertion-id"> [jsr335-15.27.4-20]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The class implements the targeted functional interface and, if the target type is an intersection type, every other interface element of the intersection.<span class="assertion-id"> [jsr335-15.27.4-20-A]</span></span>
+</li><li> <span class="norm-dynamic"> Where the lambda expression has type <em>T'</em>, for each non-<code style="background-color:inherit;font-size:medium">static</code> member method <em>m</em> of <em>T'</em>, if the function type of <em>T'</em> has a subsignature of the signature of <em>m</em>, then the class declares a method that overrides <em>m</em>.<span class="assertion-id"> [jsr335-15.27.4-20-B]</span></span>
+</li><li> <span class="norm-dynamic"> Each method's body has the effect of evaluating the lambda body, if it is an expression, or of executing the lambda body, if it is a block; if a result is expected, it is returned from the method.<span class="assertion-id"> [jsr335-15.27.4-20-D]</span></span>
+</li><li> <span class="norm-dynamic">  If the erasure of the type of a method being overridden differs in its signature from the erasure of the function type of <em>T'</em>, then before evaluating or executing the lambda body, the method body checks that each argument value is an instance of a subclass or subinterface of the erasure of the corresponding parameter type in the function type of <em>T'</em>; if not, a <code style="background-color:inherit;font-size:medium">ClassCastException</code> is thrown.<span class="assertion-id"> [jsr335-15.27.4-20-F]</span></span>
+</li><li> <span class="norm-dynamic"> The class overrides no other methods of the interface or interfaces mentioned above, except that it may override methods of the <code style="background-color:inherit;font-size:medium">Object</code> class.<span class="assertion-id"> [jsr335-15.27.4-20-E]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The rule describing when a <code style="background-color:inherit;font-size:medium">ClassCastException</code> occurs mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.5" class="external text" rel="nofollow">15.12.4.5</a>.</div></blockquote>
+<p><span class="norm-dynamic">
+To evaluate the lambda expression, either a new instance of an appropriate class is allocated and initialized, or an existing instance of an appropriate class is referenced.<span class="assertion-id"> [jsr335-15.27.4-30]</span></span>
+</p><p>This implies that the behavior of an equality operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.21" class="external text" rel="nofollow">15.21</a>) is unpredictable when applied to the result of evaluation of a lambda expression: the equality test may produce different results in different implementations, or even upon different lambda expression evaluations in the same implementation.
+</p><p><span class="norm-dynamic">
+If a new instance is to be created, but there is insufficient space to allocate the object, evaluation of the lambda expression completes abruptly by throwing an <code style="background-color:inherit;font-size:medium">OutOfMemoryError</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.6" class="external text" rel="nofollow">15.9.6</a>).<span class="assertion-id"> [jsr335-15.27.4-40]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>This section was influenced by <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.4" class="external text" rel="nofollow">15.9.4</a> "Run-time Evaluation of Class Instance Creation Expressions."</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> This section is meant to be minimally restrictive, thus allowing VMs freedom for optimization.  Some flexibility it provides:
+<ul><li> A new object need not be allocated on every evaluation
+</li><li> Objects produced by different lambda expressions need not belong to different classes (if the bodies are identical, for example)
+</li><li> Every object produced by evaluation need not belong to the same class (captured local variables might be inlined, for example)
+</li><li> If an "existing instance" is available, it need not have been created at a previous lambda evaluation (it might have been allocated during the enclosing class's initialization, for example).
+</li></ul>
+</div></li>
+<li style="margin-bottom:12px;"><div> While it is outside the scope of the language specification to prescribe compiler behavior, it is expected that all compilers will encode lambda bodies as methods, typically of the enclosing class.  The evaluation behavior specified above will then be achieved via an <code style="background-color:inherit;font-size:medium">invokedynamic</code> instruction that mentions the compiled method and invokes a standard API.  The runtime library, independent of the compiler, provides the implementation of this API and is free to use whatever strategy it prefers to manage class and object creation.
+</div></li>
+<li style="margin-bottom:12px;"><div> If the targeted functional interface type is a subtype of <code style="background-color:inherit;font-size:medium">Serializable</code>, the resulting object will automatically be an instance of a serializable class.  Making an object derived from a lambda expression serializable can have extra runtime overhead and negative security implications, so we do not require <i>all</i> lambda-derived objects to be serializable.
+<p>The standard API for lambda evaluation provides special support for serialization which is more robust than the automatic graph-traversal behavior, and which is supported across different VM implementations.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> It is expected that the lambda implementation class will typically override the <code style="background-color:inherit;font-size:medium">toString</code> method, since the implementation provided by <code style="background-color:inherit;font-size:medium">Object</code> is quite unhelpful—any useful information about the lambda expression, if the <code style="background-color:inherit;font-size:medium">Object</code> implementation were used, could only be deduced from the class's name.
+</div></li></ol></div></blockquote>
+<div id="E15.13"></div>
+<h3> <span class="mw-headline" id="15.13_Method_Reference_Expressions_.5BAddendum.5D"> 15.13 Method Reference Expressions [Addendum] </span></h3>
+<p><small>See <a href="C.html#C15.13" title="Lambda C" class="mw-redirect">15.13</a></small>
+</p><p><span class="norm-static">
+Method reference expressions are always poly expressions (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>).<span class="assertion-id"> [jsr335-15.28-10]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a method reference expression occurs in a program in someplace other than an assignment context (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>), an invocation context (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>), or a casting context (<a href="D.html#D5.5" title="Lambda D" class="mw-redirect">5.5</a>).<span class="assertion-id"> [jsr335-15.28-20]</span></span>
+</p><p>Evaluation of a method reference expression produces an instance of a functional interface (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>).  Method reference evaluation does <i>not</i> cause the execution of the corresponding method; instead, this may occur at a later time when an appropriate method of the functional interface is invoked.
+</p>
+<div id="E15.13.1"></div>
+<h3> <span class="mw-headline" id="15.13.1_Compile-Time_Declaration_of_a_Method_Reference_.5BNew.5D"> 15.13.1 Compile-Time Declaration of a Method Reference [New] </span></h3>
+<p><span class="norm-static">
+The <i>compile-time declaration</i> of a method reference is the method to which the expression refers.  In special cases, the compile-time declaration does not actually exist, but is a notional method that represents a class instance creation or an array creation.  The choice of compile-time declaration depends on a function type targeted by the expression (just as the compile-time declaration of a method invocation depends on the invocation's arguments (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>)).<span class="assertion-id"> [jsr335-15.28.1-40]</span></span>
+</p><p><span class="norm-static">
+The identification of a compile-time declaration mirrors the process for method invocations in <a href="H.html#H15.12.1" title="Lambda H" class="mw-redirect">15.12.1</a> and <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2" class="external text" rel="nofollow">15.12.2</a>.<span class="assertion-id"> [jsr335-15.28.1-100]</span></span>
+</p><p><span class="norm-static">
+First, a type to search must be determined (compare <a href="H.html#H15.12.1" title="Lambda H" class="mw-redirect">15.12.1</a>):<span class="assertion-id"> [jsr335-15.28.1-110]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the method reference has the form <em>ExpressionName <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> or <em>Primary <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the type to search is the type of the expression preceding the <code style="background-color:inherit;font-size:medium">::</code> token.<span class="assertion-id"> [jsr335-15.28.1-110-A]</span></span>
+</li><li> <span class="norm-static"> If the method reference has the form <em><code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the type to search is the superclass type of the class whose declaration contains the method reference.<span class="assertion-id"> [jsr335-15.28.1-110-B]</span></span>
+</li><li> <span class="norm-static"> If the method reference has the form <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then if <em>TypeName</em> denotes a class, the type to search is the superclass type of the named class; otherwise, <em>TypeName</em> denotes an interface, and the corresponding superinterface type of the class or interface whose declaration contains the method reference is the type to search.<span class="assertion-id"> [jsr335-15.28.1-110-C]</span></span>
+</li><li> <span class="norm-static"> If the method reference has the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the type to search is the result of capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) applied to the <em>ReferenceType</em>.<span class="assertion-id"> [jsr335-15.28.1-110-E]</span></span>
+</li><li> <span class="norm-static"> For all other forms, the referenced method is notional and there is no type to search.<span class="assertion-id"> [jsr335-15.28.1-110-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Second, given a targeted function type with <em>n</em> parameters, a set of potentially-applicable methods is identified (compare <a href="F.html#F15.12.2.1" title="Lambda F" class="mw-redirect">15.12.2.1</a>):<span class="assertion-id"> [jsr335-15.28.1-120]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the method reference has the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the potentially-applicable methods are the member methods of the type to search that have an appropriate name (given by <em>Identifier</em>), accessibility, arity (<em>n</em> or <em>n-1</em>), and type argument arity (derived from <em>NonWildTypeArguments<sub>opt</sub></em>), as described in <a href="F.html#F15.12.2.1" title="Lambda F" class="mw-redirect">15.12.2.1</a>.  Two different arities, <em>n</em> and <em>n-1</em>, are considered, to account for the possibility that this form refers to either a <code style="background-color:inherit;font-size:medium">static</code> method or an instance method.<span class="assertion-id"> [jsr335-15.28.1-120-A]</span></span>
+</li><li> <span class="norm-static"> If the method reference has the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> <code style="background-color:inherit;font-size:medium">new</code></em>, the potentially-applicable methods are a set of notional methods corresponding to the constructors of <em>ClassType</em>.  If <em>ClassType</em> is a raw type, but is not a non-static member type of a raw type, the candidate notional member methods are those described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.3" class="external text" rel="nofollow">15.9.3</a> for a class instance creation expression that uses <code style="background-color:inherit;font-size:medium">&lt;&gt;</code> to elide class type arguments.  Otherwise, the candidate notional member methods are the constructors of <em>ClassType</em>, treated as if they were methods with return type <em>ClassType</em>.  Among these candidates, the methods with appropriate accessibility, arity (<em>n</em>), and type argument arity (derived from <em>NonWildTypeArguments<sub>opt</sub></em>) are selected, as described in <a href="F.html#F15.12.2.1" title="Lambda F" class="mw-redirect">15.12.2.1</a>.<span class="assertion-id"> [jsr335-15.28.1-120-B]</span></span>
+</li><li> <span class="norm-static"> If the method reference has the form <em>ArrayType <code style="background-color:inherit;font-size:medium">::</code> <code style="background-color:inherit;font-size:medium">new</code></em>, a single notional method is considered.  The method has a single parameter of type <code style="background-color:inherit;font-size:medium">int</code>, returns the <em>ArrayType</em>, and has no <code style="background-color:inherit;font-size:medium">throws</code> clause.  If <em>n = 1</em>, this is the only potentially-applicable method; if not, there are no potentially-applicable methods.<span class="assertion-id"> [jsr335-15.28.1-120-C]</span></span>
+</li><li> <span class="norm-static"> For all other forms, the potentially-applicable methods are the member methods of the type to search that have an appropriate name (given by <em>Identifier</em>), accessibility, arity (<em>n</em>), and type argument arity (derived from <em>NonWildTypeArguments<sub>opt</sub></em>), as described in <a href="F.html#F15.12.2.1" title="Lambda F" class="mw-redirect">15.12.2.1</a>.<span class="assertion-id"> [jsr335-15.28.1-120-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If there are no potentially-applicable methods, then the method reference does not have a compile-time declaration.<span class="assertion-id"> [jsr335-15.28.1-125]</span></span>
+</p><p><span class="norm-static">
+Finally, given a targeted function type with parameter types <em>P<sub>1</sub>..P<sub>n</sub></em> and a set of potentially-applicable methods, the compile-time declaration is selected, according to the process in <a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>-<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>, with the following clarifications:<span class="assertion-id"> [jsr335-15.28.1-130]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the method reference has the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then two searches for a most-specific applicable method are performed.  Each search may produce a method or, in the case of an error as specified in <a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>-<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>, no result.<span class="assertion-id"> [jsr335-15.28.1-45]</span></span><p><span class="norm-static"> In the first search, the reference is treated as if it were an invocation with argument expressions of types <em>P<sub>1</sub>..P<sub>n</sub></em>; the type arguments, if any, are given by the method reference.<span class="assertion-id"> [jsr335-15.28.1-45-A]</span></span></p><p><span class="norm-static"> In the second search, if <em>P<sub>1</sub>..P<sub>n</sub></em> is not empty and <em>P<sub>1</sub></em> is a subtype of <em>ReferenceType</em>, the reference is treated as if it were an invocation with argument expressions of types <em>P<sub>2</sub>..P<sub>n</sub></em>.  If the <em>ReferenceType</em> is a raw type, and there exists a parameterization of this type, <em>T</em>, that is a supertype of <em>P<sub>1</sub></em>, the type to search is the result of capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) applied to <em>T</em>; otherwise, the type to search is the same as the type of the first search.  Again, the type arguments, if any, are given by the method reference.<span class="assertion-id"> [jsr335-15.28.1-45-B]</span></span></p><p><span class="norm-static">If the first search produces a <code style="background-color:inherit;font-size:medium">static</code> method, and no non-<code style="background-color:inherit;font-size:medium">static</code> method is applicable for the second search, then the result of the first search is the compile-time declaration.<span class="assertion-id"> [jsr335-15.28.1-45-F]</span></span></p><p><span class="norm-static">If the second search produces a non-<code style="background-color:inherit;font-size:medium">static</code> method, and no <code style="background-color:inherit;font-size:medium">static</code> method is applicable for the first search, then the result of the second search is the compile-time declaration.<span class="assertion-id"> [jsr335-15.28.1-45-G]</span></span></p><p><span class="norm-static">If neither of the above is true, there is no compile-time declaration.<span class="assertion-id"> [jsr335-15.28.1-45-H]</span></span></p>
+</li><li> <span class="norm-static"> For all other forms, the invocation's argument types are <em>P<sub>1</sub>...P<sub>n</sub></em>, and the type arguments (if any) are given by the method reference.  If the search results in an error, as specified in <a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>-<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>, or if the chosen method is declared <code style="background-color:inherit;font-size:medium">static</code>, there is no compile-time declaration.  Otherwise, the compile-time declaration is the most-specific applicable method.<span class="assertion-id"> [jsr335-15.28.1-46]</span></span>
+</li></ul>
+<p>For some method references, there is only one possible compile-time declaration with only one possible invocation type (<a href="F.html#F15.12.2.6" title="Lambda F" class="mw-redirect">15.12.2.6</a>), regardless of the targeted function type.  These are referred to as <i>exact method references</i>.
+</p><p><span class="norm-static">
+Specifically, a method reference ending in an <em>Identifier</em> is <i>exact</i> if it satisfies all of the following:<span class="assertion-id"> [jsr335-15.28.1-200]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the method reference has the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the <em>ReferenceType</em> is not a raw type.<span class="assertion-id"> [jsr335-15.28.1-200-D]</span></span>
+</li><li> <span class="norm-static"> The type to search has exactly one member method with the name <em>Identifier</em> that is accessible (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>) to the class or interface in which the method reference appears.<span class="assertion-id"> [jsr335-15.28.1-200-A]</span></span>
+</li><li> <span class="norm-static"> This method is not a variable-arity method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a>).<span class="assertion-id"> [jsr335-15.28.1-200-B]</span></span>
+</li><li> <span class="norm-static"> If this method is generic (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.4" class="external text" rel="nofollow">8.4.4</a>), then the method reference provides <em>NonWildTypeArguments</em>.<span class="assertion-id"> [jsr335-15.28.1-200-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A method reference of the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> <code style="background-color:inherit;font-size:medium">new</code></em> is <i>exact</i> if it satisfies all of the following:<span class="assertion-id"> [jsr335-15.28.1-210]</span></span>
+</p>
+<ul><li> <span class="norm-static"> The <em>ClassType</em> is not a raw type, or is a non-<code style="background-color:inherit;font-size:medium">static</code> member type of a raw type.<span class="assertion-id"> [jsr335-15.28.1-210-D]</span></span>
+</li><li> <span class="norm-static"> The <em>ClassType</em> has exactly one constructor that is accessible (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>) to the class or interface in which the method reference appears.<span class="assertion-id"> [jsr335-15.28.1-210-A]</span></span>
+</li><li> <span class="norm-static"> This constructor is not a variable-arity constructor.<span class="assertion-id"> [jsr335-15.28.1-210-B]</span></span>
+</li><li> <span class="norm-static"> If this constructor is generic (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.4" class="external text" rel="nofollow">8.8.4</a>), then the method reference provides <em>NonWildTypeArguments</em>.<span class="assertion-id"> [jsr335-15.28.1-210-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A method reference of the form <em>ArrayType <code style="background-color:inherit;font-size:medium">::</code> <code style="background-color:inherit;font-size:medium">new</code></em> is always <i>exact</i>.<span class="assertion-id"> [jsr335-15.28.1-220]</span></span>
+</p><p><span class="norm-static">
+A method reference that is not <i>exact</i> is referred to as <i>inexact</i>.<span class="assertion-id"> [jsr335-15.28.1-250]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> 
+<p>Method references of the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> id</em> can be interpreted in different ways.  It is ambiguous whether the identifier refers to a static method or an instance method; in the latter case, the implicit lambda expression has an extra parameter.  It's possible, of course, for both kinds of applicable methods to exist, and the search for an applicable method via <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2" class="external text" rel="nofollow">15.12.2</a> must identify them separately, since there are different parameter types for each case.
+</p><p>An example of ambiguity:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Fun&lt;T,R&gt; { R apply(T arg); }
+
+class C {
+  int size() { return 3; }
+  static int size(C arg) { return arg.size(); }
+
+  void test() {
+    Fun&lt;C, Integer&gt; f1 = C::size; // error: c.size() or C.size(c)?
+  }
+}
+</pre>
+<p>The search is smart enough to ignore potential ambiguities in which all the candidate methods of one arity have mismatched "staticness":
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Fun&lt;T,R&gt; { R apply(T arg); }
+
+class C {
+  int size() { return 3; }
+  int size(Object arg) { return 0; }
+  int size(C arg) { return arg.size(); }
+
+  void test() {
+    Fun&lt;C, Integer&gt; f1 = C::size; // no error: must be c.size()
+  }
+}
+</pre>
+<p>But when an applicable candidate with mismatched staticness is more specific than an applicable candidate <i>at the same arity</i> with correct staticness, the mismatched method will not be ignored.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Fun&lt;T,R&gt; { R apply(T arg); }
+
+class C {
+  int size() { return 3; }
+  static int size(Object arg) { return 0; }
+  int size(C arg) { return arg.size(); }
+
+  void test() {
+    Fun&lt;C, Integer&gt; f1 = C::size; // error: c.size() or C.size(c)?
+  }
+}
+</pre>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>For convenience, when a generic type is used to refer to an instance method (where the receiver becomes the first parameter), the target type can used to determine the type arguments.  This facilitates usage like <code style="background-color:inherit;font-size:medium">Pair::first</code> in place of <code style="background-color:inherit;font-size:medium">Pair&lt;String,Integer&gt;::first</code>.
+</p><p>Similarly, a method reference like <code style="background-color:inherit;font-size:medium">Pair::new</code> is treated like a "diamond" instance creation (<code style="background-color:inherit;font-size:medium">new Pair&lt;&gt;()</code>).  There is no need for the <code style="background-color:inherit;font-size:medium">&lt;&gt;</code> syntax here; in fact, it is not allowed by the grammar.  Note that this form does <i>not</i> instantiate a raw type, and there is no way to express a reference to a raw type constructor—this is because the raw instance creation would almost never be more useful than its inferred-parameters counterpart.
+</p>
+</div></li></ol></div></blockquote>
+<div id="E15.13.2"></div>
+<h3> <span class="mw-headline" id="15.13.2_Type_of_a_Method_Reference_.5BNew.5D"> 15.13.2 Type of a Method Reference [New] </span></h3>
+<p><span class="norm-static">
+A method reference expression is compatible in an assignment, invocation, or casting context with type <em>T</em> if <em>T</em> is a functional interface type (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>) and the expression is <i>congruent</i> with the function type of a <i>ground target type</i> derived from <em>T</em>.<span class="assertion-id"> [jsr335-15.28.1-15]</span></span>
+</p><p><span class="norm-static">
+If a method reference expression is compatible with its target type, <em>T</em>, then the type of the expression is the ground target type derived from <em>T</em>.<span class="assertion-id"> [jsr335-15.28.1-10]</span></span>
+</p><p><span class="norm-static">
+The <i>ground target type</i> is derived from <em>T</em> as follows:<span class="assertion-id"> [jsr335-15.28.1-18]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the target type is a wildcard-parameterized functional interface type, then the ground target type is the non-wildcard parameterization (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>) of the target type.<span class="assertion-id"> [jsr335-15.28.1-18-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the ground target type is the target type.<span class="assertion-id"> [jsr335-15.28.1-18-B]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A method reference is <i>congruent</i> with a function type if the following are true:<span class="assertion-id"> [jsr335-15.28.1-30]</span></span>
+</p>
+<ul><li> <span class="norm-static"> The function type identifies a single compile-time declaration corresponding to the reference.<span class="assertion-id"> [jsr335-15.28.1-30-A]</span></span>
+</li><li> <span class="norm-static"> One of the following is true:<span class="assertion-id"> [jsr335-15.28.1-30-B]</span></span>
+<ul><li> <span class="norm-static"> The return type of the function type is <code style="background-color:inherit;font-size:medium">void</code>.<span class="assertion-id"> [jsr335-15.28.1-30-B1]</span></span>
+</li><li> <span class="norm-static"> The return type of the function type is <em>R</em>; the result of applying capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) to the return type of the invocation type (<a href="F.html#F15.12.2.6" title="Lambda F" class="mw-redirect">15.12.2.6</a>) of the chosen declaration is <em>R'</em>, where <em>R</em> is the target type that may be used to infer <em>R'</em>; neither <em>R</em> nor <em>R'</em> is <code style="background-color:inherit;font-size:medium">void</code>; and <em>R'</em> is compatible with <em>R</em> in an assignment context.<span class="assertion-id"> [jsr335-15.28.1-30-B2]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-error">
+A compile-time unchecked warning occurs if unchecked conversion was necessary for the compile-time declaration to be applicable and, per <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.9" class="external text" rel="nofollow">5.1.9</a>, this conversion would cause an unchecked warning in an invocation context.<span class="assertion-id"> [jsr335-15.28.1-40]</span></span>
+</p><p><span class="norm-error">
+A compile-time unchecked warning occurs if unchecked conversion was necessary for the return type <em>R'</em>, described above, to be compatible with the function type's return type, <em>R</em>, and, per <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.9" class="external text" rel="nofollow">5.1.9</a>, this conversion would cause an unchecked warning in an assignment context.<span class="assertion-id"> [jsr335-15.28.1-41]</span></span>
+</p><p><span class="norm-error"> For each checked exception that is listed in the <code style="background-color:inherit;font-size:medium">throws</code> clause of the invocation type of the compile-time declaration, a compile-time error occurs unless that exception type or a supertype of that exception type is mentioned in the <code style="background-color:inherit;font-size:medium">throws</code> clause of the target type's function type.<span class="assertion-id"> [jsr335-15.28.1-60]</span></span>
+</p><p><span class="norm-error"> Where <em>T'</em> is the type of the method reference, it is a compile-time error if any class or interface mentioned by either <em>T'</em> or the function type of <em>T'</em> is not accessible from the class or interface in which the method reference appears.<span class="assertion-id"> [jsr335-15.28.1-70]</span></span>
+</p><p><span class="norm-error"> Where <em>T'</em> is the type of the method reference, for each non-<code style="background-color:inherit;font-size:medium">static</code> member method <em>m</em> of <em>T'</em>, if the function type of <em>T'</em> has a subsignature of the signature of <em>m</em>, then a notional method with the function type is said to override <em>m</em>, and any error or warning specified in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.3" class="external text" rel="nofollow">8.4.8.3</a> may occur.<span class="assertion-id"> [jsr335-15.28.1-75]</span></span>
+</p><p><span class="norm-error"> It is a compile-time error if the method reference is of the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, and the compile-time declaration is <code style="background-color:inherit;font-size:medium">static</code>, but <em>ReferenceType</em> is not expressed as a simple or qualified name (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.2" class="external text" rel="nofollow">6.2</a>).<span class="assertion-id"> [jsr335-15.28.1-80]</span></span>
+</p><p><span class="norm-error"> It is a compile-time error if the method reference is of the form <em><code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> and the compile-time declaration is <code style="background-color:inherit;font-size:medium">abstract</code>.<span class="assertion-id"> [jsr335-15.28.1-90]</span></span>
+</p><p><span class="norm-error"> It is a compile-time error if the method reference is of the form <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, and either of the following are true:<span class="assertion-id"> [jsr335-15.28.1-91]</span></span>
+</p>
+<ul><li> <span class="norm-error"> The compile-time declaration is <code style="background-color:inherit;font-size:medium">abstract</code>.<span class="assertion-id"> [jsr335-15.28.1-91-A]</span></span>
+</li><li> <span class="norm-error"> The <em>TypeName</em> denotes an interface and, where <em>C</em> is the type declaration immediately enclosing the method reference, there exists a method, distinct from the compile-time declaration, that overrides (<a href="G.html#G9.4.1" title="Lambda G" class="mw-redirect">9.4.1</a>) the compile-time declaration from a direct superinterface of <em>C</em>.<span class="assertion-id"> [jsr335-15.28.1-91-B]</span></span>
+</li></ul>
+<p><span class="norm-error"> It is a compile-time error if the method reference is of the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> <code style="background-color:inherit;font-size:medium">new</code></em> and an error would occur when determining an enclosing instance for a <em>ClassType</em>, as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.2" class="external text" rel="nofollow">15.9.2</a> (treating the method reference as if it were a class instance creation expression).<span class="assertion-id"> [jsr335-15.28.1-95]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>Parts of this section mimic <a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The key idea driving this compatibility definition is that a method reference is compatible if and only if the equivalent lambda expression <code style="background-color:inherit;font-size:medium">(x, y, z) -&gt; exp.&lt;T1, T2&gt;method(x, y, z)</code> is compatible.  (This is informal, and there are issues that make it difficult or impossible to formally define the semantics in terms of such a rewrite.)
+</div></li>
+<li style="margin-bottom:12px;"><div> 
+<p>Note that static method invocations have the form <em>TypeName<code style="background-color:inherit;font-size:medium">.</code>method<code style="background-color:inherit;font-size:medium">()</code></em>, while the method reference syntax uses the more general <em>ReferenceType</em>; an error occurs if the referenced method ends up being <code style="background-color:inherit;font-size:medium">static</code> and the qualifier is a parameterized type.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> These compatibility rules provide a convenient facility for converting from one functional interface to another:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+Task t = () -&gt; System.out.println(&quot;hi&quot;);
+Runnable r = t::invoke;
+</pre>
+<p>The implementation may be optimized so that when a lambda-derived object is passed around and converted to various types, this does not result in many levels of adaptation logic around the core lambda body.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Unlike a lambda expression, a method reference can be congruent with a generic function type (that is, a function type that has type parameters).  This is because the lambda expression would need to be able to declare type parameters, and no syntax supports this; while for a method reference, no such declaration is necessary.
+<p>For example, the following program is legal:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface ListFactory { &lt;T&gt; List&lt;T&gt; make(); }
+ListFactory arrayListFactory = ArrayList::new;
+List&lt;String&gt; ls = arrayListFactory.make();
+List&lt;Number&gt; ln = arrayListFactory.make();
+</pre>
+</div></li></ol></div></blockquote>
+<div id="E15.13.3"></div>
+<h3> <span class="mw-headline" id="15.13.3_Run-time_Evaluation_of_Method_References_.5BNew.5D"> 15.13.3 Run-time Evaluation of Method References [New] </span></h3>
+<p><span class="norm-dynamic">
+At run time, the evaluation of a method reference (distinct from invocation of the method itself) either produces a reference to an object of the targeted functional interface type or completes abruptly, as described below.<span class="assertion-id"> [jsr335-15.28.2-10]</span></span>
+</p><p><span class="norm-dynamic">
+The value of a method reference is a reference to an instance of a class with the following properties:<span class="assertion-id"> [jsr335-15.28.2-20]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The class implements the targeted functional interface and, if the target type is an intersection type, every other interface mentioned in the intersection.<span class="assertion-id"> [jsr335-15.28.2-20-A]</span></span>
+</li><li> <span class="norm-dynamic"> Where the method reference expression has type <em>T'</em>, for each non-<code style="background-color:inherit;font-size:medium">static</code> member method <em>m</em> of <em>T'</em>, if the function type of <em>T'</em> has a subsignature of the signature of <em>m</em>, then the class declares an <i>invocation method</i> that overrides <em>m</em>.<span class="assertion-id"> [jsr335-15.28.2-20-B]</span></span>
+</li><li> <span class="norm-dynamic"> Each invocation method's body invokes the referenced method, creates a class instance, or creates an array instance, as described below.<span class="assertion-id"> [jsr335-15.28.2-20-D]</span></span>
+</li><li> <span class="norm-dynamic"> If the erasure of the type of a method being overridden differs in its signature from the erasure of the function type of <em>T'</em>, then before the method invocation or instance creation, an invocation method body checks that each argument value is an instance of a subclass or subinterface of the erasure of the corresponding parameter type in the function type of <em>T'</em>; if not, a <code style="background-color:inherit;font-size:medium">ClassCastException</code> is thrown.<span class="assertion-id"> [jsr335-15.28.2-20-G]</span></span>
+</li><li> <span class="norm-dynamic"> If an invocation method's return type is not <code style="background-color:inherit;font-size:medium">void</code>, then the body returns the result of the method invocation or object instantiation, after any necessary assignment conversions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.2" class="external text" rel="nofollow">5.2</a>).<span class="assertion-id"> [jsr335-15.28.2-20-E]</span></span>
+</li><li> <span class="norm-dynamic"> The class overrides no other methods of the interface or interfaces mentioned above, except that it may override methods of the <code style="background-color:inherit;font-size:medium">Object</code> class.<span class="assertion-id"> [jsr335-15.28.2-20-F]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+If the method reference has the form <em>ExpressionName <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> or <em>Primary <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the body of the invocation method has the effect of invoking the compile-time declaration of the method reference, as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.3" class="external text" rel="nofollow">15.12.4.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.4" class="external text" rel="nofollow">15.12.4.4</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.5" class="external text" rel="nofollow">15.12.4.5</a>.<span class="assertion-id"> [jsr335-15.28.2-41]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The invocation mode is derived from the compile-time declaration as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">15.12.3</a>.<span class="assertion-id"> [jsr335-15.28.2-41-A]</span></span>
+</li><li> <span class="norm-dynamic"> The target reference is the value of the <em>ExpressionName</em> or <em>Primary</em>, as determined <i>at the time</i> the method reference was evaluated.<span class="assertion-id"> [jsr335-15.28.2-41-B]</span></span>
+</li><li> <span class="norm-dynamic"> The invocation arguments are the parameters of the invocation method.<span class="assertion-id"> [jsr335-15.28.2-41-C]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+If the method reference has the form <em><code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> or <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the body of the invocation method similarly has the effect of invoking the compile-time declaration of the method reference, as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.3" class="external text" rel="nofollow">15.12.4.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.4" class="external text" rel="nofollow">15.12.4.4</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.5" class="external text" rel="nofollow">15.12.4.5</a>.<span class="assertion-id"> [jsr335-15.28.2-42]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The invocation mode is <code style="background-color:inherit;font-size:medium">super</code>.<span class="assertion-id"> [jsr335-15.28.2-42-A]</span></span>
+</li><li> <span class="norm-dynamic"> If the method reference begins with a <em>TypeName</em> that names a class, the target reference is the value of <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">this</code></em> at the point at which the method reference is evaluated.  Otherwise, the target reference is the value of <code style="background-color:inherit;font-size:medium">this</code> at the point at which the method reference is evaluated.<span class="assertion-id"> [jsr335-15.28.2-42-B]</span></span>
+</li><li> <span class="norm-dynamic"> The invocation arguments are the parameters of the invocation method.<span class="assertion-id"> [jsr335-15.28.2-42-C]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+If the method reference has the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, the body of the invocation method similarly has the effect of invoking the compile-time declaration of the method reference, as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.3" class="external text" rel="nofollow">15.12.4.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.4" class="external text" rel="nofollow">15.12.4.4</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.5" class="external text" rel="nofollow">15.12.4.5</a>.<span class="assertion-id"> [jsr335-15.28.2-43]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The invocation mode is derived from the compile-time declaration as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">15.12.3</a>.<span class="assertion-id"> [jsr335-15.28.2-43-A]</span></span>
+</li><li> <span class="norm-dynamic"> If the compile-time declaration is an instance method, then the target reference is the first parameter of the invocation method.  Otherwise, there is no target reference.<span class="assertion-id"> [jsr335-15.28.2-43-B]</span></span>
+</li><li> <span class="norm-dynamic"> If the compile-time declaration is an instance method, then the invocation arguments (if any) are the second and subsequent parameters of the invocation method.  Otherwise, the invocation arguments are the parameters of the invocation method.<span class="assertion-id"> [jsr335-15.28.2-43-C]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+If the method reference has the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> <code style="background-color:inherit;font-size:medium">new</code></em>, the body of the invocation method has the same effect as a class instance creation expression of the form <em><code style="background-color:inherit;font-size:medium">new</code> NonWildTypeArguments<sub>opt</sub> ClassType(param<sub>1</sub>, ..., param<sub>n</sub>)</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.4" class="external text" rel="nofollow">15.9.4</a>), where <em>param<sub>1</sub>, ..., param<sub>n</sub></em> are the parameters of the invocation method.<span class="assertion-id"> [jsr335-15.28.2-50]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The enclosing instance for the new object, if any, is derived from the site of the method reference, as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.2" class="external text" rel="nofollow">15.9.2</a>.<span class="assertion-id"> [jsr335-15.28.2-50-A]</span></span>
+</li><li> <span class="norm-dynamic"> The constructor to invoke is the constructor that corresponds to the compile-time declaration of the method reference (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>).<span class="assertion-id"> [jsr335-15.28.2-50-B]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+If the method reference has the form, for some <em>k ≥ 1</em>, <em>Type <code style="background-color:inherit;font-size:medium">[]</code><sup>k</sup> <code style="background-color:inherit;font-size:medium">::</code> <code style="background-color:inherit;font-size:medium">new</code></em>, the body of the invocation method has the same effect as an array creation expression of the form <em><code style="background-color:inherit;font-size:medium">new</code> Type <code style="background-color:inherit;font-size:medium">[</code> size <code style="background-color:inherit;font-size:medium">]</code> <code style="background-color:inherit;font-size:medium">[]</code><sup>k-1</sup></em>, where <em>size</em> is the invocation method's single <code style="background-color:inherit;font-size:medium">int</code>-valued parameter.  (The notation <em><code style="background-color:inherit;font-size:medium">[]</code><sup>k</sup></em> indicates a sequence of <em>k</em> bracket pairs.)<span class="assertion-id"> [jsr335-15.28.2-52]</span></span>
+</p><p><span class="norm-dynamic">
+In any case, if the compile-time declaration of the method reference is signature polymorphic (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">15.12.3</a>), then:<span class="assertion-id"> [jsr335-15.28.2-60]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The types of the parameters for the invocation are the types of the corresponding arguments.<span class="assertion-id"> [jsr335-15.28.2-60-A]</span></span>
+</li><li> <span class="norm-dynamic"> The result type is <code style="background-color:inherit;font-size:medium">void</code> if the invocation method's return type is <code style="background-color:inherit;font-size:medium">void</code>, and <code style="background-color:inherit;font-size:medium">Object</code> otherwise.<span class="assertion-id"> [jsr335-15.28.2-60-B]</span></span>
+</li></ul>
+<p><span class="norm-dynamic"> To evaluate the method reference, the following steps are taken:<span class="assertion-id"> [jsr335-15.28.2-30]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> If the expression is a method reference that begins with an <em>ExpressionName</em> or a <em>Primary</em>, this subexpression is first evaluated.<span class="assertion-id"> [jsr335-15.28.2-30-A]</span></span><p><span class="norm-dynamic"> If the subexpression evaluation completes abruptly, then the method reference evaluation completes abruptly for the same reason.<span class="assertion-id"> [jsr335-15.28.2-30-A1]</span></span></p><p> <span class="norm-dynamic"> If the result of evaluation of the subexpression is <code style="background-color:inherit;font-size:medium">null</code>, then a <code style="background-color:inherit;font-size:medium">NullPointerException</code> is thrown.<span class="assertion-id"> [jsr335-15.28.2-30-A2]</span></span></p>
+</li><li> <span class="norm-dynamic">Next, either a new instance of an appropriate class is allocated and initialized, or an existing instance of an appropriate class is referenced.<span class="assertion-id"> [jsr335-15.28.2-30-B]</span></span><p>This implies that the behavior of an equality operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.21" class="external text" rel="nofollow">15.21</a>) is unpredictable when applied to the result of evaluation of a method reference: the equality test may produce different results in different implementations, or even upon different method reference evaluations in the same implementation.</p><p><span class="norm-dynamic">If a new instance is to be created, but there is insufficient space to allocate the object, evaluation of the method reference completes abruptly by throwing an <code style="background-color:inherit;font-size:medium">OutOfMemoryError</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.6" class="external text" rel="nofollow">15.9.6</a>).<span class="assertion-id"> [jsr335-15.28.2-30-B1]</span></span></p>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>This section borrows heavily <a href="E.html#E15.27.4" title="Lambda E" class="mw-redirect">15.27.4</a>, above.  The rules for invocation also reproduce, in simplified form, some of <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4" class="external text" rel="nofollow">15.12.4</a>.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The timing of method reference evaluation is a little more complex than that of lambda expressions: when a method reference is qualified with an expression (rather than a type), the expression is evaluated <i>immediately</i>.  The result of evaluation is then stored until the functional interface's method is invoked; at that point, the value is used as the target reference for the invocation.  This means that the portion of the method reference preceding the <code style="background-color:inherit;font-size:medium">::</code> delimiter is only evaluated when the program encounters the method reference; subsequent invocations of the functional interface do not re-evaluate the subexpression.
+</div></li>
+<li style="margin-bottom:12px;"><div> It is useful to contrast the treatment of <code style="background-color:inherit;font-size:medium">null</code> here with its treatment for a method <i>invocation</i>.  When a method invocation is evaluated, it is possible for the <em>Primary</em> that qualifies the invocation to produce <code style="background-color:inherit;font-size:medium">null</code>, but for no <code style="background-color:inherit;font-size:medium">NullPointerException</code> to occur.  This occurs when the invoked method is <code style="background-color:inherit;font-size:medium">static</code> (despite the syntax of the invocation suggesting an instance method).  Since we explicitly prohibit a matched method for this kind of method <i>reference</i> from being <code style="background-color:inherit;font-size:medium">static</code> (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>), the evaluation behavior described here is simpler—a <code style="background-color:inherit;font-size:medium">null</code> primary always triggers a <code style="background-color:inherit;font-size:medium">NullPointerException</code>.
+</div></li>
+<li style="margin-bottom:12px;"><div> As was the case for lambda expression evaluation, it is outside the scope of the language specification to prescribe compiler behavior, but it is expected that all compilers will generate an <code style="background-color:inherit;font-size:medium">invokevirtual</code> instruction that delegates to a standard API the wrapping of a referenced method as an instance of a particular interface.
+</div></li></ol></div></blockquote>
+<div id="E6.6.2.1"></div>
+<h3> <span class="mw-headline" id="6.6.2.1_Access_to_a_protected_Member_.5BModified.5D"> 6.6.2.1 Access to a <code style="background-color:inherit;font-size:medium">protected</code> Member [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6.2.1" class="external text" rel="nofollow">JLS 6.6.2.1</a></small>
+</p><p><span class="norm-static">
+Let <em>C</em> be the class in which a <code style="background-color:inherit;font-size:medium">protected</code> member is declared.  Access is permitted only within the body of a subclass <em>S</em> of <em>C</em>.<span class="assertion-id"> [jls-6.6.2.1-100]</span></span>
+</p><p><span class="norm-static">
+In addition, if <em>Id</em> denotes an instance field or instance method, then:<span class="assertion-id"> [jls-6.6.2.1-110]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the access is by a qualified name <em>Q <code style="background-color:inherit;font-size:medium">.</code> Id</em>, <u>or by a method reference expression <em>Q <code style="background-color:inherit;font-size:medium">::</code> Id</em>,</u> where <em>Q</em> is an <em>ExpressionName</em>, then the access is permitted if and only if the type of the expression <em>Q</em> is <em>S</em> or a subclass of <em>S</em>.<span class="assertion-id"> [jls-6.6.2.1-110-A]</span></span>
+</li><li> <span class="norm-static"> If the access is by a field access expression <em>E <code style="background-color:inherit;font-size:medium">.</code> Id</em>, <del>where <em>E</em> is a <em>Primary</em> expression,</del> or by a method invocation expression <em>E <code style="background-color:inherit;font-size:medium">.</code> Id <code style="background-color:inherit;font-size:medium">(</code> .. <code style="background-color:inherit;font-size:medium">)</code></em>, <u>or by a method reference expression, <em>E <code style="background-color:inherit;font-size:medium">::</code> Id</em>,</u> where <em>E</em> is a <em>Primary</em> expression, then the access is permitted if and only if the type of <em>E</em> is <em>S</em> or a subclass of <em>S</em>.<span class="assertion-id"> [jls-6.6.2.1-110-B]</span></span>
+</li><li> <span class="norm-static"> <u>If the access is by a method reference expression <em>T <code style="background-color:inherit;font-size:medium">::</code> Id</em>, where <em>T</em> is a <em>ReferenceType</em>, then the access is permitted if and only if the type <em>T</em> is <em>S</em> or a subclass of <em>S</em>.</u><span class="assertion-id"> [jsr335-6.6.2.1-110-C]</span></span>
+</li></ul>
+<p>...
+</p>
+<div id="E6.6.2.2"></div>
+<h3> <span class="mw-headline" id="6.6.2.2_Qualified_Access_to_a_protected_Constructor_.5BModified.5D"> 6.6.2.2 Qualified Access to a <code style="background-color:inherit;font-size:medium">protected</code> Constructor [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6.2.2" class="external text" rel="nofollow">JLS 6.6.2.2</a></small>
+</p><p><span class="norm-static">
+Let <em>C</em> be the class in which a <code style="background-color:inherit;font-size:medium">protected</code> constructor is declared and let <em>S</em> be the innermost class in whose declaration the use of the <code style="background-color:inherit;font-size:medium">protected</code> constructor occurs.  Then:<span class="assertion-id"> [ jls-6.6.2.2-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the access is by a superclass constructor invocation <code style="background-color:inherit;font-size:medium">super(...)</code> or by a qualified superclass constructor invocation of the form <em>E <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">(</code> ... <code style="background-color:inherit;font-size:medium">)</code></em>, where <em>E</em> is a <em>Primary</em> expression, then the access is permitted.<span class="assertion-id"> [jls-6.6.2.2-100-A]</span></span>
+</li><li> <span class="norm-static"> If the access is by an anonymous class instance creation expression of the form <em><code style="background-color:inherit;font-size:medium">new</code> C <code style="background-color:inherit;font-size:medium">(</code> ... <code style="background-color:inherit;font-size:medium">)</code> <code style="background-color:inherit;font-size:medium">{</code>...<code style="background-color:inherit;font-size:medium">}</code></em>, or by a qualified class instance creation expression of the form <em>E <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">new</code> C <code style="background-color:inherit;font-size:medium">(</code> ... <code style="background-color:inherit;font-size:medium">)</code> <code style="background-color:inherit;font-size:medium">{</code>...<code style="background-color:inherit;font-size:medium">}</code></em>, where <em>E</em> is a <em>Primary</em> expression, then the access is permitted.<span class="assertion-id"> [jls-6.6.2.2-100-B]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the access is by a simple class instance creation expression of the form <em><code style="background-color:inherit;font-size:medium">new</code> C <code style="background-color:inherit;font-size:medium">(</code> ... <code style="background-color:inherit;font-size:medium">)</code></em>, or by a qualified class instance creation expression of the form <em>E <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">new</code> C <code style="background-color:inherit;font-size:medium">(</code> ... <code style="background-color:inherit;font-size:medium">)</code></em>, where <em>E</em> is a <em>Primary</em> expression, <u>or by a method reference expression of the form <em>C <code style="background-color:inherit;font-size:medium">::</code> <code style="background-color:inherit;font-size:medium">new</code></em>, where <em>C</em> is a <em>ClassType</em>,</u> then the access is not permitted.<span class="assertion-id"> [jls-6.6.2.2-100-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A <code style="background-color:inherit;font-size:medium">protected</code> constructor can be accessed by a class instance creation expression (that does not declare an anonymous class) <u>or a method reference expression</u> only from within the package in which it is defined.<span class="assertion-id"> [jls-6.6.2.2-100-C.1]</span></span>
+</p>
+<div id="E11.2.1"></div>
+<h3> <span class="mw-headline" id="11.2.1_Exception_Analysis_of_Expressions_.5BModified.5D"> 11.2.1 Exception Analysis of Expressions [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-11.html#jls-11.2.1" class="external text" rel="nofollow">JLS 11.2.1</a></small>
+</p><p><span class="norm-static">
+A class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>) can throw an exception class <em>E</em> iff ...<span class="assertion-id"> [jls-11.2.1-100]</span></span>
+</p><p><span class="norm-static">
+A method invocation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) can throw an exception class <em>E</em> iff ...<span class="assertion-id"> [jls-11.2.1-110]</span></span>
+</p><p><span class="norm-static">
+<u>A lambda expression (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>) can throw no exception types.</u><span class="assertion-id"> [jsr335-11.2.1-120]</span></span>
+</p><p><span class="norm-static">
+For every other kind of expression, the expression can throw an exception type <em>E</em> iff one of its immediate subexpressions can throw <em>E</em>.<span class="assertion-id"> [jls-11.2.1-200]</span></span>
+</p>
+<div id="E11.2.3"></div>
+<h3> <span class="mw-headline" id="11.2.3_Exception_Checking_.5BModified.5D"> 11.2.3 Exception Checking [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-11.html#jls-11.2.3" class="external text" rel="nofollow">JLS 11.2.3</a></small>
+</p><p><span class="norm-error">
+It is a compile-time error if a method or constructor body <i>can throw</i> some exception class <em>E</em> when <em>E</em> is a checked exception class and <em>E</em> is not a subclass of some class declared in the <code style="background-color:inherit;font-size:medium">throws</code> clause of the method or constructor.<span class="assertion-id"> [jls-11.2.3-100]</span></span>
+</p><p><span class="norm-error">
+<u>It is a compile-time error if a lambda body <i>can throw</i> some exception class <em>E</em> when <em>E</em> is a checked exception class and <em>E</em> is not a subclass of some class declared in the <code style="background-color:inherit;font-size:medium">throws</code> clause of the function type targeted by the lambda expression.</u><span class="assertion-id"> [jsr335-11.2.3-105]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a class variable initializer (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.3.2" class="external text" rel="nofollow">8.3.2</a>) or static initializer (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.7" class="external text" rel="nofollow">8.7</a>) of a named class or interface <i>can throw</i> a checked exception class.<span class="assertion-id"> [jls-11.2.3-110]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if an instance variable initializer or instance initializer of a named class <i>can throw</i> a checked exception class unless that exception class or one of its superclasses is explicitly declared in the <code style="background-color:inherit;font-size:medium">throws</code> clause of each constructor of its class and the class has at least one explicitly declared constructor.<span class="assertion-id"> [jls-11.2.3-120]</span></span>
+</p><p>...
+</p><p><span class="norm-error">
+It is a compile-time error if a <code style="background-color:inherit;font-size:medium">catch</code> clause <i>can catch</i> checked exception class <em>E<sub>1</sub></em> and it is not the case that the <code style="background-color:inherit;font-size:medium">try</code> block corresponding to the <code style="background-color:inherit;font-size:medium">catch</code> clause <i>can throw</i> a checked exception class that is a subclass or superclass of <em>E<sub>1</sub></em>, unless <em>E<sub>1</sub></em> is <code style="background-color:inherit;font-size:medium">Exception</code> or a superclass of <code style="background-color:inherit;font-size:medium">Exception</code>.<span class="assertion-id"> [jls-11.2.3-200]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a <code style="background-color:inherit;font-size:medium">catch</code> clause <i>can catch</i> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-11.html#jls-11.2" class="external text" rel="nofollow">11.2</a>) checked exception class <em>E<sub>1</sub></em> and a preceding <code style="background-color:inherit;font-size:medium">catch</code> clause of the immediately enclosing <code style="background-color:inherit;font-size:medium">try</code> statement <i>can catch</i> <em>E<sub>1</sub></em> or a superclass of <em>E<sub>1</sub></em>.<span class="assertion-id"> [jls-11.2.3-210]</span></span>
+</p><p>...
+</p>
+<div id="E12.5"></div>
+<h3> <span class="mw-headline" id="12.5_Creation_of_New_Class_Instances_.5BModified.5D"> 12.5 Creation of New Class Instances [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html#jls-12.5" class="external text" rel="nofollow">JLS 12.5</a></small>
+</p><p>A new class instance may be implicitly created in the following situations:
+</p>
+<ul><li> Loading of a class or interface that contains a String literal ...
+</li><li> Execution of an operation that causes boxing conversion ...
+</li><li> Execution of a string concatenation operator ...
+</li><li> <u>Evaluation of a lambda expression (<a href="E.html#E15.27.4" title="Lambda E" class="mw-redirect">15.27.4</a>) or a method reference (<a href="E.html#E15.13.2" title="Lambda E" class="mw-redirect">15.13.2</a>) may require that a new instance of a class that implements a functional interface type be created.</u>
+</li></ul>
+<div id="E13.1"></div>
+<h3> <span class="mw-headline" id="13.1_Creation_of_New_Class_Instances_.5BModified.5D"> 13.1 Creation of New Class Instances [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.1" class="external text" rel="nofollow">JLS 13.1</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+Given a method invocation expression <u>or a method reference expression (<a href="C.html#C15.13" title="Lambda C" class="mw-redirect">15.13</a>)</u> in a class or interface <em>C</em> referencing a method named <em>m</em> declared (or implicitly declared (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.2" class="external text" rel="nofollow">9.2</a>)) in a (possibly distinct) class or interface <em>D</em>, we define the <i>qualifying type of the method invocation</i> as follows:<span class="assertion-id"> [jls-13.1-110-E]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>D</em> is <code style="background-color:inherit;font-size:medium">Object</code> then the qualifying type of the expression is <code style="background-color:inherit;font-size:medium">Object</code>.<span class="assertion-id"> [jls-13.1-110-E-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise:<span class="assertion-id"> [jls-13.1-110-E-B]</span></span>
+<ul><li> <span class="norm-static"> If the method is referenced by a simple name, ...<span class="assertion-id"> [jls-13.1-110-E-B-A]</span></span>
+</li><li> <span class="norm-static"> If the <del>reference</del> <u>expression</u> is of the form <del><em>X<code style="background-color:inherit;font-size:medium">.</code>m</em>, where <em>X</em> denotes a class or interface</del> <u><em>TypeName<code style="background-color:inherit;font-size:medium">.</code>m</em> or <em>ReferenceType<code style="background-color:inherit;font-size:medium">::</code>m</em>,</u> then the <del>class or interface</del> <u>type</u> denoted by <del><em>X</em></del> <u><em>TypeName</em> or <em>ReferenceType</em></u> is the qualifying type of the method invocation.<span class="assertion-id"> [jls-13.1-110-E-B-B]</span></span>
+</li><li> <span class="norm-static"> If the expression is of the form <u><em>ExpressionName<code style="background-color:inherit;font-size:medium">.</code>m</em></u>, <em>Primary<code style="background-color:inherit;font-size:medium">.</code>m</em>, <u><em>ExpressionName<code style="background-color:inherit;font-size:medium">::</code>m</em>, or <em>Primary<code style="background-color:inherit;font-size:medium">::</code>m</em></u>, then:<span class="assertion-id"> [jls-13.1-110-E-B-C]</span></span>
+<ul><li> <span class="norm-static"> If the compile-time type of <em>Primary</em> <u>or <em>ExpressionName</em></u> is an intersection type ...<span class="assertion-id"> [jls-13.1-110-E-B-C-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the compile-time type of <em>Primary</em> <u>or <em>ExpressionName</em></u> is the qualifying type of the method invocation.<span class="assertion-id"> [jls-13.1-110-E-B-C-B]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If the expression is of the form <em><code style="background-color:inherit;font-size:medium">super</code><code style="background-color:inherit;font-size:medium">.</code>m</em> <u>or <code style="background-color:inherit;font-size:medium">super</code><code style="background-color:inherit;font-size:medium">::</code>m</u>, then: ...<span class="assertion-id"> [jls-13.1-110-E-B-D]</span></span>
+</li><li> <span class="norm-static"> If the expression is of the form <em>X<code style="background-color:inherit;font-size:medium">.</code><code style="background-color:inherit;font-size:medium">super</code><code style="background-color:inherit;font-size:medium">.</code>m</em> <u>or <em>X<code style="background-color:inherit;font-size:medium">.</code><code style="background-color:inherit;font-size:medium">super</code><code style="background-color:inherit;font-size:medium">::</code>m</em></u>, then <u>if <em>X</em> is a class</u>, the superclass of <em>X</em> is the qualifying type of the method invocation; <u>if <em>X</em> is an interface, the named superinterface of <em>C</em> is the qualifying type of the method invocation.</u><span class="assertion-id"> [jls-13.1-110-E-B-E]</span></span>
+</li></ul>
+</li></ul>
+<p>...
+</p><p><span class="norm-static">
+Given a class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>), <del>or</del> a constructor invocation statement (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.7.1" class="external text" rel="nofollow">8.8.7.1</a>), <u>or a method reference of the form <em>ClassType<code style="background-color:inherit;font-size:medium">::</code><code style="background-color:inherit;font-size:medium">new</code></em></u> in a class or interface <em>C</em> referencing a constructor <em>m</em> declared in a (possibly distinct) class or interface <em>D</em>, we define the qualifying type of the constructor invocation as follows:<span class="assertion-id"> [jls-13.1-110-F]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If the expression is of the form <em><code style="background-color:inherit;font-size:medium">new</code> D<code style="background-color:inherit;font-size:medium">(</code>...<code style="background-color:inherit;font-size:medium">)</code></em>, <del>or</del> <em>X<code style="background-color:inherit;font-size:medium">.</code><code style="background-color:inherit;font-size:medium">new</code> D<code style="background-color:inherit;font-size:medium">(</code>...<code style="background-color:inherit;font-size:medium">)</code></em>, <u>or <em>D<code style="background-color:inherit;font-size:medium">::</code><code style="background-color:inherit;font-size:medium">new</code></em>,</u> then the qualifying type of the invocation is <em>D</em>.<span class="assertion-id"> [jls-13.1-110-F-A]</span></span>
+</li></ul>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+These changes simply indicate that the compiled form of a method reference must include the equivalent method or constructor invocation.  We also account for the changes to <code style="background-color:inherit;font-size:medium">super</code> method invocation syntax described in Part H (<a href="H.html#H15.12" title="Lambda H" class="mw-redirect">15.12</a>).</div></blockquote>
+<div id="E15.7.5"></div>
+<h3> <span class="mw-headline" id="15.7.5_Evaluation_Order_for_Other_Expressions_.5BModified.5D"> 15.7.5 Evaluation Order for Other Expressions [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.7.5" class="external text" rel="nofollow">JLS 15.7.5</a></small>
+</p><p>The order of evaluation for some expressions is not completely covered by these general rules, because these expressions may raise exceptional conditions at times that must be specified.  See the detailed explanations of evaluation order for the following kinds of expressions:
+</p>
+<ul><li> class instance creation expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.4" class="external text" rel="nofollow">15.9.4</a>)
+</li><li> array creation expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.10.1" class="external text" rel="nofollow">15.10.1</a>)
+</li><li> method invocation expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4" class="external text" rel="nofollow">15.12.4</a>)
+</li><li> array access expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.13.1" class="external text" rel="nofollow">15.13.1</a>)
+</li><li> assignments involving array components (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>)
+</li><li> <u>lambda expressions (<a href="E.html#E15.27.4" title="Lambda E" class="mw-redirect">15.27.4</a>)</u>
+</li><li> <u>method reference expressions (<a href="E.html#E15.13.3" title="Lambda E" class="mw-redirect">15.13.3</a>)</u>
+</li></ul>
+<div id="ESerialization"></div>
+<h3> <span class="mw-headline" id="Serialization_Specification_.5BAddendum.5D"> Serialization Specification [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/7/docs/platform/serialization/spec/serialTOC.html" class="external text" rel="nofollow">Java Object Serialization Specification</a></small>
+</p><p>As with inner classes, serialization of lambda expressions is strongly discouraged.  Names of synthetic methods generated by javac (or other Java compilers) to implement lambda expressions are implementation-dependent, may vary between compilers, and may change due to unrelated modifications in the same source file; differences in such names can disrupt compatibility.  Lambda expressions may refer to values from the enclosing scope; when the lambda expressions are serialized, these values will be serialized as well.  The order in which values from the enclosing scope are captured is implementation-dependent, may vary between compilers, and any modification of the source file containing the lambda expression may change this capture order, affecting deserialization correctness.  Lambda expressions cannot use field- or method-based mechanisms to control their serialized form.  If serializable lambdas are used, to minimize compatibility risks, it is recommended that class files identical to those that were present at serialization time be present at deserialization time.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div> This paragraph is to be added to <a href="http://docs.oracle.com/javase/7/docs/platform/serialization/spec/serial-arch.html#4539" class="external text" rel="nofollow">section 1.10</a> of the Java Object Serialization Specification.  It parallels a similar discussion about inner classes.
+</div></blockquote>
+
+
+
+</body></html>

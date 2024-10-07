@@ -1,0 +1,986 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:NavigableMap [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:NavigableMap"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>K</code> - the type of keys maintained by this map          </dd>
+<dd> 
+<code>V</code> - the type of mapped values       </dd> 
+</dl>
+<dl> 
+<dt>All Superinterfaces: </dt>
+<dd> 
+<a href="../../java/util/Map.html" title="interface in java.util" target="_parent">Map</a>&lt;K,V&gt;, <a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;K,V&gt;  </dd> 
+</dl>
+<dl> 
+<dt>All Known Subinterfaces:  </dt>
+<dd> 
+<a href="../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;K,V&gt; </dd> 
+</dl>
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../java/util/concurrent/ConcurrentSkipListMap.html" title="class in java.util.concurrent" target="_parent">ConcurrentSkipListMap</a>, <a href="../../java/util/TreeMap.html" title="class in java.util" target="_parent">TreeMap</a>  
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">NavigableMap&lt;K,V&gt;</span>
+extends <a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;K,V&gt;</pre>
+<div class="block">A <a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent"><code>SortedMap</code></a> extended with navigation methods returning the closest matches for given search targets. Methods <code>lowerEntry</code>, <code>floorEntry</code>, <code>ceilingEntry</code>, and <code>higherEntry</code> return <code>Map.Entry</code> objects associated with keys respectively less than, less than or equal, greater than or equal, and greater than a given key, returning <code>null</code> if there is no such key. Similarly, methods <code>lowerKey</code>, <code>floorKey</code>, <code>ceilingKey</code>, and <code>higherKey</code> return only the associated keys. All of these methods are designed for locating, not traversing entries.<p>A <code>NavigableMap</code> may be accessed and traversed in either ascending or descending key order. The <code>descendingMap</code> method returns a view of the map with the senses of all relational and directional methods inverted. The performance of ascending operations and views is likely to be faster than that of descending ones. Methods <code>subMap</code>, <code>headMap</code>, and <code>tailMap</code> differ from the like-named <code>SortedMap</code> methods in accepting additional arguments describing whether lower and upper bounds are inclusive versus exclusive. Submaps of any <code>NavigableMap</code> must implement the <code>NavigableMap</code> interface.                                                                                   </p>
+<p>This interface additionally defines methods <code>firstEntry</code>, <code>pollFirstEntry</code>, <code>lastEntry</code>, and <code>pollLastEntry</code> that return and/or remove the least and greatest mappings, if any exist, else returning <code>null</code>.                        </p>
+<p>Implementations of entry-returning methods are expected to return <code>Map.Entry</code> pairs representing snapshots of mappings at the time they were produced, and thus generally do <em>not</em> support the optional <code>Entry.setValue</code> method. Note however that it is possible to change mappings in the associated map using method <code>put</code>.                                             </p>
+<p>Methods <a href="../../java/util/NavigableMap.html#subMap-K-K-" target="_parent"><code>subMap(K, K) </code></a>, <a href="../../java/util/NavigableMap.html#headMap-K-" target="_parent"><code>headMap(K)</code></a>, and <a href="../../java/util/NavigableMap.html#tailMap-K-" target="_parent"><code>tailMap(K)</code></a> are specified to return <code>SortedMap</code> to allow existing implementations of <code>SortedMap</code> to be compatibly retrofitted to implement <code>NavigableMap</code>, but extensions and implementations of this interface are encouraged to override these methods to return <code>NavigableMap</code>. Similarly, <a href="../../java/util/SortedMap.html#keySet--" target="_parent"><code>SortedMap.keySet()</code></a> can be overriden to return <code>NavigableSet</code>.                                              </p>
+<p>This interface is a member of the <a href="http://download.oracle.com/javase/7/docs/technotes/guides/collections/index.html" target="_parent"> Java Collections Framework   </a>.       </p>                                                                         
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:lowerEntry-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"><a name="method:lowerEntry-K-"></a><a name="lowerEntry-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lowerEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;lowerEntry(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns a key-value mapping associated with the greatest key strictly less than the given key, or <code>null</code> if there is no such key.                      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an entry with the greatest key less than <code>key</code>, or <code>null</code> if there is no such key                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="lowerKey-java.lang.Object-"></a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:lowerKey-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:lowerKey-K-"></a><a name="lowerKey-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lowerKey</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;lowerKey(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns the greatest key strictly less than the given key, or <code>null</code> if there is no such key.                 </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the greatest key less than <code>key</code>, or <code>null</code> if there is no such key             </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="floorEntry-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:floorEntry-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:floorEntry-K-"></a><a name="floorEntry-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>floorEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;floorEntry(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns a key-value mapping associated with the greatest key less than or equal to the given key, or <code>null</code> if there is no such key.                        </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an entry with the greatest key less than or equal to <code>key</code>, or <code>null</code> if there is no such key                   </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="floorKey-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:floorKey-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:floorKey-K-"></a><a name="floorKey-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>floorKey</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;floorKey(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns the greatest key less than or equal to the given key, or <code>null</code> if there is no such key.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the greatest key less than or equal to <code>key</code>, or <code>null</code> if there is no such key                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="ceilingEntry-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ceilingEntry-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ceilingEntry-K-"></a><a name="ceilingEntry-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ceilingEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;ceilingEntry(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns a key-value mapping associated with the least key greater than or equal to the given key, or <code>null</code> if there is no such key.                        </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an entry with the least key greater than or equal to <code>key</code>, or <code>null</code> if there is no such key                   </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="ceilingKey-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ceilingKey-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ceilingKey-K-"></a><a name="ceilingKey-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ceilingKey</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;ceilingKey(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns the least key greater than or equal to the given key, or <code>null</code> if there is no such key.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the least key greater than or equal to <code>key</code>, or <code>null</code> if there is no such key                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="higherEntry-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:higherEntry-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:higherEntry-K-"></a><a name="higherEntry-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>higherEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;higherEntry(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns a key-value mapping associated with the least key strictly greater than the given key, or <code>null</code> if there is no such key.                      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an entry with the least key greater than <code>key</code>, or <code>null</code> if there is no such key                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="higherKey-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:higherKey-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:higherKey-K-"></a><a name="higherKey-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>higherKey</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;higherKey(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;key)</pre>
+<div class="block">Returns the least key strictly greater than the given key, or <code>null</code> if there is no such key.                 </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the least key greater than <code>key</code>, or <code>null</code> if there is no such key             </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified key cannot be compared with the keys currently in the map                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified key is null and this map does not permit null keys                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:firstEntry-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:firstEntry--"></a><a name="firstEntry--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>firstEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;firstEntry()</pre>
+<div class="block">Returns a key-value mapping associated with the least key in this map, or <code>null</code> if the map is empty.                  </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an entry with the least key, or <code>null</code> if this map is empty            </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:lastEntry-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:lastEntry--"></a><a name="lastEntry--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lastEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;lastEntry()</pre>
+<div class="block">Returns a key-value mapping associated with the greatest key in this map, or <code>null</code> if the map is empty.                  </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an entry with the greatest key, or <code>null</code> if this map is empty            </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:pollFirstEntry-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:pollFirstEntry--"></a><a name="pollFirstEntry--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pollFirstEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;pollFirstEntry()</pre>
+<div class="block">Removes and returns a key-value mapping associated with the least key in this map, or <code>null</code> if the map is empty.                    </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the removed first entry of this map, or <code>null</code> if this map is empty             </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:pollLastEntry-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:pollLastEntry--"></a><a name="pollLastEntry--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pollLastEntry</h4>
+<pre>
+<a href="../../java/util/Map.Entry.html" title="interface in java.util" target="_parent">Map.Entry</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;pollLastEntry()</pre>
+<div class="block">Removes and returns a key-value mapping associated with the greatest key in this map, or <code>null</code> if the map is empty.                    </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the removed last entry of this map, or <code>null</code> if this map is empty             </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:descendingMap-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:descendingMap--"></a><a name="descendingMap--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingMap</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;descendingMap()</pre>
+<div class="block">Returns a reverse order view of the mappings contained in this map. The descending map is backed by this map, so changes to the map are reflected in the descending map, and vice-versa. If either map is modified while an iteration over a collection view of either map is in progress (except through the iterator's own <code>remove</code> operation), the results of the iteration are undefined.<p>The returned map has an ordering equivalent to <tt><a href="../../java/util/Collections.html#reverseOrder-java.util.Comparator-" target="_parent"><code>Collections.reverseOrder</code></a>(comparator())</tt>. The expression <code>m.descendingMap().descendingMap()</code> returns a view of <code>m</code> essentially equivalent to <code>m</code>.                    </p>                                                                
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a reverse order view of this map      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:navigableKeySet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:navigableKeySet--"></a><a name="navigableKeySet--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>navigableKeySet</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&gt;&nbsp;navigableKeySet()</pre>
+<div class="block">Returns a <a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent"><code>NavigableSet</code></a> view of the keys contained in this map. The set's iterator returns the keys in ascending order. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <code>remove</code> operation), the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the <code>Iterator.remove</code>, <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations. It does not support the <code>add</code> or <code>addAll</code> operations.                                                                                                 </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a navigable set view of the keys in this map         </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:descendingKeySet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:descendingKeySet--"></a><a name="descendingKeySet--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingKeySet</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&gt;&nbsp;descendingKeySet()</pre>
+<div class="block">Returns a reverse order <a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent"><code>NavigableSet</code></a> view of the keys contained in this map. The set's iterator returns the keys in descending order. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <code>remove</code> operation), the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the <code>Iterator.remove</code>, <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations. It does not support the <code>add</code> or <code>addAll</code> operations.                                                                                                   </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a reverse order navigable set view of the keys in this map           </dd> 
+</dl>
+</li>
+</ul> 
+<a name="subMap-java.lang.Object-boolean-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:subMap-K-boolean-K-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:subMap-K-boolean-K-boolean-"></a><a name="subMap-K-boolean-K-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;subMap(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;fromKey,
+                         boolean&nbsp;fromInclusive,
+                         <a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;toKey,
+                         boolean&nbsp;toInclusive)</pre>
+<div class="block">Returns a view of the portion of this map whose keys range from <code>fromKey</code> to <code>toKey</code>. If <code>fromKey</code> and <code>toKey</code> are equal, the returned map is empty unless <code>fromInclusive</code> and <code>toInclusive</code> are both true. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside of its range, or to construct a submap either of whose endpoints lie outside its range.                              </p>                                                                  
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>fromInclusive</code> - <code>true</code> if the low endpoint is to be included in the returned view               </dd>
+<dd> 
+<code>toKey</code> - high endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>toInclusive</code> - <code>true</code> if the high endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys range from <code>fromKey</code> to <code>toKey</code>              
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> and <code>toKey</code> cannot be compared to one another using this map's comparator (or, if the map has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if <code>fromKey</code> or <code>toKey</code> cannot be compared to keys currently in the map.                                                 </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> or <code>toKey</code> is null and this map does not permit null keys                </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>fromKey</code> is greater than <code>toKey</code>; or if this map itself has a restricted range, and <code>fromKey</code> or <code>toKey</code> lies outside the bounds of the range                            </dd>   
+</dl>
+</li>
+</ul> 
+<a name="headMap-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:headMap-K-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:headMap-K-boolean-"></a><a name="headMap-K-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;headMap(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;toKey,
+                          boolean&nbsp;inclusive)</pre>
+<div class="block">Returns a view of the portion of this map whose keys are less than (or equal to, if <code>inclusive</code> is true) <code>toKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>                                                      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>toKey</code> - high endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>inclusive</code> - <code>true</code> if the high endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are less than (or equal to, if <code>inclusive</code> is true) <code>toKey</code>                    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>toKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>toKey</code> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>toKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>toKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>toKey</code> lies outside the bounds of the range                   </dd>   
+</dl>
+</li>
+</ul> 
+<a name="tailMap-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:tailMap-K-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:tailMap-K-boolean-"></a><a name="tailMap-K-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre>
+<a href="../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;tailMap(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;fromKey,
+                          boolean&nbsp;inclusive)</pre>
+<div class="block">Returns a view of the portion of this map whose keys are greater than (or equal to, if <code>inclusive</code> is true) <code>fromKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>                                                      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>inclusive</code> - <code>true</code> if the low endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are greater than (or equal to, if <code>inclusive</code> is true) <code>fromKey</code>                    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>fromKey</code> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>fromKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>fromKey</code> lies outside the bounds of the range                   </dd>   
+</dl>
+</li>
+</ul> 
+<a name="subMap-java.lang.Object-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:subMap-K-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:subMap-K-K-"></a><a name="subMap-K-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre>
+<a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;subMap(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;fromKey,
+                      <a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;toKey)</pre>
+<div class="block">Returns a view of the portion of this map whose keys range from <code>fromKey</code>, inclusive, to <code>toKey</code>, exclusive. (If <code>fromKey</code> and <code>toKey</code> are equal, the returned map is empty.) The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>
+<p>Equivalent to <code>subMap(fromKey, true, toKey, false)   </code>.  </p>                                                             
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/SortedMap.html#subMap-K-K-" target="_parent">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint (inclusive) of the keys in the returned map            </dd>
+<dd> 
+<code>toKey</code> - high endpoint (exclusive) of the keys in the returned map            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys range from <code>fromKey</code>, inclusive, to <code>toKey</code>, exclusive                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> and <code>toKey</code> cannot be compared to one another using this map's comparator (or, if the map has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if <code>fromKey</code> or <code>toKey</code> cannot be compared to keys currently in the map.                                                 </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> or <code>toKey</code> is null and this map does not permit null keys                </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>fromKey</code> is greater than <code>toKey</code>; or if this map itself has a restricted range, and <code>fromKey</code> or <code>toKey</code> lies outside the bounds of the range                            </dd>    
+</dl>
+</li>
+</ul> 
+<a name="headMap-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:headMap-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:headMap-K-"></a><a name="headMap-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre>
+<a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;headMap(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;toKey)</pre>
+<div class="block">Returns a view of the portion of this map whose keys are strictly less than <code>toKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>
+<p>Equivalent to <code>headMap(toKey, false) </code>.  </p>                                                
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/SortedMap.html#headMap-K-" target="_parent">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>toKey</code> - high endpoint (exclusive) of the keys in the returned map            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are strictly less than <code>toKey</code>              
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>toKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>toKey</code> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>toKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>toKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>toKey</code> lies outside the bounds of the range                   </dd>    
+</dl>
+</li>
+</ul> 
+<a name="tailMap-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:tailMap-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:tailMap-K-"></a><a name="tailMap-K-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre>
+<a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;&nbsp;tailMap(<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>&nbsp;fromKey)</pre>
+<div class="block">Returns a view of the portion of this map whose keys are greater than or equal to <code>fromKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>
+<p>Equivalent to <code>tailMap(fromKey, true) </code>.  </p>                                                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/SortedMap.html#tailMap-K-" target="_parent">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">K</a>,<a href="../../java/util/NavigableMap.html" title="type parameter in NavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint (inclusive) of the keys in the returned map            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are greater than or equal to <code>fromKey</code>                
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>fromKey</code> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>fromKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>fromKey</code> lies outside the bounds of the range                   </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

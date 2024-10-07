@@ -1,0 +1,161 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ServiceConfigurationError [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ServiceConfigurationError"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">ServiceConfigurationError</span>
+extends <a href="../../java/lang/Error.html" title="class in java.lang" target="_parent">Error</a>
+</pre>
+<div class="block">Error thrown when something goes wrong while loading a service provider.<p> This error will be thrown in the following situations:<ul>
+<li> The format of a provider-configuration file violates the <a href="ServiceLoader.html#format" target="_parent">specification</a>;         </li>
+<li> An <a href="../../java/io/IOException.html" title="class in java.io" target="_parent"><code>IOException</code></a> occurs while reading a provider-configuration file;        </li>
+<li> A concrete provider class named in a provider-configuration file cannot be found;            </li>
+<li> A concrete provider class is not a subclass of the service class;            </li>
+<li> A concrete provider class cannot be instantiated; or        </li>
+<li> Some other kind of error occurs.      </li>
+</ul>         
+</p>          
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../serialized-form.html#java.util.ServiceConfigurationError" target="_parent">Serialized Form </a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:ServiceConfigurationError-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:ServiceConfigurationError-java.lang.String-"></a><a name="ServiceConfigurationError-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ServiceConfigurationError</h4>
+<pre>public&nbsp;ServiceConfigurationError(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;msg)</pre>
+<div class="block">Constructs a new instance with the specified message.       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>msg</code> - The message, or <tt>null</tt> if there is no message           </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:ServiceConfigurationError-java.lang.String-java.lang.Throwable- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:ServiceConfigurationError-java.lang.String-java.lang.Throwable-"></a><a name="ServiceConfigurationError-java.lang.String-java.lang.Throwable-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ServiceConfigurationError</h4>
+<pre>public&nbsp;ServiceConfigurationError(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;msg,
+                                 <a href="../../java/lang/Throwable.html" title="class in java.lang" target="_parent">Throwable</a>&nbsp;cause)</pre>
+<div class="block">Constructs a new instance with the specified message and cause.         </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>msg</code> - The message, or <tt>null</tt> if there is no message           </dd>
+<dd> 
+<code>cause</code> - The cause, or <tt>null</tt> if the cause is nonexistent or unknown             </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

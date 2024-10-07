@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part A: Functional Interfaces</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_A_Functional_Interfaces skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part A: Functional Interfaces</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#A9.8">9.8</a>&nbsp;- <a href="#A4.9">4.9</a>&nbsp;- <a href="#A8.2">8.2</a>&nbsp;- <a href="#A8.4.2">8.4.2</a>&nbsp;- <a href="#A8.4.4">8.4.4</a>&nbsp;- <a href="#A8.4.5">8.4.5</a>&nbsp;- <a href="#A8.4.6">8.4.6</a>&nbsp;- <a href="#A9.6.3.8">9.6.3.8</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>A <i>functional interface</i> is an interface that has just one abstract method (aside from the methods of <code style="background-color:inherit;font-size:medium">Object</code>), and thus represents a single function contract.  (In some cases, this "single" method may take the form of multiple abstract methods with override-equivalent signatures inherited from superinterfaces; in this case, the inherited methods logically represent a single method.)
+</p><p>In addition to the usual process of creating an interface instance by declaring and instantiating a class, instances of functional interfaces can be created with <i>lambda expressions</i> or <i>method references</i>.
+</p><p>The <i>function type</i> of a functional interface <em>I</em> is a method type—type parameters, formal parameter types, return types, and thrown types—that can be used to legally override the abstract method(s) of <em>I</em>.
+</p><p>The term <i>functional interface type</i> refers to a non-generic functional interface, a parameterization of a functional interface, a raw functional interface, or an intersection type inducing a functional interface.
+</p>
+<div id="A9.8"></div>
+<h3> <span class="mw-headline" id="9.8_Functional_Interfaces_.5BNew.5D"> 9.8 Functional Interfaces [New] </span></h3>
+<p>A <i>functional interface</i> is an interface that has just one abstract method (aside from the methods of <code style="background-color:inherit;font-size:medium">Object</code>), and thus represents a single function contract.  (In some cases, this "single" method may take the form of multiple abstract methods with override-equivalent signatures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) inherited from superinterfaces; in this case, the inherited methods logically represent a single method.)
+</p><p><span class="norm-static">More precisely, for interface <em>I</em>, let <em>M</em> be the set of abstract methods that are members of <em>I</em> but that do not have the same signature as any public instance method of the class <code style="background-color:inherit;font-size:medium">Object</code>.  Then <em>I</em> is a functional interface if there exists a method <em>m</em> in <em>M</em> for which the following conditions hold:<span class="assertion-id"> [jsr335-9.8-10]</span></span>
+</p>
+<ul><li> <span class="norm-static">The signature of <em>m</em> is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of every method's signature in <em>M</em>.<span class="assertion-id"> [jsr335-9.8-10-A]</span></span>
+</li><li> <span class="norm-static"><em>m</em> is return-type-substitutable (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.5" class="external text" rel="nofollow">8.4.5</a>) for every method in <em>M</em>.<span class="assertion-id"> [jsr335-9.8-10-B]</span></span>
+</li></ul>
+<p>In addition to the usual process of creating an interface instance by declaring (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1" class="external text" rel="nofollow">8.1</a>) and instantiating (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>) a class, instances of functional interfaces can be created with lambda expressions (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>) or method reference expressions (<a href="C.html#C15.13" title="Lambda C" class="mw-redirect">15.13</a>).
+</p><p>The <i>function type</i> of a functional interface <em>I</em> is a method type (<a href="A.html#A8.2" title="Lambda A" class="mw-redirect">8.2</a>) that can be used to legally override (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8" class="external text" rel="nofollow">8.4.8</a>) the abstract method(s) of <em>I</em>.
+</p><p><span class="norm-static">Let <em>M</em> be the set of abstract methods defined above for <em>I</em>.  The function type of <em>I</em> consists of the following:<span class="assertion-id"> [jsr335-9.8-20]</span></span>
+</p>
+<ul><li> <span class="norm-static">Type parameters, formal parameters, and return type: Let <em>m</em> be a method in <em>M</em> with i) a signature that is a subsignature of every method's signature in <em>M</em> and ii) a return type that is a subtype of every method's return type in <em>M</em> (after adapting for any type parameters (<a href="A.html#A8.4.4" title="Lambda A" class="mw-redirect">8.4.4</a>)); if no such method exists, then let <em>m</em> be a method in <em>M</em> that i) has a signature that is a subsignature of every method's signature in <em>M</em> and ii) is return-type-substitutable for every method in <em>M</em>.  Then the function type's type parameters, formal parameter types, and return type are as given by <em>m</em>.<span class="assertion-id"> [jsr335-9.8-20-A]</span></span>
+</li></ul>
+<ul><li> <span class="norm-static">Throws clause: The function type's <code style="background-color:inherit;font-size:medium">throws</code> clause is derived from the <code style="background-color:inherit;font-size:medium">throws</code> clauses of the methods in <em>M</em>.  If the function type is generic, these clauses are first adapted to the type parameters of the function type (<a href="A.html#A8.4.4" title="Lambda A" class="mw-redirect">8.4.4</a>); if the function type is not generic but at least one method in <em>M</em> <i>is</i>, these clauses are first erased.  Then the function type's <code style="background-color:inherit;font-size:medium">throws</code> clause includes every type, <em>E</em>, satisfying the following constraints:<span class="assertion-id"> [jsr335-9.8-20-B]</span></span>
+<ul><li> <span class="norm-static"><em>E</em> is mentioned in one of the <code style="background-color:inherit;font-size:medium">throws</code> clauses.<span class="assertion-id"> [jsr335-9.8-20-B1]</span></span>
+</li><li> <span class="norm-static">For each <code style="background-color:inherit;font-size:medium">throws</code> clause, <em>E</em> is a subtype of some type named in that clause.<span class="assertion-id"> [jsr335-9.8-20-B2]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-static">
+The term <i>functional interface type</i> refers to one of the following:<span class="assertion-id"> [jsr335-9.8-30]</span></span>
+</p>
+<ul><li> <span class="norm-static"> A non-generic functional interface<span class="assertion-id"> [jsr335-9.8-30-A]</span></span>
+</li><li> <span class="norm-static"> A parameterization (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.5" class="external text" rel="nofollow">4.5</a>) of a functional interface<span class="assertion-id"> [jsr335-9.8-30-B]</span></span>
+</li><li> <span class="norm-static"> A raw functional interface (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.8" class="external text" rel="nofollow">4.8</a>)<span class="assertion-id"> [jsr335-9.8-30-D]</span></span>
+</li><li> <span class="norm-static"> An intersection type that induces a notional functional interface (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.9" class="external text" rel="nofollow">4.9</a>)<span class="assertion-id"> [jsr335-9.8-30-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The function type of a parameterized functional interface, <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>T<sub>1</sub>...T<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, where <em>T<sub>1</sub>...T<sub>n</sub></em> are types and the corresponding type parameters of <em>F</em> are <em>P<sub>1</sub>, ..., P<sub>n</sub></em>, is derived by applying the substitution <em>[P<sub>1</sub>:=T<sub>1</sub>, ..., P<sub>n</sub>:=T<sub>n</sub>]</em> to the function type of interface <em>F</em>.<span class="assertion-id"> [jsr335-9.8-38]</span></span>
+</p><p><span class="norm-static">
+The function type of a parameterized functional interface, <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>A<sub>1</sub>...A<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em>, where one or more of <em>A<sub>1</sub>...A<sub>n</sub></em> is a wildcard, is the function type of the <i>non-wildcard parameterization</i> of <em>F</em>, <em>F<code style="background-color:inherit;font-size:medium">&lt;</code>T<sub>1</sub>...T<sub>n</sub><code style="background-color:inherit;font-size:medium">&gt;</code></em> determined as follows.  Let <em>P<sub>1</sub>, ..., P<sub>n</sub></em> be the type parameters of <em>F</em> and <em>B<sub>1</sub>, ..., B<sub>n</sub></em> be the corresponding bounds.  For all <em>i</em>, <em>1 ≤ i ≤ n</em>, <em>T<sub>i</sub></em> is derived according to the form of <em>A<sub>i</sub></em>:<span class="assertion-id"> [jsr335-9.8-40]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a type, then <em>T<sub>i</sub> = A<sub>i</sub></em>.<span class="assertion-id"> [jsr335-9.8-40-A]</span></span>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a wildcard, and the corresponding type parameter bound, <em>B<sub>i</sub></em>, mentions one of <em>P<sub>1</sub>...P<sub>n</sub></em>, then <em>T<sub>i</sub></em> is undefined and there is no function type.<span class="assertion-id"> [jsr335-9.8-39]</span></span>
+</li><li> <span class="norm-static"> Otherwise:<span class="assertion-id"> [jsr335-9.8-40-E]</span></span>
+<ul><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is an unbound wildcard <em><code style="background-color:inherit;font-size:medium">?</code></em>, then <em>T<sub>i</sub> = B<sub>i</sub></em>.<span class="assertion-id"> [jsr335-9.8-40-D]</span></span>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a upper-bounded wildcard <em><code style="background-color:inherit;font-size:medium">? extends</code> U<sub>i</sub></em>, then <em>T<sub>i</sub> = glb(U<sub>i</sub>, B<sub>i</sub>)</em>.<span class="assertion-id"> [jsr335-9.8-40-B]</span></span>
+</li><li> <span class="norm-static"> If <em>A<sub>i</sub></em> is a lower-bounded wildcard <em><code style="background-color:inherit;font-size:medium">? super</code> L<sub>i</sub></em>, then <em>T<sub>i</sub> = L<sub>i</sub></em>.<span class="assertion-id"> [jsr335-9.8-40-C]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-static">
+The function type of a raw functional interface is the erasure of the functional interface's function type.<span class="assertion-id"> [jsr335-9.8-45]</span></span>
+</p><p><span class="norm-static">
+The function type of an intersection type that induces a notional functional interface (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.9" class="external text" rel="nofollow">4.9</a>) is the function type of the notional interface.<span class="assertion-id"> [jsr335-9.8-50]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>"A closure is an object that supports exactly one method: <em>apply</em>." - Guy Steele
+</p>
+</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Functional interface examples:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Runnable { void run(); }
+  // Functional
+
+interface Foo { boolean equals(Object obj); }
+ // Not functional; equals is already an implicit member
+
+interface Bar extends Foo { int compare(String o1, String o2); }
+ // Functional; Bar has one abstract non-Object method
+
+interface Comparator&lt;T&gt; {
+ boolean equals(Object obj);
+ int compare(T o1, T o2);
+}
+ // Functional; Comparator has one abstract non-Object method
+
+interface Foo {
+  int m();
+  Object clone();
+}
+  // Not functional; method Object.clone is not public
+
+interface X { int m(Iterable&lt;String&gt; arg); }
+interface Y { int m(Iterable&lt;String&gt; arg); }
+interface Z extends X, Y {}
+  // Functional: two methods, but they have the same signature
+
+interface X { Iterable m(Iterable&lt;String&gt; arg); }
+interface Y { Iterable&lt;String&gt; m(Iterable arg); }
+interface Z extends X, Y {}
+  // Functional: Y.m is a subsignature &amp; return-type-substitutable
+
+interface X { int m(Iterable&lt;String&gt; arg); }
+interface Y { int m(Iterable&lt;Integer&gt; arg); }
+interface Z extends X, Y {}
+  // Compiler error: No method has a subsignature of all abstract methods
+
+interface X { int m(Iterable&lt;String&gt; arg, Class c); }
+interface Y { int m(Iterable arg, Class&lt;?&gt; c); }
+interface Z extends X, Y {}
+  // Compiler error: No method has a subsignature of all abstract methods
+
+interface X { long m(); }
+interface Y { int m(); }
+interface Z extends X, Y {}
+  // Compiler error: no method is return type substitutable
+
+interface Foo&lt;T&gt; { void m(T arg); }
+interface Bar&lt;T&gt; { void m(T arg); }
+interface FooBar&lt;X, Y&gt; extends Foo&lt;X&gt;, Bar&lt;Y&gt; {}
+  // Compiler error: different signatures, same erasure
+
+interface Foo&lt;T, N extends Number&gt; {
+  void m(T arg);
+  void m(N arg);
+}
+interface Bar extends Foo&lt;String, Integer&gt; {}
+interface Baz extends Foo&lt;Integer, Integer&gt; {}
+  // Foo is _not_ functional: different signatures for m
+  // Bar is _not_ functional: different signatures for m
+  // Baz is functional: same signature for m
+
+interface Executor { &lt;T&gt; T execute(Action&lt;T&gt; a); }
+  // Functional
+
+interface X { &lt;T&gt; T execute(Action&lt;T&gt; a); }
+interface Y { &lt;S&gt; S execute(Action&lt;S&gt; a); }
+interface Exec extends X, Y {}
+  // Functional: signatures are &quot;the same&quot;
+
+interface X { &lt;T&gt; T execute(Action&lt;T&gt; a); }
+interface Y { &lt;S,T&gt; S execute(Action&lt;S&gt; a); }
+interface Exec extends X, Y {}
+  // Compiler error: different signatures, same erasure
+</pre></div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Function type examples:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface X { void m() throws IOException; }
+interface Y { void m() throws EOFException; }
+interface Z { void m() throws ClassNotFoundException; }
+interface XY extends X, Y {}
+interface XYZ extends X, Y, Z {}
+
+// XY has function type ()-&gt;void throws EOFException
+// XYZ has function type ()-&gt;void (throws nothing)
+
+interface A {
+  List&lt;String&gt; foo(List&lt;String&gt; arg) throws IOException, SQLTransientException;
+}
+interface B {
+  List foo(List&lt;String&gt; arg) throws EOFException, SQLException, TimeoutException;
+}
+interface C {
+  List foo(List arg) throws Exception;
+}
+interface D extends A, B {}
+interface E extends A, B, C {}
+
+// D has function type (List&lt;String&gt;)-&gt;List&lt;String&gt; throws EOFException, SQLTransientException
+// E has function type (List)-&gt;List throws EOFException, SQLTransientException
+
+interface G1 {
+  &lt;E extends Exception&gt; Object m() throws E;
+}
+interface G2 {
+  &lt;F extends Exception&gt; String m() throws Exception;
+}
+interface G extends G1, G2 {}
+
+// G has function type &lt;F extends Exception&gt; ()-&gt;String throws F
+</pre></div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>The definition of <i>functional interface</i> excludes methods in an interface that are also public methods in <code style="background-color:inherit;font-size:medium">Object</code>.  This is to allow functional treatment of an interface like <code style="background-color:inherit;font-size:medium">Comparator</code> that declares multiple abstract methods of which only one is really "new"; the other method is an explicit declaration of an abstract method that would otherwise be implicitly declared, and will be automatically implemented by any subclass.
+<p>Note that if non-public methods of <code style="background-color:inherit;font-size:medium">Object</code>—like <code style="background-color:inherit;font-size:medium">clone()</code>—are declared in an interface, they are not automatically implemented by every subclass of the interface, because the inherited implementation is protected, while the interface method must be public.  The only way to implement such an interface would be to override the non-public Object method, making it public.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>Functional interfaces can be generic: <code style="background-color:inherit;font-size:medium">Predicate&lt;T&gt;</code>, for example.
+<p>A previous, more general approach made the "functional" property one of types (specific parameterizations) rather than interfaces.  Each distinct parameterization was examined to determine if it had a single abstract method; parameterizations were allowed to "merge" otherwise-distinct methods.  The extra complexity introduced by this strategy, however, was not deemed worthwhile.  If an interface could only qualify as functional under a certain parameterization, a corresponding functional interface can be declared by extending the interface, using that particular parameterization as the supertype.
+</p><p>Under the current definition, a functional interface may be parameterized in a way that produces distinct abstract methods—that is, multiple methods that cannot be legally overridden with a single declaration.  For example:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface I { Object m(Class c); }
+interface J&lt;S&gt; { S m(Class&lt;?&gt; c); }
+interface K&lt;T&gt; { T m(Class&lt;?&gt; c); }
+interface Functional&lt;S,T&gt; extends I, J&lt;S&gt;, K&lt;T&gt; {}
+</pre>
+<p>Interface <code style="background-color:inherit;font-size:medium">Functional</code> is functional—<code style="background-color:inherit;font-size:medium">I.m</code> is return-type-substitutable for the other two—but <code style="background-color:inherit;font-size:medium">Functional&lt;String,Integer&gt;</code> clearly cannot be implemented with a single method.  However, other parameterizations of <code style="background-color:inherit;font-size:medium">Functional</code> <i>can</i> be implemented with a single method.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>A design goal for functional interfaces is to interact cleanly with raw types in abstract method declarations without unnecessarily encouraging or introducing their use.
+<p>The <i>subsignature</i> definition in the JLS allows an erased signature to override an unerased version (note that the "signature" consists of a name, type parameters, and parameter types, but not <code style="background-color:inherit;font-size:medium">return</code> or <code style="background-color:inherit;font-size:medium">throws</code> types).  It does not allow piecemeal erasure—either the entire signature must be erased, or the two signatures must be the same.  Thus, if the set <em>M</em> used in the functional interface definition contains one method that has a subsignature of all the others, then the set contains at most two unique signatures: an erased version, and a non-erased version.  If there is an erased version, that is the signature we use.  Then, for simplicity, the set of candidate return types is restricted to those that appear on an erased-signature method.
+</p><p>When there are multiple methods with <i>different</i> unerased signatures, the interface is not functional.  We do not attempt to unify them via erasure.  For example, it would be possible to treat the following as a functional interface, but we prefer not to, since there's a clear problem with the interface's design, and we don't want to <i>introduce</i> raw types into a program.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+ interface A { void f(List&lt;String&gt; ls); }
+ interface B { void f(List&lt;Integer&gt; li); }
+ interface C extends A,B {}
+ C c1 = (List l) -&gt; ...;
+ C c2 = l -&gt; ...;
+</pre>
+<p>When some return types are erased and others are not, we try to choose the non-erased type, if possible:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+LinkedList foo()
+List&lt;?&gt; foo()
+LinkedList&lt;String&gt; foo()
+LinkedList&lt;?&gt; foo()
+</pre>
+</div></li>
+<li style="margin-bottom:12px;"><div> While the name may suggest otherwise, a "function type" is <i>not</i> a type in the sense of <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.1" class="external text" rel="nofollow">4.1</a>.  It is a collection of types that form a method signature, return type, and <code style="background-color:inherit;font-size:medium">throws</code> clause.  This abuse of the "type" terminology is consistent with precedent—see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.2" class="external text" rel="nofollow">8.2</a>.
+</div></li>
+<li style="margin-bottom:12px;"><div> The function type of a functional interface is defined nondeterministically: while the signatures in <em>M</em> are "the same", they may be syntactically different (<code style="background-color:inherit;font-size:medium">HashMap.Entry</code> and <code style="background-color:inherit;font-size:medium">Map.Entry</code>, for example); the return type may be a subtype of every other return type, but there may be other return types that are <i>also</i> subtypes (<code style="background-color:inherit;font-size:medium">List&lt;?&gt;</code> and <code style="background-color:inherit;font-size:medium">List&lt;? extends Object&gt;</code>, for example); and the order of thrown types is unspecified.
+<p>These distinctions are subtle, but they can sometimes be important.  However, function types will not be used in a way in which the nondeterminism matters.  It may affect generated code, but that is mostly implementation-dependent anyway.
+</p><p>Note that the current JLS similarly defines the return type and throws clause of a "most specific method" nondeterministically when there are multiple abstract methods (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.5" class="external text" rel="nofollow">15.12.2.5</a>).
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>Function types are allowed to be generic.  There is no syntax in this specification for generic lambda expressions (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">see 15.27</a>).  However, generic methods and constructors can instantiate such functional interfaces (<a href="E.html#E15.13.2" title="Lambda E" class="mw-redirect">see 15.13.2</a>).
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The goal driving the definition of a function type's thrown exception types is to support the invariant that a method with the resulting <code style="background-color:inherit;font-size:medium">throws</code> clause could override each abstract method of the functional interface.  Per <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.6" class="external text" rel="nofollow">8.4.6</a>, this means the function type cannot throw "more" exceptions than any single method in the set <em>M</em>.  So we look for as many exception types as possible that are "covered" by every method's <code style="background-color:inherit;font-size:medium">throws</code> clause.
+</div></li>
+<li style="margin-bottom:12px;"><div> When a functional interface is wildcard-parameterized, there are many different instantiations that could satisfy the wildcard and produce different function types: e.g., each of <code style="background-color:inherit;font-size:medium">Predicate&lt;Integer&gt;</code> (function type <code style="background-color:inherit;font-size:medium">Integer -&gt; boolean</code>), <code style="background-color:inherit;font-size:medium">Predicate&lt;Number&gt;</code> (function type <code style="background-color:inherit;font-size:medium">Number -&gt; boolean</code>), and <code style="background-color:inherit;font-size:medium">Predicate&lt;Object&gt;</code> (function type <code style="background-color:inherit;font-size:medium">Object -&gt; boolean</code>) is a <code style="background-color:inherit;font-size:medium">Predicate&lt;? super Integer&gt;</code>.  Sometimes, we can tell from context (e.g., the parameter types of a lambda expression) which is intended (<a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">see 15.27.3</a>).  Other times, we're left to arbitrarily pick one; in these circumstances, we just choose the bounds.  (Since this simple strategy can't guarantee that the resulting type will satisfy certain complex bounds, we give up in complex cases.)
+</div></li>
+<li style="margin-bottom:12px;"><div> In special circumstances, it is useful to treat an intersection type as a functional interface type, so this is supported.  Typically, this will look like an intersection of one functional interface and one or more marker interfaces: <code style="background-color:inherit;font-size:medium">Runnable &amp; Serializable</code>.
+<p>In practice, such types can be used in casts (<a href="D.html#D15.16" title="Lambda D" class="mw-redirect">15.16</a>) that force a lambda expression to conform to a certain type.  As a special case, when one of the interfaces in the intersection is <code style="background-color:inherit;font-size:medium">Serializable</code>, special runtime support for serialization will be triggered (<a href="E.html#E15.27.4" title="Lambda E" class="mw-redirect">see 15.27.4</a>).
+</p>
+</div></li></ol></div></blockquote>
+<div id="A4.9"></div>
+<h3> <span class="mw-headline" id="4.9_Intersection_Type_.5BModified.5D"> 4.9 Intersection Type [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.9" class="external text" rel="nofollow">JLS 4.9</a></small>
+</p><p><span class="norm-static">
+An intersection type takes the form <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em> (<em>n &gt; 0</em>), where <em>T<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>) are <del>type expressions</del> <u>types</u>.<span class="assertion-id"> [jls-4.9-100]</span></span>
+</p><p>Intersection types <u>can be derived from type parameter bounds (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.4" class="external text" rel="nofollow">4.4</a>) and cast expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.16" class="external text" rel="nofollow">15.16</a>); they also</u> arise in the processes of capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) and <del>type inference (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.7" class="external text" rel="nofollow">15.12.2.7</a>)</del> <u>least upper bound computation (<a href="G.html#G4.10.4" title="Lambda G" class="mw-redirect">4.10.4</a>)</u>.  It is not possible to write an intersection type directly <del>as part of a program</del> <u>in a place where a <em>Type</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.1" class="external text" rel="nofollow">4.1</a>) is expected</u>; no syntax supports this.
+</p><p>The values of an intersection type are those objects that are values of all of the types <em>T<sub>i</sub></em> for <em>1 ≤ i ≤ n</em>.
+</p><p><span class="norm-static">
+<u>Every intersection type <i>induces</i> a notional class or interface for the purpose of identifying the members of the intersection,</u> as follows:<span class="assertion-id"> [jsr335-4.9-301]</span></span>
+</p>
+<ul><li> <span class="norm-static"> For each <em>T<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>), let <em>C<sub>i</sub></em> be the most specific class or array type such that <em>T<sub>i</sub> &lt;: C<sub>i</sub></em>.  Then there must be some <del><em>T<sub>k</sub> &lt;:</em></del> <em>C<sub>k</sub></em> such that <em>C<sub>k</sub> &lt;: C<sub>i</sub></em> for any <em>i</em> (<em>1 ≤ i ≤ n</em>), or a compile-time error occurs.<span class="assertion-id"> [jls-4.9-300-A]</span></span>
+</li><li> <span class="norm-static"> For <em>1 ≤ j ≤ n</em>, if <em>T<sub>j</sub></em> is a type variable, then let <em>T'<sub>j</sub></em> be an interface whose members are the same as the public members of <em>T<sub>j</sub></em>; otherwise, if <em>T<sub>j</sub></em> is an interface, then let <em>T'<sub>j</sub></em> be <em>T<sub>j</sub></em>.<span class="assertion-id"> [jls-4.9-300-B]</span></span>
+</li><li> <span class="norm-static"> Then <u>if <em>C<sub>k</sub></em> is <code style="background-color:inherit;font-size:medium">Object</code>, a notional interface is induced; otherwise, a notional class is induced with direct superclass <em>C<sub>k</sub></em>.  This class or interface has</u> direct superinterfaces <em>T'<sub>1</sub>, ..., T'<sub>n</sub></em>, <u>and is</u> declared in the same package in which the intersection type appears.<span class="assertion-id"> [jls-4.9-300-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The members of an intersection type <u>are the members of the class or interface it induces</u>.<span class="assertion-id"> [jls-4.9-300]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+There are a number of problems with this definition of the members of an intersection (including no allowance for wildcards, extending an array type, and lack of explicit well-formedness rules), but those problems are set aside for now.  Our only goal is to adjust the existing rules so that an intersection may be treated as a functional interface in certain circumstances.</div></blockquote>
+<div id="A8.2"></div>
+<h3> <span class="mw-headline" id="8.2_Class_Members_.5BModified.5D"> 8.2 Class Members [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.2" class="external text" rel="nofollow">JLS 8.2</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+We use the phrase <i>the type of a member</i> to denote:<span class="assertion-id"> [jls-8.2-200]</span></span>
+</p>
+<ul><li> <span class="norm-static"> For a field, its type.<span class="assertion-id"> [jls-8.2-200-A]</span></span>
+</li><li> <span class="norm-static"> For a method, an ordered <del>3-tuple</del> <u>4-tuple</u> consisting of:<span class="assertion-id"> [jls-8.2-200-B]</span></span>
+<ul><li> <span class="norm-static"> <u>type parameters: the declarations of any type parameters of the method member.</u><span class="assertion-id"> [jls-8.2-200-B-D]</span></span>
+</li><li> <span class="norm-static"> arguments types: a list of the types of the arguments to the method member.<span class="assertion-id"> [jls-8.2-200-B-A]</span></span>
+</li><li> <span class="norm-static"> return type: the return type of the method member.<span class="assertion-id"> [jls-8.2-200-B-B]</span></span>
+</li><li> <span class="norm-static"> throws clause: exception types declared in the throws clause of the method member.<span class="assertion-id"> [jls-8.2-200-B-C]</span></span>
+</li></ul>
+</li></ul>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This is a bug fix, necessary to clarify what constitutes a <i>function type</i>.</div></blockquote>
+<div id="A8.4.2"></div>
+<h3> <span class="mw-headline" id="8.4.2_Method_Signature_.5BModified.5D"> 8.4.2 Method Signature [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">JLS 8.4.2</a></small>
+</p><p><span class="norm-static">Two methods <u>or constructors, <em>M</em> and <em>N</em>,</u> have the <i>same signature</i> if they have the same name, <u>the same type parameters (if any) (<a href="A.html#A8.4.4" title="Lambda A" class="mw-redirect">8.4.4</a>), and, after adapting the formal parameter types of <em>N</em> to the the type parameters of <em>M</em>, the same formal parameter types</u>.<span class="assertion-id"> [jls-8.4.2-100]</span></span>
+</p><p><del><span class="norm-static"> Two method or constructor declarations <em>M</em> and <em>N</em> have the <i>same argument types</i> if all of the following conditions hold:<span class="assertion-id"> [jls-8.4.2-110]</span></span></del>
+</p>
+<ul><li> <del><span class="norm-static"> They have the same number of formal parameters (possibly zero)<span class="assertion-id"> [jls-8.4.2-110-A]</span></span></del>
+</li><li> <del><span class="norm-static"> They have the same number of type parameters (possibly zero)<span class="assertion-id"> [jls-8.4.2-110-B]</span></span></del>
+</li><li> <del><span class="norm-static"> Let <em>A<sub>1</sub>, ..., A<sub>n</sub></em> be the type parameters of <em>M</em> and let <em>B<sub>1</sub>, ..., B<sub>n</sub></em> be the type parameters of <em>N</em>.  After renaming each occurrence of a <em>B<sub>i</sub></em> in <em>N</em>'s type to <em>A<sub>i</sub></em>, the bounds of corresponding type variables are the same, and the formal parameter types of <em>M</em> and <em>N</em> are the same.<span class="assertion-id"> [jls-8.4.2-110-C]</span></span></del>
+</li></ul>
+<p>...
+</p>
+<div id="A8.4.4"></div>
+<h3> <span class="mw-headline" id="8.4.4_Generic_Methods_.5BAddendum.5D"> 8.4.4 Generic Methods [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.4" class="external text" rel="nofollow">JLS 8.4.4</a></small>
+</p><p><span class="norm-static">Two methods or constructors <em>M</em> and <em>N</em> have the <i>same type parameters</i> if both of the following are true:<span class="assertion-id"> [jsr335-8.4.4-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"><em>M</em> and <em>N</em> have same number of type parameters (possibly zero).<span class="assertion-id"> [jsr335-8.4.4-10-A]</span></span>
+</li><li> <span class="norm-static">Where <em>A<sub>1</sub>, ... , A<sub>n</sub></em> are the type parameters of <em>M</em> and <em>B<sub>1</sub>, ..., B<sub>n</sub></em> are the type parameters of <em>N</em>, let <em>θ=[B<sub>1</sub>:=A<sub>1</sub>, ..., B<sub>n</sub>:=A<sub>n</sub>]</em>.  Then, for all <em>i</em>, <em>1≤i≤n</em>, the bound of <em>A<sub>i</sub></em> is the same type as <em>θ</em> applied to the bound of <em>B<sub>i</sub></em>.<span class="assertion-id"> [jsr335-8.4.4-10-B]</span></span>
+</li></ul>
+<p><span class="norm-static">Where two methods or constructors <em>M</em> and <em>N</em> have the same type parameters, a type mentioned in <em>N</em> can be <i>adapted to the type parameters</i> of <em>M</em> by applying <em>θ</em>, as defined above, to the type.<span class="assertion-id"> [jsr335-8.4.4-20]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This concept of type parameter adaptation is implicit in JLS 7 but never expressed outright.  Being explicit about it allows us to more precisely and correctly identify the return type and <code style="background-color:inherit;font-size:medium">throws</code> clause of a function type.</div></blockquote>
+<div id="A8.4.5"></div>
+<h3> <span class="mw-headline" id="8.4.5_Method_Return_Type_.5BModified.5D"> 8.4.5 Method Return Type [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.5" class="external text" rel="nofollow">JLS 8.4.5</a></small>
+</p><p><span class="norm-static">A method declaration <em>d<sub>1</sub></em> with return type <em>R<sub>1</sub></em> is <i>return-type-substitutable</i> for another method <em>d<sub>2</sub></em> with return type <em>R<sub>2</sub></em>, if and only if the following conditions hold:<span class="assertion-id"> [jls-8.4.5-210]</span></span>
+</p>
+<ul><li> <span class="norm-static">If <em>R<sub>1</sub></em> is <code style="background-color:inherit;font-size:medium">void</code> then <em>R<sub>2</sub></em> is <code style="background-color:inherit;font-size:medium">void</code>.<span class="assertion-id"> [jls-8.4.5-210-A]</span></span>
+</li><li> <span class="norm-static">If <em>R<sub>1</sub></em> is a primitive type, then <em>R<sub>2</sub></em> is identical to <em>R<sub>1</sub></em>.<span class="assertion-id"> [jls-8.4.5-210-B]</span></span>
+</li><li> <span class="norm-static">If <em>R<sub>1</sub></em> is a reference type then <u>one of the following is true</u>:<span class="assertion-id"> [jls-8.4.5-210-C]</span></span>
+<ul><li> <span class="norm-static"><em>R<sub>1</sub></em>, <u>adapted to the type parameters of <em>d<sub>2</sub></em> (<a href="A.html#A8.4.4" title="Lambda A" class="mw-redirect">8.4.4</a>)</u>, is <del>either</del> a subtype of <em>R<sub>2</sub></em>.<span class="assertion-id"> [jls-8.4.5-210-C-1]</span></span> <del>or</del>
+</li><li> <span class="norm-static"><em>R<sub>1</sub></em> can be converted to a subtype of <em>R<sub>2</sub></em> by unchecked conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.9" class="external text" rel="nofollow">5.1.9</a>).<span class="assertion-id"> [jls-8.4.5-210-C-1']</span></span> <del>or</del>
+</li><li> <span class="norm-static"><u><em>d<sub>1</sub></em> does not have the same signature as <em>d<sub>2</sub></em> (<a href="A.html#A8.4.2" title="Lambda A" class="mw-redirect">8.4.2</a>)</u>, and <em>R1 = |R2|</em><span class="assertion-id"> [jls-8.4.5-210-C-2]</span></span>
+</li></ul>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This is a bug fix for the specification.  First, it adjusts the <em>R1 = |R2|</em> rule to more accurately describe longstanding behavior.  Second, it takes advantage of the definition of type parameter adaptation (<a href="A.html#A8.4.4" title="Lambda A" class="mw-redirect">8.4.4</a>).</div></blockquote>
+<div id="A8.4.6"></div>
+<h3> <span class="mw-headline" id="8.4.6_Method_Throws_.5BModified.5D"> 8.4.6 Method Throws [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.6" class="external text" rel="nofollow">JLS 8.4.6</a></small>
+</p><p>...
+</p><p><span class="norm-error"> If the unerased <code style="background-color:inherit;font-size:medium">throws</code> clause of <em>m</em> does not contain a supertype of each exception type in the <code style="background-color:inherit;font-size:medium">throws</code> clause of <em>n</em> <u>(adapted, if necessary, to the type parameters of <em>m</em>)</u>, a compile-time unchecked warning occurs.<span class="assertion-id"> [jls-8.4.8.3-210-C]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This takes advantage of the definition of type parameter adaptation, above, and can be viewed as a bug fix for the specification.</div></blockquote>
+<div id="A9.6.3.8"></div>
+<h3> <span class="mw-headline" id="9.6.3.8_FunctionalInterface_.5BNew.5D"> 9.6.3.8 FunctionalInterface [New] </span></h3>
+<p>The annotation type <code style="background-color:inherit;font-size:medium">FunctionalInterface</code> is used to indicate that an interface is meant to be a functional interface (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>).
+</p><p><span class="norm-error">
+If an interface is annotated with the annotation <code style="background-color:inherit;font-size:medium">@FunctionalInterface</code> but is not, in fact, a functional interface, a compile-time error occurs.<span class="assertion-id"> [jsr335-9.6.3.8-10]</span></span>
+</p><p>This facilitates early detection of inappropriate method declarations appearing in or inherited by an interface that is meant to be functional.
+</p><p>Because some interfaces are functional incidentally, it is not necessary or desirable that all functional interfaces be annotated with the <code style="background-color:inherit;font-size:medium">@FunctionalInterface</code> annotation.
+</p>
+
+
+</body></html>

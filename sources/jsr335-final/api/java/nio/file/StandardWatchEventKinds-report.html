@@ -1,0 +1,183 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:StandardWatchEventKinds [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:StandardWatchEventKinds"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public final class <span class="typeNameLabel">StandardWatchEventKinds</span>
+extends <a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">Defines the <em>standard</em> event kinds.    </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.7</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:OVERFLOW [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:OVERFLOW"></a><a name="OVERFLOW"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OVERFLOW</h4>
+<pre>public static final&nbsp;<a href="../../../java/nio/file/WatchEvent.Kind.html" title="interface in java.nio.file" target="_parent">WatchEvent.Kind</a>&lt;<a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&gt; OVERFLOW</pre>
+<div class="block">A special event to indicate that events may have been lost or discarded.<p> The <a href="../../../java/nio/file/WatchEvent.html#context--" target="_parent"><code>context</code></a> for this event is implementation specific and may be <code>null</code>. The event <a href="../../../java/nio/file/WatchEvent.html#count--" target="_parent"><code>count</code></a> may be greater than <code>1</code>.                    </p>            
+</div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/nio/file/WatchService.html" title="interface in java.nio.file" target="_parent"><code>WatchService</code></a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENTRY_CREATE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENTRY_CREATE"></a><a name="ENTRY_CREATE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENTRY_CREATE</h4>
+<pre>public static final&nbsp;<a href="../../../java/nio/file/WatchEvent.Kind.html" title="interface in java.nio.file" target="_parent">WatchEvent.Kind</a>&lt;<a href="../../../java/nio/file/Path.html" title="interface in java.nio.file" target="_parent">Path</a>&gt; ENTRY_CREATE</pre>
+<div class="block">Directory entry created.<p> When a directory is registered for this event then the <a href="../../../java/nio/file/WatchKey.html" title="interface in java.nio.file" target="_parent"><code>WatchKey</code></a> is queued when it is observed that an entry is created in the directory or renamed into the directory. The event <a href="../../../java/nio/file/WatchEvent.html#count--" target="_parent"><code>count</code></a> for this event is always <code>1</code>.                                       </p>  
+</div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENTRY_DELETE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENTRY_DELETE"></a><a name="ENTRY_DELETE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENTRY_DELETE</h4>
+<pre>public static final&nbsp;<a href="../../../java/nio/file/WatchEvent.Kind.html" title="interface in java.nio.file" target="_parent">WatchEvent.Kind</a>&lt;<a href="../../../java/nio/file/Path.html" title="interface in java.nio.file" target="_parent">Path</a>&gt; ENTRY_DELETE</pre>
+<div class="block">Directory entry deleted.<p> When a directory is registered for this event then the <a href="../../../java/nio/file/WatchKey.html" title="interface in java.nio.file" target="_parent"><code>WatchKey</code></a> is queued when it is observed that an entry is deleted or renamed out of the directory. The event <a href="../../../java/nio/file/WatchEvent.html#count--" target="_parent"><code>count</code></a> for this event is always <code>1</code>.                                     </p>  
+</div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENTRY_MODIFY [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENTRY_MODIFY"></a><a name="ENTRY_MODIFY"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ENTRY_MODIFY</h4>
+<pre>public static final&nbsp;<a href="../../../java/nio/file/WatchEvent.Kind.html" title="interface in java.nio.file" target="_parent">WatchEvent.Kind</a>&lt;<a href="../../../java/nio/file/Path.html" title="interface in java.nio.file" target="_parent">Path</a>&gt; ENTRY_MODIFY</pre>
+<div class="block">Directory entry modified.<p> When a directory is registered for this event then the <a href="../../../java/nio/file/WatchKey.html" title="interface in java.nio.file" target="_parent"><code>WatchKey</code></a> is queued when it is observed that an entry in the directory has been modified. The event <a href="../../../java/nio/file/WatchEvent.html#count--" target="_parent"><code>count</code></a> for this event is <code>1</code> or greater.                                    </p>  
+</div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ListResourceBundle [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ListResourceBundle"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>Direct Known Subclasses:  </dt>
+<dd> 
+<a href="../../javax/accessibility/AccessibleResourceBundle.html" title="class in javax.accessibility" target="_parent">AccessibleResourceBundle</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">ListResourceBundle</span>
+extends <a href="../../java/util/ResourceBundle.html" title="class in java.util" target="_parent">ResourceBundle</a>
+</pre>
+<div class="block"> 
+<code>ListResourceBundle</code> is an abstract subclass of <code>ResourceBundle</code> that manages resources for a locale in a convenient and easy to use list. See <code>ResourceBundle</code> for more information about resource bundles in general.<p> Subclasses must override <code>getContents</code> and provide an array, where each item in the array is a pair of objects. The first element of each pair is the key, which must be a <code>String</code>, and the second element is the value associated with that key.                                            </p>
+<p> The following <a name="sample">example</a> shows two members of a resource bundle family with the base name "MyResources". "MyResources" is the default member of the bundle family, and "MyResources_fr" is the French member. These members are based on <code>ListResourceBundle</code> (a related <a href="PropertyResourceBundle.html#sample" target="_parent">example</a> shows how you can add a bundle to this family that's based on a properties file). The keys in this example are of the form "s1" etc. The actual keys are entirely up to your choice, so long as they are the same as the keys you use in your program to retrieve the objects from the bundle. Keys are case-sensitive.                                                                                                     </p>
+<blockquote>
+<pre>
+
+ public class MyResources extends ListResourceBundle {
+     protected Object[][] getContents() {
+         return new Object[][] {
+         // LOCALIZE THIS
+             {"s1", "The disk \"{1}\" contains {0}."},  // MessageFormat pattern
+             {"s2", "1"},                               // location of {0} in pattern
+             {"s3", "My Disk"},                         // sample disk name
+             {"s4", "no files"},                        // first ChoiceFormat choice
+             {"s5", "one file"},                        // second ChoiceFormat choice
+             {"s6", "{0,number} files"},                // third ChoiceFormat choice
+             {"s7", "3 Mar 96"},                        // sample date
+             {"s8", new Dimension(1,5)}                 // real object, not just string
+         // END OF MATERIAL TO LOCALIZE
+         };
+     }
+ }
+
+ public class MyResources_fr extends ListResourceBundle {
+     protected Object[][] getContents() {
+         return new Object[][] {
+         // LOCALIZE THIS
+             {"s1", "Le disque \"{1}\" {0}."},          // MessageFormat pattern
+             {"s2", "1"},                               // location of {0} in pattern
+             {"s3", "Mon disque"},                      // sample disk name
+             {"s4", "ne contient pas de fichiers"},     // first ChoiceFormat choice
+             {"s5", "contient un fichier"},             // second ChoiceFormat choice
+             {"s6", "contient {0,number} fichiers"},    // third ChoiceFormat choice
+             {"s7", "3 mars 1996"},                     // sample date
+             {"s8", new Dimension(1,3)}                 // real object, not just string
+         // END OF MATERIAL TO LOCALIZE
+         };
+     }
+ }
+ </pre>
+</blockquote>
+<p> The implementation of a <code>ListResourceBundle</code> subclass must be thread-safe if it's simultaneously used by multiple threads. The default implementations of the methods in this class are thread-safe.                           </p>                               
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.1</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/ResourceBundle.html" title="class in java.util" target="_parent"><code>ResourceBundle</code></a>, <a href="../../java/util/PropertyResourceBundle.html" title="class in java.util" target="_parent"><code>PropertyResourceBundle</code></a>  
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:ListResourceBundle-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:ListResourceBundle--"></a><a name="ListResourceBundle--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ListResourceBundle</h4>
+<pre>public&nbsp;ListResourceBundle()</pre>
+<div class="block">Sole constructor. (For invocation by subclass constructors, typically implicit.)        </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:handleGetObject-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:handleGetObject-java.lang.String-"></a><a name="handleGetObject-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleGetObject</h4>
+<pre>public final&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;handleGetObject(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;key)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../java/util/ResourceBundle.html#handleGetObject-java.lang.String-" target="_parent">ResourceBundle</a></code>   </span> 
+</div>
+<div class="block">Gets an object for the given key from this resource bundle. Returns null if this resource bundle does not contain an object for the given key.                         </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/ResourceBundle.html#handleGetObject-java.lang.String-" target="_parent">handleGetObject</a></code>&nbsp;in class&nbsp;<code><a href="../../java/util/ResourceBundle.html" title="class in java.util" target="_parent">ResourceBundle</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key for the desired object        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the object for the given key, or null       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getKeys-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getKeys--"></a><a name="getKeys--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getKeys</h4>
+<pre>public&nbsp;<a href="../../java/util/Enumeration.html" title="interface in java.util" target="_parent">Enumeration</a>&lt;<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&gt;&nbsp;getKeys()</pre>
+<div class="block">Returns an <code>Enumeration</code> of the keys contained in this <code>ResourceBundle</code> and its parent bundles.             </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/ResourceBundle.html#getKeys--" target="_parent">getKeys</a></code>&nbsp;in class&nbsp;<code><a href="../../java/util/ResourceBundle.html" title="class in java.util" target="_parent">ResourceBundle</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an <code>Enumeration</code> of the keys contained in this <code>ResourceBundle</code> and its parent bundles.            </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/ResourceBundle.html#keySet--" target="_parent"><code>ResourceBundle.keySet()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:handleKeySet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:handleKeySet--"></a><a name="handleKeySet--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleKeySet</h4>
+<pre>protected&nbsp;<a href="../../java/util/Set.html" title="interface in java.util" target="_parent">Set</a>&lt;<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&gt;&nbsp;handleKeySet()</pre>
+<div class="block">Returns a <code>Set</code> of the keys contained <em>only</em> in this <code>ResourceBundle</code>.          </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/ResourceBundle.html#handleKeySet--" target="_parent">handleKeySet</a></code>&nbsp;in class&nbsp;<code><a href="../../java/util/ResourceBundle.html" title="class in java.util" target="_parent">ResourceBundle</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a <code>Set</code> of the keys contained only in this <code>ResourceBundle</code>         
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/ResourceBundle.html#keySet--" target="_parent"><code>ResourceBundle.keySet()</code></a> 
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getContents-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getContents--"></a><a name="getContents--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getContents</h4>
+<pre>protected abstract&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>[][]&nbsp;getContents()</pre>
+<div class="block">Returns an array in which each item is a pair of objects in an <code>Object</code> array. The first element of each pair is the key, which must be a <code>String</code>, and the second element is the value associated with that key. See the class description for details.                                              </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an array of an <code>Object</code> array representing a key-value pair.         </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        {
+                        font-family:Helvetica, Arial, sans-serif;
+                        }
+                        a {text-decoration:none}
+                        a:hover {text-decoration:underline}
+                        a.problem {text-decoration:underline; color:red}
+                        a.problem:hover {text-decoration:underline}
+                        .removed {
+                        background-color: #fdc6c6;
+                        }
+                        .added {
+                        background-color: #ccffcc;
+                        }
+                        .changed {
+                        color: #ff0000;
+                        }
+                        .none {
+                        color: black;
+                        }
+                        .modified {
+                        font-weight:bold;
+                        color: #ff0000;
+                        }
+                        .total {
+                        font-weight:bold;
+                        background-color:#eeeeee;
+                        }
+                        .header {
+                        background-color:#eeeeee;
+                        }
+                        .stat {
+                        font-size:80%;
+                        }
+                        .stat1 {
+                        font-size:100%;
+                        background-color: #a0a0a0;
+                        }
+                        .stat1 tr {
+                        background-color: white;
+                        }
+                        td.context {
+                        font-size:90%;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table border="0" cellspacing="5" width="100%" class="stat">
+<tr class="header">
+<td nowrap="1"><font size="+1">Document Statistics</font></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellspacing="1" cellpadding="2" class="stat1">
+<tr>
+<td><b>Status</b></td><td colspan="5"><span class="changed">Changed</span></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellspacing="5" width="100%" class="stat">
+<tr class="header">
+<td nowrap="1"><font size="+1">Package Statistics</font></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellspacing="1" cellpadding="2" class="stat1">
+<tr>
+<td>&nbsp;</td><td>Changed</td><td>Added</td><td>Removed</td><td>Unchanged</td><td><b>Total</b></td>
+</tr>
+<tr>
+<td>Documents</td><td class="changed">11</td><td class="added">0</td><td class="removed">0</td><td>94</td><td class="total">105</td>
+</tr>
+<tr>
+<td>Contexts</td><td class="changed">3</td><td class="added">22</td><td class="removed">0</td><td>1756</td><td class="total">1781</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellspacing="5" width="100%" class="stat">
+<tr class="header">
+<td nowrap="1"><font size="+1">Package Detail</font></td>
+</tr>
+<tr>
+<td nowrap="1"><font size="-2">
+                                (*) Columns: (1) - Changed, (2) - Added, (3) - Removed,
+                                &sum; - Total
+                            </font></td>
+</tr>
+<tr>
+<td style="padding-left:5px">
+<table border="0" cellspacing="1" cellpadding="2" class="stat1">
+<tr>
+<td rowspan="3" width="100%">File</td><td colspan="6" align="center">Contexts</td>
+</tr>
+<tr>
+<td colspan="4" align="center" nowrap="1">Modified
+                                        <font size="-2"> (*)</font></td><td rowspan="2">Un- changed</td><td rowspan="2"><b>Total</b></td>
+</tr>
+<tr>
+<td>1</td><td>2</td><td>3</td><td class="modified">&sum;</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractMethodError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractMethodError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Appendable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Appendable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ArithmeticException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ArithmeticException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ArrayIndexOutOfBoundsException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ArrayIndexOutOfBoundsException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ArrayStoreException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ArrayStoreException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AssertionError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AssertionError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AutoCloseable.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">AutoCloseable</a></td><td class="changed">1</td><td class="added"></td><td class="removed"></td><td class="modified">1</td><td>1</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Boolean.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Boolean</a></td><td class="changed"></td><td class="added">3</td><td class="removed"></td><td class="modified">3</td><td>18</td><td class="total">21</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="BootstrapMethodError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">BootstrapMethodError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Byte.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Byte</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>29</td><td class="total">29</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="CharSequence.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">CharSequence</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>5</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Character.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Character</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>154</td><td class="total">154</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Character.Subset.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Character.Subset</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Character.UnicodeBlock.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Character.UnicodeBlock</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>225</td><td class="total">225</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Character.UnicodeScript.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Character.UnicodeScript</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>108</td><td class="total">108</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Class.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Class</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>65</td><td class="total">65</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ClassCastException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ClassCastException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ClassCircularityError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ClassCircularityError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ClassFormatError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ClassFormatError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ClassLoader.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ClassLoader</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>34</td><td class="total">34</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ClassNotFoundException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ClassNotFoundException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ClassValue.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ClassValue</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="CloneNotSupportedException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">CloneNotSupportedException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Cloneable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Cloneable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Comparable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Comparable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Compiler.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Compiler</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Deprecated.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Deprecated</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Double.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Double</a></td><td class="changed"></td><td class="added">3</td><td class="removed"></td><td class="modified">3</td><td>39</td><td class="total">42</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Enum.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Enum</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>12</td><td class="total">12</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EnumConstantNotPresentException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EnumConstantNotPresentException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Error.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Error</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Exception.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Exception</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ExceptionInInitializerError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ExceptionInInitializerError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Float.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Float</a></td><td class="changed"></td><td class="added">3</td><td class="removed"></td><td class="modified">3</td><td>40</td><td class="total">43</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="FunctionalInterface.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">FunctionalInterface</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalAccessError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalAccessError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalAccessException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalAccessException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalArgumentException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalArgumentException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalMonitorStateException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalMonitorStateException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalStateException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalStateException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalThreadStateException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalThreadStateException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IncompatibleClassChangeError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IncompatibleClassChangeError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IndexOutOfBoundsException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IndexOutOfBoundsException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InheritableThreadLocal.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InheritableThreadLocal</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InstantiationError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InstantiationError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InstantiationException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InstantiationException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Integer.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Integer</a></td><td class="changed"></td><td class="added">3</td><td class="removed"></td><td class="modified">3</td><td>52</td><td class="total">55</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InternalError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InternalError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InterruptedException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InterruptedException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Iterable.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Iterable</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>2</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="LinkageError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">LinkageError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Long.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Long</a></td><td class="changed"></td><td class="added">3</td><td class="removed"></td><td class="modified">3</td><td>51</td><td class="total">54</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Math.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Math</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>76</td><td class="total">76</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NegativeArraySizeException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NegativeArraySizeException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NoClassDefFoundError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NoClassDefFoundError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NoSuchFieldError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NoSuchFieldError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NoSuchFieldException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NoSuchFieldException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NoSuchMethodError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NoSuchMethodError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NoSuchMethodException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NoSuchMethodException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NullPointerException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NullPointerException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Number.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Number</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>8</td><td class="total">8</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NumberFormatException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NumberFormatException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Object.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Object</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>13</td><td class="total">13</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="OutOfMemoryError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">OutOfMemoryError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Override.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Override</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Package.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Package</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>22</td><td class="total">22</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Process.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Process</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>11</td><td class="total">11</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ProcessBuilder.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ProcessBuilder</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>22</td><td class="total">22</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ProcessBuilder.Redirect.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ProcessBuilder.Redirect</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ProcessBuilder.Redirect.Type.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ProcessBuilder.Redirect.Type</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>8</td><td class="total">8</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Readable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Readable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ReflectiveOperationException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ReflectiveOperationException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Runnable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Runnable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Runtime.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Runtime</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>25</td><td class="total">25</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="RuntimeException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">RuntimeException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="RuntimePermission.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">RuntimePermission</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SafeVarargs.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SafeVarargs</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SecurityException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SecurityException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SecurityManager.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SecurityManager</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>44</td><td class="total">44</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Short.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Short</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>30</td><td class="total">30</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StackOverflowError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StackOverflowError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StackTraceElement.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StackTraceElement</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StrictMath.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StrictMath</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>70</td><td class="total">70</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="String.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">String</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>82</td><td class="total">84</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StringBuffer.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StringBuffer</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>55</td><td class="total">55</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StringBuilder.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StringBuilder</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>55</td><td class="total">55</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StringIndexOutOfBoundsException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StringIndexOutOfBoundsException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SuppressWarnings.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SuppressWarnings</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="System.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">System</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>31</td><td class="total">31</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Thread.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Thread</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>55</td><td class="total">55</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Thread.State.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Thread.State</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>9</td><td class="total">9</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Thread.UncaughtExceptionHandler.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Thread.UncaughtExceptionHandler</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ThreadDeath.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ThreadDeath</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ThreadGroup.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ThreadGroup</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>27</td><td class="total">27</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ThreadLocal.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">ThreadLocal</a></td><td class="changed">1</td><td class="added">1</td><td class="removed"></td><td class="modified">2</td><td>5</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Throwable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Throwable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>19</td><td class="total">19</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="TypeNotPresentException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">TypeNotPresentException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnknownError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnknownError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnsatisfiedLinkError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnsatisfiedLinkError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnsupportedClassVersionError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnsupportedClassVersionError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnsupportedOperationException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnsupportedOperationException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="VerifyError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">VerifyError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="VirtualMachineError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">VirtualMachineError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Void.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Void</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td colspan="7"></td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="package-summary.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">package-summary</a></td><td class="changed">1</td><td class="added"></td><td class="removed"></td><td class="modified">1</td><td>0</td><td class="total">1</td>
+</tr>
+<tr>
+<td colspan="7"></td>
+</tr>
+<tr>
+<td><b>Total</b></td><td class="changed">3</td><td class="added">22</td><td class="removed">0</td><td class="modified">25</td><td>1756</td><td class="total">1781</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

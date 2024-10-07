@@ -1,0 +1,158 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Comparable [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Comparable"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>T</code> - the type of objects that this object may be compared to             </dd> 
+</dl>
+<dl> 
+<dt>All Known Subinterfaces:  </dt>
+<dd> 
+<a href="../../java/time/chrono/ChronoLocalDate.html" title="interface in java.time.chrono" target="_parent">ChronoLocalDate</a>, <a href="../../java/time/chrono/ChronoLocalDateTime.html" title="interface in java.time.chrono" target="_parent">ChronoLocalDateTime</a>&lt;D&gt;, <a href="../../java/time/chrono/Chronology.html" title="interface in java.time.chrono" target="_parent">Chronology</a>, <a href="../../java/time/chrono/ChronoZonedDateTime.html" title="interface in java.time.chrono" target="_parent">ChronoZonedDateTime</a>&lt;D&gt;, <a href="../../java/util/concurrent/Delayed.html" title="interface in java.util.concurrent" target="_parent">Delayed</a>, <a href="../../javax/naming/Name.html" title="interface in javax.naming" target="_parent">Name</a>, <a href="../../java/nio/file/Path.html" title="interface in java.nio.file" target="_parent">Path</a>, <a href="../../java/util/concurrent/RunnableScheduledFuture.html" title="interface in java.util.concurrent" target="_parent">RunnableScheduledFuture</a>&lt;V&gt;, <a href="../../java/util/concurrent/ScheduledFuture.html" title="interface in java.util.concurrent" target="_parent">ScheduledFuture</a>&lt;V&gt;         </dd> 
+</dl>
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../java/time/chrono/AbstractChronology.html" title="class in java.time.chrono" target="_parent">AbstractChronology</a>, <a href="../../javax/swing/plaf/nimbus/AbstractRegionPainter.PaintContext.CacheMode.html" title="enum in javax.swing.plaf.nimbus" target="_parent">AbstractRegionPainter.PaintContext.CacheMode</a>, <a href="../../java/nio/file/AccessMode.html" title="enum in java.nio.file" target="_parent">AccessMode</a>, <a href="../../java/nio/file/attribute/AclEntryFlag.html" title="enum in java.nio.file.attribute" target="_parent">AclEntryFlag</a>, <a href="../../java/nio/file/attribute/AclEntryPermission.html" title="enum in java.nio.file.attribute" target="_parent">AclEntryPermission</a>, <a href="../../java/nio/file/attribute/AclEntryType.html" title="enum in java.nio.file.attribute" target="_parent">AclEntryType</a>, <a href="../../javax/xml/ws/soap/AddressingFeature.Responses.html" title="enum in javax.xml.ws.soap" target="_parent">AddressingFeature.Responses</a>, <a href="../../java/net/Authenticator.RequestorType.html" title="enum in java.net" target="_parent">Authenticator.RequestorType</a>, <a href="../../java/math/BigDecimal.html" title="class in java.math" target="_parent">BigDecimal</a>, <a href="../../java/math/BigInteger.html" title="class in java.math" target="_parent">BigInteger</a>, <a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>, <a href="../../java/lang/Byte.html" title="class in java.lang" target="_parent">Byte</a>, <a href="../../java/nio/ByteBuffer.html" title="class in java.nio" target="_parent">ByteBuffer</a>, <a href="../../java/util/Calendar.html" title="class in java.util" target="_parent">Calendar</a>, <a href="../../java/security/cert/CertPathValidatorException.BasicReason.html" title="enum in java.security.cert" target="_parent">CertPathValidatorException.BasicReason</a>, <a href="../../java/lang/Character.html" title="class in java.lang" target="_parent">Character</a>, <a href="../../java/lang/Character.UnicodeScript.html" title="enum in java.lang" target="_parent">Character.UnicodeScript</a>, <a href="../../java/nio/CharBuffer.html" title="class in java.nio" target="_parent">CharBuffer</a>, <a href="../../java/nio/charset/Charset.html" title="class in java.nio.charset" target="_parent">Charset</a>, <a href="../../java/time/temporal/ChronoField.html" title="enum in java.time.temporal" target="_parent">ChronoField</a>, <a href="../../java/time/temporal/ChronoUnit.html" title="enum in java.time.temporal" target="_parent">ChronoUnit</a>, <a href="../../java/sql/ClientInfoStatus.html" title="enum in java.sql" target="_parent">ClientInfoStatus</a>, <a href="../../java/text/CollationKey.html" title="class in java.text" target="_parent">CollationKey</a>, <a href="../../java/util/stream/Collector.Characteristics.html" title="enum in java.util.stream" target="_parent">Collector.Characteristics</a>, <a href="../../java/awt/Component.BaselineResizeBehavior.html" title="enum in java.awt" target="_parent">Component.BaselineResizeBehavior</a>, <a href="../../javax/naming/CompositeName.html" title="class in javax.naming" target="_parent">CompositeName</a>, <a href="../../javax/naming/CompoundName.html" title="class in javax.naming" target="_parent">CompoundName</a>, <a href="../../java/security/cert/CRLReason.html" title="enum in java.security.cert" target="_parent">CRLReason</a>, <a href="../../java/security/CryptoPrimitive.html" title="enum in java.security" target="_parent">CryptoPrimitive</a>, <a href="../../java/util/Date.html" title="class in java.util" target="_parent">Date</a>, <a href="../../java/sql/Date.html" title="class in java.sql" target="_parent">Date</a>, <a href="../../java/time/DayOfWeek.html" title="enum in java.time" target="_parent">DayOfWeek</a>, <a href="../../java/awt/Desktop.Action.html" title="enum in java.awt" target="_parent">Desktop.Action</a>, <a href="../../javax/tools/Diagnostic.Kind.html" title="enum in javax.tools" target="_parent">Diagnostic.Kind</a>, <a href="../../java/awt/Dialog.ModalExclusionType.html" title="enum in java.awt" target="_parent">Dialog.ModalExclusionType</a>, <a href="../../java/awt/Dialog.ModalityType.html" title="enum in java.awt" target="_parent">Dialog.ModalityType</a>, <a href="../../javax/tools/DocumentationTool.Location.html" title="enum in javax.tools" target="_parent">DocumentationTool.Location</a>, <a href="../../java/lang/Double.html" title="class in java.lang" target="_parent">Double</a>, <a href="../../java/nio/DoubleBuffer.html" title="class in java.nio" target="_parent">DoubleBuffer</a>, <a href="../../javax/swing/DropMode.html" title="enum in javax.swing" target="_parent">DropMode</a>, <a href="../../java/time/Duration.html" title="class in java.time" target="_parent">Duration</a>, <a href="../../javax/lang/model/element/ElementKind.html" title="enum in javax.lang.model.element" target="_parent">ElementKind</a>, <a href="../../java/lang/annotation/ElementType.html" title="enum in java.lang.annotation" target="_parent">ElementType</a>, <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>, <a href="../../java/io/File.html" title="class in java.io" target="_parent">File</a>, <a href="../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>, <a href="../../java/nio/file/FileVisitOption.html" title="enum in java.nio.file" target="_parent">FileVisitOption</a>, <a href="../../java/nio/file/FileVisitResult.html" title="enum in java.nio.file" target="_parent">FileVisitResult</a>, <a href="../../java/lang/Float.html" title="class in java.lang" target="_parent">Float</a>, <a href="../../java/nio/FloatBuffer.html" title="class in java.nio" target="_parent">FloatBuffer</a>, <a href="../../java/time/format/FormatStyle.html" title="enum in java.time.format" target="_parent">FormatStyle</a>, <a href="../../java/util/Formatter.BigDecimalLayoutForm.html" title="enum in java.util" target="_parent">Formatter.BigDecimalLayoutForm</a>, <a href="../../javax/swing/text/html/FormSubmitEvent.MethodType.html" title="enum in javax.swing.text.html" target="_parent">FormSubmitEvent.MethodType</a>, <a href="../../java/awt/GraphicsDevice.WindowTranslucency.html" title="enum in java.awt" target="_parent">GraphicsDevice.WindowTranslucency</a>, <a href="../../java/util/GregorianCalendar.html" title="class in java.util" target="_parent">GregorianCalendar</a>, <a href="../../javax/swing/GroupLayout.Alignment.html" title="enum in javax.swing" target="_parent">GroupLayout.Alignment</a>, <a href="../../java/time/chrono/HijrahChronology.html" title="class in java.time.chrono" target="_parent">HijrahChronology</a>, <a href="../../java/time/chrono/HijrahDate.html" title="class in java.time.chrono" target="_parent">HijrahDate</a>, <a href="../../java/time/chrono/HijrahEra.html" title="enum in java.time.chrono" target="_parent">HijrahEra</a>, <a href="../../java/time/Instant.html" title="class in java.time" target="_parent">Instant</a>, <a href="../../java/nio/IntBuffer.html" title="class in java.nio" target="_parent">IntBuffer</a>, <a href="../../java/lang/Integer.html" title="class in java.lang" target="_parent">Integer</a>, <a href="../../java/time/chrono/IsoChronology.html" title="class in java.time.chrono" target="_parent">IsoChronology</a>, <a href="../../java/time/chrono/IsoEra.html" title="enum in java.time.chrono" target="_parent">IsoEra</a>, <a href="../../java/time/chrono/JapaneseChronology.html" title="class in java.time.chrono" target="_parent">JapaneseChronology</a>, <a href="../../java/time/chrono/JapaneseDate.html" title="class in java.time.chrono" target="_parent">JapaneseDate</a>, <a href="../../javax/tools/JavaFileObject.Kind.html" title="enum in javax.tools" target="_parent">JavaFileObject.Kind</a>, <a href="../../java/sql/JDBCType.html" title="enum in java.sql" target="_parent">JDBCType</a>, <a href="../../javax/swing/JTable.PrintMode.html" title="enum in javax.swing" target="_parent">JTable.PrintMode</a>, <a href="../../java/security/KeyRep.Type.html" title="enum in java.security" target="_parent">KeyRep.Type</a>, <a href="../../javax/swing/LayoutStyle.ComponentPlacement.html" title="enum in javax.swing" target="_parent">LayoutStyle.ComponentPlacement</a>, <a href="../../javax/naming/ldap/LdapName.html" title="class in javax.naming.ldap" target="_parent">LdapName</a>, <a href="../../java/nio/file/LinkOption.html" title="enum in java.nio.file" target="_parent">LinkOption</a>, <a href="../../java/time/LocalDate.html" title="class in java.time" target="_parent">LocalDate</a>, <a href="../../java/time/LocalDateTime.html" title="class in java.time" target="_parent">LocalDateTime</a>, <a href="../../java/util/Locale.Category.html" title="enum in java.util" target="_parent">Locale.Category</a>, <a href="../../java/util/Locale.FilteringMode.html" title="enum in java.util" target="_parent">Locale.FilteringMode</a>, <a href="../../java/time/LocalTime.html" title="class in java.time" target="_parent">LocalTime</a>, <a href="../../java/lang/Long.html" title="class in java.lang" target="_parent">Long</a>, <a href="../../java/nio/LongBuffer.html" title="class in java.nio" target="_parent">LongBuffer</a>, <a href="../../java/nio/MappedByteBuffer.html" title="class in java.nio" target="_parent">MappedByteBuffer</a>, <a href="../../java/lang/management/MemoryType.html" title="enum in java.lang.management" target="_parent">MemoryType</a>, <a href="../../javax/xml/ws/handler/MessageContext.Scope.html" title="enum in javax.xml.ws.handler" target="_parent">MessageContext.Scope</a>, <a href="../../java/time/chrono/MinguoChronology.html" title="class in java.time.chrono" target="_parent">MinguoChronology</a>, <a href="../../java/time/chrono/MinguoDate.html" title="class in java.time.chrono" target="_parent">MinguoDate</a>, <a href="../../java/time/chrono/MinguoEra.html" title="enum in java.time.chrono" target="_parent">MinguoEra</a>, <a href="../../javax/lang/model/element/Modifier.html" title="enum in javax.lang.model.element" target="_parent">Modifier</a>, <a href="../../java/time/Month.html" title="enum in java.time" target="_parent">Month</a>, <a href="../../java/time/MonthDay.html" title="class in java.time" target="_parent">MonthDay</a>, <a href="../../java/awt/MultipleGradientPaint.ColorSpaceType.html" title="enum in java.awt" target="_parent">MultipleGradientPaint.ColorSpaceType</a>, <a href="../../java/awt/MultipleGradientPaint.CycleMethod.html" title="enum in java.awt" target="_parent">MultipleGradientPaint.CycleMethod</a>, <a href="../../javax/lang/model/element/NestingKind.html" title="enum in javax.lang.model.element" target="_parent">NestingKind</a>, <a href="../../java/text/Normalizer.Form.html" title="enum in java.text" target="_parent">Normalizer.Form</a>, <a href="../../java/awt/font/NumericShaper.Range.html" title="enum in java.awt.font" target="_parent">NumericShaper.Range</a>, <a href="../../javax/management/ObjectName.html" title="class in javax.management" target="_parent">ObjectName</a>, <a href="../../java/io/ObjectStreamField.html" title="class in java.io" target="_parent">ObjectStreamField</a>, <a href="../../java/time/OffsetDateTime.html" title="class in java.time" target="_parent">OffsetDateTime</a>, <a href="../../java/time/OffsetTime.html" title="class in java.time" target="_parent">OffsetTime</a>, <a href="../../java/security/cert/PKIXReason.html" title="enum in java.security.cert" target="_parent">PKIXReason</a>, <a href="../../java/security/cert/PKIXRevocationChecker.Option.html" title="enum in java.security.cert" target="_parent">PKIXRevocationChecker.Option</a>, <a href="../../java/nio/file/attribute/PosixFilePermission.html" title="enum in java.nio.file.attribute" target="_parent">PosixFilePermission</a>, <a href="../../java/lang/ProcessBuilder.Redirect.Type.html" title="enum in java.lang" target="_parent">ProcessBuilder.Redirect.Type</a>, <a href="../../java/net/Proxy.Type.html" title="enum in java.net" target="_parent">Proxy.Type</a>, <a href="../../java/sql/PseudoColumnUsage.html" title="enum in java.sql" target="_parent">PseudoColumnUsage</a>, <a href="../../javax/naming/ldap/Rdn.html" title="class in javax.naming.ldap" target="_parent">Rdn</a>, <a href="../../java/time/format/ResolverStyle.html" title="enum in java.time.format" target="_parent">ResolverStyle</a>, <a href="../../javax/annotation/Resource.AuthenticationType.html" title="enum in javax.annotation" target="_parent">Resource.AuthenticationType</a>, <a href="../../java/lang/annotation/RetentionPolicy.html" title="enum in java.lang.annotation" target="_parent">RetentionPolicy</a>, <a href="../../java/math/RoundingMode.html" title="enum in java.math" target="_parent">RoundingMode</a>, <a href="../../javax/swing/RowFilter.ComparisonType.html" title="enum in javax.swing" target="_parent">RowFilter.ComparisonType</a>, <a href="../../java/sql/RowIdLifetime.html" title="enum in java.sql" target="_parent">RowIdLifetime</a>, <a href="../../javax/swing/event/RowSorterEvent.Type.html" title="enum in javax.swing.event" target="_parent">RowSorterEvent.Type</a>, <a href="../../javax/xml/ws/Service.Mode.html" title="enum in javax.xml.ws" target="_parent">Service.Mode</a>, <a href="../../java/lang/Short.html" title="class in java.lang" target="_parent">Short</a>, <a href="../../java/nio/ShortBuffer.html" title="class in java.nio" target="_parent">ShortBuffer</a>, <a href="../../java/time/format/SignStyle.html" title="enum in java.time.format" target="_parent">SignStyle</a>, <a href="../../javax/jws/soap/SOAPBinding.ParameterStyle.html" title="enum in javax.jws.soap" target="_parent">SOAPBinding.ParameterStyle</a>, <a href="../../javax/jws/soap/SOAPBinding.Style.html" title="enum in javax.jws.soap" target="_parent">SOAPBinding.Style</a>, <a href="../../javax/jws/soap/SOAPBinding.Use.html" title="enum in javax.jws.soap" target="_parent">SOAPBinding.Use</a>, <a href="../../javax/swing/SortOrder.html" title="enum in javax.swing" target="_parent">SortOrder</a>, <a href="../../javax/lang/model/SourceVersion.html" title="enum in javax.lang.model" target="_parent">SourceVersion</a>, <a href="../../javax/net/ssl/SSLEngineResult.HandshakeStatus.html" title="enum in javax.net.ssl" target="_parent">SSLEngineResult.HandshakeStatus</a>, <a href="../../javax/net/ssl/SSLEngineResult.Status.html" title="enum in javax.net.ssl" target="_parent">SSLEngineResult.Status</a>, <a href="../../java/nio/file/StandardCopyOption.html" title="enum in java.nio.file" target="_parent">StandardCopyOption</a>, <a href="../../javax/tools/StandardLocation.html" title="enum in javax.tools" target="_parent">StandardLocation</a>, <a href="../../java/nio/file/StandardOpenOption.html" title="enum in java.nio.file" target="_parent">StandardOpenOption</a>, <a href="../../java/net/StandardProtocolFamily.html" title="enum in java.net" target="_parent">StandardProtocolFamily</a>, <a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>, <a href="../../javax/swing/SwingWorker.StateValue.html" title="enum in javax.swing" target="_parent">SwingWorker.StateValue</a>, <a href="../../java/time/format/TextStyle.html" title="enum in java.time.format" target="_parent">TextStyle</a>, <a href="../../java/time/chrono/ThaiBuddhistChronology.html" title="class in java.time.chrono" target="_parent">ThaiBuddhistChronology</a>, <a href="../../java/time/chrono/ThaiBuddhistDate.html" title="class in java.time.chrono" target="_parent">ThaiBuddhistDate</a>, <a href="../../java/time/chrono/ThaiBuddhistEra.html" title="enum in java.time.chrono" target="_parent">ThaiBuddhistEra</a>, <a href="../../java/lang/Thread.State.html" title="enum in java.lang" target="_parent">Thread.State</a>, <a href="../../java/sql/Time.html" title="class in java.sql" target="_parent">Time</a>, <a href="../../java/sql/Timestamp.html" title="class in java.sql" target="_parent">Timestamp</a>, <a href="../../java/util/concurrent/TimeUnit.html" title="enum in java.util.concurrent" target="_parent">TimeUnit</a>, <a href="../../java/awt/TrayIcon.MessageType.html" title="enum in java.awt" target="_parent">TrayIcon.MessageType</a>, <a href="../../javax/lang/model/type/TypeKind.html" title="enum in javax.lang.model.type" target="_parent">TypeKind</a>, <a href="../../java/net/URI.html" title="class in java.net" target="_parent">URI</a>, <a href="../../java/util/UUID.html" title="class in java.util" target="_parent">UUID</a>, <a href="../../javax/jws/WebParam.Mode.html" title="enum in javax.jws" target="_parent">WebParam.Mode</a>, <a href="../../java/awt/Window.Type.html" title="enum in java.awt" target="_parent">Window.Type</a>, <a href="../../javax/xml/bind/annotation/XmlAccessOrder.html" title="enum in javax.xml.bind.annotation" target="_parent">XmlAccessOrder</a>, <a href="../../javax/xml/bind/annotation/XmlAccessType.html" title="enum in javax.xml.bind.annotation" target="_parent">XmlAccessType</a>, <a href="../../javax/xml/bind/annotation/XmlNsForm.html" title="enum in javax.xml.bind.annotation" target="_parent">XmlNsForm</a>, <a href="../../java/time/Year.html" title="class in java.time" target="_parent">Year</a>, <a href="../../java/time/YearMonth.html" title="class in java.time" target="_parent">YearMonth</a>, <a href="../../java/time/ZonedDateTime.html" title="class in java.time" target="_parent">ZonedDateTime</a>, <a href="../../java/time/ZoneOffset.html" title="class in java.time" target="_parent">ZoneOffset</a>, <a href="../../java/time/zone/ZoneOffsetTransition.html" title="class in java.time.zone" target="_parent">ZoneOffsetTransition</a>, <a href="../../java/time/zone/ZoneOffsetTransitionRule.TimeDefinition.html" title="enum in java.time.zone" target="_parent">ZoneOffsetTransitionRule.TimeDefinition</a>                                                                                                                                                        
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">Comparable&lt;T&gt;</span>
+</pre>
+<div class="block">This interface imposes a total ordering on the objects of each class that implements it. This ordering is referred to as the class's <i>natural ordering </i>, and the class's <tt>compareTo</tt> method is referred to as its <i>natural comparison method  </i>.<p> Lists (and arrays) of objects that implement this interface can be sorted automatically by <a href="../../java/util/Collections.html#sort-java.util.List-" target="_parent"><code>Collections.sort</code></a> (and <a href="../../java/util/Arrays.html#sort-java.lang.Object:A-" target="_parent"><code>Arrays.sort</code></a>). Objects that implement this interface can be used as keys in a <a href="../../java/util/SortedMap.html" title="interface in java.util" target="_parent">sorted map </a> or as elements in a <a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">sorted set </a>, without the need to specify a <a href="../../java/util/Comparator.html" title="interface in java.util" target="_parent">comparator</a>.                                           </p>
+<p> The natural ordering for a class <tt>C</tt> is said to be <i>consistent with equals  </i> if and only if <tt>e1.compareTo(e2) == 0  </tt> has the same boolean value as <tt>e1.equals(e2)</tt> for every <tt>e1</tt> and <tt>e2</tt> of class <tt>C</tt>. Note that <tt>null</tt> is not an instance of any class, and <tt>e.compareTo(null)</tt> should throw a <tt>NullPointerException</tt> even though <tt>e.equals(null)</tt> returns <tt>false</tt>.                                                     </p>
+<p> It is strongly recommended (though not required) that natural orderings be consistent with equals. This is so because sorted sets (and sorted maps) without explicit comparators behave "strangely" when they are used with elements (or keys) whose natural ordering is inconsistent with equals. In particular, such a sorted set (or sorted map) violates the general contract for set (or map), which is defined in terms of the <tt>equals</tt> method.                                                                     </p>
+<p> For example, if one adds two keys <tt>a</tt> and <tt>b</tt> such that <code>(!a.equals(b) &amp;&amp; a.compareTo(b) == 0)    </code> to a sorted set that does not use an explicit comparator, the second <tt>add</tt> operation returns false (and the size of the sorted set does not increase) because <tt>a</tt> and <tt>b</tt> are equivalent from the sorted set's perspective.                                                   </p>
+<p> Virtually all Java core classes that implement <tt>Comparable</tt> have natural orderings that are consistent with equals. One exception is <tt>java.math.BigDecimal</tt>, whose natural ordering equates <tt>BigDecimal</tt> objects with equal values and different precisions (such as 4.0 and 4.00).                                     </p>
+<p> For the mathematically inclined, the <i>relation</i> that defines the natural ordering on a given class C is:<pre>
+       {(x, y) such that x.compareTo(y) &lt;= 0}.
+ </pre> The <i>quotient</i> for this total order is:<pre>
+       {(x, y) such that x.compareTo(y) == 0}.
+ </pre> It follows immediately from the contract for <tt>compareTo</tt> that the quotient is an <i>equivalence relation </i> on <tt>C</tt>, and that the natural ordering is a <i>total order </i> on <tt>C</tt>. When we say that a class's natural ordering is <i>consistent with equals  </i>, we mean that the quotient for the natural ordering is the equivalence relation defined by the class's <a href="../../java/lang/Object.html#equals-java.lang.Object-" target="_parent"><code>equals(Object)</code></a> method:<pre>
+     {(x, y) such that x.equals(y)}. </pre>                                                                               
+</p>
+<p> This interface is a member of the <a href="http://download.oracle.com/javase/7/docs/technotes/guides/collections/index.html" target="_parent"> Java Collections Framework   </a>.        </p>                                  
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.2</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Comparator.html" title="interface in java.util" target="_parent"><code>Comparator</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:compareTo-T- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"><a name="method:compareTo-T-"></a><a name="compareTo-T-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>compareTo</h4>
+<pre>int&nbsp;compareTo(<a href="../../java/lang/Comparable.html" title="type parameter in Comparable" target="_parent">T</a>&nbsp;o)</pre>
+<div class="block">Compares this object with the specified object for order. Returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.<p>The implementor must ensure <tt>sgn(x.compareTo(y)) == -sgn(y.compareTo(x))  </tt> for all <tt>x</tt> and <tt>y</tt>. (This implies that <tt>x.compareTo(y)</tt> must throw an exception iff <tt>y.compareTo(x)</tt> throws an exception.)                      </p>
+<p>The implementor must also ensure that the relation is transitive: <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)  </tt> implies <tt>x.compareTo(z)&gt;0</tt>.            </p>
+<p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt> implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))  </tt>, for all <tt>z</tt>.            </p>
+<p>It is strongly recommended, but <i>not</i> strictly required that <tt>(x.compareTo(y)==0) == (x.equals(y))  </tt>. Generally speaking, any class that implements the <tt>Comparable</tt> interface and violates this condition should clearly indicate this fact. The recommended language is "Note: this class has a natural ordering that is inconsistent with equals."                                           </p>
+<p>In the foregoing description, the notation <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical <i>signum</i> function, which is defined to return one of <tt>-1</tt>, <tt>0</tt>, or <tt>1</tt> according to whether the value of <i>expression</i> is negative, zero or positive.                                  </p>                               
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>o</code> - the object to be compared.       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.                     </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified object is null        </dd>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified object's type prevents it from being compared to this object.               </dd>   
+</dl>
+</li>
+</ul>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

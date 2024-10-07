@@ -1,0 +1,228 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Appendable [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Appendable"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../java/io/BufferedWriter.html" title="class in java.io" target="_parent">BufferedWriter</a>, <a href="../../java/io/CharArrayWriter.html" title="class in java.io" target="_parent">CharArrayWriter</a>, <a href="../../java/nio/CharBuffer.html" title="class in java.nio" target="_parent">CharBuffer</a>, <a href="../../java/io/FileWriter.html" title="class in java.io" target="_parent">FileWriter</a>, <a href="../../java/io/FilterWriter.html" title="class in java.io" target="_parent">FilterWriter</a>, <a href="../../java/rmi/server/LogStream.html" title="class in java.rmi.server" target="_parent">LogStream</a>, <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent">OutputStreamWriter</a>, <a href="../../java/io/PipedWriter.html" title="class in java.io" target="_parent">PipedWriter</a>, <a href="../../java/io/PrintStream.html" title="class in java.io" target="_parent">PrintStream</a>, <a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>, <a href="../../java/lang/StringBuffer.html" title="class in java.lang" target="_parent">StringBuffer</a>, <a href="../../java/lang/StringBuilder.html" title="class in java.lang" target="_parent">StringBuilder</a>, <a href="../../java/io/StringWriter.html" title="class in java.io" target="_parent">StringWriter</a>, <a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>              
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">Appendable</span>
+</pre>
+<div class="block">An object to which <tt>char</tt> sequences and values can be appended. The <tt>Appendable</tt> interface must be implemented by any class whose instances are intended to receive formatted output from a <a href="../../java/util/Formatter.html" title="class in java.util" target="_parent"><code>Formatter</code></a>.<p> The characters to be appended should be valid Unicode characters as described in <a href="Character.html#unicode" target="_parent">Unicode Character Representation  </a>. Note that supplementary characters may be composed of multiple 16-bit <tt>char</tt> values.                          </p>
+<p> Appendables are not necessarily safe for multithreaded access. Thread safety is the responsibility of classes that extend and implement this interface.                     </p>
+<p> Since this interface may be implemented by existing classes with different styles of error handling there is no guarantee that errors will be propagated to the invoker.                           </p>                              
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-java.lang.CharSequence- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-java.lang.CharSequence-"></a><a name="append-java.lang.CharSequence-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>
+<a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a>&nbsp;append(<a href="../../java/lang/CharSequence.html" title="interface in java.lang" target="_parent">CharSequence</a>&nbsp;csq)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Appends the specified character sequence to this <tt>Appendable</tt>.<p> Depending on which class implements the character sequence <tt>csq</tt>, the entire sequence may not be appended. For instance, if <tt>csq</tt> is a <a href="../../java/nio/CharBuffer.html" title="class in java.nio" target="_parent"><code>CharBuffer</code></a> then the subsequence to append is defined by the buffer's position and limit.                                    </p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csq</code> - The character sequence to append. If <tt>csq</tt> is <tt>null</tt>, then the four characters <tt>"null"</tt> are appended to this Appendable.                     </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A reference to this <tt>Appendable</tt>    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-java.lang.CharSequence-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-java.lang.CharSequence-int-int-"></a><a name="append-java.lang.CharSequence-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>
+<a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a>&nbsp;append(<a href="../../java/lang/CharSequence.html" title="interface in java.lang" target="_parent">CharSequence</a>&nbsp;csq,
+                  int&nbsp;start,
+                  int&nbsp;end)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Appends a subsequence of the specified character sequence to this <tt>Appendable</tt>.<p> An invocation of this method of the form <tt>out.append(csq, start, end)  </tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in exactly the same way as the invocation<pre>
+     out.append(csq.subSequence(start, end)) </pre>                       
+</p>          
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csq</code> - The character sequence from which a subsequence will be appended. If <tt>csq</tt> is <tt>null</tt>, then characters will be appended as if <tt>csq</tt> contained the four characters <tt>"null"</tt>.                             </dd>
+<dd> 
+<code>start</code> - The index of the first character in the subsequence           </dd>
+<dd> 
+<code>end</code> - The index of the character following the last character in the subsequence              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A reference to this <tt>Appendable</tt>    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IndexOutOfBoundsException.html" title="class in java.lang" target="_parent">IndexOutOfBoundsException</a></code> - If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt> is greater than <tt>end</tt>, or <tt>end</tt> is greater than <tt>csq.length()</tt>                   
+</dd>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-char-"></a><a name="append-char-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>append</h4>
+<pre>
+<a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a>&nbsp;append(char&nbsp;c)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Appends the specified character to this <tt>Appendable</tt>.      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - The character to append      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A reference to this <tt>Appendable</tt>    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

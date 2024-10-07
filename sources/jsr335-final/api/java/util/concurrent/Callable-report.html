@@ -1,0 +1,140 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Callable [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Callable"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>V</code> - the result type of method <code>call</code>        
+</dd> 
+</dl>
+<dl> 
+<dt>All Known Subinterfaces:  </dt>
+<dd> 
+<a href="../../../javax/tools/DocumentationTool.DocumentationTask.html" title="interface in javax.tools" target="_parent">DocumentationTool.DocumentationTask</a>, <a href="../../../javax/tools/JavaCompiler.CompilationTask.html" title="interface in javax.tools" target="_parent">JavaCompiler.CompilationTask</a>  
+</dd> 
+</dl>
+<dl> 
+<dt>Functional Interface: </dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.                    </dd> 
+</dl> 
+<hr> 
+<br>
+<pre>
+<a href="../../../java/lang/FunctionalInterface.html" title="annotation in java.lang" target="_parent">@FunctionalInterface</a>
+public interface <span class="typeNameLabel">Callable&lt;V&gt;</span>
+</pre>
+<div class="block">A task that returns a result and may throw an exception. Implementors define a single method with no arguments called <code>call</code>.<p>The <code>Callable</code> interface is similar to <a href="../../../java/lang/Runnable.html" title="interface in java.lang" target="_parent"><code>Runnable</code></a>, in that both are designed for classes whose instances are potentially executed by another thread. A <code>Runnable</code>, however, does not return a result and cannot throw a checked exception.                                   </p>
+<p>The <a href="../../../java/util/concurrent/Executors.html" title="class in java.util.concurrent" target="_parent"><code>Executors</code></a> class contains utility methods to convert from other common forms to <code>Callable</code> classes.              </p>                    
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/concurrent/Executor.html" title="interface in java.util.concurrent" target="_parent"><code>Executor</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:call-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:call--"></a><a name="call--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>call</h4>
+<pre>
+<a href="../../../java/util/concurrent/Callable.html" title="type parameter in Callable" target="_parent">V</a>&nbsp;call()
+throws <a href="../../../java/lang/Exception.html" title="class in java.lang" target="_parent">Exception</a>
+</pre>
+<div class="block">Computes a result, or throws an exception if unable to do so.           </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>computed result </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/Exception.html" title="class in java.lang" target="_parent">Exception</a></code> - if unable to compute a result        </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

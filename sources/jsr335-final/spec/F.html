@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part F: Overload Resolution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_F_Overload_Resolution skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part F: Overload Resolution</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#F15.12.2">15.12.2</a>&nbsp;- <a href="#F15.12.2.1">15.12.2.1</a>&nbsp;- <a href="#F15.12.2.2">15.12.2.2</a>&nbsp;- <a href="#F15.12.2.3">15.12.2.3</a>&nbsp;- <a href="#F15.12.2.4">15.12.2.4</a>&nbsp;- <a href="#F15.12.2.5">15.12.2.5</a>&nbsp;- <a href="#F15.12.2.6">15.12.2.6</a>&nbsp;- <a href="#F15.12.3">15.12.3</a>&nbsp;- <a href="#F15.9.3">15.9.3</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>Method and constructor declarations can be overloaded, meaning multiple matching declarations with different parameter types can co-exist in a type.  In order to interpret a method invocation or a class instance creation expression, the compiler performs "overload resolution," inferring the declaration intended by the user at a particular invocation site.  This occurs in three steps: i) identifying <i>potentially applicable methods</i>, that is, methods of the appropriate shape; ii) performing type analysis to identify <i>applicable methods</i> for the given arguments; iii) among the applicable methods, choosing one that is <i>most specific</i>.
+</p><p>To accomodate lambda expressions, the definition of potential applicability is expanded to take into account both the arity of the candidate methods and the presence and "shape" of functional interface target types.
+</p><p>To check for applicability, the types of an invocation's arguments can no longer, in general, be inputs to the analysis.  This is because:
+</p>
+<ul><li> The arguments to a method invocation may be poly expressions
+</li><li> Poly expressions cannot be typed in the absence of a target type
+</li><li> Overload resolution has to be completed before the arguments' target types will be known
+</li></ul>
+<p>Instead, the input to the applicability check is a list of argument <i>expressions</i>, which <i>can</i> be checked for compatibility with potential target types, even if the ultimate types of the expressions are unknown.
+</p><p>The meaning of an implicitly-typed lambda expression or an inexact method reference is sufficiently vague prior to resolving a target type that arguments containing these expressions are not considered <i>pertinent to applicability</i>; they are simply ignored (except for their expected arity) until overload resolution is finished.
+</p><p>The Java 7 most-specific analysis was defined as a pairwise comparison of method declarations via subtyping.  Here, we augment the analysis so that, where the corresponding argument is an explicitly-typed lambda expression or an exact method reference, one functional interface type can be preferred over another if it has a "better" function type return type, by a variety of measures: subtyping, boxing, or <code style="background-color:inherit;font-size:medium">void</code> vs. non-<code style="background-color:inherit;font-size:medium">void</code>.
+</p>
+<div id="F15.12.2"></div>
+<h3> <span class="mw-headline" id="15.12.2_Compile-Time_Step_2:_Determine_Method_Signature_.5BModified.5D"> 15.12.2 Compile-Time Step 2: Determine Method Signature [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2" class="external text" rel="nofollow">JLS 15.12.2</a></small>
+</p><p>The second step searches the type determined in the previous step for member methods.  This step uses the name of the method and <u>the argument expressions</u> to locate methods that are both <i>accessible</i> and <i>applicable</i>, that is, declarations that can be correctly invoked on the given arguments.
+</p><p>There may be more than one such method, in which case the <i>most specific</i> one is chosen.  The descriptor (signature plus return type) of the most specific method is <u>the</u> one used at run time to perform the method dispatch.
+</p><p><span class="norm-static">
+A method is <i>applicable</i> if it is <del>either</del> applicable by <u>one of strict invocation</u> (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>), <del>applicable by</del> <u>loose invocation</u> (<a href="F.html#F15.12.2.3" title="Lambda F" class="mw-redirect">15.12.2.3</a>), or <del>it is an applicable</del> variable arity <del>method</del> <u>invocation</u> (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>).<span class="assertion-id"> [jls-15.12.2-120]</span></span>
+</p><p><u>Certain argument expressions that contain implicitly-typed lambda expressions (<a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a>) or inexact method references (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>) are ignored by the applicability tests, because their meaning cannot be determined until a target type is selected.</u>
+</p><p><u>Although the method invocation may be a poly expression, only its argument expressions—<i>not</i> the invocation's target type—influence the selection of applicable methods.</u>
+</p><p>...
+</p><p>Deciding whether a method is applicable will, in the case of generic methods (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.4" class="external text" rel="nofollow">8.4.4</a>), require <u>an analysis of the type arguments</u>.  Type arguments may be passed explicitly or implicitly.  If they are passed implicitly, <u>bounds on the type arguments</u> must be inferred <u>(<a href="G.html#G18" title="Lambda G" class="mw-redirect">18</a>)</u> from <del>the types of</del> the argument expressions.
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>
+<p>To check for applicability, the types of an invocation's arguments can no longer, in general, be inputs to the analysis.  This is because:
+</p>
+<ul><li> The arguments to a method invocation may be poly expressions
+</li><li> Poly expressions cannot be typed in the absence of a target type
+</li><li> Overload resolution has to be completed before the arguments' target types will be known
+</li></ul>
+<p>Instead, the input to the applicability check is a list of argument expressions, which <i>can</i> be checked for compatibility with potential target types, even if the ultimate types of the expressions are unknown.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>Overload resolution is independent of a target type for two reasons:
+</p>
+<ul><li> First, it makes the user model more accessible and less error-prone.  The meaning of a method name (i.e., the declaration corresponding to the name) is too fundamental to the meaning of a program to depend on subtle contextual hints.  (In contrast, other poly expressions may have different behavior depending on a target type; but the variation in behavior is always limited and essentially equivalent, while no such guarantees can be made about the behavior of an arbitrary set of methods that share a name and arity.)
+</li><li> Second, it allows other properties—such as whether or not the method is a poly expression (<a href="D.html#D15.12" title="Lambda D" class="mw-redirect">15.12</a>) or how to categorize a conditional (<a href="D.html#D15.25" title="Lambda D" class="mw-redirect">15.25</a>)—to depend on the meaning of the method name, even before a target type is known.
+</li></ul>
+</div></li></ol></div></blockquote>
+<div id="F15.12.2.1"></div>
+<h3> <span class="mw-headline" id="15.12.2.1_Identify_Potentially_Applicable_Methods_.5BModified.5D"> 15.12.2.1 Identify Potentially Applicable Methods [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.1" class="external text" rel="nofollow">JLS 15.12.2.1</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+A member method is <i>potentially applicable</i> to a method invocation if and only if all of the following are true:<span class="assertion-id"> [jls-15.12.2.1-200]</span></span>
+</p>
+<ul><li> <span class="norm-static"> The name of the member is identical to the name of the method in the method invocation.<span class="assertion-id"> [jls-15.12.2.1-200-A]</span></span>
+</li><li> <span class="norm-static"> The member is accessible (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>) to the class or interface in which the method invocation appears.<span class="assertion-id"> [jls-15.12.2.1-200-B]</span></span><p>Whether a member method is accessible at a method invocation depends on the access modifier (<code style="background-color:inherit;font-size:medium">public</code>, none, <code style="background-color:inherit;font-size:medium">protected</code>, or <code style="background-color:inherit;font-size:medium">private</code>) in the member's declaration and on where the method invocation appears.</p>
+</li><li> <span class="norm-static"> If the member is a fixed arity method with arity <em>n</em>, the arity of the method invocation is equal to <em>n</em>, <u>and for all <em>i</em>, <em>1 ≤ i ≤ n</em>, the <em>i</em>th argument of the method invocation is <i>potentially compatible</i>, as defined below, with the type of the <em>i</em>th parameter of the method.</u><span class="assertion-id"> [jls-15.12.2.1-200-D]</span></span>
+</li><li> <span class="norm-static"> If the member is a variable arity method with arity <em>n</em>, <u>then for all <em>i</em>, <em>1 ≤ i ≤ n-1</em>, the <em>i</em>th argument of the method invocation is <i>potentially compatible</i> with the type of the <em>i</em>th parameter of the method; and, where the <em>n</em>th parameter of the method has type <em>T<code style="background-color:inherit;font-size:medium">[]</code></em>, one of the following is true:</u><span class="assertion-id"> [jls-15.12.2.1-200-C]</span></span>
+<ul><li> <span class="norm-static"> <u>The arity of the method invocation is equal to <em>n-1</em>.</u><span class="assertion-id"> [jsr335-15.12.2.1-200-C1]</span></span>
+</li><li> <span class="norm-static"> <u>The arity of the method invocation is equal to <em>n</em>, and the <em>n</em>th argument of the method invocation is potentially compatible with either <em>T</em> or <em>T<code style="background-color:inherit;font-size:medium">[]</code></em>.</u><span class="assertion-id"> [jsr335-15.12.2.1-200-C2]</span></span>
+</li><li> <span class="norm-static"> <u>The arity of the method invocation is <em>m</em>, where <em>m &gt; n</em>, and for all <em>i</em>, <em>n ≤ i ≤ m</em>, the <em>i</em>th argument of the method invocation is potentially compatible with <em>T</em>.</u><span class="assertion-id"> [jsr335-15.12.2.1-200-C3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> If the method invocation includes explicit type arguments, and the member is a generic method, then the number of type arguments is equal to the number of type parameters of the method.<span class="assertion-id"> [jls-15.12.2.1-200-E]</span></span>
+</li></ul>
+<p>...
+</p><p><span class="norm-static">
+<u>An expression is <i>potentially compatible</i> with a target type according to the following rules:</u><span class="assertion-id"> [jsr335-15.12.2.1-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>A lambda expression (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>) is potentially compatible with a functional interface type (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>) if all of the following are true:</u><span class="assertion-id"> [jsr335-15.12.2.1-10-A]</span></span>
+<ul><li> <span class="norm-static"> <u>The arity of the targeted type's function type is the same as the arity of the lambda expression.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-A1]</span></span>
+</li><li> <span class="norm-static"> <u>If the targeted type's function type has a <code style="background-color:inherit;font-size:medium">void</code> return, then the lambda body is either a statement expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.8" class="external text" rel="nofollow">14.8</a>) or a void-compatible block (<a href="B.html#B15.27.2" title="Lambda B" class="mw-redirect">15.27.2</a>).</u><span class="assertion-id"> [jsr335-15.12.2.1-10-A2]</span></span>
+</li><li> <span class="norm-static"> <u>If the targeted type's function type has a (non-<code style="background-color:inherit;font-size:medium">void</code>) return type, then the lambda body is either an expression or a value-compatible block (<a href="B.html#B15.27.2" title="Lambda B" class="mw-redirect">15.27.2</a>).</u><span class="assertion-id"> [jsr335-15.12.2.1-10-A3]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> <u>A method reference (<a href="B.html#B15.13" title="Lambda B" class="mw-redirect">15.13</a>) is potentially compatible with a functional interface type if, where the type's function type arity is <em>n</em>, there exists at least one potentially-applicable method for the method reference at arity <em>n</em> (<a href="B.html#B15.13.1" title="Lambda B" class="mw-redirect">15.13.1</a>), and one of the following is true:</u><span class="assertion-id"> [jsr335-15.12.2.1-10-B]</span></span>
+<ul><li> <span class="norm-static"> <u>The method reference has the form <em>ReferenceType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> and at least one potentially-applicable method either i) is declared <code style="background-color:inherit;font-size:medium">static</code> and supports arity <em>n</em>, or ii) is <i>not</i> declared <code style="background-color:inherit;font-size:medium">static</code> and supports arity <em>n-1</em>.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-B1]</span></span>
+</li><li> <span class="norm-static"> <u>The method reference has some other form and at least one potentially-applicable method is <i>not</i> declared <code style="background-color:inherit;font-size:medium">static</code>.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-B2]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> <u>A lambda expression or a method reference is potentially compatible with a type variable if the type variable is a type parameter of the candidate method.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-C]</span></span>
+</li><li> <span class="norm-static"> <u>A parenthesized expression (<a href="D.html#D15.8.5" title="Lambda D" class="mw-redirect">15.8.5</a>) is potentially compatible with a type if its contained expression is potentially compatible with that type.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-D]</span></span>
+</li><li> <span class="norm-static"> <u>A conditional expression (<a href="D.html#D15.25" title="Lambda D" class="mw-redirect">15.25</a>) is potentially compatible with a type if each of its second and third operand expressions are potentially compatible with that type.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-E]</span></span>
+</li><li> <span class="norm-static"> <u>A class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>), a method invocation expression, or an expression of a standalone form (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) is potentially compatible with any type.</u><span class="assertion-id"> [jsr335-15.12.2.1-10-F]</span></span>
+</li></ul>
+<p><span class="norm-error">
+If the search does not yield at least one method that is potentially applicable, then a compile-time error occurs.<span class="assertion-id"> [jls-15.12.2.1-210]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>This definition of potential applicability expands the previous arity check to also take into account the presence and "shape" of functional interface target types.
+</p>
+In some cases involving type argument inference, a lambda expression appearing as a method invocation argument cannot be properly typed until after overload resolution.  These rules allow the form of the lambda expression to still be taken into account, discarding obviously incorrect target types that might otherwise cause ambiguity errors.</div></blockquote>
+<div id="F15.12.2.2"></div>
+<h3> <span class="mw-headline" id="15.12.2.2_Phase_1:_Identify_Matching_Arity_Methods_Applicable_by_Subtyping_Strict_Invocation_.5BModified.5D"> 15.12.2.2 Phase 1: Identify Matching Arity Methods Applicable by <del>Subtyping</del> <u>Strict Invocation</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.2" class="external text" rel="nofollow">JLS 15.12.2.2</a></small>
+</p><p><span class="norm-static">
+<u>An argument expression is considered <i>pertinent to applicability</i> for a potentially-applicable method <em>m</em> unless it has one of the following forms:</u><span class="assertion-id"> [jsr335-15.12.2.2-5]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>An implicitly-typed lambda expression (<a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a>).</u><span class="assertion-id"> [jsr335-15.12.2.2-5-A]</span></span>
+</li><li> <span class="norm-static"> <u>An inexact method reference (<a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>).</u><span class="assertion-id"> [jsr335-15.12.2.2-5-B]</span></span>
+</li><li> <span class="norm-static"> <u>If <em>m</em> is a generic method and the method invocation does not provide explicit type arguments, an explicitly-typed lambda expression or an exact method reference for which the corresponding target type (as derived from the signature of <em>m</em>) is a type parameter of <em>m</em>.</u><span class="assertion-id"> [jsr335-15.12.2.2-5-C]</span></span>
+</li><li> <span class="norm-static"> <u>An explicitly-typed lambda expression whose body is an expression that is not pertinent to applicability.</u><span class="assertion-id"> [jsr335-15.12.2.2-5-D]</span></span>
+</li><li> <span class="norm-static"> <u>An explicitly-typed lambda expression whose body is a block, where at least one result expression is not pertinent to applicability.</u><span class="assertion-id"> [jsr335-15.12.2.2-5-E]</span></span>
+</li><li> <span class="norm-static"> <u>A parenthesized expression (<a href="D.html#D15.8.5" title="Lambda D" class="mw-redirect">15.8.5</a>) whose contained expression is not pertinent to applicability.</u><span class="assertion-id"> [jsr335-15.12.2.2-5-F]</span></span>
+</li><li> <span class="norm-static"> <u>A conditional expression (<a href="D.html#D15.25" title="Lambda D" class="mw-redirect">15.25</a>) whose second or third operand is not pertinent to applicability.</u><span class="assertion-id"> [jsr335-15.12.2.2-5-G]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Let <em>m</em> be a potentially applicable method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.1" class="external text" rel="nofollow">15.12.2.1</a>) <u>with arity <em>n</em></u>, let <em>e<sub>1</sub>, ..., e<sub>n</sub></em> be the actual argument expressions of the method invocation, and let <del><em>A<sub>i</sub></em> be the type of <em>e<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>)</del> <u><em>F<sub>1</sub>, ..., F<sub>n</sub></em> be the types of the formal parameters of <em>m</em></u>.  Then:<span class="assertion-id"> [jls-15.12.2.2-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>If <em>m</em> is a generic method and the method invocation does not provide explicit type arguments, then the applicability of the method is inferred as described in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>.</u><span class="assertion-id"> [jsr335-15.12.2.2-10-A]</span></span>
+</li><li> <span class="norm-static"> <u>Otherwise,</u> if <em>m</em> is a generic method, then let <em>R<sub>1</sub>, ..., R<sub>p</sub></em> (<em>p ≥ 1</em>) be the type parameters of <em>m</em>, <del>and</del> let <em>B<sub>l</sub></em> be the declared bound of <em>R<sub>l</sub></em> (<em>1 ≤ l ≤ p</em>), <u>and</u> let <em>U<sub>1</sub>, ..., U<sub>p</sub></em> be the explicit type arguments given in the method invocation.  <u>Then <em>m</em> is <i>applicable by strict invocation</i> if:</u><span class="assertion-id"> [jsr335-15.12.2.2-10-B]</span></span>
+<ul><li> <span class="norm-static"> For <em>1 ≤ i ≤ n</em>, <u>if <em>e<sub>i</sub></em> is pertinent to applicability then <em>e<sub>i</sub></em> is compatible in a strict invocation context with <em>F<sub>i</sub>[R<sub>1</sub>:=U<sub>1</sub>, ..., R<sub>p</sub>:=U<sub>p</sub>]</em>.</u><span class="assertion-id"> [jsr335-15.12.2.2-10-B1]</span></span>
+</li><li> <span class="norm-static"> <u>For <em>1 ≤ l ≤ p</em></u>, <em>U<sub>l</sub> &lt;: B<sub>l</sub>[R<sub>1</sub>:=U<sub>1</sub>, ..., R<sub>p</sub>:=U<sub>p</sub>]</em>.<span class="assertion-id"> [jsr335-15.12.2.2-10-B2]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> Otherwise, <u><em>m</em> is <i>applicable by strict invocation</i> if, for <em>1 ≤ i ≤ n</em>, either <em>e<sub>i</sub></em> is compatible in a strict invocation context with <em>F<sub>i</sub></em> or <em>e<sub>i</sub></em> is not pertinent to applicability.</u><span class="assertion-id"> [jsr335-15.12.2.2-10-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If no method applicable by <u>strict invocation</u> is found, the search for applicable methods continues with phase 2 (<a href="F.html#F15.12.2.3" title="Lambda F" class="mw-redirect">15.12.2.3</a>).<span class="assertion-id"> [jls-15.12.2.2-120]</span></span>
+</p><p><span class="norm-static">
+Otherwise, the most specific method (<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>) is chosen among the methods that are applicable by <u>strict invocation</u>.<span class="assertion-id"> [jls-15.12.2.2-130]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The rules for handling generic method type argument inference, and associated terminology, have become too unwieldy to simply inline in the applicability rules.  Instead, in this and the subsequent applicability sections, the inference problem has been factored out to <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>.
+</div></li>
+<li style="margin-bottom:12px;"><div> The meaning of an implicitly-typed lambda expression or an inexact method reference is sufficiently vague prior to resolving a target type that arguments containing these expressions are not considered <i>pertinent to applicability</i>; they are simply ignored (except for their expected arity) until overload resolution is finished.
+</div></li></ol></div></blockquote>
+<div id="F15.12.2.3"></div>
+<h3> <span class="mw-headline" id="15.12.2.3_Phase_2:_Identify_Matching_Arity_Methods_Applicable_by_Invocation_Conversion_Loose_Invocation_.5BModified.5D"> 15.12.2.3 Phase 2: Identify Matching Arity Methods Applicable by <del>Invocation Conversion</del> <u>Loose Invocation</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.3" class="external text" rel="nofollow">JLS 15.12.2.3</a></small>
+</p><p><span class="norm-static">
+Let <em>m</em> be a potentially applicable method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.1" class="external text" rel="nofollow">15.12.2.1</a>) <u>with arity <em>n</em></u>, let <em>e<sub>1</sub>, ..., e<sub>n</sub></em> be the actual argument expressions of the method invocation, and let <del><em>A<sub>i</sub></em> be the type of <em>e<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>)</del> <u><em>F<sub>1</sub>, ..., F<sub>n</sub></em> be the types of the formal parameters of <em>m</em></u>.  Then:<span class="assertion-id"> [jls-15.12.2.3-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>If <em>m</em> is a generic method and the method invocation does not provide explicit type arguments, then the applicability of the method is inferred as described in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>.</u><span class="assertion-id"> [jsr335-15.12.2.3-10-A]</span></span>
+</li><li> <span class="norm-static"> <u>Otherwise,</u> if <em>m</em> is a generic method, then let <em>R<sub>1</sub>, ..., R<sub>p</sub></em> (<em>p ≥ 1</em>) be the type parameters of <em>m</em>, <del>and</del> let <em>B<sub>l</sub></em> be the declared bound of <em>R<sub>l</sub></em> (<em>1 ≤ l ≤ p</em>), <u>and</u> let <em>U<sub>1</sub>, ..., U<sub>p</sub></em> be the explicit type arguments given in the method invocation.  <u>Then <em>m</em> is <i>applicable by loose invocation</i> if:</u><span class="assertion-id"> [jsr335-15.12.2.3-10-B]</span></span>
+<ul><li> <span class="norm-static"> For <em>1 ≤ i ≤ n</em>, <u>if <em>e<sub>i</sub></em> is pertinent to applicability (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>) then <em>e<sub>i</sub></em> is compatible in a loose invocation context with <em>F<sub>i</sub>[R<sub>1</sub>:=U<sub>1</sub>, ..., R<sub>p</sub>:=U<sub>p</sub>]</em>.</u><span class="assertion-id"> [jsr335-15.12.2.3-10-B1]</span></span>
+</li><li> <span class="norm-static"> <u>For <em>1 ≤ l ≤ p</em></u>, <em>U<sub>l</sub> &lt;: B<sub>l</sub>[R<sub>1</sub>:=U<sub>1</sub>, ..., R<sub>p</sub>:=U<sub>p</sub>]</em>.<span class="assertion-id"> [jsr335-15.12.2.3-10-B2]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> Otherwise, <u><em>m</em> is <i>applicable by loose invocation</i> if, for <em>1 ≤ i ≤ n</em>, either <em>e<sub>i</sub></em> is compatible in a loose invocation context with <em>F<sub>i</sub></em> or <em>e<sub>i</sub></em> is not pertinent to applicability (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>).</u><span class="assertion-id"> [jsr335-15.12.2.3-10-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If no method applicable by <u>loose invocation</u> is found, the search for applicable methods continues with phase 3 (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>).<span class="assertion-id"> [jls-15.12.2.3-120]</span></span>
+</p><p><span class="norm-static">
+Otherwise, the most specific method (<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>) is chosen among the methods that are applicable by <u>loose invocation</u>.<span class="assertion-id"> [jls-15.12.2.3-130]</span></span>
+</p>
+<div id="F15.12.2.4"></div>
+<h3> <span class="mw-headline" id="15.12.2.4_Phase_3:_Identify_Methods_Applicable_by_Variable_Arity_Methods_Invocation_.5BModified.5D"> 15.12.2.4 Phase 3: Identify <u>Methods</u> Applicable <u>by</u> Variable Arity <del>Methods</del> <u>Invocation</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.4" class="external text" rel="nofollow">JLS 15.12.2.4</a></small>
+</p><p><span class="norm-static">
+<u>Where a variable-arity method has formal parameter types <em>F<sub>1</sub>, ..., F<sub>n-1</sub>, F<sub>n</sub><code style="background-color:inherit;font-size:medium">[]</code></em>, define the <i><em>i</em>th variable-arity parameter type</i> of the method as follows:</u><span class="assertion-id"> [jsr335-15.12.2.4-5]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>For <em>i ≤ n-1</em>, the <em>i</em>th variable-arity parameter type is <em>F<sub>i</sub></em>.</u><span class="assertion-id"> [jsr335-15.12.2.4-5-A]</span></span>
+</li><li> <span class="norm-static"> <u>For <em>i ≥ n</em>, the <em>i</em>th variable-arity parameter type is <em>F<sub>n</sub></em>.</u><span class="assertion-id"> [jsr335-15.12.2.4-5-B]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Let <em>m</em> be a potentially applicable method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.1" class="external text" rel="nofollow">15.12.2.1</a>) with variable arity, let <em>e<sub>1</sub>, ..., e<sub>k</sub></em> be the actual argument expressions of the method invocation and let <del><em>A<sub>i</sub></em> be the type of <em>e<sub>i</sub></em> (<em>1 ≤ i ≤ k</em>)</del> <u><em>T<sub>1</sub>, ..., T<sub>k</sub></em> be first <em>k</em> variable-arity parameter types of <em>m</em></u>.  Then:<span class="assertion-id"> [jls-15.12.2.4-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>If <em>m</em> is a generic method and the method invocation does not provide explicit type arguments, then the applicability of the method is inferred as described in <a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>.</u><span class="assertion-id"> [jsr335-15.12.2.4-10-A]</span></span>
+</li><li> <span class="norm-static"> <u>Otherwise,</u> if <em>m</em> is a generic method, then let <em>R<sub>1</sub>, ..., R<sub>p</sub></em> (<em>p ≥ 1</em>) be the type parameters of <em>m</em>, <del>and</del> let <em>B<sub>l</sub></em> be the declared bound of <em>R<sub>l</sub></em> (<em>1 ≤ l ≤ p</em>), <u>and</u> let <em>U<sub>1</sub>, ..., U<sub>p</sub></em> be the explicit type arguments given in the method invocation.  <u>Then <em>m</em> is an <i>applicable variable-arity method</i> if:</u><span class="assertion-id"> [jsr335-15.12.2.4-10-B]</span></span>
+<ul><li> <span class="norm-static"> <u>For <em>1 ≤ i ≤ k</em>, if <em>e<sub>i</sub></em> is pertinent to applicability (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>) then <em>e<sub>i</sub></em> is compatible in a loose invocation context with <em>T<sub>i</sub>[R<sub>1</sub>:=U<sub>1</sub>, ..., R<sub>p</sub>:=U<sub>p</sub>]</em>.</u><span class="assertion-id"> [jsr335-15.12.2.4-10-B1]</span></span>
+</li><li> <span class="norm-static"> <u>For <em>1 ≤ l ≤ p</em></u>, <em>U<sub>l</sub> &lt;: B<sub>l</sub>[R<sub>1</sub>:=U<sub>1</sub>, ..., R<sub>p</sub>:=U<sub>p</sub>]</em>.<span class="assertion-id"> [jsr335-15.12.2.4-10-B4]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> Otherwise, <u><em>m</em> is <i>applicable by variable-arity invocation</i> if for <em>1 ≤ i ≤ k</em>, either <em>e<sub>i</sub></em> is compatible in a loose invocation context with <em>T<sub>i</sub></em> or <em>e<sub>i</sub></em> is not pertinent to applicability (<a href="F.html#F15.12.2.2" title="Lambda F" class="mw-redirect">15.12.2.2</a>).</u><span class="assertion-id"> [jsr335-15.12.2.4-10-C]</span></span>
+</li></ul>
+<p><span class="norm-error">
+If no <u>method</u> applicable <u>by</u> variable-arity <del>method</del> <u>invocation</u> is found, a compile-time error occurs.<span class="assertion-id"> [jls-15.12.2.4-120]</span></span>
+</p><p><span class="norm-static">
+Otherwise, the most specific method (<a href="F.html#F15.12.2.5" title="Lambda F" class="mw-redirect">15.12.2.5</a>) is chosen among the <u>methods</u> applicable <u>by</u> variable-arity <del>methods</del> <u>invocation</u>.<span class="assertion-id"> [jls-15.12.2.4-130]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The previous "applicable variable arity method" terminology incorrectly hinted that, if a variable-arity method is applicable in any phase, it is applicable in and only in Phase 3.  This overlooks the fact that variable arity methods can act as fixed-arity methods in Phases 1 and 2.  What is relevant is the kinds of adaptations actually used to determine applicability, <i>not</i> the kinds of adaptations allowed by the method declaration.
+</div></li>
+<li style="margin-bottom:12px;"><div> The <i>ith variable arity parameter type</i> is a notational shorthand that simplifies the problem of describing all possible ways in which arguments might be matched up with parameter types.  This is especially useful in the next section.
+</div></li>
+<li style="margin-bottom:12px;"><div> An access check on the type of the last parameter appeared here previously, but has been moved to <a href="F.html#F15.12.3" title="Lambda F" class="mw-redirect">15.12.3</a>.
+</div></li></ol></div></blockquote>
+<div id="F15.12.2.5"></div>
+<h3> <span class="mw-headline" id="15.12.2.5_Choosing_the_Most_Specific_Method_.5BModified.5D"> 15.12.2.5 Choosing the Most Specific Method [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.5" class="external text" rel="nofollow">JLS 15.12.2.5</a></small>
+</p><p>If more than one member method is both accessible and applicable to a method invocation, it is necessary to choose one to provide the descriptor for the run-time method dispatch.  The Java programming language uses the rule that the <i>most specific</i> method is chosen.
+</p><p>The informal intuition is that one method is more specific than another if any invocation handled by the first method could be passed on to the other one without a compile-time error.  <u>In cases such as an explicitly-typed lambda expression argument (<a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a>) or a variable-arity invocation (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>), some flexibility is allowed to adapt one signature to the other.</u>
+</p><p><span class="norm-static">
+One <del>fixed-arity member</del> <u>applicable</u> method <del>named <em>m</em></del> <u><em>m<sub>1</sub></em></u> is <i>more specific</i> than another <del>member</del>  <u>applicable</u> method <del>of the same name and arity</del>, <u><em>m<sub>2</sub></em>, for an invocation with argument expressions <em>exp<sub>1</sub>, ..., exp<sub>k</sub>,</em> if any of the following are true</u>:<span class="assertion-id"> [jls-15.12.2.5-200]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is generic and <em>m<sub>1</sub></em> is inferred to be more specific than <em>m<sub>2</sub></em> for argument expressions <em>exp<sub>1</sub>, ..., exp<sub>k</sub></em> by <a href="G.html#G18.5.4" title="Lambda G" class="mw-redirect">18.5.4</a>.</u><span class="assertion-id"> [jsr335-15.12.2.5-200-B]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is not generic, <em>m<sub>1</sub></em> and <em>m<sub>2</sub></em> are applicable by strict or loose invocation, and where <em>m<sub>1</sub></em> has parameter types <em>S<sub>1</sub>, ..., S<sub>n</sub></em> and <em>m<sub>2</sub></em> has parameter types <em>T<sub>1</sub>, ..., T<sub>n</sub></em>, for all <em>i</em> (<em>1 ≤ i ≤ n</em>), the type <em>S<sub>i</sub></em> is <i>more specific</i> than <em>T<sub>i</sub></em> for argument <em>exp<sub>i</sub></em>.</u><span class="assertion-id"> [jsr335-15.12.2.5-200-C]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is not generic, <em>m<sub>1</sub></em> and <em>m<sub>2</sub></em> are applicable by variable arity invocation, and where the first <em>k</em> variable-arity parameter types of <em>m<sub>1</sub></em> are <em>S<sub>1</sub>, ..., S<sub>k</sub></em> and the first <em>k</em> variable-arity parameter types of <em>m<sub>2</sub></em> are <em>T<sub>1</sub>, ..., T<sub>k</sub></em>, for all <em>i</em> (<em>1 ≤ i ≤ k</em>), the type <em>S<sub>i</sub></em> is <i>more specific</i> than <em>T<sub>i</sub></em> for argument <em>exp<sub>i</sub></em>; additionally, if <em>m<sub>2</sub></em> has <em>k+1</em> parameters, then the <em>k+1</em>th variable-arity parameter type of <em>m<sub>1</sub></em> is a subtype of the <em>k+1</em>th variable-arity parameter type of <em>m<sub>2</sub></em>.</u><span class="assertion-id"> [jsr335-15.12.2.5-300-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The above conditions are the only circumstances under which one method may be more specific than another.<span class="assertion-id"> [jls-15.12.2.5-400]</span></span>
+</p><p><span class="norm-static"> <u>A type <em>S</em> is <i>more specific</i> than a type <em>T</em> for <i>any</i> expression if <em>S &lt;: T</em>.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-A]</span></span>
+</p><p><span class="norm-static">
+<u>In addition, a functional interface type <em>S</em> is <i>more specific</i> than a functional interface type <em>T</em> for an expression <em>exp</em> if <em>T</em> is not a subtype of <em>S</em> and one of the following conditions apply.  Let <em>U<sub>1</sub>, ..., U<sub>k</sub></em> and <em>R<sub>1</sub></em> be the parameter types and return type, respectively, of the function type of <i>the capture of</i> <em>S</em>, and let <em>V<sub>1</sub>, ..., V<sub>k</sub></em> and <em>R<sub>2</sub></em> be the parameter types and return type, respectively, of the function type of <em>T</em>.</u><span class="assertion-id"> [jsr335-15.12.2.5-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>exp</em> is an explicitly-typed lambda expression (<a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a>) and one of the following is true (where <i>result expression</i> is defined in <a href="B.html#B15.27.2" title="Lambda B" class="mw-redirect">15.27.2</a> for a block body, and refers to the body itself for an expression body):</u><span class="assertion-id"> [jsr335-15.12.2.5-10-F]</span></span>
+<ul><li> <span class="norm-static"> <u><em>R<sub>2</sub></em> is <code style="background-color:inherit;font-size:medium">void</code>.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-F5]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub> &lt;: R<sub>2</sub></em>.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-F6]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub></em> and <em>R<sub>2</sub></em> are functional interface types, and <em>R<sub>1</sub></em> is more specific than <em>R<sub>2</sub></em> for each result expression.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-F7]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub></em> is a primitive type, <em>R<sub>2</sub></em> is a reference type, and each result expression is a standalone expression (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) of a primitive type.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-F8]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub></em> is a reference type, <em>R<sub>2</sub></em> is a primitive type, and each result expression is either a standalone expression of a reference type or a poly expression.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-F9]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> <u><em>exp</em> is an exact method reference (<a href="B.html#B15.13.1" title="Lambda B" class="mw-redirect">15.13.1</a>); for all <em>i</em>, <em>1 ≤ i ≤ k</em>, <em>U<sub>i</sub></em> is the same as <em>V<sub>i</sub></em>; and one of the following is true:</u><span class="assertion-id"> [jsr335-15.12.2.5-10-G]</span></span>
+<ul><li> <span class="norm-static"> <u><em>R<sub>2</sub></em> is <code style="background-color:inherit;font-size:medium">void</code>.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-G5]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub> &lt;: R<sub>2</sub></em>.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-G6]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub></em> is a primitive type, <em>R<sub>2</sub></em> is a reference type, and the compile-time declaration for the method reference has a primitive return type.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-G8]</span></span>
+</li><li> <span class="norm-static"> <u><em>R<sub>1</sub></em> is a reference type, <em>R<sub>2</sub></em> is a primitive type, and the compile-time declaration for the method reference has a reference return type.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-G9]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> <u><em>exp</em> is a parenthesized expression (<a href="D.html#D15.8.5" title="Lambda D" class="mw-redirect">15.8.5</a>) and one of these conditions applies recursively to the wrapped expression.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-D]</span></span>
+</li><li> <span class="norm-static"> <u><em>exp</em> is a conditional expression (<a href="D.html#D15.25.3" title="Lambda D" class="mw-redirect">15.25.3</a>) and for each of the second and third operands, one of these conditions applies recursively.</u><span class="assertion-id"> [jsr335-15.12.2.5-10-E]</span></span>
+</li></ul>
+<p><span class="norm-static">
+A method <em>m<sub>1</sub></em> is <i>strictly more specific</i> than another method <em>m<sub>2</sub></em> if and only if <em>m<sub>1</sub></em> is more specific than <em>m<sub>2</sub></em> and <em>m<sub>2</sub></em> is not more specific than <em>m<sub>1</sub></em>.<span class="assertion-id"> [jls-15.12.2.5-500]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>
+<p>The Java 7 most-specific analysis was defined as a pairwise comparison of method declarations via subtyping.  Here, we augment the analysis so that, where the corresponding argument is an explicitly-typed lambda expression or an exact method reference, one functional interface type can be preferred over another if it has a "better" function type return type, by a variety of measures: subtyping, boxing, or <code style="background-color:inherit;font-size:medium">void</code> vs. non-<code style="background-color:inherit;font-size:medium">void</code>.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>As above, the inference problem associated with the most-specific analysis has been factored out into its own section, <a href="G.html#G18.5.4" title="Lambda G" class="mw-redirect">18.5.4</a>.
+</p>
+</div></li></ol></div></blockquote>
+<div id="F15.12.2.6"></div>
+<h3> <span class="mw-headline" id="15.12.2.6_Method_Invocation_Type_Result_and_Throws_Types_.5BModified.5D"> 15.12.2.6 Method <u>Invocation Type</u> <del>Result and Throws Types</del> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.6" class="external text" rel="nofollow">JLS 15.12.2.6</a></small>
+</p><p><span class="norm-static">
+<u>The <i>invocation type</i> of a most-specific accessible and applicable method is a method type (<a href="F.html#F8.2" title="Lambda F" class="mw-redirect">8.2</a>) expressing the target types of the invocation arguments, the result type of the invocation, and the exception types of the invocation.  It</u> is determined as follows:<span class="assertion-id"> [jsr335-15.12.2.6-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>If the chosen method is generic and the method invocation does not provide explicit type arguments, the invocation type is inferred as described in <a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>.</u><span class="assertion-id"> [jsr335-15.12.2.6-10-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if the chosen method is generic, then for <em>1 ≤ i ≤ <u>p</u></em>, let <u><em>P<sub>i</sub></em></u> be the formal type parameters of the method, <u>and</u> let <u><em>T<sub>i</sub></em></u> be the actual type arguments <u>provided</u> for the method invocation.  <u>Apply the substitution <em>[P<sub>1</sub>:=T<sub>1</sub>, ..., P<sub>p</sub>:=T<sub>p</sub>]</em> to the method's type. If unchecked conversion was not necessary for the method to be applicable, then this is the invocation type of m; if unchecked conversion <i>was</i> necessary, then this substitution provides the parameter types of the invocation type, while the return type and thrown types are given by the erasure of the method's type (without applying the substitution).</u><span class="assertion-id"> [jsr335-15.12.2.6-10-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if unchecked conversion was necessary for the method to be applicable, then <u>the parameter types of the invocation type are the parameter types of the method's type</u>; the <del>result</del> <u>return</u> type <u>and thrown types</u> <del>is</del> <u>are given by</u> the erasure (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.6" class="external text" rel="nofollow">4.6</a>) of the method's <del>declared return</del> type.<span class="assertion-id"> [jsr335-15.12.2.6-10-B]</span></span>
+</li><li> <span class="norm-static"> <u>Otherwise, if the chosen method is the <code style="background-color:inherit;font-size:medium">getClass</code> method of the class <code style="background-color:inherit;font-size:medium">Object</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.3.2" class="external text" rel="nofollow">4.3.2</a>), the method's invocation type is the same as the method's type, except that the return type is <code style="background-color:inherit;font-size:medium">Class&lt;? extends <em>T</em>&gt;</code>, where <em>T</em> is the type that was searched, as determined by <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.1" class="external text" rel="nofollow">15.12.1</a>.</u><span class="assertion-id"> [jsr335-15.12.2.6-10-E]</span></span>
+</li><li> <span class="norm-static"> <u>Otherwise, the method's invocation type is the same as the method's type.</u><span class="assertion-id"> [jsr335-15.12.2.6-10-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+<u>The type of the method invocation expression is</u> obtained by applying capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) to the return type <u>of the invocation type</u> of the chosen method.<span class="assertion-id"> [jls-15.12.2.6-100-C.1]</span></span>
+</p><p><span class="norm-static">
+The exception types that a method invocation expression can throw are specified in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-11.html#jls-11.2.1" class="external text" rel="nofollow">11.2.1</a>.<span class="assertion-id"> [jls-15.12.2.6-300]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> We introduce <i>invocation type</i> here to group together the return type, exception types, and parameter types.  Because poly expressions can appear as method arguments, we need to be more explicit than before about what the target type of a method argument is.  This new abstraction also clarifies the interaction with inference (<a href="G.html#G18.5.2" title="Lambda G" class="mw-redirect">18.5.2</a>), and simplifies the text for this section, which was needlessly concerned with the details of substitution and erasure on lists of types.
+</div></li>
+<li style="margin-bottom:12px;"><div> The return type of the <code style="background-color:inherit;font-size:medium">getClass</code> method was already defined in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.3.2" class="external text" rel="nofollow">4.3.2</a>, but the definition was added here for clarity.  (In particular, it should be clear that this special return type is also used for method reference compatibility testing (<a href="E.html#E15.13.2" title="Lambda E" class="mw-redirect">15.13.2</a>).)
+</div></li></ol></div></blockquote>
+<div id="F15.12.3"></div>
+<h3> <span class="mw-headline" id="15.12.3_Compile-Time_Step_3:_Is_the_Chosen_Method_Appropriate.3F_.5BAddendum.5D"> 15.12.3 Compile-Time Step 3: Is the Chosen Method Appropriate? [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">JLS 15.12.3</a></small>
+</p><p><span class="norm-error">
+It is a compile-time error if an argument to a method invocation is not compatible with its target type, as derived from the invocation type.<span class="assertion-id"> [jsr335-15.12.3-10]</span></span>
+</p><p><span class="norm-error">
+If the compile-time declaration is applicable by variable-arity invocation, then where the last formal parameter type of the invocation type of the method is <em>F<sub>n</sub><code style="background-color:inherit;font-size:medium">[]</code></em>, it is a compile-time error if the type which is the erasure of <u><em>F<sub>n</sub></em></u> is not accessible at the point of invocation.<span class="assertion-id"> [jsr335-15.12.3-20]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The JLS 7 version of <a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a> performed this vararg access check during overload resolution.  The check is necessary in order to guarantee that it is possible for the compiler to create an array of the given type.  But it creates a soundness problem for inference (<a href="G.html#G18.5.1" title="Lambda G" class="mw-redirect">18.5.1</a>): how can inference guarantee that an inferred type will be accessible?  Thus, the access check is more appropriate as a post-resolution step.</div></blockquote>
+<div id="F15.9.3"></div>
+<h3> <span class="mw-headline" id="15.9.3_Choosing_the_Constructor_and_its_Arguments_.5BAddendum.5D"> 15.9.3 Choosing the Constructor and its Arguments [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.3" class="external text" rel="nofollow">JLS 15.9.3</a></small>
+</p><p><span class="norm-error">
+It is a compile-time error if an argument to a class instance creation expression is not compatible with its target type, as derived from the invocation type (<a href="F.html#F15.12.2.6" title="Lambda F" class="mw-redirect">15.12.2.6</a>).<span class="assertion-id"> [jsr335-15.9.3-10]</span></span>
+</p><p><span class="norm-error">
+If the compile-time declaration is applicable by variable-arity invocation (<a href="F.html#F15.12.2.4" title="Lambda F" class="mw-redirect">15.12.2.4</a>), then where the last formal parameter type of the invocation type of the constructor is <em>F<sub>n</sub><code style="background-color:inherit;font-size:medium">[]</code></em>, it is a compile-time error if the type which is the erasure of <u><em>F<sub>n</sub></em></u> is not accessible at the point of invocation.<span class="assertion-id"> [jsr335-15.9.3-20]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>These rules are identical to those for <a href="F.html#F15.12.3" title="Lambda F" class="mw-redirect">15.12.3</a>.  The same checks should be performed for both constructors and methods.
+</p>
+</div></blockquote>
+
+
+
+</body></html>

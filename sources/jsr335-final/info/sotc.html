@@ -1,0 +1,824 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ascii"/>
+    <title>State of the Lambda: Libraries Edition</title>
+    <link rel="shortcut icon" href="http://openjdk.java.net/images/nanoduke.ico"/>
+    <style type="text/css">
+
+      A { text-decoration: none; }
+      A:link, A:visited { color: #437291; }
+      A:visited { color: #666666; }
+      A[href]:hover { color: #e76f00; }
+      A IMG { border-width: 0px; }
+      IMG { background: white; }
+      A.internal { color: #b00; }
+      A[name] { color: black; }
+
+      BODY {
+        background: white;
+        margin: 2em;
+        font-size: medium;
+        width: 60em;
+        margin-bottom: 100%;
+      }
+      BODY { font-family: Bitstream Vera Sans, Verdana, sans serif; }
+      PRE { font-family: monospace; }
+      CODE { font-family: courier new, monospace; font-size: medium; font-weight: bold; }
+
+      P { margin: 1ex 0em; }
+      PRE { margin: 1.5ex 2em; }
+      BLOCKQUOTE { margin: 1.5ex 2em; }
+      LI BLOCKQUOTE { margin-left: 0em; }
+      LI { margin: 0ex 0em; }
+      .todo { color: darkred; text-align: right; }
+
+      TABLE { border-collapse: collapse; padding: 0px; }
+      TD { padding: 0px; vertical-align: top; }
+
+      UL LI { list-style-type: square; }
+
+      DIV.summary { margin: 2ex 2em; }
+
+      DIV.head { margin-bottom: 2em; }
+      DIV.doctitle { font-size: x-large; font-weight: bold; }
+      DIV.twarn { color: #cc0000; font-size: smaller; font-weight: bold;
+                  margin-bottom: 1.5ex; }
+      DIV.authors { margin-top: 1ex; font-size: large; }
+      DIV.author A { font-style: italic; }
+      DIV.version { font-size: medium; margin-top: 1ex; }
+      DIV.copyright, DIV.comments { font-size: small; }
+      DIV.version SPAN.modified { color: green; font-weight: bold; }
+      DIV.head DIV.notes { margin-top: 1ex; }
+
+      P.subsection { margin-top: 2ex; }
+      P.subsection:first-child { margin-top: 1ex; }
+      P SPAN.title { font-weight: bold; padding-right: 1em; }
+
+      HR { border: 0px; border-top: 1px solid black; margin: 2ex 0em; }
+
+      DIV.qa { margin-top: 2ex; }
+
+      H1 { font-size: x-large; }
+      H2 { font-size: large; margin-top: 3ex; margin-bottom: 0ex; }
+
+      PRE {
+        padding: 1px 1ex;
+        background: #e8e8e8;
+        font-size: smaller;
+        ZZdisplay: none;
+      }
+
+    </style>
+  </head>
+  <body>
+<h1>State of the Lambda: Libraries Edition</h1>
+
+<!-- This document is in Markdown format:
+     http://daringfireball.net/projects/markdown/
+ -->
+
+<h4>September 2013</h4>
+
+<h4>Java SE 8 Edition</h4>
+
+<p>This is an informal overview of the major library enhancements in Java
+SE 8 to take advantage of new language features, primarily lambda
+expressions and default methods, specified by <a href="http://jcp.org/en/jsr/detail?id=335">JSR 335</a> and
+implemented in the OpenJDK <a href="http://openjdk.java.net/projects/lambda/">Lambda Project</a>.  It refines the
+<a href="http://cr.openjdk.java.net/~briangoetz/lambda/sotc3.html">previous iteration</a> posted in November 2012.  The new
+language features for Java SE 8 are described in <a href="http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-final.html">State of the
+Lambda</a>, which should be read first.</p>
+
+<h2>Background</h2>
+
+<p>Had lambda expressions (closures) been part of the Java language from
+the beginning, our Collections APIs would certainly look different
+than they do today.  As the Java language acquires lambda expressions
+as part of <a href="http://jcp.org/en/jsr/detail?id=335">JSR 335</a>, this has the unfortunate side effect of making
+our Collections interfaces look even more out of date!  While it might
+be tempting to start from scratch and build a replacement Collections
+framework ("Collections II"), replacing the Collections framework
+would be a major task, as the Collections interfaces permeate the entire
+Java ecosystem, and the adoption lag would be many years.  Instead, we
+pursue an evolutionary strategy of adding extension methods to
+existing interfaces (such as <code>Collection</code>, <code>List</code>, or <code>Iterable</code>), and
+adding a <em>stream</em> abstraction (e.g., <code>java.util.stream.Stream</code>) for
+performing aggregate operations on datasets, and
+retrofitting existing classes to provide stream views, enabling many
+of the desired idioms without making people trade in their trusty
+<code>ArrayList</code>s and <code>HashMap</code>s.  (This is not to say that Collections
+will never be replaced; clearly there are limitations beyond simply
+not being designed for lambdas.  A more modern collections framework
+may be considered for a future version of the JDK.)</p>
+
+<p>A key driver for this work is making parallelism more accessible to
+developers.  While the Java platform provides strong support for
+concurrency and parallelism already, developers face unnecessary
+impediments in migrating their code from sequential to parallel as
+needed.  Therefore, it is important to encourage idioms that are
+<em>both</em> sequential- and parallel-friendly.  This is facilitated by
+shifting the focus towards describing <em>what</em> computation should be
+performed, rather than <em>how</em> it should be performed.  It is also
+important to strike the balance between making parallelism <em>easier</em>
+but not going so far as to make it <em>invisible</em>; our goal is <em>explicit
+but unobstrusive</em> parallelism.  (Making parallelism transparent would
+introduce nondeterminism and the possibility of data races where users
+might not expect it.)</p>
+
+<h2>Internal vs external iteration</h2>
+
+<p>The Collections framework relies on the concept of <em>external
+iteration</em>, where a <code>Collection</code> provides, by implementing <code>Iterable</code>,
+a means to enumerate its elements, and clients use this to step
+sequentially through the elements of a collection.  For example, if we
+wanted to set the color of every shape in a collection of shapes to
+red, we would write:</p>
+
+<pre><code>for (Shape s : shapes) {
+    s.setColor(RED);
+}
+</code></pre>
+
+<p>This example illustrates external iteration; the for-each loop calls
+the <code>iterator()</code> method of <code>shapes</code>, and steps through the collection
+one by one.  External iteration is straightforward enough, but it has
+several problems:</p>
+
+<ul>
+<li>Java's for-loop is inherently sequential, and must
+process the elements in the order specified by the collection.</li>
+<li>It deprives the library method of the opportunity to manage the
+control flow, which might be able to provide better peformance by
+exploiting reordering of the data, parallelism, short-circuiting,
+or laziness.</li>
+</ul>
+
+<p>Sometimes the strong guarantees of the for-each loop (sequential,
+in-order) are desirable, but often are just an impediment to
+performance.</p>
+
+<p>The alternative to external iteration is <em>internal iteration</em>, where
+instead of controlling the iteration, the client delegates that to the
+library and passes in snippets of code to execute at various points in
+the computation.</p>
+
+<p>The internal-iteration equivalent of the previous example is:</p>
+
+<pre><code>shapes.forEach(s -&gt; s.setColor(RED));
+</code></pre>
+
+<p>This may appear to be a small syntactic change, but the difference is
+significant.  The control of the operation has been handed off from
+the client code to the library code, allowing the libraries not only
+to abstract over common control flow operations, but also enabling
+them to potentially use laziness, parallelism, and out-of-order
+execution to improve performance.  (Whether an implementation of
+<code>forEach</code> actually does any of these things is for the
+implementation to determine, but with internal iteration they
+are at least possible, whereas with external iteration, they are not.)</p>
+
+<p>Whereas external iteration mixes the <em>what</em> (color the shapes red) and
+the <em>how</em> (get an <code>Iterator</code> and iterate it sequentially), internal
+iteration lets the client dictate the what but lets the library
+control the how.  This offers several potential benefits: client code
+can be clearer, since it need only focus on stating the problem, not
+the details of how to go about solving it, and we can move complex 
+optimization code into libraries where it can benefit all users.  </p>
+
+<h2>Streams</h2>
+
+<p>The key new library abstraction introduced in Java SE 8 is a <em>stream</em>,
+defined in package <a href="http://download.java.net/jdk8/docs/api/java/util/stream/package-summary.html"><code>java.util.stream</code></a>.  (There are
+several stream types; <a href="http://download.java.net/jdk8/docs/api/java/util/stream/Stream.html"><code>Stream&lt;T&gt;</code></a> represents a
+stream of object references, and there are specializations such as
+<a href="http://download.java.net/jdk8/docs/api/java/util/stream/IntStream.html"><code>IntStream</code></a> to describe streams of primitives.)
+A stream represents a sequence of values, and exposes a set of
+aggregate operations that allow us to express common manipulations on
+those values easily and clearly.  The libraries provide convenient
+ways to obtain stream views of collections, arrays, and other data 
+sources.</p>
+
+<p>Stream operations are chained together into <em>pipelines</em>.  For example,
+if we wanted to color only the blue shapes red, we could say:</p>
+
+<pre><code>shapes.stream() 
+      .filter(s -&gt; s.getColor() == BLUE)
+      .forEach(s -&gt; s.setColor(RED));
+</code></pre>
+
+<p>The <code>stream()</code> method on <code>Collection</code> produces a stream view of the
+elements of that collection; the <code>filter()</code> operation then produces a
+stream containing the shapes that are blue, and these elements are
+then made red by <code>forEach()</code>.</p>
+
+<p>If we wanted to collect the blue shapes into a new <code>List</code>, we could 
+say:</p>
+
+<pre><code>List&lt;Shape&gt; blue = shapes.stream()
+                         .filter(s -&gt; s.getColor() == BLUE)
+                         .collect(Collectors.toList());
+</code></pre>
+
+<p>The <code>collect()</code> operation collects the input elements into an
+aggregate (such as a <code>List</code>) or a summary description; the argument to
+<code>collect()</code> is a recipe for how to do this aggregation.  In this case,
+we use <code>toList()</code>, which is a simple recipe that accumulates the
+elements into a <code>List</code>.  (More detail on <code>collect()</code> can be found in
+the "Collectors" section.)</p>
+
+<p>If each shape were contained in a <code>Box</code>, and we wanted to know which
+boxes contained at least one blue shape, we could say:</p>
+
+<pre><code>Set&lt;Box&gt; hasBlueShape = shapes.stream()
+                              .filter(s -&gt; s.getColor() == BLUE)
+                              .map(s -&gt; s.getContainingBox())
+                              .collect(Collectors.toSet());
+</code></pre>
+
+<p>The <code>map()</code> operation produces a stream whose values are the result of
+applying a mapping function (here, one that takes a shape and returns
+its containing box) to each element in its input stream.  </p>
+
+<p>If we wanted to add up the total weight of the blue shapes, we could
+express that as:</p>
+
+<pre><code>int sum = shapes.stream()
+                .filter(s -&gt; s.getColor() == BLUE)
+                .mapToInt(s -&gt; s.getWeight())
+                .sum();
+</code></pre>
+
+<p>So far, we haven't provided much detail about the specific signatures
+of the Stream operations shown; these examples simply illustrate the
+types of problems that the Streams framework is designed to address.</p>
+
+<h4>Streams vs Collections</h4>
+
+<p>Collections and streams, while bearing some superficial similarities,
+have different goals.  Collections are primarily concerned with the
+efficient management of, and access to, their elements.  By contrast,
+streams do not provide a means to directly access or manipulate their
+elements, and are instead concerned with declaratively describing the
+computational operations which will be performed in aggregate on that
+source.  Accordingly, streams differ from Collections in several ways:</p>
+
+<ul>
+<li>No storage.  Streams don't have storage for values; they carry
+values from a source (which could be a data structure, a generating
+function, an I/O channel, etc) through a pipeline of computational
+steps.</li>
+<li>Functional in nature.  Operations on a stream produce a result,
+but do not modify its underlying data source.  </li>
+<li>Laziness-seeking.  Many stream operations, such as filtering,
+mapping, sorting, or duplicate removal) can be implemented lazily.
+This facilitates efficient single-pass execution of entire
+pipelines, as well as facilitating efficient implementation of
+short-circuiting operations.  </li>
+<li>Bounds optional.  There are many problems that are sensible to
+express as infinite streams, letting clients consume values until
+they are satisfied.  (If we were enumerating perfect numbers, it is
+easy to express this as a filtering operation on the stream of all
+integers.)  While a Collection is constrained to be finite, a 
+stream is not.  (To terminate in finite time, a stream pipeline
+with an infinite source can use short-circuiting operations; 
+alternately, you can request an <code>Iterator</code> from a <code>Stream</code> and
+traverse it manually.)  </li>
+</ul>
+
+<p>As an API, Streams is completely independent from Collections.  While
+it is easy to use a collection as the source for a stream
+(<code>Collection</code> has <code>stream()</code> and <code>parallelStream()</code> methods) or to
+dump the elements of a stream into a collection (using the <code>collect()</code>
+operation as shown earlier), aggregates other than <code>Collection</code> can be
+used as sources for streams as well.  Many JDK classes, such as
+<code>BufferedReader</code>, <code>Random</code>, and <code>BitSet</code>, have been retrofitted to act
+as sources for streams, and <code>Arrays.stream()</code> provides stream view of
+arrays.  In fact, anything that can be described with an <code>Iterator</code>
+can be used as a stream source, though if more information is
+available (such as size or metadata about stream contents like
+sortedness), the library can provide an optimized execution.</p>
+
+<h4>Laziness</h4>
+
+<p>Operations like filtering or mapping, can be performed <em>eagerly</em>
+(where the filtering is performed on all elements before the <code>filter</code>
+method returns), or <em>lazily</em> (where the <code>Stream</code> representing the
+filtered result only applies the filter to elements from its source as
+needed.)  Performing computations lazily, where practical, can be
+beneficial.  For example, if we perform filtering lazily, we can fuse
+the filtering with other operations later in the pipeline, so as not
+to require multiple passes on the data.  Similarly, if we are
+searching a large collection for the first element that matches a
+given criteria, we can stop once we find one, rather than processing
+the entire collection.  (This is especially important for infinite
+sources; whereas laziness is merely an optimization for finite
+sources, it makes operations on infinite sources possible, whereas an
+eager approach would never terminate.)</p>
+
+<p>Operations such as filtering and mapping can be thought of as naturally
+lazy, whether or not they are implemented as such.  On the other hand,
+value-producing operations such as <code>sum()</code>, or side-effect-producing
+operations such as <code>forEach()</code>, are "naturally eager", because they 
+must produce a concrete result.  </p>
+
+<p>In a pipeline such as:</p>
+
+<pre><code>int sum = shapes.stream()
+                .filter(s -&gt; s.getColor() == BLUE)
+                .mapToInt(s -&gt; s.getWeight())
+                .sum();
+</code></pre>
+
+<p>the filtering and mapping operations are lazy.  This means that we
+don't start drawing elements from the source until we start the <code>sum</code>
+operation, and when we do perform the <code>sum</code> operation, we fuse
+filtering, mapping, and addition into a single pass on the data.  This
+minimizes the bookkeeping costs required to manage intermediate
+elements.</p>
+
+<p>Many loops can be restated as aggregate operations drawing from a data
+source (array, collection, generator function, I/O channel), doing a
+series of lazy operations (filtering, mapping, etc), and then doing a
+single eager operation (<code>forEach</code>, <code>toArray</code>, <code>collect</code>, etc) -- such
+as filter-map-accumulate, filter-map-sort-foreach, etc.  The naturally
+lazy operations tend to be used to compute temporary intermediate
+results, and we exploit this property in our API design.  Rather than
+have the <code>filter</code> and <code>map</code> return a collection, we instead have them
+return a new stream.  In the Streams API, operations that return a
+stream are lazy, and operations that return a non-stream result (or
+return no result, such as <code>forEach()</code>) are eager.  In most cases where
+potentially-lazy operations are being applied to aggregates, this
+turns out to be exactly what we want -- each stage takes a stream of
+input values, performs some transformation on it, and passes the
+values to the next stage in the pipeline.  </p>
+
+<p>Conveniently, when used in a source-lazy-lazy-eager pipeline, the
+laziness is mostly invisible, as the computation is "sandwiched" with
+a source at one end (often a collection), and an operation that
+produces the desired result (or side-effect) at the other end.  This
+turns out to yield good usability and performance in an API with a
+relatively small surface area.</p>
+
+<p>Methods like <code>anyMatch(Predicate)</code> or <code>findFirst()</code>, while eager, can
+use <em>short-circuiting</em> to stop processing once they can determine the
+final result.  Given a pipeline like:</p>
+
+<pre><code>Optional&lt;Shape&gt; firstBlue = shapes.stream()
+                                  .filter(s -&gt; s.getColor() == BLUE)
+                                  .findFirst();
+</code></pre>
+
+<p>Because the filter step is lazy, the <code>findFirst</code> implementation will
+only draw from upstream until it gets an element, which means we need
+only apply the predicate to input elements until we find one for which
+the predicate is true, rather than all of them.  The <code>findFirst()</code>
+method returns an <code>Optional</code>, since there might not be any elements
+matching the desired criteria.  <code>Optional</code> provides a
+means to describe a value that might or might not be present.</p>
+
+<p>Note that the user didn't have to ask for laziness, or even think
+about it very much; the right thing happened, with the library
+arranging for as little computation as it could.</p>
+
+<h4>Parallelism</h4>
+
+<p>Stream pipelines can execute either in serial or parallel; this choice
+is a property of the stream.  Unless you explicitly ask for a parallel
+stream, the JDK implementations always return sequential streams (a
+sequential stream may be converted into a parallel one with the
+<code>parallel()</code> method.)</p>
+
+<p>While parallelism is always explicit, it need not be intrusive.  Our
+sum-of-weights example can be executed in parallel simply by invoking
+the <code>parallelStream()</code> method on the source collection instead of
+<code>stream()</code>:</p>
+
+<pre><code>int sum = shapes.parallelStream()
+                .filter(s -&gt; s.getColor() == BLUE)
+                .mapToInt(s -&gt; s.getWeight())
+                .sum();
+</code></pre>
+
+<p>The result is that the serial and parallel expressions of the same
+computation look similar, but parallel executions are still clearly
+identified as parallel (without the parallel machinery overwhelming
+the code).</p>
+
+<p>Because the stream source might be a mutable collection, there is the
+possibility for interference if the source is modified while it is
+being traversed.  The stream operations are intended to be used while
+the underlying source is held constant for the duration of the
+operation.  This condition is generally easy to maintain; if the
+collection is confined to the current thread, simply ensure that the
+lambda expressions passed to stream operations do not mutate the
+stream source.  (This condition is not substantially different from
+the restrictions on iterating Collections today; if a Collection is
+modified while being iterated, most implementations throw
+<code>ConcurrentModificationException</code>.)  We refer to this requirement as
+<em>non-interference</em>.</p>
+
+<p>It is best to avoid any side-effects in the lambdas passed to stream
+methods.  While some side-effects, such as debugging statements that
+print out values are usually safe, accessing mutable state from these
+lambdas can cause data races or surprising behavior since lambdas may
+be executed from many threads simultaneously, and may not see elements
+in their natural encounter order.  Non-interference includes not only
+not interfering with the source, but not interfering with other
+lambdas; this sort of interference can arise when one lambda modifies
+mutable state and another lambda reads it.  </p>
+
+<p>As long as the non-interference requirement is satisfied, we can
+execute parallel operations safely and with predictable results even
+on non-thread-safe sources such as <code>ArrayList</code>.</p>
+
+<h2>Examples</h2>
+
+<p>Below is an fragment from the JDK class <code>Class</code> (the
+<code>getEnclosingMethod</code> method), which loops over all declared methods,
+matching method name, return type, and number and type of parameters.
+Here is the original code:</p>
+
+<pre><code> for (Method m : enclosingInfo.getEnclosingClass().getDeclaredMethods()) {
+     if (m.getName().equals(enclosingInfo.getName()) ) {
+         Class&lt;?&gt;[] candidateParamClasses = m.getParameterTypes();
+         if (candidateParamClasses.length == parameterClasses.length) {
+             boolean matches = true;
+             for(int i = 0; i &lt; candidateParamClasses.length; i++) {
+                 if (!candidateParamClasses[i].equals(parameterClasses[i])) {
+                     matches = false;
+                     break;
+                 }
+             }
+
+             if (matches) { // finally, check return type
+                 if (m.getReturnType().equals(returnType) )
+                     return m;
+             }
+         }
+     }
+ }
+
+ throw new InternalError("Enclosing method not found");
+</code></pre>
+
+<p>Using streams, we can eliminate all the temporary variables and move
+the control logic into the library.  We fetch the list of methods via
+reflection, turn it into a <code>Stream</code> with <code>Arrays.stream</code>, and then use
+a series of filters to reject the ones that don't match name,
+parameter types, or return type.  The result of <code>findFirst</code> is an
+<code>Optional&lt;Method&gt;</code>, and we then either fetch and return the resulting
+method or throw an exception.</p>
+
+<pre><code>return Arrays.stream(enclosingInfo.getEnclosingClass().getDeclaredMethods())
+             .filter(m -&gt; Objects.equals(m.getName(), enclosingInfo.getName())
+             .filter(m -&gt;  Arrays.equals(m.getParameterTypes(), parameterClasses))
+             .filter(m -&gt; Objects.equals(m.getReturnType(), returnType))
+             .findFirst()
+             .orElseThrow(() -&gt; new InternalError("Enclosing method not found");
+</code></pre>
+
+<p>This version of the code is more compact, more readable, and less
+error-prone.</p>
+
+<p>Stream operations are very effective for ad-hoc queries over
+collections.  Consider a hypothetical "music library" application,
+where a library has a list of albums, an album has a title and a list
+of tracks, and a track has a name, artist, and rating.</p>
+
+<p>Consider the query "find the names of albums that have at least one
+track rated four or higher, sorted by name."  To construct this set,
+we might write:</p>
+
+<pre><code>List&lt;Album&gt; favs = new ArrayList&lt;&gt;();
+for (Album a : albums) {
+    boolean hasFavorite = false;
+    for (Track t : a.tracks) {
+        if (t.rating &gt;= 4) {
+            hasFavorite = true;
+            break;
+        }
+    }
+    if (hasFavorite)
+        favs.add(a);
+}
+Collections.sort(favs, new Comparator&lt;Album&gt;() {
+                           public int compare(Album a1, Album a2) {
+                               return a1.name.compareTo(a2.name);
+                           }});
+</code></pre>
+
+<p>We can use the stream operations to simplify each of the three major
+steps -- identification of whether any track in an album has a rating
+of at least for (<code>anyMatch</code>), the sorting, and the collection of
+albums matching our criteria into a <code>List</code>:</p>
+
+<pre><code>List&lt;Album&gt; sortedFavs =
+  albums.stream()
+        .filter(a -&gt; a.tracks.anyMatch(t -&gt; (t.rating &gt;= 4)))
+        .sorted(Comparator.comparing(a -&gt; a.name))
+        .collect(Collectors.toList());
+</code></pre>
+
+<p>The <code>Comparator.comparing()</code> method takes a function that extracts a
+<code>Comparable</code> sort key, and returns a <code>Comparator</code> that compares on
+that key (see section "Comparator factories", below.)</p>
+
+<h4>Collectors</h4>
+
+<p>In the examples so far, we've used the <code>collect()</code> method to gather
+the elements of a stream into a <code>List</code> or <code>Set</code>.  The argument to
+<code>collect()</code> is a <code>Collector</code>, which embodies a recipe for folding
+elements into a data structure or summary.  The <code>Collectors</code> class
+contains factories for many common collectors; <code>toList()</code> and
+<code>toSet()</code> are among the most commonly used, but there are many more
+that can be used to perform sophisticated transforms on the data.</p>
+
+<p>A <code>Collector</code> is parameterized by its input and output types.  The
+<code>toList()</code> collector has an input type of some <code>T</code> and an output type
+of <code>List&lt;T&gt;</code>.  A slightly more complicated <code>Collector</code> is <code>toMap</code>, of
+which there are several versions.  The simplest version takes a pair
+of functions, one which maps input elements to map keys, and the other
+to map values.  It takes a <code>T</code> as input and produces a <code>Map&lt;K,V&gt;</code>,
+where <code>K</code> and <code>V</code> are the result types of the key and value mapping
+functions.  (More complex versions allow you to customize the type of
+the resulting map, or to resolve duplicates when multiple elements map
+to the same key.)  For example, to create a reverse index on a known
+unique key such as catalog number:</p>
+
+<pre><code>Map&lt;Integer, Album&gt; albumsByCatalogNumber =
+    albums.stream()
+          .collect(Collectors.toMap(a -&gt; a.getCatalogNumber(), a -&gt; a));
+</code></pre>
+
+<p>Related to <code>toMap</code> is <code>groupingBy</code>.  Let's say we wanted to tabulate
+our favorite tracks by artist.  We want a <code>Collector</code> that takes as
+input <code>Track</code> and produces a <code>Map&lt;Artist,List&lt;Track&gt;&gt;</code>.  This exactly
+matches the behavior of the simplest form of the <code>groupingBy</code>
+collector, which takes a classification function and produces a map
+keyed by that function, whose corresponding values are a list of input
+elements who correspond to that key.</p>
+
+<pre><code>Map&lt;Artist, List&lt;Track&gt;&gt; favsByArtist =
+    tracks.stream()
+          .filter(t -&gt; t.rating &gt;= 4)
+          .collect(Collectors.groupingBy(t -&gt; t.artist));
+</code></pre>
+
+<p>Collectors can be composed and reused to produce more complex
+collectors.  The simple form of the <code>groupingBy</code> collector organized
+elements into buckets according to the classification function (here,
+the track's artist), and put all elements that map to the same bucket
+into a <code>List</code>.  There is a more general version that lets you use
+<em>another</em> collector to organize the elements within a bucket; this
+version takes a classifying function and a downstream collector as
+arguments, and all elements mapped into the same bucket by the
+classifying function are passed to the downstream collector.  (The
+one-argument version of <code>groupingBy</code> implicitly uses <code>toList()</code> as its
+downstream collector.)  For example, if we want to collect the tracks
+associated with each artist into a <code>Set</code> instead of a <code>List</code>, we could
+combine this with the <code>toSet()</code> collector:</p>
+
+<pre><code>Map&lt;Artist, Set&lt;Track&gt;&gt; favsByArtist =
+    tracks.stream()
+          .filter(t -&gt; t.rating &gt;= 4)
+          .collect(Collectors.groupingBy(t -&gt; t.artist, 
+                                         Collectors.toSet()));
+</code></pre>
+
+<p>If we wanted to categorize tracks by artist and rating to create a
+multi-level map, we could do:</p>
+
+<pre><code>Map&lt;Artist, Map&lt;Integer, List&lt;Track&gt;&gt;&gt; byArtistAndRating =
+    tracks.stream()
+          .collect(groupingBy(t -&gt; t.artist, 
+                              groupingBy(t -&gt; t.rating)));
+</code></pre>
+
+<p>As a final example, let's say we wanted to create a frequency
+distribution of words that appear in track titles.  We first use
+<code>Stream.flatMap()</code> and <code>Pattern.splitAsStream</code> to take a stream of
+tracks and explode each track into the words in that track's name,
+producing a stream of words in all the names of all the tracks.  We
+can then use <code>groupingBy</code> using <code>String.toUpperCase</code> as the classifier
+function (so all words that are the same word, ignoring case, are
+considered the same and therefore appear in the same bucket) and use
+the <code>counting()</code> collector as the downstream collector to count the
+appearances of each word (without having to create an intermediate
+collection):</p>
+
+<pre><code>Pattern pattern = Pattern.compile(\\s+");
+Map&lt;String, Integer&gt; wordFreq = 
+    tracks.stream()
+          .flatMap(t -&gt; pattern.splitAsStream(t.name)) // Stream&lt;String&gt;
+          .collect(groupingBy(s -&gt; s.toUpperCase(),
+                              counting()));
+</code></pre>
+
+<p>The <code>flatMap</code> method takes as its argument a function that maps an
+input element (here, a track) to a stream of something (here, words in
+the track name).  It applies this mapping function to every element of
+the stream, replacing each element with the contents of the resulting
+stream.  (Think of this as two operations, first mapping every element
+to a stream of zero or more other elements, and then flattening out
+the contents of the resulting streams into a single stream.)  So here,
+the result of the <code>flatMap</code> operation is a stream containing all the
+words in all the track names.  We then group the words together into
+buckets containing occurrences of words which are identical modulo
+case, and use the <code>counting()</code> collector to count the number of words
+in each bucket.</p>
+
+<p>The <code>Collectors</code> class has lots of methods for constructing collectors
+that can be used for all sorts of common queries, roll-ups, and
+tabulations, and you can implement your own <code>Collector</code> as well.</p>
+
+<h2>Parallelism under the hood</h2>
+
+<p>With the Fork/Join framework added in Java SE 7, the JDK has an API
+for efficiently implementing parallel computations.  However, parallel
+code with Fork/Join looks very different from (and much bigger than)
+the equivalent serial code, which acts as a barrier to
+parallelization.  By supporting the exact same set of operations on
+sequential and parallel streams, users can switch between serial and
+parallel execution without rewriting their code, removing this barrier
+and making parallelism more accessible and less error-prone.  </p>
+
+<p>The steps involved in implementing a parallel computation via
+recursive decomposition are: dividing a problem into subproblems,
+solving a subproblem sequentially to produce a partial result, and
+combining the partial results of two subproblems.  The Fork/Join
+machinery is designed to automate this process.</p>
+
+<p>In order to support the full set of operations on any stream source,
+we model the stream source with an abstraction called <code>Spliterator</code>,
+which is a generalization of a traditional iterator.  In addition to
+supporting sequential access to the data elements, a spliterator also
+supports decomposition: just as an <code>Iterator</code> lets you carve off a
+single element and leave the rest described by the <code>Iterator</code>, a
+<code>Spliterator</code> lets you carve off a larger chunk (ideally, half) of the
+input elements into a new <code>Spliterator</code>, and leave the rest of the
+data to be described by the original <code>Spliterator</code>.  (Both
+spliterators can then be decomposed further.)  Additionally, a
+spliterator can provide source metadata such as the number of elements
+(if known) and a set of boolean characteristics (such as "the elements
+are sorted") that can be used by the Streams framework to optimize
+execution.</p>
+
+<p>This approach separates the structural properties of recursive
+decomposition from the algorithms that can be executed in parallel on
+decomposible data structures.  The author of a data structure need
+only provide the decomposition logic, and then immediately gets the
+benefit of parallel execution of stream operations.  </p>
+
+<p>Most users won't ever have to implement a <code>Spliterator</code>; they'll just
+use the <code>stream()</code> methods on existing collections.  But, if you ever
+are implementing a collection or other stream source, you might want
+to consider providing a custom <code>Spliterator</code>.  The API for
+<code>Spliterator</code> is shown below:</p>
+
+<pre><code>public interface Spliterator&lt;T&gt; {
+    // Element access
+    boolean tryAdvance(Consumer&lt;? super T&gt; action);
+    void forEachRemaining(Consumer&lt;? super T&gt; action); 
+
+    // Decomposition
+    Spliterator&lt;T&gt; trySplit();
+
+    // Optional metadata
+    long estimateSize();
+    int characteristics();
+    Comparator&lt;? super T&gt; getComparator();
+}
+</code></pre>
+
+<p>Base interfaces such as <code>Iterable</code> and <code>Collection</code> provide correct
+but low-performance <code>spliterator()</code> implementations, but
+sub-interfaces (like <code>Set</code>) and concrete implementations (like
+<code>ArrayList</code>) override these with higher-quality spliterators that take
+advantage of information not available to the base type.  The quality
+of a spliterator implementation will affect performance of stream
+execution; returning well-balanced splits from the <code>split()</code> method
+will improve CPU utilization, and providing the correct
+characteristics and size metadata will enable many other
+optimizations.</p>
+
+<h4>Encounter order</h4>
+
+<p>Many data sources, such as lists, arrays, and I/O channels, have a
+natural <em>encounter order</em>, which means the order in which the elements
+appear has significance.  Others, such as <code>HashSet</code>, have no defined
+encounter order (and therefore an <code>Iterator</code> for a <code>HashSet</code> is
+permitted to serve up the elements in any order it likes.)  </p>
+
+<p>One of the characteristics tracked by <code>Spliterator</code>, and used by
+stream implementations, is whether the stream has a defined encounter
+order.  With a few exceptions (such as <code>Stream.forEach()</code> or
+<code>Stream.findAny()</code>), parallel operations are constrained by encounter
+order.  This means that in a stream pipeline like</p>
+
+<pre><code>List&lt;String&gt; names = people.parallelStream()
+                           .map(Person::getName)
+                           .collect(toList());
+</code></pre>
+
+<p>the names must appear in the same order as the corresponding people
+did in the stream source.  Usually, this is what we want, and for many
+stream operations, this is not prohibitively expensive to preserve.
+On the other hand, if the source were a <code>HashSet</code>, then the names
+could appear in any order, and might appear in a different order
+across multiple executions.  </p>
+
+<h2>Streams and lambdas in the JDK</h2>
+
+<p>Having exposed <code>Stream</code> as a top-level abstraction, we want to ensure
+that the features of <code>Stream</code> are available as widely throughout the
+JDK as possible.  <code>Collection</code> has been augmented with <code>stream()</code> and
+<code>parallelStream()</code> methods for converting collections into streams;
+arrays can be converted into streams with <code>Arrays.stream()</code>.  </p>
+
+<p>Additionally, there are static factory methods in <code>Stream</code> (and the
+associated primitive specializations) for creating streams, such as
+<code>Stream.of</code>, <code>Stream.generate</code>, and <code>IntStream.range</code>.  Many other
+classes have acquired new stream-bearing methods, such as
+<code>String.chars</code>, <code>BufferedReader.lines</code>, <code>Pattern.splitAsStream</code>,
+<code>Random.ints</code>, and <code>BitSet.stream</code>.</p>
+
+<p>Finally, we provide a set of APIs for constructing streams, to be used
+by library writers who wish to expose stream functionality on
+non-standard aggregates.  The minimal information needed to create a
+<code>Stream</code> is an <code>Iterator</code>, but if the creator has additional metadata
+(such as knowing the size), the library can provide a more efficient
+implementation by implementing a <code>Spliterator</code> (as all of the JDK
+collections have).</p>
+
+<h4>Comparator factories</h4>
+
+<p>The <code>Comparator</code> class has acquired a number of new methods that are
+useful for building comparators.  </p>
+
+<p>The static method <code>Comparator.comparing()</code> takes a function that
+extracts a <code>Comparable</code> sort key and produces a <code>Comparator</code>.  Its
+implementation is very simple: </p>
+
+<pre><code>public static &lt;T, U extends Comparable&lt;? super U&gt;&gt; Comparator&lt;T&gt; comparing(
+        Function&lt;? super T, ? extends U&gt; keyExtractor) {
+    return (c1, c2) 
+        -&gt; keyExtractor.apply(c1).compareTo(keyExtractor.apply(c2));
+}
+</code></pre>
+
+<p>Methods like this are an example of <em>higher order functions</em> --
+functions who take as arguments functions or return new functions.
+Methods like this simplify user code by reducing duplication:</p>
+
+<pre><code>List&lt;Person&gt; people = ...
+people.sort(comparing(p -&gt; p.getLastName()));
+</code></pre>
+
+<p>This is much cleaner than the "old way", which usually involved an
+anonymous class instance that implemented <code>Comparator</code>.  But the real
+power of this approach is its improved composability.  For example,
+<code>Comparator</code> has a default method for reversing its direction.  So, 
+to sort the people by last name in reverse order, we can simply 
+create the comparator as before, and then ask it to reverse itself: </p>
+
+<pre><code>people.sort(comparing(p -&gt; p.getLastName()).reversed());
+</code></pre>
+
+<p>Similarly, the default method <code>thenComparing</code> allows you to take a
+<code>Comparator</code> and refine its behavior when the initial comparator 
+views two elements as equal.  To sort the people by last name then 
+first name, we would do: </p>
+
+<pre><code>Comparator&lt;Person&gt; c = Comparator.comparing(p -&gt; p.getLastName())
+                                 .thenComparing(p -&gt; p.getFirstName());
+people.sort(c);
+</code></pre>
+
+<h4>Mutative collection operations</h4>
+
+<p>Stream operations on collections produce a new value, collection, or
+side-effect.  However, sometimes we do want to mutate the collection
+in-place, and some new methods have been added to <code>Collection</code>,
+<code>List</code>, and <code>Map</code> to take advantage of lambdas, such as
+<code>Iterable.forEach(Consumer)</code>, <code>Collection.removeAll(Predicate)</code>,
+<code>List.replaceAll(UnaryOperator)</code>, <code>List.sort(Comparator)</code>, and
+<code>Map.computeIfAbsent()</code>.  Additionally, non-atomic versions of the
+methods from <code>ConcurrentMap</code>, such as <code>replace</code> and <code>putIfAbsent</code> have
+been pulled up into <code>Map</code>.  </p>
+
+<h2>Summary</h2>
+
+<p>While adding lambda expressions to the language is a huge step
+forward, developers get their work done every day by using the core
+libraries, so the language evolution effort was paired with a library
+evolution effort so that users could start using the new features on
+day one.  The centerpiece of the new library features is the <code>Stream</code>
+abstraction, which provides powerful facilities for aggregate
+operations on data sets, and has been deeply integrated with the
+existing collection classes as well as other JDK classes.  </p>
+
+<!-- This document is in Markdown format:
+[title]: State of the Lambda: Libraries Edition
+ -->
+</body></html>

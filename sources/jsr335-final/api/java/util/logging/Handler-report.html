@@ -1,0 +1,626 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Handler [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Handler"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>Direct Known Subclasses:  </dt>
+<dd> 
+<a href="../../../java/util/logging/MemoryHandler.html" title="class in java.util.logging" target="_parent">MemoryHandler</a>, <a href="../../../java/util/logging/StreamHandler.html" title="class in java.util.logging" target="_parent">StreamHandler</a>  
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">Handler</span>
+extends <a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">A <tt>Handler</tt> object takes log messages from a <tt>Logger</tt> and exports them. It might for example, write them to a console or write them to a file, or send them to a network logging service, or forward them to an OS log, or whatever.<p> A <tt>Handler</tt> can be disabled by doing a <tt>setLevel(Level.OFF)</tt> and can be re-enabled by doing a <tt>setLevel</tt> with an appropriate level.                     </p>
+<p> 
+<tt>Handler</tt> classes typically use <tt>LogManager</tt> properties to set default values for the <tt>Handler</tt>'s <tt>Filter</tt>, <tt>Formatter</tt>, and <tt>Level</tt>. See the specific documentation for each concrete <tt>Handler</tt> class.                          </p>                                           
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.4</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Handler-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Handler--"></a><a name="Handler--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Handler</h4>
+<pre>protected&nbsp;Handler()</pre>
+<div class="block">Default constructor. The resulting <tt>Handler</tt> has a log level of <tt>Level.ALL</tt>, no <tt>Formatter</tt>, and no <tt>Filter</tt>. A default <tt>ErrorManager</tt> instance is installed as the <tt>ErrorManager</tt>.                        </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:publish-java.util.logging.LogRecord- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:publish-java.util.logging.LogRecord-"></a><a name="publish-java.util.logging.LogRecord-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>publish</h4>
+<pre>public abstract&nbsp;void&nbsp;publish(<a href="../../../java/util/logging/LogRecord.html" title="class in java.util.logging" target="_parent">LogRecord</a>&nbsp;record)</pre>
+<div class="block">Publish a <tt>LogRecord</tt>.<p> The logging request was made initially to a <tt>Logger</tt> object, which initialized the <tt>LogRecord</tt> and forwarded it here.                  </p>
+<p> The <tt>Handler</tt> is responsible for formatting the message, when and if necessary. The formatting should include localization.                 </p>  
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>record</code> - description of the log event. A null record is silently ignored and is not published                 </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:flush-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:flush--"></a><a name="flush--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flush</h4>
+<pre>public abstract&nbsp;void&nbsp;flush()</pre>
+<div class="block">Flush any buffered output.   </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:close-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:close--"></a><a name="close--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>close</h4>
+<pre>public abstract&nbsp;void&nbsp;close()
+                    throws <a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a>
+</pre>
+<div class="block">Close the <tt>Handler</tt> and free all associated resources.<p> The close method will perform a <tt>flush</tt> and then close the <tt>Handler</tt>. After close has been called this <tt>Handler</tt> should no longer be used. Method calls may either be silently ignored or may throw runtime exceptions.                                    </p>       
+</div>
+<dl> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setFormatter-java.util.logging.Formatter- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setFormatter-java.util.logging.Formatter-"></a><a name="setFormatter-java.util.logging.Formatter-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setFormatter</h4>
+<pre>public&nbsp;void&nbsp;setFormatter(<a href="../../../java/util/logging/Formatter.html" title="class in java.util.logging" target="_parent">Formatter</a>&nbsp;newFormatter)
+                  throws <a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a>
+</pre>
+<div class="block">Set a <tt>Formatter</tt>. This <tt>Formatter</tt> will be used to format <tt>LogRecords</tt> for this <tt>Handler</tt>.<p> Some <tt>Handlers</tt> may not use <tt>Formatters</tt>, in which case the <tt>Formatter</tt> will be remembered, but not used.                 </p>
+<p></p>             
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>newFormatter</code> - the <tt>Formatter</tt> to use (may not be null)          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getFormatter-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getFormatter--"></a><a name="getFormatter--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFormatter</h4>
+<pre>public&nbsp;<a href="../../../java/util/logging/Formatter.html" title="class in java.util.logging" target="_parent">Formatter</a>&nbsp;getFormatter()</pre>
+<div class="block">Return the <tt>Formatter</tt> for this <tt>Handler</tt>.     </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the <tt>Formatter</tt> (may be null).    </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setEncoding-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setEncoding-java.lang.String-"></a><a name="setEncoding-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setEncoding</h4>
+<pre>public&nbsp;void&nbsp;setEncoding(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;encoding)
+                 throws <a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a>,
+                        <a href="../../../java/io/UnsupportedEncodingException.html" title="class in java.io" target="_parent">UnsupportedEncodingException</a>
+</pre>
+<div class="block">Set the character encoding used by this <tt>Handler</tt>.<p> The encoding should be set before any <tt>LogRecords</tt> are written to the <tt>Handler</tt>.             </p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>encoding</code> - The name of a supported character encoding. May be null, to indicate the default platform encoding.                  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd>
+<dd> 
+<code><a href="../../../java/io/UnsupportedEncodingException.html" title="class in java.io" target="_parent">UnsupportedEncodingException</a></code> - if the named encoding is not supported.         </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getEncoding-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getEncoding--"></a><a name="getEncoding--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEncoding</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getEncoding()</pre>
+<div class="block">Return the character encoding for this <tt>Handler</tt>.      </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The encoding name. May be null, which indicates the default encoding should be used.             </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setFilter-java.util.logging.Filter- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setFilter-java.util.logging.Filter-"></a><a name="setFilter-java.util.logging.Filter-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setFilter</h4>
+<pre>public&nbsp;void&nbsp;setFilter(<a href="../../../java/util/logging/Filter.html" title="interface in java.util.logging" target="_parent">Filter</a>&nbsp;newFilter)
+               throws <a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a>
+</pre>
+<div class="block">Set a <tt>Filter</tt> to control output on this <tt>Handler</tt>.<p> For each call of <tt>publish</tt> the <tt>Handler</tt> will call this <tt>Filter</tt> (if it is non-null) to check if the <tt>LogRecord</tt> should be published or discarded.                         </p>        
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>newFilter</code> - a <tt>Filter</tt> object (may be null)        </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getFilter-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getFilter--"></a><a name="getFilter--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFilter</h4>
+<pre>public&nbsp;<a href="../../../java/util/logging/Filter.html" title="interface in java.util.logging" target="_parent">Filter</a>&nbsp;getFilter()</pre>
+<div class="block">Get the current <tt>Filter</tt> for this <tt>Handler</tt>.      </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a <tt>Filter</tt> object (may be null)     </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setErrorManager-java.util.logging.ErrorManager- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setErrorManager-java.util.logging.ErrorManager-"></a><a name="setErrorManager-java.util.logging.ErrorManager-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setErrorManager</h4>
+<pre>public&nbsp;void&nbsp;setErrorManager(<a href="../../../java/util/logging/ErrorManager.html" title="class in java.util.logging" target="_parent">ErrorManager</a>&nbsp;em)</pre>
+<div class="block">Define an ErrorManager for this Handler.<p> The ErrorManager's "error" method will be invoked if any errors occur while using this Handler.               </p>     
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>em</code> - the new ErrorManager     </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getErrorManager-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getErrorManager--"></a><a name="getErrorManager--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getErrorManager</h4>
+<pre>public&nbsp;<a href="../../../java/util/logging/ErrorManager.html" title="class in java.util.logging" target="_parent">ErrorManager</a>&nbsp;getErrorManager()</pre>
+<div class="block">Retrieves the ErrorManager for this Handler.     </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the ErrorManager for this Handler    </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:reportError-java.lang.String-java.lang.Exception-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:reportError-java.lang.String-java.lang.Exception-int-"></a><a name="reportError-java.lang.String-java.lang.Exception-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>reportError</h4>
+<pre>protected&nbsp;void&nbsp;reportError(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;msg,
+                           <a href="../../../java/lang/Exception.html" title="class in java.lang" target="_parent">Exception</a>&nbsp;ex,
+                           int&nbsp;code)</pre>
+<div class="block">Protected convenience method to report an error to this Handler's ErrorManager. Note that this method retrieves and uses the ErrorManager without doing a security check. It can therefore be used in environments where the caller may be non-privileged.                                     </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>msg</code> - a descriptive string (may be null)        </dd>
+<dd> 
+<code>ex</code> - an exception (may be null)       </dd>
+<dd> 
+<code>code</code> - an error code defined in ErrorManager        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setLevel-java.util.logging.Level- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setLevel-java.util.logging.Level-"></a><a name="setLevel-java.util.logging.Level-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLevel</h4>
+<pre>public&nbsp;void&nbsp;setLevel(<a href="../../../java/util/logging/Level.html" title="class in java.util.logging" target="_parent">Level</a>&nbsp;newLevel)
+              throws <a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a>
+</pre>
+<div class="block">Set the log level specifying which message levels will be logged by this <tt>Handler</tt>. Message levels lower than this value will be discarded.<p> The intention is to allow developers to turn on voluminous logging, but to limit the messages that are sent to certain <tt>Handlers</tt>.                      </p>                      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>newLevel</code> - the new value for the log level         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - if a security manager exists and if the caller does not have <tt>LoggingPermission("control")</tt>.               </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getLevel-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getLevel--"></a><a name="getLevel--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLevel</h4>
+<pre>public&nbsp;<a href="../../../java/util/logging/Level.html" title="class in java.util.logging" target="_parent">Level</a>&nbsp;getLevel()</pre>
+<div class="block">Get the log level specifying which messages will be logged by this <tt>Handler</tt>. Message levels lower than this level will be discarded.                     </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the level of messages being logged.     </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:isLoggable-java.util.logging.LogRecord- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:isLoggable-java.util.logging.LogRecord-"></a><a name="isLoggable-java.util.logging.LogRecord-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isLoggable</h4>
+<pre>public&nbsp;boolean&nbsp;isLoggable(<a href="../../../java/util/logging/LogRecord.html" title="class in java.util.logging" target="_parent">LogRecord</a>&nbsp;record)</pre>
+<div class="block">Check if this <tt>Handler</tt> would actually log a given <tt>LogRecord</tt>.<p> This method checks if the <tt>LogRecord</tt> has an appropriate <tt>Level</tt> and whether it satisfies any <tt>Filter</tt>. It also may make other <tt>Handler</tt> specific checks that might prevent a handler from logging the <tt>LogRecord</tt>. It will return false if the <tt>LogRecord</tt> is null.                                          </p>
+<p></p>         
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>record</code> - a <tt>LogRecord</tt>    
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>true if the <tt>LogRecord</tt> would be logged.      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

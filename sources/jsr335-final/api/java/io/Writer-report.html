@@ -1,0 +1,638 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Writer [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Writer"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/io/Closeable.html" title="interface in java.io" target="_parent">Closeable</a>, <a href="../../java/io/Flushable.html" title="interface in java.io" target="_parent">Flushable</a>, <a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a>, <a href="../../java/lang/AutoCloseable.html" title="interface in java.lang" target="_parent">AutoCloseable</a>    
+</dd> 
+</dl>
+<dl> 
+<dt>Direct Known Subclasses:  </dt>
+<dd> 
+<a href="../../java/io/BufferedWriter.html" title="class in java.io" target="_parent">BufferedWriter</a>, <a href="../../java/io/CharArrayWriter.html" title="class in java.io" target="_parent">CharArrayWriter</a>, <a href="../../java/io/FilterWriter.html" title="class in java.io" target="_parent">FilterWriter</a>, <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent">OutputStreamWriter</a>, <a href="../../java/io/PipedWriter.html" title="class in java.io" target="_parent">PipedWriter</a>, <a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent">PrintWriter</a>, <a href="../../java/io/StringWriter.html" title="class in java.io" target="_parent">StringWriter</a>       
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">Writer</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+implements <a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a>, <a href="../../java/io/Closeable.html" title="interface in java.io" target="_parent">Closeable</a>, <a href="../../java/io/Flushable.html" title="interface in java.io" target="_parent">Flushable</a>
+</pre>
+<div class="block">Abstract class for writing to character streams. The only methods that a subclass must implement are write(char[], int, int), flush(), and close(). Most subclasses, however, will override some of the methods defined here in order to provide higher efficiency, additional functionality, or both.                                          </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.1</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/io/Writer.html" title="class in java.io" target="_parent"><code>Writer</code></a>, <a href="../../java/io/BufferedWriter.html" title="class in java.io" target="_parent"><code>BufferedWriter</code></a>, <a href="../../java/io/CharArrayWriter.html" title="class in java.io" target="_parent"><code>CharArrayWriter</code></a>, <a href="../../java/io/FilterWriter.html" title="class in java.io" target="_parent"><code>FilterWriter</code></a>, <a href="../../java/io/OutputStreamWriter.html" title="class in java.io" target="_parent"><code>OutputStreamWriter</code></a>, <a href="../../java/io/FileWriter.html" title="class in java.io" target="_parent"><code>FileWriter</code></a>, <a href="../../java/io/PipedWriter.html" title="class in java.io" target="_parent"><code>PipedWriter</code></a>, <a href="../../java/io/PrintWriter.html" title="class in java.io" target="_parent"><code>PrintWriter</code></a>, <a href="../../java/io/StringWriter.html" title="class in java.io" target="_parent"><code>StringWriter</code></a>, <a href="../../java/io/Reader.html" title="class in java.io" target="_parent"><code>Reader</code></a>          
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:lock [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:lock"></a><a name="lock"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>lock</h4>
+<pre>protected&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a> lock</pre>
+<div class="block">The object used to synchronize operations on this stream. For efficiency, a character-stream object may use an object other than itself to protect critical sections. A subclass should therefore use the object in this field rather than <tt>this</tt> or a synchronized method.                                         </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Writer-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Writer--"></a><a name="Writer--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Writer</h4>
+<pre>protected&nbsp;Writer()</pre>
+<div class="block">Creates a new character-stream writer whose critical sections will synchronize on the writer itself.             </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Writer-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Writer-java.lang.Object-"></a><a name="Writer-java.lang.Object-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Writer</h4>
+<pre>protected&nbsp;Writer(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;lock)</pre>
+<div class="block">Creates a new character-stream writer whose critical sections will synchronize on the given object.             </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>lock</code> - Object to synchronize on      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-int-"></a><a name="write-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(int&nbsp;c)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Writes a single character. The character to be written is contained in the 16 low-order bits of the given integer value; the 16 high-order bits are ignored.<p> Subclasses that intend to support efficient single-character output should override this method.            </p>                          
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - int specifying a character to be written         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-char:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-char:A-"></a><a name="write-char:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(char[]&nbsp;cbuf)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Writes an array of characters.    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>cbuf</code> - Array of characters to be written        </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-char:A-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-char:A-int-int-"></a><a name="write-char:A-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public abstract&nbsp;void&nbsp;write(char[]&nbsp;cbuf,
+                           int&nbsp;off,
+                           int&nbsp;len)
+                    throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Writes a portion of an array of characters.       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>cbuf</code> - Array of characters     </dd>
+<dd> 
+<code>off</code> - Offset from which to start writing characters         </dd>
+<dd> 
+<code>len</code> - Number of characters to write       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-java.lang.String-"></a><a name="write-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;str)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Writes a string.  </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>str</code> - String to be written      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-java.lang.String-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-java.lang.String-int-int-"></a><a name="write-java.lang.String-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>write</h4>
+<pre>public&nbsp;void&nbsp;write(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;str,
+                  int&nbsp;off,
+                  int&nbsp;len)
+           throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Writes a portion of a string.     </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>str</code> - A String    </dd>
+<dd> 
+<code>off</code> - Offset from which to start writing characters         </dd>
+<dd> 
+<code>len</code> - Number of characters to write       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IndexOutOfBoundsException.html" title="class in java.lang" target="_parent">IndexOutOfBoundsException</a></code> - If <tt>off</tt> is negative, or <tt>len</tt> is negative, or <tt>off+len</tt> is negative or greater than the length of the given string                       </dd>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-java.lang.CharSequence- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-java.lang.CharSequence-"></a><a name="append-java.lang.CharSequence-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>public&nbsp;<a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>&nbsp;append(<a href="../../java/lang/CharSequence.html" title="interface in java.lang" target="_parent">CharSequence</a>&nbsp;csq)
+              throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Appends the specified character sequence to this writer.<p> An invocation of this method of the form <tt>out.append(csq)</tt> behaves in exactly the same way as the invocation<pre>
+     out.write(csq.toString()) </pre>                  
+</p>
+<p> Depending on the specification of <tt>toString</tt> for the character sequence <tt>csq</tt>, the entire sequence may not be appended. For instance, invoking the <tt>toString</tt> method of a character buffer will return a subsequence whose content depends upon the buffer's position and limit.                                         </p>       
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Appendable.html#append-java.lang.CharSequence-" target="_parent">append</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csq</code> - The character sequence to append. If <tt>csq</tt> is <tt>null</tt>, then the four characters <tt>"null"</tt> are appended to this writer.                     </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-java.lang.CharSequence-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-java.lang.CharSequence-int-int-"></a><a name="append-java.lang.CharSequence-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>public&nbsp;<a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>&nbsp;append(<a href="../../java/lang/CharSequence.html" title="interface in java.lang" target="_parent">CharSequence</a>&nbsp;csq,
+                     int&nbsp;start,
+                     int&nbsp;end)
+              throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Appends a subsequence of the specified character sequence to this writer. <tt>Appendable</tt>.<p> An invocation of this method of the form <tt>out.append(csq, start, end)  </tt> when <tt>csq</tt> is not <tt>null</tt> behaves in exactly the same way as the invocation<pre>
+     out.write(csq.subSequence(start, end).toString()) </pre>                       
+</p>           
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Appendable.html#append-java.lang.CharSequence-int-int-" target="_parent">append</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csq</code> - The character sequence from which a subsequence will be appended. If <tt>csq</tt> is <tt>null</tt>, then characters will be appended as if <tt>csq</tt> contained the four characters <tt>"null"</tt>.                             </dd>
+<dd> 
+<code>start</code> - The index of the first character in the subsequence           </dd>
+<dd> 
+<code>end</code> - The index of the character following the last character in the subsequence              </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IndexOutOfBoundsException.html" title="class in java.lang" target="_parent">IndexOutOfBoundsException</a></code> - If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt> is greater than <tt>end</tt>, or <tt>end</tt> is greater than <tt>csq.length()</tt>                   
+</dd>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:append-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:append-char-"></a><a name="append-char-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre>public&nbsp;<a href="../../java/io/Writer.html" title="class in java.io" target="_parent">Writer</a>&nbsp;append(char&nbsp;c)
+              throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Appends the specified character to this writer.<p> An invocation of this method of the form <tt>out.append(c)</tt> behaves in exactly the same way as the invocation<pre>
+     out.write(c) </pre>                  
+</p>      
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Appendable.html#append-char-" target="_parent">append</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Appendable.html" title="interface in java.lang" target="_parent">Appendable</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - The 16-bit character to append       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This writer </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:flush-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:flush--"></a><a name="flush--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flush</h4>
+<pre>public abstract&nbsp;void&nbsp;flush()
+                    throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Flushes the stream. If the stream has saved any characters from the various write() methods in a buffer, write them immediately to their intended destination. Then, if that destination is another character or byte stream, flush it. Thus one flush() invocation will flush all the buffers in a chain of Writers and OutputStreams.<p> If the intended destination of this stream is an abstraction provided by the underlying operating system, for example a file, then flushing the stream guarantees only that bytes previously written to the stream are passed to the operating system for writing; it does not guarantee that they are actually written to a physical device such as a disk drive.                                                           </p>                                                    
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Flushable.html#flush--" target="_parent">flush</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/io/Flushable.html" title="interface in java.io" target="_parent">Flushable</a></code>  
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:close-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:close--"></a><a name="close--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>close</h4>
+<pre>public abstract&nbsp;void&nbsp;close()
+                    throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Closes the stream, flushing it first. Once the stream has been closed, further write() or flush() invocations will cause an IOException to be thrown. Closing a previously closed stream has no effect.                               </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/Closeable.html#close--" target="_parent">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/io/Closeable.html" title="interface in java.io" target="_parent">Closeable</a></code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/AutoCloseable.html#close--" target="_parent">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/AutoCloseable.html" title="interface in java.lang" target="_parent">AutoCloseable</a></code>  
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - If an I/O error occurs       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

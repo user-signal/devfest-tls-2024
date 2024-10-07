@@ -1,0 +1,2452 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ZipEntry [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ZipEntry"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../../java/lang/Cloneable.html" title="interface in java.lang" target="_parent">Cloneable</a> 
+</dd> 
+</dl>
+<dl> 
+<dt>Direct Known Subclasses:  </dt>
+<dd> 
+<a href="../../../java/util/jar/JarEntry.html" title="class in java.util.jar" target="_parent">JarEntry</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">ZipEntry</span>
+extends <a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+implements <a href="../../../java/lang/Cloneable.html" title="interface in java.lang" target="_parent">Cloneable</a>
+</pre>
+<div class="block">This class is used to represent a ZIP file entry.         </div>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:STORED [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:STORED"></a><a name="STORED"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>STORED</h4>
+<pre>public static final&nbsp;int STORED</pre>
+<div class="block">Compression method for uncompressed entries.    </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.STORED" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:DEFLATED [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:DEFLATED"></a><a name="DEFLATED"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFLATED</h4>
+<pre>public static final&nbsp;int DEFLATED</pre>
+<div class="block">Compression method for compressed (deflated) entries.     </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.DEFLATED" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCSIG"></a><a name="LOCSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCSIG</h4>
+<pre>public static final&nbsp;long LOCSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTSIG"></a><a name="EXTSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTSIG</h4>
+<pre>public static final&nbsp;long EXTSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.EXTSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENSIG"></a><a name="CENSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENSIG</h4>
+<pre>public static final&nbsp;long CENSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDSIG"></a><a name="ENDSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDSIG</h4>
+<pre>public static final&nbsp;long ENDSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCHDR"></a><a name="LOCHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCHDR</h4>
+<pre>public static final&nbsp;int LOCHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTHDR"></a><a name="EXTHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTHDR</h4>
+<pre>public static final&nbsp;int EXTHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.EXTHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENHDR"></a><a name="CENHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENHDR</h4>
+<pre>public static final&nbsp;int CENHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDHDR"></a><a name="ENDHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDHDR</h4>
+<pre>public static final&nbsp;int ENDHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCVER [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCVER"></a><a name="LOCVER"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCVER</h4>
+<pre>public static final&nbsp;int LOCVER</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCVER" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCFLG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCFLG"></a><a name="LOCFLG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCFLG</h4>
+<pre>public static final&nbsp;int LOCFLG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCFLG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCHOW [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCHOW"></a><a name="LOCHOW"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCHOW</h4>
+<pre>public static final&nbsp;int LOCHOW</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCHOW" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCTIM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCTIM"></a><a name="LOCTIM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCTIM</h4>
+<pre>public static final&nbsp;int LOCTIM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCTIM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCCRC [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCCRC"></a><a name="LOCCRC"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCCRC</h4>
+<pre>public static final&nbsp;int LOCCRC</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCCRC" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCSIZ"></a><a name="LOCSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCSIZ</h4>
+<pre>public static final&nbsp;int LOCSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCLEN [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCLEN"></a><a name="LOCLEN"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCLEN</h4>
+<pre>public static final&nbsp;int LOCLEN</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCLEN" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCNAM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCNAM"></a><a name="LOCNAM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCNAM</h4>
+<pre>public static final&nbsp;int LOCNAM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCNAM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCEXT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCEXT"></a><a name="LOCEXT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCEXT</h4>
+<pre>public static final&nbsp;int LOCEXT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.LOCEXT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTCRC [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTCRC"></a><a name="EXTCRC"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTCRC</h4>
+<pre>public static final&nbsp;int EXTCRC</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.EXTCRC" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTSIZ"></a><a name="EXTSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTSIZ</h4>
+<pre>public static final&nbsp;int EXTSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.EXTSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTLEN [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTLEN"></a><a name="EXTLEN"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTLEN</h4>
+<pre>public static final&nbsp;int EXTLEN</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.EXTLEN" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENVEM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENVEM"></a><a name="CENVEM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENVEM</h4>
+<pre>public static final&nbsp;int CENVEM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENVEM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENVER [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENVER"></a><a name="CENVER"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENVER</h4>
+<pre>public static final&nbsp;int CENVER</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENVER" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENFLG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENFLG"></a><a name="CENFLG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENFLG</h4>
+<pre>public static final&nbsp;int CENFLG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENFLG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENHOW [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENHOW"></a><a name="CENHOW"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENHOW</h4>
+<pre>public static final&nbsp;int CENHOW</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENHOW" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENTIM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENTIM"></a><a name="CENTIM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENTIM</h4>
+<pre>public static final&nbsp;int CENTIM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENTIM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENCRC [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENCRC"></a><a name="CENCRC"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENCRC</h4>
+<pre>public static final&nbsp;int CENCRC</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENCRC" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENSIZ"></a><a name="CENSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENSIZ</h4>
+<pre>public static final&nbsp;int CENSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENLEN [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENLEN"></a><a name="CENLEN"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENLEN</h4>
+<pre>public static final&nbsp;int CENLEN</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENLEN" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENNAM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENNAM"></a><a name="CENNAM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENNAM</h4>
+<pre>public static final&nbsp;int CENNAM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENNAM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENEXT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENEXT"></a><a name="CENEXT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENEXT</h4>
+<pre>public static final&nbsp;int CENEXT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENEXT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENCOM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENCOM"></a><a name="CENCOM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENCOM</h4>
+<pre>public static final&nbsp;int CENCOM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENCOM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENDSK [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENDSK"></a><a name="CENDSK"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENDSK</h4>
+<pre>public static final&nbsp;int CENDSK</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENDSK" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENATT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENATT"></a><a name="CENATT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENATT</h4>
+<pre>public static final&nbsp;int CENATT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENATT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENATX [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENATX"></a><a name="CENATX"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENATX</h4>
+<pre>public static final&nbsp;int CENATX</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENATX" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENOFF [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENOFF"></a><a name="CENOFF"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENOFF</h4>
+<pre>public static final&nbsp;int CENOFF</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.CENOFF" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDSUB [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDSUB"></a><a name="ENDSUB"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDSUB</h4>
+<pre>public static final&nbsp;int ENDSUB</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDSUB" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDTOT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDTOT"></a><a name="ENDTOT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDTOT</h4>
+<pre>public static final&nbsp;int ENDTOT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDTOT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDSIZ"></a><a name="ENDSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDSIZ</h4>
+<pre>public static final&nbsp;int ENDSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDOFF [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDOFF"></a><a name="ENDOFF"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDOFF</h4>
+<pre>public static final&nbsp;int ENDOFF</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDOFF" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDCOM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDCOM"></a><a name="ENDCOM"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ENDCOM</h4>
+<pre>public static final&nbsp;int ENDCOM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.zip.ZipEntry.ENDCOM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:ZipEntry-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:ZipEntry-java.lang.String-"></a><a name="ZipEntry-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ZipEntry</h4>
+<pre>public&nbsp;ZipEntry(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</pre>
+<div class="block">Creates a new zip entry with the specified name.        </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - The entry name     </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the entry name is null        </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the entry name is longer than 0xFFFF bytes           </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:ZipEntry-java.util.zip.ZipEntry- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:ZipEntry-java.util.zip.ZipEntry-"></a><a name="ZipEntry-java.util.zip.ZipEntry-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ZipEntry</h4>
+<pre>public&nbsp;ZipEntry(<a href="../../../java/util/zip/ZipEntry.html" title="class in java.util.zip" target="_parent">ZipEntry</a>&nbsp;e)</pre>
+<div class="block">Creates a new zip entry with fields taken from the specified zip entry.            </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e</code> - A zip Entry object      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the entry object is null        </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getName-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getName--"></a><a name="getName--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getName</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getName()</pre>
+<div class="block">Returns the name of the entry.     </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the name of the entry    </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setTime-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setTime-long-"></a><a name="setTime-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTime</h4>
+<pre>public&nbsp;void&nbsp;setTime(long&nbsp;time)</pre>
+<div class="block">Sets the last modification time of the entry.<p> If the entry is output to a ZIP file or ZIP file formatted output stream the last modification time set by this method will be stored into the <code>date and time fields   </code> of the zip file entry and encoded in standard <code>MS-DOS date and time format    </code>. The <a href="../../../java/util/TimeZone.html#getDefault--" target="_parent"><code>default TimeZone </code></a> is used to convert the epoch time to the MS-DOS data and time.                                                      </p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>time</code> - The last modification time of the entry in milliseconds since the epoch              </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getTime--" target="_parent"><code>getTime()</code></a>, <a href="../../../java/util/zip/ZipEntry.html#getLastModifiedTime--" target="_parent"><code>getLastModifiedTime()</code></a>  
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getTime-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getTime--"></a><a name="getTime--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTime</h4>
+<pre>public&nbsp;long&nbsp;getTime()</pre>
+<div class="block">Returns the last modification time of the entry.<p> If the entry is read from a ZIP file or ZIP file formatted input stream, this is the last modification time from the <code>date and time fields   </code> of the zip file entry. The <a href="../../../java/util/TimeZone.html#getDefault--" target="_parent"><code>default TimeZone </code></a> is used to convert the standard MS-DOS formatted date and time to the epoch time.                                              </p>       
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The last modification time of the entry in milliseconds since the epoch, or -1 if not specified                </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setTime-long-" target="_parent"><code>setTime(long)</code></a>, <a href="../../../java/util/zip/ZipEntry.html#setLastModifiedTime-java.nio.file.attribute.FileTime-" target="_parent"><code>setLastModifiedTime(FileTime)</code></a>  
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setLastModifiedTime-java.nio.file.attribute.FileTime- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setLastModifiedTime-java.nio.file.attribute.FileTime-"></a><a name="setLastModifiedTime-java.nio.file.attribute.FileTime-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLastModifiedTime</h4>
+<pre>public&nbsp;<a href="../../../java/util/zip/ZipEntry.html" title="class in java.util.zip" target="_parent">ZipEntry</a>&nbsp;setLastModifiedTime(<a href="../../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>&nbsp;time)</pre>
+<div class="block">Sets the last modification time of the entry.<p> When output to a ZIP file or ZIP file formatted output stream the last modification time set by this method will be stored into zip file entry's <code>date and time fields   </code> in <code>standard MS-DOS date and time format     </code>), and the extended timestamp fields in <code>optional extra data  </code> in UTC time.                                        </p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>time</code> - The last modification time of the entry         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This zip entry  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the <code>time</code> is null       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getLastModifiedTime--" target="_parent"><code>getLastModifiedTime()</code></a> 
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getLastModifiedTime-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getLastModifiedTime--"></a><a name="getLastModifiedTime--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastModifiedTime</h4>
+<pre>public&nbsp;<a href="../../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>&nbsp;getLastModifiedTime()</pre>
+<div class="block">Returns the last modification time of the entry.<p> If the entry is read from a ZIP file or ZIP file formatted input stream, this is the last modification time from the zip file entry's <code>optional extra data  </code> if the extended timestamp fields are present. Otherwise the last modification time is read from the entry's <code>date and time fields   </code>, the <a href="../../../java/util/TimeZone.html#getDefault--" target="_parent"><code>default TimeZone </code></a> is used to convert the standard MS-DOS formatted date and time to the epoch time.                                                              </p>       
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The last modification time of the entry, null if not specified          </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setLastModifiedTime-java.nio.file.attribute.FileTime-" target="_parent"><code>setLastModifiedTime(FileTime)</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setLastAccessTime-java.nio.file.attribute.FileTime- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setLastAccessTime-java.nio.file.attribute.FileTime-"></a><a name="setLastAccessTime-java.nio.file.attribute.FileTime-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLastAccessTime</h4>
+<pre>public&nbsp;<a href="../../../java/util/zip/ZipEntry.html" title="class in java.util.zip" target="_parent">ZipEntry</a>&nbsp;setLastAccessTime(<a href="../../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>&nbsp;time)</pre>
+<div class="block">Sets the last access time of the entry.<p> If set, the last access time will be stored into the extended timestamp fields of entry's <code>optional extra data  </code>, when output to a ZIP file or ZIP file formatted stream.                            </p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>time</code> - The last access time of the entry         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This zip entry  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the <code>time</code> is null       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getLastAccessTime--" target="_parent"><code>getLastAccessTime()</code></a> 
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getLastAccessTime-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getLastAccessTime--"></a><a name="getLastAccessTime--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastAccessTime</h4>
+<pre>public&nbsp;<a href="../../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>&nbsp;getLastAccessTime()</pre>
+<div class="block">Returns the last access time of the entry.<p> The last access time is from the extended timestamp fields of entry's <code>optional extra data  </code> when read from a ZIP file or ZIP file formatted stream.                        </p>       
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The last access time of the entry, null if not specified          </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setLastAccessTime-java.nio.file.attribute.FileTime-" target="_parent"><code>setLastAccessTime(FileTime)</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setCreationTime-java.nio.file.attribute.FileTime- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setCreationTime-java.nio.file.attribute.FileTime-"></a><a name="setCreationTime-java.nio.file.attribute.FileTime-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCreationTime</h4>
+<pre>public&nbsp;<a href="../../../java/util/zip/ZipEntry.html" title="class in java.util.zip" target="_parent">ZipEntry</a>&nbsp;setCreationTime(<a href="../../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>&nbsp;time)</pre>
+<div class="block">Sets the creation time of the entry.<p> If set, the creation time will be stored into the extended timestamp fields of entry's <code>optional extra data  </code>, when output to a ZIP file or ZIP file formatted stream.                           </p>      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>time</code> - The creation time of the entry        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>This zip entry  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the <code>time</code> is null       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getCreationTime--" target="_parent"><code>getCreationTime()</code></a> 
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getCreationTime-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getCreationTime--"></a><a name="getCreationTime--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCreationTime</h4>
+<pre>public&nbsp;<a href="../../../java/nio/file/attribute/FileTime.html" title="class in java.nio.file.attribute" target="_parent">FileTime</a>&nbsp;getCreationTime()</pre>
+<div class="block">Returns the creation time of the entry.<p> The creation time is from the extended timestamp fields of entry's <code>optional extra data  </code> when read from a ZIP file or ZIP file formatted stream.                       </p>      
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the creation time of the entry, null if not specified         </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setCreationTime-java.nio.file.attribute.FileTime-" target="_parent"><code>setCreationTime(FileTime)</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setSize-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setSize-long-"></a><a name="setSize-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSize</h4>
+<pre>public&nbsp;void&nbsp;setSize(long&nbsp;size)</pre>
+<div class="block">Sets the uncompressed size of the entry data.       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>size</code> - the uncompressed size in bytes       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the specified size is less than 0, is greater than 0xFFFFFFFF when <a href="package-summary.html#zip64" target="_parent">ZIP64 format </a> is not supported, or is less than 0 when ZIP64 is supported                            </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getSize--" target="_parent"><code>getSize()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getSize-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getSize--"></a><a name="getSize--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSize</h4>
+<pre>public&nbsp;long&nbsp;getSize()</pre>
+<div class="block">Returns the uncompressed size of the entry data.       </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the uncompressed size of the entry data, or -1 if not known           </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setSize-long-" target="_parent"><code>setSize(long)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getCompressedSize-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getCompressedSize--"></a><a name="getCompressedSize--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCompressedSize</h4>
+<pre>public&nbsp;long&nbsp;getCompressedSize()</pre>
+<div class="block">Returns the size of the compressed entry data.<p> In the case of a stored entry, the compressed size will be the same as the uncompressed size of the entry.                     </p>       
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the size of the compressed entry data, or -1 if not known           </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setCompressedSize-long-" target="_parent"><code>setCompressedSize(long)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setCompressedSize-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setCompressedSize-long-"></a><a name="setCompressedSize-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCompressedSize</h4>
+<pre>public&nbsp;void&nbsp;setCompressedSize(long&nbsp;csize)</pre>
+<div class="block">Sets the size of the compressed entry data.       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>csize</code> - the compressed size to set to        </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getCompressedSize--" target="_parent"><code>getCompressedSize()</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setCrc-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setCrc-long-"></a><a name="setCrc-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCrc</h4>
+<pre>public&nbsp;void&nbsp;setCrc(long&nbsp;crc)</pre>
+<div class="block">Sets the CRC-32 checksum of the uncompressed entry data.        </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>crc</code> - the CRC-32 value     </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the specified CRC-32 value is less than 0 or greater than 0xFFFFFFFF               </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getCrc--" target="_parent"><code>getCrc()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getCrc-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getCrc--"></a><a name="getCrc--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCrc</h4>
+<pre>public&nbsp;long&nbsp;getCrc()</pre>
+<div class="block">Returns the CRC-32 checksum of the uncompressed entry data.        </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the CRC-32 checksum of the uncompressed entry data, or -1 if not known            </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setCrc-long-" target="_parent"><code>setCrc(long)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setMethod-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setMethod-int-"></a><a name="setMethod-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMethod</h4>
+<pre>public&nbsp;void&nbsp;setMethod(int&nbsp;method)</pre>
+<div class="block">Sets the compression method for the entry.      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>method</code> - the compression method, either STORED or DEFLATED         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the specified compression method is invalid         </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getMethod--" target="_parent"><code>getMethod()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getMethod-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getMethod--"></a><a name="getMethod--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMethod</h4>
+<pre>public&nbsp;int&nbsp;getMethod()</pre>
+<div class="block">Returns the compression method of the entry.      </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the compression method of the entry, or -1 if not specified          </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setMethod-int-" target="_parent"><code>setMethod(int)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setExtra-byte:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setExtra-byte:A-"></a><a name="setExtra-byte:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setExtra</h4>
+<pre>public&nbsp;void&nbsp;setExtra(byte[]&nbsp;extra)</pre>
+<div class="block">Sets the optional extra field data for the entry.<p> Invoking this method may change this entry's last modification time, last access time and creation time, if the <code>extra</code> field data includes the extensible timestamp fields, such as <code>NTFS tag 0x0001  </code> or <code>Info-ZIP Extended Timestamp  </code>, as specified in <a href="http://www.info-zip.org/doc/appnote-19970311-iz.zip" target="_parent">Info-ZIP Application Note 970311   </a>.                                   </p>        
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>extra</code> - The extra field data bytes       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the length of the specified extra field data is greater than 0xFFFF bytes                </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getExtra--" target="_parent"><code>getExtra()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getExtra-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getExtra--"></a><a name="getExtra--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getExtra</h4>
+<pre>public&nbsp;byte[]&nbsp;getExtra()</pre>
+<div class="block">Returns the extra field data for the entry.       </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the extra field data for the entry, or null if none          </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setExtra-byte:A-" target="_parent"><code>setExtra(byte[])</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setComment-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setComment-java.lang.String-"></a><a name="setComment-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setComment</h4>
+<pre>public&nbsp;void&nbsp;setComment(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;comment)</pre>
+<div class="block">Sets the optional comment string for the entry.<p>ZIP entry comments have maximum length of 0xffff. If the length of the specified comment string is greater than 0xFFFF bytes after encoding, only the first 0xFFFF bytes are output to the ZIP file entry.                                  </p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>comment</code> - the comment string     </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#getComment--" target="_parent"><code>getComment()</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getComment-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getComment--"></a><a name="getComment--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getComment</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getComment()</pre>
+<div class="block">Returns the comment string for the entry.      </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the comment string for the entry, or null if none         </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/zip/ZipEntry.html#setComment-java.lang.String-" target="_parent"><code>setComment(String)</code></a> 
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:isDirectory-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:isDirectory--"></a><a name="isDirectory--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDirectory</h4>
+<pre>public&nbsp;boolean&nbsp;isDirectory()</pre>
+<div class="block">Returns true if this is a directory entry. A directory entry is defined to be one whose name ends with a '/'.                     </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>true if this is a directory entry      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:toString-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:toString--"></a><a name="toString--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;toString()</pre>
+<div class="block">Returns a string representation of the ZIP entry.       </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/Object.html#toString--" target="_parent">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a string representation of the object.     </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:hashCode-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:hashCode--"></a><a name="hashCode--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hashCode</h4>
+<pre>public&nbsp;int&nbsp;hashCode()</pre>
+<div class="block">Returns the hash code value for this entry.       </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/Object.html#hashCode--" target="_parent">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a hash code value for this object.      </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/lang/Object.html#equals-java.lang.Object-" target="_parent"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../../java/lang/System.html#identityHashCode-java.lang.Object-" target="_parent"><code>System.identityHashCode(java.lang.Object)</code></a>  
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:clone-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:clone--"></a><a name="clone--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>clone</h4>
+<pre>public&nbsp;<a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;clone()</pre>
+<div class="block">Returns a copy of this entry.     </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/Object.html#clone--" target="_parent">clone</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a clone of this instance.    </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/lang/Cloneable.html" title="interface in java.lang" target="_parent"><code>Cloneable</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

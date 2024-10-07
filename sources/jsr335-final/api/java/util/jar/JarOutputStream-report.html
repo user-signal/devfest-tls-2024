@@ -1,0 +1,1453 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:JarOutputStream [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:JarOutputStream"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../../java/io/Closeable.html" title="interface in java.io" target="_parent">Closeable</a>, <a href="../../../java/io/Flushable.html" title="interface in java.io" target="_parent">Flushable</a>, <a href="../../../java/lang/AutoCloseable.html" title="interface in java.lang" target="_parent">AutoCloseable</a>   
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">JarOutputStream</span>
+extends <a href="../../../java/util/zip/ZipOutputStream.html" title="class in java.util.zip" target="_parent">ZipOutputStream</a>
+</pre>
+<div class="block">The <code>JarOutputStream</code> class is used to write the contents of a JAR file to any output stream. It extends the class <code>java.util.zip.ZipOutputStream</code> with support for writing an optional <code>Manifest</code> entry. The <code>Manifest</code> can be used to specify meta-information about the JAR file and its entries.                                            </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.2</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/jar/Manifest.html" title="class in java.util.jar" target="_parent"><code>Manifest</code></a>, <a href="../../../java/util/zip/ZipOutputStream.html" title="class in java.util.zip" target="_parent"><code>ZipOutputStream</code></a>  
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCSIG"></a><a name="LOCSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCSIG</h4>
+<pre>public static final&nbsp;long LOCSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTSIG"></a><a name="EXTSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTSIG</h4>
+<pre>public static final&nbsp;long EXTSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.EXTSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENSIG"></a><a name="CENSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENSIG</h4>
+<pre>public static final&nbsp;long CENSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDSIG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDSIG"></a><a name="ENDSIG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDSIG</h4>
+<pre>public static final&nbsp;long ENDSIG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDSIG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCHDR"></a><a name="LOCHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCHDR</h4>
+<pre>public static final&nbsp;int LOCHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTHDR"></a><a name="EXTHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTHDR</h4>
+<pre>public static final&nbsp;int EXTHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.EXTHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENHDR"></a><a name="CENHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENHDR</h4>
+<pre>public static final&nbsp;int CENHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDHDR [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDHDR"></a><a name="ENDHDR"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDHDR</h4>
+<pre>public static final&nbsp;int ENDHDR</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDHDR" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCVER [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCVER"></a><a name="LOCVER"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCVER</h4>
+<pre>public static final&nbsp;int LOCVER</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCVER" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCFLG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCFLG"></a><a name="LOCFLG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCFLG</h4>
+<pre>public static final&nbsp;int LOCFLG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCFLG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCHOW [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCHOW"></a><a name="LOCHOW"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCHOW</h4>
+<pre>public static final&nbsp;int LOCHOW</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCHOW" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCTIM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCTIM"></a><a name="LOCTIM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCTIM</h4>
+<pre>public static final&nbsp;int LOCTIM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCTIM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCCRC [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCCRC"></a><a name="LOCCRC"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCCRC</h4>
+<pre>public static final&nbsp;int LOCCRC</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCCRC" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCSIZ"></a><a name="LOCSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCSIZ</h4>
+<pre>public static final&nbsp;int LOCSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCLEN [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCLEN"></a><a name="LOCLEN"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCLEN</h4>
+<pre>public static final&nbsp;int LOCLEN</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCLEN" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCNAM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCNAM"></a><a name="LOCNAM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCNAM</h4>
+<pre>public static final&nbsp;int LOCNAM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCNAM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LOCEXT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LOCEXT"></a><a name="LOCEXT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LOCEXT</h4>
+<pre>public static final&nbsp;int LOCEXT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.LOCEXT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTCRC [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTCRC"></a><a name="EXTCRC"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTCRC</h4>
+<pre>public static final&nbsp;int EXTCRC</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.EXTCRC" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTSIZ"></a><a name="EXTSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTSIZ</h4>
+<pre>public static final&nbsp;int EXTSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.EXTSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:EXTLEN [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:EXTLEN"></a><a name="EXTLEN"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EXTLEN</h4>
+<pre>public static final&nbsp;int EXTLEN</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.EXTLEN" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENVEM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENVEM"></a><a name="CENVEM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENVEM</h4>
+<pre>public static final&nbsp;int CENVEM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENVEM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENVER [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENVER"></a><a name="CENVER"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENVER</h4>
+<pre>public static final&nbsp;int CENVER</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENVER" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENFLG [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENFLG"></a><a name="CENFLG"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENFLG</h4>
+<pre>public static final&nbsp;int CENFLG</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENFLG" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENHOW [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENHOW"></a><a name="CENHOW"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENHOW</h4>
+<pre>public static final&nbsp;int CENHOW</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENHOW" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENTIM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENTIM"></a><a name="CENTIM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENTIM</h4>
+<pre>public static final&nbsp;int CENTIM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENTIM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENCRC [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENCRC"></a><a name="CENCRC"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENCRC</h4>
+<pre>public static final&nbsp;int CENCRC</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENCRC" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENSIZ"></a><a name="CENSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENSIZ</h4>
+<pre>public static final&nbsp;int CENSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENLEN [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENLEN"></a><a name="CENLEN"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENLEN</h4>
+<pre>public static final&nbsp;int CENLEN</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENLEN" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENNAM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENNAM"></a><a name="CENNAM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENNAM</h4>
+<pre>public static final&nbsp;int CENNAM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENNAM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENEXT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENEXT"></a><a name="CENEXT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENEXT</h4>
+<pre>public static final&nbsp;int CENEXT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENEXT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENCOM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENCOM"></a><a name="CENCOM"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENCOM</h4>
+<pre>public static final&nbsp;int CENCOM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENCOM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENDSK [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENDSK"></a><a name="CENDSK"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENDSK</h4>
+<pre>public static final&nbsp;int CENDSK</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENDSK" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENATT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENATT"></a><a name="CENATT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENATT</h4>
+<pre>public static final&nbsp;int CENATT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENATT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENATX [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENATX"></a><a name="CENATX"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENATX</h4>
+<pre>public static final&nbsp;int CENATX</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENATX" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CENOFF [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CENOFF"></a><a name="CENOFF"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CENOFF</h4>
+<pre>public static final&nbsp;int CENOFF</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.CENOFF" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDSUB [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDSUB"></a><a name="ENDSUB"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDSUB</h4>
+<pre>public static final&nbsp;int ENDSUB</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDSUB" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDTOT [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDTOT"></a><a name="ENDTOT"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDTOT</h4>
+<pre>public static final&nbsp;int ENDTOT</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDTOT" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDSIZ [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDSIZ"></a><a name="ENDSIZ"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDSIZ</h4>
+<pre>public static final&nbsp;int ENDSIZ</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDSIZ" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDOFF [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDOFF"></a><a name="ENDOFF"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENDOFF</h4>
+<pre>public static final&nbsp;int ENDOFF</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDOFF" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ENDCOM [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ENDCOM"></a><a name="ENDCOM"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ENDCOM</h4>
+<pre>public static final&nbsp;int ENDCOM</pre>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.jar.JarOutputStream.ENDCOM" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:JarOutputStream-java.io.OutputStream-java.util.jar.Manifest- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:JarOutputStream-java.io.OutputStream-java.util.jar.Manifest-"></a><a name="JarOutputStream-java.io.OutputStream-java.util.jar.Manifest-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JarOutputStream</h4>
+<pre>public&nbsp;JarOutputStream(<a href="../../../java/io/OutputStream.html" title="class in java.io" target="_parent">OutputStream</a>&nbsp;out,
+                       <a href="../../../java/util/jar/Manifest.html" title="class in java.util.jar" target="_parent">Manifest</a>&nbsp;man)
+                throws <a href="../../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Creates a new <code>JarOutputStream</code> with the specified <code>Manifest</code>. The manifest is written as the first entry to the output stream.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - the actual output stream      </dd>
+<dd> 
+<code>man</code> - the optional <code>Manifest</code>     
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if an I/O error has occurred        </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:JarOutputStream-java.io.OutputStream- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:JarOutputStream-java.io.OutputStream-"></a><a name="JarOutputStream-java.io.OutputStream-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>JarOutputStream</h4>
+<pre>public&nbsp;JarOutputStream(<a href="../../../java/io/OutputStream.html" title="class in java.io" target="_parent">OutputStream</a>&nbsp;out)
+                throws <a href="../../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Creates a new <code>JarOutputStream</code> with no manifest.      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - the actual output stream      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if an I/O error has occurred        </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:putNextEntry-java.util.zip.ZipEntry- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:putNextEntry-java.util.zip.ZipEntry-"></a><a name="putNextEntry-java.util.zip.ZipEntry-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>putNextEntry</h4>
+<pre>public&nbsp;void&nbsp;putNextEntry(<a href="../../../java/util/zip/ZipEntry.html" title="class in java.util.zip" target="_parent">ZipEntry</a>&nbsp;ze)
+                  throws <a href="../../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block">Begins writing a new JAR file entry and positions the stream to the start of the entry data. This method will also close any previous entry. The default compression method will be used if no compression method was specified for the entry. The current time will be used if the entry has no set modification time.                                                       </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/zip/ZipOutputStream.html#putNextEntry-java.util.zip.ZipEntry-" target="_parent">putNextEntry</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/zip/ZipOutputStream.html" title="class in java.util.zip" target="_parent">ZipOutputStream</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>ze</code> - the ZIP/JAR entry to be written        </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/zip/ZipException.html" title="class in java.util.zip" target="_parent">ZipException</a></code> - if a ZIP error has occurred        </dd>
+<dd> 
+<code><a href="../../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if an I/O error has occurred        </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

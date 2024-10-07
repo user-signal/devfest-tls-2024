@@ -1,0 +1,510 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        {
+                        font-family:Helvetica, Arial, sans-serif;
+                        }
+                        a {text-decoration:none}
+                        a:hover {text-decoration:underline}
+                        a.problem {text-decoration:underline; color:red}
+                        a.problem:hover {text-decoration:underline}
+                        .removed {
+                        background-color: #fdc6c6;
+                        }
+                        .added {
+                        background-color: #ccffcc;
+                        }
+                        .changed {
+                        color: #ff0000;
+                        }
+                        .none {
+                        color: black;
+                        }
+                        .modified {
+                        font-weight:bold;
+                        color: #ff0000;
+                        }
+                        .total {
+                        font-weight:bold;
+                        background-color:#eeeeee;
+                        }
+                        .header {
+                        background-color:#eeeeee;
+                        }
+                        .stat {
+                        font-size:80%;
+                        }
+                        .stat1 {
+                        font-size:100%;
+                        background-color: #a0a0a0;
+                        }
+                        .stat1 tr {
+                        background-color: white;
+                        }
+                        td.context {
+                        font-size:90%;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table border="0" cellspacing="5" width="100%" class="stat">
+<tr class="header">
+<td nowrap="1"><font size="+1">Document Statistics</font></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellspacing="1" cellpadding="2" class="stat1">
+<tr>
+<td><b>Status</b></td><td colspan="5"><span class="none">Not Changed</span></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellspacing="5" width="100%" class="stat">
+<tr class="header">
+<td nowrap="1"><font size="+1">Package Statistics</font></td>
+</tr>
+<tr>
+<td>
+<table border="0" cellspacing="1" cellpadding="2" class="stat1">
+<tr>
+<td>&nbsp;</td><td>Changed</td><td>Added</td><td>Removed</td><td>Unchanged</td><td><b>Total</b></td>
+</tr>
+<tr>
+<td>Documents</td><td class="changed">30</td><td class="added">0</td><td class="removed">0</td><td>99</td><td class="total">129</td>
+</tr>
+<tr>
+<td>Contexts</td><td class="changed">13</td><td class="added">131</td><td class="removed">0</td><td>1890</td><td class="total">2034</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellspacing="5" width="100%" class="stat">
+<tr class="header">
+<td nowrap="1"><font size="+1">Package Detail</font></td>
+</tr>
+<tr>
+<td nowrap="1"><font size="-2">
+                                (*) Columns: (1) - Changed, (2) - Added, (3) - Removed,
+                                &sum; - Total
+                            </font></td>
+</tr>
+<tr>
+<td style="padding-left:5px">
+<table border="0" cellspacing="1" cellpadding="2" class="stat1">
+<tr>
+<td rowspan="3" width="100%">File</td><td colspan="6" align="center">Contexts</td>
+</tr>
+<tr>
+<td colspan="4" align="center" nowrap="1">Modified
+                                        <font size="-2"> (*)</font></td><td rowspan="2">Un- changed</td><td rowspan="2"><b>Total</b></td>
+</tr>
+<tr>
+<td>1</td><td>2</td><td>3</td><td class="modified">&sum;</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractCollection.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractCollection</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>16</td><td class="total">16</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractList.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractList</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>19</td><td class="total">19</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractMap.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractMap</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>18</td><td class="total">18</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractMap.SimpleEntry.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractMap.SimpleEntry</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>9</td><td class="total">9</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractMap.SimpleImmutableEntry.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractMap.SimpleImmutableEntry</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>9</td><td class="total">9</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractQueue.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractQueue</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>7</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractSequentialList.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractSequentialList</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>9</td><td class="total">9</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="AbstractSet.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">AbstractSet</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ArrayDeque.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">ArrayDeque</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>36</td><td class="total">37</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ArrayList.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">ArrayList</a></td><td class="changed"></td><td class="added">4</td><td class="removed"></td><td class="modified">4</td><td>31</td><td class="total">35</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Arrays.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Arrays</a></td><td class="changed"></td><td class="added">24</td><td class="removed"></td><td class="modified">24</td><td>132</td><td class="total">156</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Base64.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Base64</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>8</td><td class="total">8</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Base64.Decoder.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Base64.Decoder</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Base64.Encoder.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Base64.Encoder</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>7</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="BitSet.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">BitSet</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>37</td><td class="total">38</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Calendar.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Calendar</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>112</td><td class="total">112</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Calendar.Builder.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Calendar.Builder</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>16</td><td class="total">16</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Collection.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Collection</a></td><td class="changed"></td><td class="added">4</td><td class="removed"></td><td class="modified">4</td><td>16</td><td class="total">20</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Collections.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Collections</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>70</td><td class="total">70</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Comparator.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Comparator</a></td><td class="changed"></td><td class="added">16</td><td class="removed"></td><td class="modified">16</td><td>3</td><td class="total">19</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ConcurrentModificationException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ConcurrentModificationException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Currency.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Currency</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>12</td><td class="total">12</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Date.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Date</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>36</td><td class="total">36</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Deque.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Deque</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>28</td><td class="total">28</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Dictionary.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Dictionary</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>9</td><td class="total">9</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="DoubleSummaryStatistics.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">DoubleSummaryStatistics</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="DuplicateFormatFlagsException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">DuplicateFormatFlagsException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EmptyStackException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EmptyStackException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EnumMap.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EnumMap</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>18</td><td class="total">18</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EnumSet.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EnumSet</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>14</td><td class="total">14</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Enumeration.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Enumeration</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EventListener.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EventListener</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EventListenerProxy.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EventListenerProxy</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="EventObject.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">EventObject</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="FormatFlagsConversionMismatchException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">FormatFlagsConversionMismatchException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Formattable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Formattable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="FormattableFlags.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">FormattableFlags</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Formatter.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Formatter</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>23</td><td class="total">23</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Formatter.BigDecimalLayoutForm.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Formatter.BigDecimalLayoutForm</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="FormatterClosedException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">FormatterClosedException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="GregorianCalendar.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">GregorianCalendar</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>36</td><td class="total">36</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="HashMap.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">HashMap</a></td><td class="changed"></td><td class="added">11</td><td class="removed"></td><td class="modified">11</td><td>18</td><td class="total">29</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="HashSet.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">HashSet</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>13</td><td class="total">14</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Hashtable.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Hashtable</a></td><td class="changed"></td><td class="added">11</td><td class="removed"></td><td class="modified">11</td><td>25</td><td class="total">36</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IdentityHashMap.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">IdentityHashMap</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>19</td><td class="total">21</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalFormatCodePointException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalFormatCodePointException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalFormatConversionException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalFormatConversionException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalFormatException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalFormatException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalFormatFlagsException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalFormatFlagsException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalFormatPrecisionException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalFormatPrecisionException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllegalFormatWidthException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllegalFormatWidthException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IllformedLocaleException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IllformedLocaleException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InputMismatchException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InputMismatchException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="IntSummaryStatistics.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">IntSummaryStatistics</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="InvalidPropertiesFormatException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">InvalidPropertiesFormatException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Iterator.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Iterator</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>4</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="LinkedHashMap.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">LinkedHashMap</a></td><td class="changed">1</td><td class="added">3</td><td class="removed"></td><td class="modified">4</td><td>12</td><td class="total">16</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="LinkedHashSet.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">LinkedHashSet</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>5</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="LinkedList.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">LinkedList</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>42</td><td class="total">43</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="List.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">List</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>27</td><td class="total">29</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ListIterator.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ListIterator</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ListResourceBundle.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ListResourceBundle</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Locale.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Locale</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>70</td><td class="total">70</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Locale.Builder.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Locale.Builder</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>15</td><td class="total">15</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Locale.Category.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Locale.Category</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Locale.FilteringMode.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Locale.FilteringMode</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>8</td><td class="total">8</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Locale.LanguageRange.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Locale.LanguageRange</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>12</td><td class="total">12</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="LongSummaryStatistics.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">LongSummaryStatistics</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>11</td><td class="total">11</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Map.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Map</a></td><td class="changed"></td><td class="added">11</td><td class="removed"></td><td class="modified">11</td><td>15</td><td class="total">26</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Map.Entry.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Map.Entry</a></td><td class="changed"></td><td class="added">4</td><td class="removed"></td><td class="modified">4</td><td>6</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="MissingFormatArgumentException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">MissingFormatArgumentException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="MissingFormatWidthException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">MissingFormatWidthException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="MissingResourceException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">MissingResourceException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NavigableMap.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NavigableMap</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>22</td><td class="total">22</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NavigableSet.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NavigableSet</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>16</td><td class="total">16</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="NoSuchElementException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">NoSuchElementException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Objects.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Objects</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>13</td><td class="total">13</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Observable.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Observable</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>11</td><td class="total">11</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Observer.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Observer</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>2</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Optional.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Optional</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>16</td><td class="total">16</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="OptionalDouble.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">OptionalDouble</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>12</td><td class="total">12</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="OptionalInt.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">OptionalInt</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>12</td><td class="total">12</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="OptionalLong.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">OptionalLong</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>12</td><td class="total">12</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PrimitiveIterator.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">PrimitiveIterator</a></td><td class="changed">1</td><td class="added">1</td><td class="removed"></td><td class="modified">2</td><td>0</td><td class="total">2</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PrimitiveIterator.OfDouble.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">PrimitiveIterator.OfDouble</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>3</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PrimitiveIterator.OfInt.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">PrimitiveIterator.OfInt</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>3</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PrimitiveIterator.OfLong.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">PrimitiveIterator.OfLong</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>3</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PriorityQueue.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">PriorityQueue</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>20</td><td class="total">21</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Properties.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Properties</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>19</td><td class="total">19</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PropertyPermission.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">PropertyPermission</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>7</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="PropertyResourceBundle.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">PropertyResourceBundle</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Queue.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Queue</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>7</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Random.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Random</a></td><td class="changed"></td><td class="added">12</td><td class="removed"></td><td class="modified">12</td><td>13</td><td class="total">25</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="RandomAccess.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">RandomAccess</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ResourceBundle.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ResourceBundle</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>22</td><td class="total">22</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ResourceBundle.Control.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ResourceBundle.Control</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>17</td><td class="total">17</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Scanner.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Scanner</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>66</td><td class="total">66</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ServiceConfigurationError.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ServiceConfigurationError</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="ServiceLoader.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">ServiceLoader</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>7</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Set.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Set</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>16</td><td class="total">17</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SimpleTimeZone.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SimpleTimeZone</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>29</td><td class="total">29</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SortedMap.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SortedMap</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SortedSet.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">SortedSet</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>7</td><td class="total">8</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterator.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterator</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>17</td><td class="total">17</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterator.OfDouble.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterator.OfDouble</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterator.OfInt.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterator.OfInt</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterator.OfLong.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterator.OfLong</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>6</td><td class="total">6</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterator.OfPrimitive.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterator.OfPrimitive</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterators.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Spliterators</a></td><td class="changed">8</td><td class="added"></td><td class="removed"></td><td class="modified">8</td><td>18</td><td class="total">26</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterators.AbstractDoubleSpliterator.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterators.AbstractDoubleSpliterator</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterators.AbstractIntSpliterator.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterators.AbstractIntSpliterator</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterators.AbstractLongSpliterator.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterators.AbstractLongSpliterator</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Spliterators.AbstractSpliterator.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Spliterators.AbstractSpliterator</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="SplittableRandom.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">SplittableRandom</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>26</td><td class="total">26</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Stack.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Stack</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>7</td><td class="total">7</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StringJoiner.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StringJoiner</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>8</td><td class="total">8</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="StringTokenizer.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">StringTokenizer</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>10</td><td class="total">10</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="TimeZone.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">TimeZone</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>27</td><td class="total">27</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Timer.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">Timer</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>13</td><td class="total">13</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="TimerTask.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">TimerTask</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>5</td><td class="total">5</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="TooManyListenersException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">TooManyListenersException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>3</td><td class="total">3</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="TreeMap.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">TreeMap</a></td><td class="changed">3</td><td class="added">4</td><td class="removed"></td><td class="modified">7</td><td>38</td><td class="total">45</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="TreeSet.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">TreeSet</a></td><td class="changed"></td><td class="added">1</td><td class="removed"></td><td class="modified">1</td><td>31</td><td class="total">32</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UUID.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UUID</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>16</td><td class="total">16</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnknownFormatConversionException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnknownFormatConversionException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="UnknownFormatFlagsException.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">UnknownFormatFlagsException</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>4</td><td class="total">4</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="Vector.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">Vector</a></td><td class="changed"></td><td class="added">4</td><td class="removed"></td><td class="modified">4</td><td>54</td><td class="total">58</td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="WeakHashMap.html" target="_top" class="changed" title="Document is tagged as 'CHANGED'">WeakHashMap</a></td><td class="changed"></td><td class="added">2</td><td class="removed"></td><td class="modified">2</td><td>17</td><td class="total">19</td>
+</tr>
+<tr>
+<td colspan="7"></td>
+</tr>
+<tr>
+<td class="doc"><img src="../../pics/specDoc.gif" title="Specification File">&nbsp;<a href="package-summary.html" target="_top" class="none" title="Document is tagged as 'UNCHANGED'">package-summary</a></td><td class="changed"></td><td class="added"></td><td class="removed"></td><td>0</td><td>1</td><td class="total">1</td>
+</tr>
+<tr>
+<td colspan="7"></td>
+</tr>
+<tr>
+<td><b>Total</b></td><td class="changed">13</td><td class="added">131</td><td class="removed">0</td><td class="modified">144</td><td>1890</td><td class="total">2034</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
