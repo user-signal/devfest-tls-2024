@@ -158,7 +158,51 @@
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
 
+                        fun parametricPredicate(x: Int): <span class="ch">(Int) -> Boolean</span> {
+                            val c = longComputation(x)
+                            return <span class="ch">{ y -> y % c == 0 }</span>
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = parametricPredicate(3)
+                            println(aList.filter(predicate))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
                         val parametricPredicateCurried: (Int) -> (Int) -> Boolean = { x ->
+                            val c = longComputation(x);
+                            { y -> y % c == 0 }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = parametricPredicate(3)
+                            println(aList.filter(predicate))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        val parametricPredicateCurried: <span class="ch">(Int) -> (Int) -> Boolean</span> = { x ->
                             val c = longComputation(x);
                             { y -> y % c == 0 }
                         }
