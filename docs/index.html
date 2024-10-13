@@ -143,6 +143,28 @@
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
 
+                        fun parametricPredicate(x: Int, y: Int): Boolean {
+                            val c = longComputation(x)
+                            return y % c == 0
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = { y -> parametricPredicate(3, y) }
+                            println(aList.filter(predicate))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+
                         fun parametricPredicate(x: Int): (Int) -> Boolean {
                             val c = longComputation(x)
                             return { y -> y % c == 0 }
@@ -189,7 +211,7 @@
 
                         fun parametricPredicate(x: Int): (Int) -> Boolean {
                             val c = longComputation(x)
-                            return <span class="ch">{ y -> y % c == 0 }</span>
+                            return { y -> y % c == 0 }
                         }
 
             </code><div class="lang">Kotlin</div></pre>
@@ -211,7 +233,7 @@
 
                         fun parametricPredicate(x: Int): (Int) -> Boolean {
                             val c = longComputation(x)
-                            return <span class="ch">{ y -> y % c == 0 }</span>
+                            return { y -> y % c == 0 }
                         }
 
             </code><div class="lang">Kotlin</div></pre>
