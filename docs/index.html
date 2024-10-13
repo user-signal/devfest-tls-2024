@@ -187,6 +187,50 @@
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
 
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return <span class="ch">{ y -> y % c == 0 }</span>
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = <span class="ch">parametricPredicate(3)</span>
+                            println(aList.filter(predicate))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return <span class="ch">{ y -> y % c == 0 }</span>
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun main() {
+                            val aList = 1..100
+                            val predicate = parametricPredicate(3)
+                            println(aList.filter(<span class="ch">predicate</span>))
+
+                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
                         val parametricPredicateCurried: (Int) -> (Int) -> Boolean = { x ->
                             val c = longComputation(x);
                             { y -> y % c == 0 }
@@ -897,7 +941,15 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> y % c == 0 }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
 
                         fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0
 
@@ -910,13 +962,55 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> y % c == 0 }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        <span class="ch">fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0</span>
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> parametricPredicateLambda(c, y) }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px">
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> y % c == 0 }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0
+
+                        fun parametricPredicate(x: Int): (Int) -> Boolean {
+                            val c = longComputation(x)
+                            return { y -> <span class="ch">parametricPredicateLambda(c, y)</span> }
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
             <h1>Closure conversion</h1>
         </section>
 
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
 
-                        data class Closure&lt;C, I, O&gt;(val capture:C, val code: (C, I) -> O)
+                        data class Closure&lt;C, I, O&gt;(val capture: C, val code: (C, I) -> O)
 
             </code><div class="lang">Kotlin</div></pre>
             <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
@@ -930,6 +1024,50 @@ fun longComputation(x: Int): Int {
                             val c = 42
                             val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
                             if (predicate.code(predicate.capture, 81)) println("Ok") else println("Ko")
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        data class Closure&lt;C, I, O&gt;(val capture: C, val code: (C, I) -> O)
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun parametricPredicate(x: Int): Closure&lt;Int, Int, Boolean&gt; {
+                            val c = longComputation(x)
+                            return <span class="ch">Closure(c, ::parametricPredicateLambda)</span>
+                        }
+
+                        fun main() {
+                            val c = 42
+                            val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
+                            if (predicate.code(predicate.capture, 81)) println("Ok") else println("Ko")
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        data class Closure&lt;C, I, O&gt;(val capture: C, val code: (C, I) -> O)
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        fun parametricPredicate(x: Int): Closure&lt;Int, Int, Boolean&gt; {
+                            val c = longComputation(x)
+                            return Closure(c, ::parametricPredicateLambda)
+                        }
+
+                        fun main() {
+                            val c = 42
+                            val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
+                            if (<span class="ch">predicate.code(predicate.capture, 81)</span>) println("Ok") else println("Ko")
                         }
 
             </code><div class="lang">Kotlin</div></pre>
