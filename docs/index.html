@@ -39,19 +39,16 @@
 
         <section>
             <h1><span style="font-size:2em;text-transform:lowercase">$\lambda$</span></h1>
-        </section>
-
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="language-lisp" style="max-height: 800px">
-
-                    (defun filter (fn list)
-                        (cond ((null list) nil)
-                              (t (cond ((funcall (eval fn) (car list)) (cons (car list) (filter fn (cdr list))))
-                                       (t (filter fn (cdr list)))))))
-
-                    (filter '(lambda (x) (= (mod x 2) 0)) '(1 2 3 4 5 6))
-
-            </code><div class="lang">Lisp</div></pre>
+            <aside class="notes">
+                Les fonctions d'ordre supérieur (c'est-à-dire dont les paramètres sont des fonctions ou dont la valeur de
+                retour peut être une fonction) font définitivement partie de l'outillage de base du développeur.
+                <br><br>
+                Pour celà les fonctions sont devenues des entités de première classe des langages de programmation. Autrement dit
+                ce sont des valeurs à part entière que l'on peut par exemple affecter à des variables.
+                <br><br>
+                Il n'est d'ailleurs même plus nécessaire de les nommer pour pouvoir les définir. Nous pouvons créer des fonctions anonymes
+                communément appelées « lambdas ».
+            </aside>
         </section>
 
         <section>
@@ -69,6 +66,33 @@
 
                                 */
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Cet attirail permet d'exprimer plus l'intention que la procédure à suivre. Par exemple ici en disposant d'une
+                fonction « filter » sur des collections, à laquelle on peut fournir un prédicat, il n'est plus besoin de s'appesantir
+                sur les détails d'une itération. La démarche est plus déclarative que procédurale.
+                <br><br>
+                Dans ce qui suit l'essentiel des exemples de code seront en Kotlin. J'aurais pu m'appuyer sur C#, Rust, Java
+                ou Javascript... Non, quand même pas Javascript ! Mais Kotlin c'est mon langage du moment, dont la lecture
+                ne devrait pas vous troubler. Contrairement à...
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="language-lisp" style="max-height: 800px">
+
+                    (defun filter (fn list)
+                        (cond ((null list) nil)
+                              (t (cond ((funcall (eval fn) (car list)) (cons (car list) (filter fn (cdr list))))
+                                       (t (filter fn (cdr list)))))))
+
+                    (filter '(lambda (x) (= (mod x 2) 0)) '(1 2 3 4 5 6))
+
+            </code><div class="lang">Lisp</div></pre>
+            <aside class="notes">
+                ... Common Lisp. Si Lisp va être une sorte de fil rouge historique de cette présentation, je n'avais pas
+                envie de vous perdre bêtement en route. D'autant que, moi qui ai enseigné en TP de Lisp à la Fac il y a
+                plus de 25 ans, j'en ai un peu bavé pour écrire cet exemple pourtant simple.
+            </aside>
         </section>
 
         <section>
@@ -87,6 +111,17 @@
                         aList.filter { it % 2 == 0 }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Dans cet exemple la partie en surbrillance est donc une lambda prenant en paramètre un entier et vérifiant
+                s'il est pair (le reste de la division par 2 doit être 0).
+                <br><br>
+                Particularité de Kotlin, on peut dans certains cas, comme ici, nommer implicitement un paramètre unique
+                « it ».
+                <br><br>
+                Et autre particularité de Kotlin, une lambda dernière position des paramètres d'une fonction peut être
+                sortie de la liste des paramètres. C'est un emprunt à Groovy, je crois, qui contribue à faire de Kotlin
+                un langage sympathique pour faire des DSL embarqués... Mais ça sera l'objet d'un autre présentation.
+            </aside>
         </section>
 
         <section>
@@ -332,7 +367,7 @@
                     <li>Co-inventeur des systèmes à temps partagé</li>
                     <li>1956 : Algorithme Alpha-Béta</li>
                     <li>1958 : Lisp</li>
-                    <li>Premier langage fonctionnel</li>
+                    <li>Premier langage de manipulation symbolique</li>
                     <li>Second langage après FORTRAN (1954)</li>
                 </ul>
             </aside>
@@ -347,7 +382,7 @@
         </section>
 
         <section>
-            <h1>Funarg</h1>
+            <h1>Funarg Problem</h1>
         </section>
 
         <section>
@@ -749,6 +784,17 @@ fun longComputation(x: Int): Int {
             </div>
 
             <aside class="notes">
+                <ul>
+                    <li>Créateur d'Emacs avec David Moon</li>
+                    <li>David Moon futur Symbolics</li>
+                    <li>Premier portage de TeX</li>
+                    <li>Co-créateur de Scheme (1975) avec Gerald Sussmann</li>
+                    <li>Auteur des « λ papers »</li>
+                    <li>Employé par Thinking Machines (*Lisp et C*)</li>
+                    <li>Employé par Sun (1994) puis Oracle (2010)</li>
+                    <li>Commités de normalisation de Common Lisp, C, Fortran</li>
+                    <li>Verse d'Epic Games avec Simon Peyton-Jones</li>
+                </ul>
             </aside>
         </section>
 
@@ -969,7 +1015,7 @@ fun longComputation(x: Int): Int {
                 </div>
             </div>
 
-            <aside class="notes">
+           <aside class="notes">
             </aside>
         </section>
 
@@ -1045,12 +1091,36 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        data class Closure&lt;C, I, O&gt;(val capture: C, val code: (C, I) -> O)
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        data class Closure&lt;C, I, O&gt;(<span class="ch">val capture: C</span>, val code: (C, I) -> O)
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        data class Closure&lt;C, I, O&gt;(val capture: C, <span class="ch">val code: (C, I) -> O</span>)
+
+            </code><div class="lang">Kotlin</div></pre>
+        </section>
+
+        <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
 
                         data class Closure&lt;C, I, O&gt;(val capture: C, val code: (C, I) -> O)
 
             </code><div class="lang">Kotlin</div></pre>
-            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px">
 
                         fun parametricPredicate(x: Int): Closure&lt;Int, Int, Boolean&gt; {
                             val c = longComputation(x)
