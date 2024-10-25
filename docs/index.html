@@ -121,6 +121,8 @@
                 Et autre particularité de Kotlin, une lambda dernière position des paramètres d'une fonction peut être
                 sortie de la liste des paramètres. C'est un emprunt à Groovy, je crois, qui contribue à faire de Kotlin
                 un langage sympathique pour faire des DSL embarqués... Mais ça sera l'objet d'un autre présentation.
+                <br><br>
+                En tout état de cause, cet exemple n'est pas des plus intéressants pour notre exploration...
             </aside>
         </section>
 
@@ -148,6 +150,14 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Considérons plutôt celui-ci : un prédicat paramétrable par son premier argument pour vérifier une
+                propriété du second argument. Et tant qu'à faire, ce paramétrage est le résultat d'un calcul arbitrairement
+                long effectué sur le premier argument.
+                <br><br>
+                Et si l'on veut utiliser ce prédicat à deux arguments, dans le même contexte que précédemment, il va
+                falloir l'adapter, à l'aide d'une fonction anonyme...
+            </aside>
         </section>
 
         <section>
@@ -174,10 +184,25 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                ... en fixant ce premier argument pour le ramener à un seul argument à tester.
+                <br><br>
+                Un inconvénient de cette approche est que « longComputation » sera effectuée à chaque itération de « filter ».
+                Une façon de résoudre ce problème est de sortir ce long calcul de « parametricPredicate ». Mais j'ai envie
+                de vous présenter une autre approche qui serait de pouvoir appliquer partiellement « parametricPredicate » à
+                un argument. Et pour cela je dois vous parler de...
+            </aside>
         </section>
 
         <section>
             <h1>Curryfication</h1>
+            <aside class="notes">
+                Ce terme est dérivé du nom d'Haskell Curry, un logicien du 20ᵉ siècle ayant mené des travaux sur la logique
+                combinatoire et qui donné son prénom à un célèbre langage fonctionnel. En réalité ce concept
+                est plutôt du à Moses Schönfinkel, mais Schönfinkelification aurait été plus difficile à prononcer.
+                <br><br>
+                Alors de quoi s'agit-il ?
+            </aside>
         </section>
 
         <section>
@@ -185,6 +210,12 @@
                 <div style="margin-top: .5em; font-size: 2.11em">$f: (A, B) \rightarrow C$</div>
                 <div class="fragment" style="margin-top: .25em; font-size: 2.11em">$f: A \rightarrow (B \rightarrow C)$</div>
             </div>
+            <aside class="notes">
+                Tout simplement de voir une fonction à 2 arguments comme équivalente à une fonction d'un argument
+                produisant un autre fonction d'un argument.
+                <br><br>
+                Et donc comme une fonction que l'on peut appliquer partiellement ou graduellement à plusieurs arguments.
+            </aside>
         </section>
 
         <section>
@@ -207,6 +238,9 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Si l'on repart de notre example de travail, curryfier « parametricPredicate » revient à la transformer ainsi...
+            </aside>
         </section>
 
         <section>
@@ -229,6 +263,9 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Que peut-on constater ici ?
+            </aside>
         </section>
 
         <section>
@@ -251,6 +288,10 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Qu'elle ne prend plus qu'un seul paramètre, celui qui va servir à « longComputation ». Et que son type
+                indique bien qu'elle retourne une fonction de Int vers Boolean.
+            </aside>
         </section>
 
         <section>
@@ -273,6 +314,10 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Que l'on peut éventuellement affecter son résultat à une variable. N'oublions pas que les fonctions sont
+                ici des citoyens de première class...
+            </aside>
         </section>
 
         <section>
@@ -295,12 +340,16 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Et donc qu'on peut utiliser ce résultat comme prédicat pour « filter » et accessoirement cette fois
+                le long calcul n'est effectué qu'une seule fois et no à chaque itération du filtre.
+            </aside>
         </section>
 
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
 
-                        val parametricPredicateCurried: (Int) -> (Int) -> Boolean = { x ->
+                        val parametricPredicate: (Int) -> (Int) -> Boolean = { x ->
                             val c = longComputation(x);
                             { y -> y % c == 0 }
                         }
@@ -317,6 +366,9 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Soit dit en passant on aurait aussi pu faire un pas de plus et dire que « parametricPredicate » est...
+            </aside>
         </section>
 
         <section>
@@ -339,11 +391,17 @@
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                ... qui reçoit une fonction de Int qui retourne une fonction de Int vers Boolean. Mais bon, restons là...
+            </aside>
         </section>
 
         <section>
             <h1>Lisp 1.5</h1>
             <h2>1958</h2>
+            <aside class="notes">
+                Mais avant d'aller plus loin, faisons un premier saut en 1958 à la naissance de LISP.
+            </aside>
         </section>
 
         <section>
@@ -362,11 +420,14 @@
             </div>
 
             <aside class="notes">
+                John McCarthy (1927-2011)
                 <ul>
-                    <li>Pionier de l'IA (on lui doit le terme)</li>
+                    <li>Chercheur à l'université de Standford essentiellement</li>
+                    <li>Prix Turing 1971</li>
                     <li>Co-inventeur des systèmes à temps partagé</li>
+                    <li>Pionnier de l'IA (on lui doit le terme)</li>
                     <li>1956 : Algorithme Alpha-Béta</li>
-                    <li>1958 : Lisp</li>
+                    <li>1958 : Lisp - LISt Processing</li>
                     <li>Premier langage de manipulation symbolique</li>
                     <li>Second langage après FORTRAN (1954)</li>
                 </ul>
@@ -375,18 +436,44 @@
 
         <section>
             <a href="http://jmc.stanford.edu/articles/lisp/lisp.pdf"><img src="./images/HistoryOfLisp.png" alt=""></a>
+            <aside class="notes">
+                Lisp est un langage conçu avant pour la manipulation symbolique, par opposition à FORTRAN dont le but et
+                le calcul numérique. L'idée était d'avoir un langage facilitant l'écriture d'algorithmes tels que la
+                dérivation symbolique de fonctions (une des premières applications) et largement adopté de ce fait dans
+                la recherche en IA et en théorie des langages (de programmation ou naturels)...
+            </aside>
         </section>
 
         <section>
             <img src="./images/HistoryOfLispHighlighted.png" alt="">
+            <aside class="notes">
+                Et de manière assez cocasse, c'était à l'origine un langage sans fonctions d'ordre supérieur avec une
+                syntaxe proche de FORTRAN (le M-language) permettant de manipuler des structures de liste (le S-language).
+                Rapidement, on s'est aperçu qu'il est possible de plonger le premier dans le second grace aux fonctions
+                EVAL et APPLY, rendant LISP homo iconique. C'est-à-dire que la structure du langage et structure des données
+                manipulées est identique. Ça ouvre une porte à la méta-programmation qui s'apparente à la réflexivité.
+            </aside>
         </section>
 
         <section>
             <h1>Funarg Problem</h1>
+            <aside class="notes">
+                Dans la foulée, LISP gagne les fonctions d'ordre supérieur et la possibilité de définir des fonctions
+                anonymes, des LAMBDAS. Un argument fonctionnel de fonction est ce que l'on nomme FUNARG dans le jargon
+                Lispien.
+                <br><br>
+                J'ai cru pendant longtemps de LISP était avant tout fonctionnel et avait été inspiré
+                pas le lambda calcul. En fait LISP 1.5 était encore très impératif (SETQ, RPLACA...) et McCarthy aurait
+                indiqué en avoir été peu inspiré.
+            </aside>
         </section>
 
         <section>
             <a href="https://dspace.mit.edu/bitstream/handle/1721.1/5854/AIM-199.pdf"><img style="border: thin solid black; margin-bottom: 100%; margin-top: 3em" src="./images/funarg-problem.png" alt=""></a>
+            <aside class="notes">
+                Sauf que dans les premières moutures de LISP, les FUNARG avaient un problème étudié (ici par Joel Moses
+                dans un mémo de MIT) et longuement débattu.
+            </aside>
         </section>
 
         <section>
@@ -406,11 +493,22 @@
                                     if (predicate(81)) println("Ok") else println("Ko")
                                 }
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Pour illustrer ce problème, reprenons notre exemple (pas en LISP bien sûr). C'est peu ou prou l'exemple
+                initial, mais l'appel à « filter » et avec une variable « c » définie dans « main ».
+            </aside>
+
         </section>
 
         <section>
             <h2>Les fonctions <span class="green">(récursives)</span> décortiquées</h2>
             <a style="margin-bottom: 100%" href="https://www.youtube.com/watch?v=aTDSZtHCIGU"><img src="./images/Devoxx-2022.png" alt=""></a>
+            <aside class="notes">
+                En passant, je me permets une petite promotion éhontée pour une de mes présentations passées qui parle des
+                fonctions, éventuellement récursives, et de leur mise en œuvre. Présentation qui pourrait être un
+                complément intéressant à celle-ci.
+            </aside>
+
         </section>
 
         <section>
@@ -446,6 +544,15 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/1.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Nous allons suivre pas à pas le déroulement de ce programme. Comme je l'explique plus en détail dans
+                mon autre présentation, l'environnement d'exécution d'une fonction est fourni par un enregistrement
+                d'activation plus tous ceux des fonctions appelantes. Un enregistrement est créé à l'activation de la
+                fonction et détruit quand elle se termine. Et dans la plupart des langages (mais pas tous) cette gestion
+                se fait sous forme de pile.
+                <br><br>
+                Donc ici on commence avec l'enregistrement d'activation de « main » dans la pile.
+            </aside>
         </section>
 
         <section>
@@ -481,6 +588,9 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/2.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                « c » se voit affecter la valeur 42
+            </aside>
         </section>
 
         <section>
@@ -516,6 +626,9 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/2.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Puis on appelle la fonction « parametricPredicate » currifiée avec 3 en argument.
+            </aside>
         </section>
 
         <section>
@@ -551,6 +664,10 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/3.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Ce qui génère un nouvel enregistrement d'activation pour elle sur la pile. À son tour « longComputation »
+                est appelée avec 3 en argument.
+            </aside>
         </section>
 
         <section>
@@ -586,6 +703,10 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/4.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Et un nouvel enregistrement d'activation lui est allouée. « longComputation » produit et retourne son
+                résultat 9.
+            </aside>
         </section>
 
         <section>
@@ -621,6 +742,9 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/5.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Qui est affecté à « c » dans l'environnement de « parametricPredicate ».
+            </aside>
         </section>
 
         <section>
@@ -656,6 +780,11 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/5.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Et c'est que les Athéniens s'atteignirent ! « parametricPrédicate » doit retourner une fonction
+                anonyme, et naïvement, on pourrait considérer (comme en langage C par exemple) qu'il s'agit d'un pointeur
+                sur fonction.
+            </aside>
         </section>
 
         <section>
@@ -691,6 +820,10 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/6.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Ici l'adresse du code compilé de la fonction « @Lambda0 » est retourné et affecté à la variable
+                « predicate » dans l'environnement de « main ».
+            </aside>
         </section>
 
         <section>
@@ -726,6 +859,10 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/6.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Puis on appelle « predicate » avec 81 en paramètre à tester... Donc, on lui alloue un enregistrement
+                d'activation.
+            </aside>
         </section>
 
         <section>
@@ -761,11 +898,32 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem/7.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Mais dans cet environnement « c » n'a pas de valeur, alors on remonte la chaîne des environnements pour
+                en trouver une. On tombe sur le 42 initial. Et là, c'est le drame ! On s'attend à un résultat positif
+                (81 est divisible par 9 en nombre entier), pourtant c'est faux parce que la lambda n'utilise pas la
+                bonne valeur de « c ». Il pourrait même ne pas y avoir de valeur pour « c ».
+                <br><br>
+                À vrai dire, je ne sais pas ce qui est le pire entre un programme qui plante clairement ou qui répond à
+                côté sans que l'on s'en aperçoive.
+                <br><br>
+                Alors ne nous méprenons pas : cela peut être considéré comme une fonctionnalité légitime. Ça s'appelle
+                de la liaison dynamique. Et pendant longtemps, le sujet a été débattu, avec ses partisans et ces détracteurs.
+                Et c'est même devenu un idîome LISP. On parle d'idîome dans un langage quand un design pattern est très
+                lié à la sémantique du langage.
+                <br><br>
+                Je serais enclin à dire, si l'on se place dans un cadre de programmation fonctionnelle, que le principe
+                de raisonnement local est mis à mal par un tel mécanisme. Quand je code, j'ai du mal avec les effets
+                contextuels d'utilisation d'une fonction autre que ses paramètres d'entrée.
+            </aside>
         </section>
 
         <section>
             <h1>Scheme</h1>
             <h2>1975</h2>
+            <aside class="notes">
+                Donc le sujet est débattu pendant plus de 15 ans dans le monde lispien. Jusqu'à l'arrivée de SCHEME.
+            </aside>
         </section>
 
         <section>
@@ -778,18 +936,16 @@ fun longComputation(x: Int): Int {
                 </div>
                 <div class="fragment">
                     <div style="grid-column: 2; grid-row: 1/2">
-                        <a href="https://dspace.mit.edu/bitstream/handle/1721.1/5753/AIM-443.pdf"><img style="border: thin solid black" src="./images/LambdaTheUltimate.png" alt=""></a>
+                        <a href="https://media.githubusercontent.com/media/sarabander/sicp-pdf/master/sicp.pdf"><img src="./images/SICP.png" alt=""></a>
                     </div>
                 </div>
             </div>
-
             <aside class="notes">
                 <ul>
                     <li>Créateur d'Emacs avec David Moon</li>
-                    <li>David Moon futur Symbolics</li>
+                    <li>David Moon futur Symbolics (machines langage LISP)</li>
                     <li>Premier portage de TeX</li>
                     <li>Co-créateur de Scheme (1975) avec Gerald Sussmann</li>
-                    <li>Auteur des « λ papers »</li>
                     <li>Employé par Thinking Machines (*Lisp et C*)</li>
                     <li>Employé par Sun (1994) puis Oracle (2010)</li>
                     <li>Commités de normalisation de Common Lisp, C, Fortran</li>
@@ -808,12 +964,17 @@ fun longComputation(x: Int): Int {
                 </div>
                 <div>
                     <div style="grid-column: 2; grid-row: 1/2">
-                        <a href="https://media.githubusercontent.com/media/sarabander/sicp-pdf/master/sicp.pdf"><img src="./images/SICP.png" alt=""></a>
+                        <a href="https://dspace.mit.edu/bitstream/handle/1721.1/5753/AIM-443.pdf"><img style="border: thin solid black" src="./images/LambdaTheUltimate.png" alt=""></a>
                     </div>
                 </div>
             </div>
-
             <aside class="notes">
+                Il est aussi l'auteur des « λ the ultimate » papers. C'est une série d'articles parfois coécrits avec
+                Sussmann, qui prend le partit de la liaison lexicale. Il s'agit de faire en sorte, même au prix d'un
+                surcoût à l'exécution d'un programme, que les variables libres d'une lambda prennent la valeur qu'elles
+                avaient au moment de leur définition et non au moment de l'exécution.
+                <br><br>
+                Et au travers de multiples exemples, il montre toute l'utilité de ce concept.
             </aside>
         </section>
 
@@ -832,10 +993,17 @@ fun longComputation(x: Int): Int {
                 <div class="yellow" style="justify-self: center">$(\lambda x.\,M)\:E \rightarrow M[x:=E]$</div>
                 <div class="yellow" style="justify-self: start">$\beta$-reduction</div>
             </div>
+            <aside class="notes">
+                Pour la peine, la liaison lexicale est au fondement de l'interprétation du lambda calcul.
+            </aside>
         </section>
 
         <section>
             <a href="https://www.cs.tufts.edu/comp/150FP/archive/peter-landin/mechanical-eval.pdf"><img style="border: thin solid black; margin-bottom: 100%; margin-top: 3em" src="./images/Landin.png" alt=""></a>
+            <aside class="notes">
+                Et sa mise en œuvre concrète est depuis longtemps comprise, comme dans cet article fondateur de Peter Landin
+                datant de 1964 ! Accessoirement lui doit aussi le terme « sucre syntaxique » !
+            </aside>
         </section>
 
         <section>
