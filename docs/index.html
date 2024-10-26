@@ -1039,6 +1039,12 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem-solved/5.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Reprenons le déroulé de notre exemple là où le problème apparait. Retourner un « pointeur » sur le code
+                de la fonction anonyme ne suffit pas. Il faut aussi fournir des élements de son environnement qui feraient
+                défault ultérieurement : les valeurs de ses variables libres. Celles qui ne font pas partie des paramètres
+                de la lambda.
+            </aside>
         </section>
 
         <section>
@@ -1074,6 +1080,11 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem-solved/6.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Et de plus, on a besoin que cette information survive à la dés-allocation de l'enregistrement d'activation
+                de « parametricPredicate ». Pour celà, on va allouer une structure contenant valeur des variables libres de
+                la lambda et pointeur sur son code sur le tas (heap).
+            </aside>
         </section>
 
         <section>
@@ -1109,6 +1120,12 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem-solved/7.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                C'est cette structure qu'on appelle « Closure » ou « Fermeture » : on fait l'inventaire des variables libres
+                four « fermer » la lambda. En ce sens, on peut dire qu'une fonction anonyme liée lexicalement est un concept
+                du langage et une « Fermeture » un détail d'implémentation. Après, peut-être à tort, les termes « lambda » et
+                « closure » sont devenus interchangeables dans certains discours.
+            </aside>
         </section>
 
         <section>
@@ -1144,6 +1161,11 @@ fun longComputation(x: Int): Int {
                     <object data-fragment-index="4" data="./images/funarg-problem-solved/8.svg"></object>
                 </div>
             </div>
+            <aside class="notes">
+                Et maintenant, lors de l'évaluation de « predicate(81) » on fera référence à la valeur de « c » lors la
+                définition de la lambda et non celle de « main ». Encore une fois, c'est un choix qui s'est débattu et le
+                consensus actuel est que la liaison lexicale est la bonne approche.
+            </aside>
         </section>
 
         <section>
@@ -1161,11 +1183,22 @@ fun longComputation(x: Int): Int {
                     <a href="https://inria.hal.science/inria-00070049/document"><img style="border: solid black 1px; margin-top: 2.5em" src="./images/OCaml.png" alt=""></a>
                 </div>
             </div>
+            <aside class="notes">
+                C'est d'ailleurs le monde de la programmation fonctionnelle, tout au long de la fin du 20ᵉ siècle, qui a poussé
+                dans ce sens (avec ici deux emblématiques représentants, Haskell et OCaml), emportant dans son sillage le monde
+                lispien.
+            </aside>
         </section>
 
         <section>
             <h1>Clojure</h1>
             <h2>2007</h2>
+            <aside class="notes">
+                En plissant fortement les yeux, on notera tout de même une similitude entre les « Closures » et les
+                objets des langages OO : une structure avec un dictionnaire de valeurs et un pointeur sur du code qui fait
+                référence à ce dictionnaire. D'ailleurs Guy Steele dans ces « lambda the ultimate » papers en parle de
+                manière indirecte.
+            </aside>
         </section>
 
         <section>
@@ -1182,13 +1215,25 @@ fun longComputation(x: Int): Int {
                     </div>
                 </div>
             </div>
-
-           <aside class="notes">
+            <aside class="notes">
+                En 2007, Rich Hickey après avoir fait une première tentative sur la plateforme .NET, propose un dialecte
+                de Scheme ciblant la JVM. Et forcément, il adopte la liaison lexicale comme fondement pour la
+                définition des fonctions anonymes. En bien d'autres partis pris qu'il détaille dans cet article des
+                « Proceedings of the ACM on Programming Languages » (appels terminaux et récursivité).
+                <br><br>
+                Voyons comment il a (ou aurait) pu procéder pour mettre des « closure » sur une plateforme qui n'est pas
+                initialement prévue pour.
             </aside>
         </section>
 
         <section>
             <h1><span style="text-transform:lowercase">$\lambda$</span>-lifting</h1>
+            <aside class="notes">
+                On va d'abord parler d'une transformation classique utilisée par les compilateurs pour des langages
+                fonctionnels. Elle n'est pas requise pour la suite, mais mérite qu'on la signale : Le « lamnda lifting ».
+                D'autant plus que dans la compilation de Java aujourd'hui, et pour une raison qui m'échappe, on l'appelle
+                « lambda desugaring ». Il faudra qu'un jour, je pose la question à Rémi Forax...
+            </aside>
         </section>
 
         <section>
@@ -1210,6 +1255,10 @@ fun longComputation(x: Int): Int {
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                L'idée est très simple : une première transformation du code fait apparaitre une fonction sans variable
+                libre, au plus haut niveau, correspondant à la lambda que l'on veut compiler
+            </aside>
         </section>
 
         <section>
@@ -1231,6 +1280,10 @@ fun longComputation(x: Int): Int {
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Forcément, elle est susceptible d'avoir plus de paramètres que la lambda d'origine, puisque les variables
+                libres ne doivent plus l'être.
+            </aside>
         </section>
 
         <section>
@@ -1252,10 +1305,17 @@ fun longComputation(x: Int): Int {
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Là, vous me direz, on à fait que déplacer le problème... C'est pas faux !
+            </aside>
         </section>
 
         <section>
             <h1>Closure conversion</h1>
+            <aside class="notes">
+                En fait il y a une seconde transformation, qui elle en revanche en fondamentale pour noter sujet: la
+                closure conversion.
+            </aside>
         </section>
 
         <section>
@@ -1264,6 +1324,9 @@ fun longComputation(x: Int): Int {
                         data class Closure&lt;C, I, O&gt;(val capture: C, val code: (C, I) -> O)
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Et c'est là que la similitude en objet et closure se voit un peu mieux.
+            </aside>
         </section>
 
         <section>
@@ -1272,6 +1335,9 @@ fun longComputation(x: Int): Int {
                         data class Closure&lt;C, I, O&gt;(<span class="ch">val capture: C</span>, val code: (C, I) -> O)
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Sauf qu'ici, j'ai décidé d'utiliser une structure, plutôt qu'une classe, qui embarque la variable capturée...
+            </aside>
         </section>
 
         <section>
@@ -1280,6 +1346,9 @@ fun longComputation(x: Int): Int {
                         data class Closure&lt;C, I, O&gt;(val capture: C, <span class="ch">val code: (C, I) -> O</span>)
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                ... et le pointeur dur le code.
+            </aside>
         </section>
 
         <section>
@@ -1302,6 +1371,9 @@ fun longComputation(x: Int): Int {
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Ce qui permet de réécrire « parametricPredicate »...
+            </aside>
         </section>
 
         <section>
@@ -1324,6 +1396,10 @@ fun longComputation(x: Int): Int {
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                ... de la façon suivante : elle retourne une représentation de la fonction anonyme accompagnée des
+                valeurs des variables capturées. C'est représentation opérationnelle d'une valeur fonction.
+            </aside>
         </section>
 
         <section>
@@ -1346,11 +1422,18 @@ fun longComputation(x: Int): Int {
                         }
 
             </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Et forcément au point d'appel, il faut aussi effectuer une adaptation. On appelle le code de la
+                fonction lambda liftée avec ces deux arguments, la valeur capturée et celle qu'on veut tester.
+            </aside>
         </section>
 
         <section>
             <h1>Java 8</h1>
             <h2>2014</h2>
+            <aside class="notes">
+                L'utilisation de fonctions anonymes fait son chemin dans bien des langages. 
+            </aside>
         </section>
 
         <section>
