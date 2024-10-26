@@ -1432,16 +1432,29 @@ fun longComputation(x: Int): Int {
             <h1>Java 8</h1>
             <h2>2014</h2>
             <aside class="notes">
-                L'utilisation de fonctions anonymes fait son chemin dans bien des langages. 
+                L'utilisation de fonctions anonymes fait son chemin dans bien des langages. Peut-être parce que de plus en
+                plus de développeurs sont sensibilisés à la programmation fonctionnelle qui en use abondamment... Ou parce
+                que ça fait bien, allez savoir ?
             </aside>
         </section>
 
         <section>
             <img style="border: thin solid" src="./images/JSR335.png" alt="">
+            <aside class="notes">
+                En attendant, la gestation du support des lambda dans Java débute à la sortie de Clojure, en 2007 et va
+                quand même durer 7 ans, pour voir officiellement sortir la JSR 335 dans Java 8.
+            </aside>
         </section>
 
         <section>
             <a href="http://gafter.blogspot.com/2007/01/definition-of-closures.html"><img style="border: thin solid black" src="./images/Gafter.png" alt=""></a>
+            <aside class="notes">
+                Pourquoi tant de temps ? Parce que Java est un langage orienté objets et que la somme des concepts sujets
+                à la liaison lexicale dépasse les variables lisp d'une fonction anonyme Lisp. Ce qui est très bien expliqué
+                dans cet article de Neil Gafter, membre d'un groupe ayant formulé une des trois propositions d'intégrations
+                initiales (rien que ça). Mais aussi parce que les enjeux de rétro compatibilité et d'évolutivité de Java
+                en tant que plateforme sont grands.
+            </aside>
         </section>
 
         <section>
@@ -1471,6 +1484,10 @@ fun longComputation(x: Int): Int {
         org.jetbrains.annotations.NotNull
 
             </code></pre>
+            <aside class="notes">
+                Fondamentalement la technique retenue est peu ou prou celle que je viens de décrire. On fera plutôt
+                appel à une instance classe interne pour matérialiser la closure.
+            </aside>
         </section>
 
         <section>
@@ -1500,6 +1517,13 @@ fun longComputation(x: Int): Int {
         org.jetbrains.annotations.NotNull
 
             </code></pre>
+            <aside class="notes">
+                Mais les concepteurs de la JSR 355 vont surtout tirer partit de l'instruction de la JVM introduite en Java 7
+                pour les langages dynamique : « InvokeDynamic ». L'idée c'est de se rendre résistants à de potentiels
+                futurs choix de mise en œuvre en générant cette classe interne à la volée. Le temps me manque pour entrer
+                dans les détails, mais sachez par exemple qu'une version spéciale de la librairie de manipulation de
+                bytecode ASM est embarquée à cette fin.
+            </aside>
         </section>
 
         <section>
