@@ -23,6 +23,10 @@
         <section>
             <h1>Fermé pour inventaire</h1>
             <h3>Histoire et mécanique des « closures »</h3>
+            <aside class="notes">
+                Bonjour à tous, et merci d'avoir choisi cette session dans laquelle il ne sera question ni de Kubernetes,
+                ni d'IA... Quoique ?
+            </aside>
         </section>
 
         <section>
@@ -42,11 +46,10 @@
 <!--                <div style="font-size: smaller">&mdash; <a href="https://fr.wikipedia.org/wiki/Fernand_Braudel">Fernand Braudel</a></div>-->
 <!--            </blockquote>-->
             <aside class="notes">
-                Bonjour à tous, et merci d'avoir choisi cette session dans laquelle il ne sera question ni de Kubernetes,
-                ni d'IA... Quoique ? Je suis Frédéric Cabestre, un artisan du logiciel issu il y a fort
-                longtemps du monde académique... Ce qui a laissé des traces. Si vous avez des soucis avec des sujets
-                ésotériques ou tout simplement besoin de faire accompagner une équipe de développement, vous pouvez
-                me contacter... Vous trouverez bien comment faire.
+                Je suis Frédéric Cabestre, un artisan du logiciel issu il y a fort longtemps du monde académique... Ce
+                qui a laissé quelques traces. Si vous avez des soucis avec des sujets ésotériques ou tout simplement besoin
+                de faire accompagner une équipe de développement, vous pouvez me contacter... Vous trouverez bien comment
+                faire.
             </aside>
         </section>
 
@@ -131,9 +134,10 @@
                 Particularité de Kotlin, on peut dans certains cas, comme ici, nommer implicitement un paramètre unique
                 « it ».
                 <br><br>
-                Et autre particularité de Kotlin, une lambda dernière position des paramètres d'une fonction peut être
+                Et autre particularité de Kotlin, une lambda en dernière position des paramètres d'une fonction peut être
                 sortie de la liste des paramètres. C'est un emprunt à Groovy, je crois, qui contribue à faire de Kotlin
-                un langage sympathique pour faire des DSL embarqués... Mais ça sera l'objet d'un autre présentation.
+                un langage sympathique pour faire des DSL embarqués... Mais ça sera l'objet d'une autre présentation.
+                Qui sait ?
                 <br><br>
                 En tout état de cause, cet exemple n'est pas des plus intéressants pour notre exploration...
             </aside>
@@ -164,9 +168,12 @@
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
-                Considérons plutôt celui-ci : un prédicat paramétrable par son premier argument pour vérifier une
-                propriété du second argument. Et tant qu'à faire, ce paramétrage est le résultat d'un calcul arbitrairement
-                long effectué sur le premier argument.
+                Considérons plutôt celui-ci : un prédicat ajustable par son premier paramètre ( « x ») pour vérifier une
+                propriété du second paramètre (« y »). Et tant qu'à faire, cet ajustement est le résultat d'un calcul
+                arbitrairement long effectué sur « x ».
+                <br><br>
+                Je vous l'accorde, c'est un exemple tiré par le peu de cheveux qu'il me reste. Mais il faut faire simple
+                pour parler de choses compliquées.
                 <br><br>
                 Et si l'on veut utiliser ce prédicat à deux arguments, dans le même contexte que précédemment, il va
                 falloir l'adapter, à l'aide d'une fonction anonyme...
@@ -198,9 +205,10 @@
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
-                ... en fixant ce premier argument pour le ramener à un seul argument à tester.
+                ... en fixant le premier argument pour le ramener à un seul paramètre à tester.
                 <br><br>
                 Un inconvénient de cette approche est que « longComputation » sera effectuée à chaque itération de « filter ».
+                <br><br>
                 Une façon de résoudre ce problème est de sortir ce long calcul de « parametricPredicate ». Mais j'ai envie
                 de vous présenter une autre approche qui serait de pouvoir appliquer partiellement « parametricPredicate » à
                 un argument. Et pour cela je dois vous parler de...
@@ -212,7 +220,7 @@
             <aside class="notes">
                 Ce terme est dérivé du nom d'Haskell Curry, un logicien du 20ᵉ siècle ayant mené des travaux sur la logique
                 combinatoire et qui donné son prénom à un célèbre langage fonctionnel. En réalité ce concept
-                est plutôt du à Moses Schönfinkel, mais Schönfinkelification aurait été plus difficile à prononcer.
+                est plutôt dû à Moses Schönfinkel, mais Schönfinkelification aurait été plus difficile à prononcer.
                 <br><br>
                 Alors de quoi s'agit-il ?
             </aside>
@@ -224,8 +232,9 @@
                 <div class="fragment" style="margin-top: .25em; font-size: 2.11em">$f: A \rightarrow (B \rightarrow C)$</div>
             </div>
             <aside class="notes">
-                Tout simplement de voir une fonction à 2 arguments comme équivalente à une fonction d'un argument
-                produisant un autre fonction d'un argument.
+                Tout simplement de voir une fonction à 2 paramètres...
+                <br><br>
+                ... comme équivalente à une fonction à un paramètre produisant un autre fonction à un paramètre.
                 <br><br>
                 Et donc comme une fonction que l'on peut appliquer partiellement ou graduellement à plusieurs arguments.
             </aside>
@@ -252,7 +261,7 @@
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
-                Si l'on repart de notre example de travail, curryfier « parametricPredicate » revient à la transformer ainsi...
+                Si l'on repart de notre example de travail, curryfier « parametricPredicate » revient à le transformer ainsi...
             </aside>
         </section>
 
@@ -329,7 +338,7 @@
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
                 Que l'on peut éventuellement affecter son résultat à une variable. N'oublions pas que les fonctions sont
-                ici des citoyens de première class...
+                ici des citoyens de première classe...
             </aside>
         </section>
 
@@ -355,7 +364,7 @@
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
                 Et donc qu'on peut utiliser ce résultat comme prédicat pour « filter » et accessoirement cette fois
-                le long calcul n'est effectué qu'une seule fois et no à chaque itération du filtre.
+                le long calcul n'est effectué qu'une seule fois et non à chaque itération du filtre.
             </aside>
         </section>
 
@@ -380,7 +389,7 @@
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
-                Soit dit en passant on aurait aussi pu faire un pas de plus et dire que « parametricPredicate » est...
+                Soit dit en passant, on aurait aussi pu faire un pas de plus et dire que « parametricPredicate » est...
             </aside>
         </section>
 
@@ -405,7 +414,8 @@
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
-                ... qui reçoit une fonction de Int qui retourne une fonction de Int vers Boolean. Mais bon, restons là...
+                ... une variable qui reçoit une fonction de Int qui retourne une fonction de Int vers Boolean.
+                Mais bon, restons là...
             </aside>
         </section>
 
@@ -413,7 +423,7 @@
             <h1>Lisp 1.5</h1>
             <h2>1958</h2>
             <aside class="notes">
-                Mais avant d'aller plus loin, faisons un premier saut en 1958 à la naissance de LISP.
+                Avant d'aller plus loin, faisons un premier saut en 1958 à la naissance de LISP.
             </aside>
         </section>
 
@@ -433,24 +443,21 @@
             </div>
 
             <aside class="notes">
-                John McCarthy (1927-2011)
-                <ul>
-                    <li>Chercheur à l'université de Standford essentiellement</li>
-                    <li>Prix Turing 1971</li>
-                    <li>Co-inventeur des systèmes à temps partagé</li>
-                    <li>Pionnier de l'IA (on lui doit le terme)</li>
-                    <li>1956 : Algorithme Alpha-Béta</li>
-                    <li>1958 : Lisp - LISt Processing</li>
-                    <li>Premier langage de manipulation symbolique</li>
-                    <li>Second langage après FORTRAN (1954)</li>
-                </ul>
+                Cet élégant barbu est...
+                <br><br>
+                John McCarthy (1927-2011), chercheur de l'université de Standford ayant obtenu
+                le prix Turing en 1971, il est co-inventeur des systèmes à temps partagé (pensez Unix) et pionnier de l'IA
+                (on lui doit le terme). En 1956, il crée l'algorithme d'élagage Alpha-Béta utilisé au cœur de moteurs de
+                jeux pour les échecs par exemple.
+                <br><br>
+                Mais il a aussi contribué à la création de LISP en 1958 second langage concret après FORTRAN (1954).
             </aside>
         </section>
 
         <section>
             <a href="http://jmc.stanford.edu/articles/lisp/lisp.pdf"><img src="./images/HistoryOfLisp.png" alt=""></a>
             <aside class="notes">
-                Lisp est un langage conçu avant pour la manipulation symbolique, par opposition à FORTRAN dont le but et
+                Lisp est un langage conçu avant tout pour la manipulation symbolique, par opposition à FORTRAN dont le but et
                 le calcul numérique. L'idée était d'avoir un langage facilitant l'écriture d'algorithmes tels que la
                 dérivation symbolique de fonctions (une des premières applications) et largement adopté de ce fait dans
                 la recherche en IA et en théorie des langages (de programmation ou naturels)...
@@ -472,12 +479,12 @@
             <h1>Funarg Problem</h1>
             <aside class="notes">
                 Dans la foulée, LISP gagne les fonctions d'ordre supérieur et la possibilité de définir des fonctions
-                anonymes, des LAMBDAS. Un argument fonctionnel de fonction est ce que l'on nomme FUNARG dans le jargon
+                anonymes, des LAMBDAS. Un argument fonctionnel de fonction est ce que l'on nomme un FUNARG dans le jargon
                 Lispien.
                 <br><br>
                 J'ai cru pendant longtemps de LISP était avant tout fonctionnel et avait été inspiré
                 pas le lambda calcul. En fait LISP 1.5 était encore très impératif (SETQ, RPLACA...) et McCarthy aurait
-                indiqué en avoir été peu inspiré.
+                indiqué s'en être peu inspiré.
             </aside>
         </section>
 
@@ -508,7 +515,7 @@
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
                 Pour illustrer ce problème, reprenons notre exemple (pas en LISP bien sûr). C'est peu ou prou l'exemple
-                initial, mais l'appel à « filter » et avec une variable « c » définie dans « main ».
+                initial, mais sans l'appel à « filter » et avec une variable « c » définie dans « main ».
             </aside>
 
         </section>
@@ -564,7 +571,7 @@ fun longComputation(x: Int): Int {
                 fonction et détruit quand elle se termine. Et dans la plupart des langages (mais pas tous) cette gestion
                 se fait sous forme de pile.
                 <br><br>
-                Donc ici on commence avec l'enregistrement d'activation de « main » dans la pile.
+                Donc ici, on commence avec l'enregistrement d'activation de « main » dans la pile.
             </aside>
         </section>
 
@@ -794,7 +801,7 @@ fun longComputation(x: Int): Int {
                 </div>
             </div>
             <aside class="notes">
-                Et c'est que les Athéniens s'atteignirent ! « parametricPrédicate » doit retourner une fonction
+                Et c'est que les Athéniens s'atteignirent ! « parametricPredicate » doit retourner une fonction
                 anonyme, et naïvement, on pourrait considérer (comme en langage C par exemple) qu'il s'agit d'un pointeur
                 sur fonction.
             </aside>
@@ -954,16 +961,17 @@ fun longComputation(x: Int): Int {
                 </div>
             </div>
             <aside class="notes">
-                <ul>
-                    <li>Créateur d'Emacs avec David Moon</li>
-                    <li>David Moon futur Symbolics (machines langage LISP)</li>
-                    <li>Premier portage de TeX</li>
-                    <li>Co-créateur de Scheme (1975) avec Gerald Sussmann</li>
-                    <li>Employé par Thinking Machines (*Lisp et C*)</li>
-                    <li>Employé par Sun (1994) puis Oracle (2010)</li>
-                    <li>Commités de normalisation de Common Lisp, C, Fortran</li>
-                    <li>Verse d'Epic Games avec Simon Peyton-Jones</li>
-                </ul>
+                Jusqu'à croiser la route de...
+                <br><br>
+                Guy Lewis Steel Junior, à qui on doit entre autres Emacs et le premier portage de TeX de Donald Knuth. Il
+                a été impliqué dans la définition ou la normalisation de nombreux langages de programmation, comme *Lisp
+                et C* chez Thinking Machines ; Common Lisp, C, Fortran dans le cadre de commités ; Et Java en tant
+                qu'employé de Sun en 1994 puis Oracle depuis 2010. Il est même récemment allé travailler avec Epic Games
+                sur le langage Verse en compagnie de Simon Peyton-Jones, un des piliers d'Haskell.
+                <br><br>
+                Pour ce qui nous concerne aujourd'hui, il est surtout le co-créateur de Scheme en 1975 de SCHEME avec
+                Gerald Sussmann au MIT. Gerald Jay Sussmann auteur du livre « Structure and Interpretation of Computer
+                Programs », que je vous invite à parcourir tant il fait partie des fondamentaux.
             </aside>
         </section>
 
@@ -1177,7 +1185,7 @@ fun longComputation(x: Int): Int {
             <aside class="notes">
                 Et maintenant, lors de l'évaluation de « predicate(81) » on fera référence à la valeur de « c » lors la
                 définition de la lambda et non celle de « main ». Encore une fois, c'est un choix qui s'est débattu et le
-                consensus actuel est que la liaison lexicale est la bonne approche.
+                consensus actuel veut que la liaison lexicale soit la bonne approche.
             </aside>
         </section>
 
@@ -1231,7 +1239,9 @@ fun longComputation(x: Int): Int {
             <aside class="notes">
                 En 2007, Rich Hickey après avoir fait une première tentative sur la plateforme .NET, propose un dialecte
                 de Scheme ciblant la JVM. Et forcément, il adopte la liaison lexicale comme fondement pour la
-                définition des fonctions anonymes. En bien d'autres partis pris qu'il détaille dans cet article des
+                définition des fonctions anonymes.
+                <br><br>
+                Et bien d'autres partis pris qu'il détaille dans cet article des
                 « Proceedings of the ACM on Programming Languages » (appels terminaux et récursivité).
                 <br><br>
                 Voyons comment il a (ou aurait) pu procéder pour mettre des « closure » sur une plateforme qui n'est pas
@@ -1243,7 +1253,7 @@ fun longComputation(x: Int): Int {
             <h1><span style="text-transform:lowercase">$\lambda$</span>-lifting</h1>
             <aside class="notes">
                 On va d'abord parler d'une transformation classique utilisée par les compilateurs pour des langages
-                fonctionnels. Elle n'est pas requise pour la suite, mais mérite qu'on la signale : Le « lamnda lifting ».
+                fonctionnels. Elle n'est pas requise pour la suite, mais mérite qu'on la signale : Le « lambda lifting ».
                 D'autant plus que dans la compilation de Java aujourd'hui, et pour une raison qui m'échappe, on l'appelle
                 « lambda desugaring ». Il faudra qu'un jour, je pose la question à Rémi Forax...
             </aside>
@@ -1319,15 +1329,15 @@ fun longComputation(x: Int): Int {
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
-                Là, vous me direz, on à fait que déplacer le problème... C'est pas faux !
+                Là, vous me direz, on a fait que déplacer le problème... C'est pas faux !
             </aside>
         </section>
 
         <section>
             <h1>Closure conversion</h1>
             <aside class="notes">
-                En fait il y a une seconde transformation, qui elle en revanche en fondamentale pour noter sujet: la
-                closure conversion.
+                En fait, il y a une seconde transformation, qui elle en revanche en fondamentale pour notre sujet : la
+                « closure conversion ».
             </aside>
         </section>
 
@@ -1411,7 +1421,7 @@ fun longComputation(x: Int): Int {
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
                 ... de la façon suivante : elle retourne une représentation de la fonction anonyme accompagnée des
-                valeurs des variables capturées. C'est représentation opérationnelle d'une valeur fonction.
+                valeurs des variables capturées. C'est une représentation opérationnelle d'une valeur fonction.
             </aside>
         </section>
 
@@ -1463,7 +1473,7 @@ fun longComputation(x: Int): Int {
             <a href="http://gafter.blogspot.com/2007/01/definition-of-closures.html"><img style="border: thin solid black" src="./images/Gafter.png" alt=""></a>
             <aside class="notes">
                 Pourquoi tant de temps ? Parce que Java est un langage orienté objets et que la somme des concepts sujets
-                à la liaison lexicale dépasse les variables lisp d'une fonction anonyme Lisp. Ce qui est très bien expliqué
+                à la liaison lexicale dépasse les variables d'une fonction anonyme Lisp. Ce qui est très bien expliqué
                 dans cet article de Neil Gafter, membre d'un groupe ayant formulé une des trois propositions d'intégrations
                 initiales (rien que ça). Mais aussi parce que les enjeux de rétro compatibilité et d'évolutivité de Java
                 en tant que plateforme sont grands.
@@ -1532,7 +1542,7 @@ fun longComputation(x: Int): Int {
             </code></pre>
             <aside class="notes">
                 Mais les concepteurs de la JSR 355 vont surtout tirer partit de l'instruction de la JVM introduite en Java 7
-                pour les langages dynamique : « InvokeDynamic ». L'idée c'est de se rendre résistants à de potentiels
+                pour les langages dynamique : « InvokeDynamic ». L'idée, c'est de se rendre résistants à de potentiels
                 futurs choix de mise en œuvre en générant cette classe interne à la volée. Le temps me manque pour entrer
                 dans les détails, mais sachez par exemple qu'une version spéciale de la librairie de manipulation de
                 bytecode ASM est embarquée à cette fin.
