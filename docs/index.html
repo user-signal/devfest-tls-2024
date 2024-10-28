@@ -1389,7 +1389,7 @@ fun longComputation(x: Int): Int {
 
                         fun main() {
                             val c = 42
-                            val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
+                            val predicate: Closure&lt;Int, Int, Boolean&gt; = parametricPredicate(3)
                             if (predicate.code(predicate.capture, 81)) println("Ok") else println("Ko")
                         }
 
@@ -1414,7 +1414,7 @@ fun longComputation(x: Int): Int {
 
                         fun main() {
                             val c = 42
-                            val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
+                            val predicate: Closure&lt;Int, Int, Boolean&gt; = parametricPredicate(3)
                             if (predicate.code(predicate.capture, 81)) println("Ok") else println("Ko")
                         }
 
@@ -1440,7 +1440,7 @@ fun longComputation(x: Int): Int {
 
                         fun main() {
                             val c = 42
-                            val predicate: Closure&lt;Int, Int, Boolean> = parametricPredicate(3)
+                            val predicate: Closure&lt;Int, Int, Boolean&gt; = parametricPredicate(3)
                             if (<span class="ch">predicate.code(predicate.capture, 81)</span>) println("Ok") else println("Ko")
                         }
 
@@ -1551,6 +1551,28 @@ fun longComputation(x: Int): Int {
 
         <section>
             <h1>Conclusion</h1>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="rust" style="max-height: 800px" data-noescape>
+
+                        fn long_computation(x: i64) -> i64 { x * x }
+
+                        fn parametric_predicate(x: i64) -> impl FnMut(&i64) -> bool {
+                            let c = long_computation(x);
+                            move |y| { y % c == 0 }
+                        }
+
+                        fn main() {
+                            let a_list = 1 .. 100;
+                            let predicate = parametric_predicate(3);
+                            let filtered_list = a_list.filter(predicate);
+                            println!("{:?}", filtered_list.collect::&lt;Vec&lt;i64&gt;&gt;())
+                        }
+
+                        // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
+
+            </code><div class="lang">Rust</div></pre>
         </section>
 
         <section>
