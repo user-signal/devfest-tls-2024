@@ -6,10 +6,10 @@ fn parametric_predicate(x: i64) -> impl FnMut(&i64) -> bool {
 }
 
 fn main() {
-    let a_list = 1 .. 100;
+    let a_range = 1 .. 100;
     let predicate = parametric_predicate(3);
-    let filtered_list = a_list.filter(predicate);
-    println!("{:?}", filtered_list.collect::<Vec<i64>>())
+    let filtered_range = a_range.filter(predicate);
+    println!("{:?}", filtered_range.collect::<Vec<i64>>())
 }
 
 // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]

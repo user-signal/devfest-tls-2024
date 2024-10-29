@@ -1481,30 +1481,111 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-  public static final kotlin.jvm.functions.Function1&lt;java.lang.Integer, java.lang.Boolean&gt; parametricSieve(int);
-    descriptor: (I)Lkotlin/jvm/functions/Function1;
-    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
-    Code:
-      stack=1, locals=2, args_size=1
-         0: iload_0
-         1: invokestatic  #14                 // Method longComputation:(I)I
-         4: istore_1
-         5: iload_1
-         6: invokedynamic #33,  0             // InvokeDynamic #0:invoke:(I)Lkotlin/jvm/functions/Function1;
-        11: areturn
-      LineNumberTable:
-        line 8: 0
-        line 9: 5
-      LocalVariableTable:
-        Start  Length  Slot  Name   Signature
-            5       7     1     c   I
-            0      12     0     x   I
-    Signature: #11                          // (I)Lkotlin/jvm/functions/Function1&lt;Ljava/lang/Integer;Ljava/lang/Boolean;&gt;
-    RuntimeInvisibleAnnotations:
-      0: #12()
-        org.jetbrains.annotations.NotNull
+                            public class Main {
+
+                                public static int longComputation(int x) {
+                                    return x * x;
+                                }
+
+                                public static IntPredicate parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return (int y) -> y % c == 0;
+                                }
+
+                                public static void main(String[] args) {
+                                    var aStream = IntStream.rangeClosed(0, 100);
+                                    var predicate = parametricPredicate(3);
+                                    IntStream filteredStream = aStream.filter(predicate);
+                                    System.out.println(
+                                            filteredStream.
+                                                    mapToObj(Integer::toString).
+                                                    collect(Collectors.joining(",", "[", "]")));
+                                }
+
+                               // [0,9,18,27,36,45,54,63,72,81,90,99]
+                            }
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
+
+          private static boolean lambda$parametricPredicate$0(int, int);
+            descriptor: (II)Z
+            flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
+            Code:
+              stack=2, locals=2, args_size=2
+                 0: iload_1
+                 1: iload_0
+                 2: irem
+                 3: ifne          10
+                 6: iconst_1
+                 7: goto          11
+                10: iconst_0
+                11: ireturn
+              LineNumberTable:
+                line 15: 0
+              StackMapTable: number_of_entries = 2
+                frame_type = 10 /* same */
+                frame_type = 64 /* same_locals_1_stack_item */
+                  stack = [ int ]
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
+
+          private static boolean <span class="ch">lambda$parametricPredicate$0(int, int)</span>;
+            descriptor: (II)Z
+            flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
+            Code:
+              stack=2, locals=2, args_size=2
+                 0: iload_1
+                 1: iload_0
+                 2: irem
+                 3: ifne          10
+                 6: iconst_1
+                 7: goto          11
+                10: iconst_0
+                11: ireturn
+              LineNumberTable:
+                line 15: 0
+              StackMapTable: number_of_entries = 2
+                frame_type = 10 /* same */
+                frame_type = 64 /* same_locals_1_stack_item */
+                  stack = [ int ]
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
+
+          public static java.util.function.IntPredicate parametricPredicate(int);
+            descriptor: (I)Ljava/util/function/IntPredicate;
+            flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+            Code:
+              stack=1, locals=2, args_size=1
+                 0: iload_0
+                 1: invokestatic  #7                  // Method longComputation:(I)I
+                 4: istore_1
+                 5: iload_1
+                 6: invokedynamic #13,  0             // InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;
+                11: areturn
+              LineNumberTable:
+                line 14: 0
+                line 15: 5
 
             </code></pre>
             <aside class="notes">
@@ -1514,30 +1595,22 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-  public static final kotlin.jvm.functions.Function1&lt;java.lang.Integer, java.lang.Boolean&gt; parametricSieve(int);
-    descriptor: (I)Lkotlin/jvm/functions/Function1;
-    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
-    Code:
-      stack=1, locals=2, args_size=1
-         0: iload_0
-         1: invokestatic  #14                 // Method longComputation:(I)I
-         4: istore_1
-         5: iload_1
-         6: <span class="ch">invokedynamic</span> #33,  0             // InvokeDynamic #0:invoke:(I)Lkotlin/jvm/functions/Function1;
-        11: areturn
-      LineNumberTable:
-        line 8: 0
-        line 9: 5
-      LocalVariableTable:
-        Start  Length  Slot  Name   Signature
-            5       7     1     c   I
-            0      12     0     x   I
-    Signature: #11                          // (I)Lkotlin/jvm/functions/Function1&lt;Ljava/lang/Integer;Ljava/lang/Boolean;&gt;
-    RuntimeInvisibleAnnotations:
-      0: #12()
-        org.jetbrains.annotations.NotNull
+          public static java.util.function.IntPredicate parametricPredicate(int);
+            descriptor: (I)Ljava/util/function/IntPredicate;
+            flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+            Code:
+              stack=1, locals=2, args_size=1
+                 0: iload_0
+                 1: invokestatic  #7                  // Method longComputation:(I)I
+                 4: istore_1
+                 5: iload_1
+                 6: <span class="ch">invokedynamic</span> #13,  0             // InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;
+                11: areturn
+              LineNumberTable:
+                line 14: 0
+                line 15: 5
 
             </code></pre>
             <aside class="notes">
@@ -1546,6 +1619,46 @@ fun longComputation(x: Int): Int {
                 futurs choix de mise en œuvre en générant cette classe interne à la volée. Le temps me manque pour entrer
                 dans les détails, mais sachez par exemple qu'une version spéciale de la librairie de manipulation de
                 bytecode ASM est embarquée à cette fin.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+        BootstrapMethods:
+          0: #80 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
+                Ljava/lang/invoke/MethodHandles$Lookup;
+                Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                Ljava/lang/invoke/MethodType;
+                Ljava/lang/invoke/MethodHandle;
+                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+            Method arguments:
+              #87 (I)Z
+              #89 REF_invokeStatic net/sigusr/Main.lambda$parametricPredicate$0:(II)Z
+              #87 (I)Z
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+        BootstrapMethods:
+          0: #80 REF_invokeStatic java/lang/invoke/<span class="ch">LambdaMetafactory</span>.metafactory:(
+                Ljava/lang/invoke/MethodHandles$Lookup;
+                Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                Ljava/lang/invoke/MethodType;
+                Ljava/lang/invoke/MethodHandle;
+                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+            Method arguments:
+              #87 (I)Z
+              #89 REF_invokeStatic net/sigusr/Main.lambda$parametricPredicate$0:(II)Z
+              #87 (I)Z
+
+            </code></pre>
+            <aside class="notes">
             </aside>
         </section>
 
@@ -1564,10 +1677,10 @@ fun longComputation(x: Int): Int {
                         }
 
                         fn main() {
-                            let a_list = 1 .. 100;
+                            let a_range = 1 .. 100;
                             let predicate = parametric_predicate(3);
-                            let filtered_list = a_list.filter(predicate);
-                            println!("{:?}", filtered_list.collect::&lt;Vec&lt;i64&gt;&gt;())
+                            let filtered_range = a_range.filter(predicate);
+                            println!("{:?}", filtered_range.collect::&lt;Vec&lt;i64&gt;&gt;())
                         }
 
                         // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
