@@ -1,0 +1,4 @@
+
+When I started working on Rust, a lot of the motivation was the pain of losing all the nice ML-isms I enjoyed in my hobby hacking when it came time to work in C++ "for pay". We actually tried to pull a lot of this stuff (algebraic types, pattern matching, options, annotation-light typing) into the failed ES4 project as well, but it sank under its weight.
+
+It's remarkable to me that in the years between, we've seen such a shift in what's considered "normal" new-language tech. F# is shipping on several platforms (whether or not M# ever actually surfaces again); Scala is considered an employable skill; C++11 has lambdas and local type inference at least, if not algebraic types or pattern matching; Rust actually exists now; and now one can rely on similar comforts in the Apple ecosystem. How delightful!
