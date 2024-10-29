@@ -1483,8 +1483,6 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-                            public class Main {
-
                                 public static int longComputation(int x) {
                                     return x * x;
                                 }
@@ -1494,7 +1492,7 @@ fun longComputation(x: Int): Int {
                                     return (int y) -> y % c == 0;
                                 }
 
-                                public static void main(String[] args) {
+                                void main() {
                                     var aStream = IntStream.rangeClosed(0, 100);
                                     var predicate = parametricPredicate(3);
                                     IntStream filteredStream = aStream.filter(predicate);
@@ -1504,8 +1502,7 @@ fun longComputation(x: Int): Int {
                                                     collect(Collectors.joining(",", "[", "]")));
                                 }
 
-                               // [0,9,18,27,36,45,54,63,72,81,90,99]
-                            }
+                                // [0,9,18,27,36,45,54,63,72,81,90,99]
 
             </code></pre>
             <aside class="notes">

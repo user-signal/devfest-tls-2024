@@ -1,4 +1,4 @@
-package net.sigusr;
+package net.sigusr.c0;
 
 import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
