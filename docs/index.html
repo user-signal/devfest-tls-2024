@@ -112,28 +112,104 @@
         </section>
 
         <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+
+                        public inline fun &lt;T&gt; Iterable&lt;T&gt;.filter(predicate: (T) -> Boolean): List&lt;T&gt; {
+                            return filterTo(ArrayList&lt;T&gt;(), predicate)
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+
+                        public inline fun &lt;T&gt; <span class="ch">Iterable&lt;T&gt;</span>.filter(predicate: (T) -> Boolean): List&lt;T&gt; {
+                            return filterTo(ArrayList&lt;T&gt;(), predicate)
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+
+                        public inline fun &lt;T&gt; Iterable&lt;T&gt;.filter(predicate: <span class="ch">(T) -> Boolean</span>): List&lt;T&gt; {
+                            return filterTo(ArrayList&lt;T&gt;(), predicate)
+                        }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
 
                         aList.filter(<span class="ch">{ x -> x % 2 == 0 }</span>)
-
-            </code><div class="lang">Kotlin</div></pre>
-            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex"><code class="kotlin" style="max-height: 800px" data-noescape="">
-
-                        aList.filter({ <span class="ch">it</span> % 2 == 0 })
-
-            </code><div class="lang">Kotlin</div></pre>
-            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
-
-                        aList.filter { it % 2 == 0 }
 
             </code><div class="lang">Kotlin</div></pre>
             <aside class="notes">
                 Dans cet exemple la partie en surbrillance est donc une lambda prenant en paramètre un entier et vérifiant
                 s'il est pair (le reste de la division par 2 doit être 0).
-                <br><br>
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        aList.filter({ x -> x % 2 == 0 })
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                      aList.filter({ x<span class="ch">: Int</span> -> x % 2 == 0 })
+
+            </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
+                Kotlin, comme beaucoup de langages aujourd'hui, dispose de capacités d'inférence de type. Ce qui permet
+                dans une certaine mesure de s'économiser quelques annotations de type.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        aList.filter({ x -> x % 2 == 0 })
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+
+                        aList.filter({ <span class="ch">it</span> % 2 == 0 })
+
+            </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
                 Particularité de Kotlin, on peut dans certains cas, comme ici, nommer implicitement un paramètre unique
                 « it ».
-                <br><br>
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+
+                        aList.filter({ x -> x % 2 == 0 })
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex"><code class="kotlin" style="max-height: 800px" data-noescape="">
+
+                        aList.filter({ it % 2 == 0 })
+
+            </code><div class="lang">Kotlin</div></pre>
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+
+                        aList.filter { it % 2 == 0 }
+
+            </code><div class="lang">Kotlin</div></pre>
+            <aside class="notes">
                 Et autre particularité de Kotlin, une lambda en dernière position des paramètres d'une fonction peut être
                 sortie de la liste des paramètres. C'est un emprunt à Groovy, je crois, qui contribue à faire de Kotlin
                 un langage sympathique pour faire des DSL embarqués... Mais ça sera l'objet d'une autre présentation.
@@ -396,7 +472,7 @@
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
 
-                        val parametricPredicateCurried: <span class="ch">(Int) -> (Int) -> Boolean</span> = { x ->
+                        val parametricPredicate: <span class="ch">(Int) -> (Int) -> Boolean</span> = { x ->
                             val c = longComputation(x);
                             { y -> y % c == 0 }
                         }
@@ -1489,13 +1565,14 @@ fun longComputation(x: Int): Int {
 
                                 public static IntPredicate parametricPredicate(int x) {
                                     var c = longComputation(x);
-                                    return (int y) -> y % c == 0;
+                                    return y -> y % c == 0;
                                 }
 
                                 void main() {
                                     var aStream = IntStream.rangeClosed(0, 100);
                                     var predicate = parametricPredicate(3);
                                     IntStream filteredStream = aStream.filter(predicate);
+
                                     System.out.println(
                                             filteredStream.
                                                     mapToObj(Integer::toString).
@@ -1507,7 +1584,113 @@ fun longComputation(x: Int): Int {
             </code></pre>
             <aside class="notes">
             </aside>
+        </section>
 
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static int longComputation(int x) {
+                                    return x * x;
+                                }
+
+                                public static IntPredicate parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return <span class="ch">y -> y % c == 0</span>;
+                                }
+
+                                void main() {
+                                    var aStream = IntStream.rangeClosed(0, 100);
+                                    var predicate = parametricPredicate(3);
+                                    IntStream filteredStream = aStream.filter(predicate);
+
+                                    System.out.println(
+                                            filteredStream.
+                                                    mapToObj(Integer::toString).
+                                                    collect(Collectors.joining(",", "[", "]")));
+                                }
+
+                                // [0,9,18,27,36,45,54,63,72,81,90,99]
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static int longComputation(int x) {
+                                    return x * x;
+                                }
+
+                                public static <span class="ch">IntPredicate</span> parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return y -> y % c == 0;
+                                }
+
+                                void main() {
+                                    var aStream = IntStream.rangeClosed(0, 100);
+                                    var predicate = parametricPredicate(3);
+                                    IntStream filteredStream = aStream.filter(predicate);
+
+                                    System.out.println(
+                                            filteredStream.
+                                                    mapToObj(Integer::toString).
+                                                    collect(Collectors.joining(",", "[", "]")));
+                                }
+
+                                // [0,9,18,27,36,45,54,63,72,81,90,99]
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                @FunctionalInterface
+                                public interface IntPredicate {
+
+                                    boolean test(int value);
+
+                                }
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                <span class="ch">@FunctionalInterface</span>
+                                public interface IntPredicate {
+
+                                    boolean test(int value);
+
+                                }
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
+        </section>
+
+
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                @FunctionalInterface
+                                public interface IntPredicate {
+
+                                    <span class="ch">boolean test(int value)</span>;
+
+                                }
+
+            </code></pre>
+            <aside class="notes">
+            </aside>
         </section>
 
         <section>
@@ -1613,9 +1796,33 @@ fun longComputation(x: Int): Int {
             <aside class="notes">
                 Mais les concepteurs de la JSR 355 vont surtout tirer partit de l'instruction de la JVM introduite en Java 7
                 pour les langages dynamique : « InvokeDynamic ». L'idée, c'est de se rendre résistants à de potentiels
-                futurs choix de mise en œuvre en générant cette classe interne à la volée. Le temps me manque pour entrer
-                dans les détails, mais sachez par exemple qu'une version spéciale de la librairie de manipulation de
-                bytecode ASM est embarquée à cette fin.
+                futurs choix de mise en œuvre en générant cette classe interne à la volée.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+          public static java.util.function.IntPredicate parametricPredicate(int);
+            descriptor: (I)Ljava/util/function/IntPredicate;
+            flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+            Code:
+              stack=1, locals=2, args_size=1
+                 0: iload_0
+                 1: invokestatic  #7                  // Method longComputation:(I)I
+                 4: istore_1
+                 5: iload_1
+                 6: <span class="ch">invokedynamic</span> #13,  0             <span class="ch">// InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;</span>
+                11: areturn
+              LineNumberTable:
+                line 14: 0
+                line 15: 5
+
+            </code></pre>
+            <aside class="notes">
+                Mais les concepteurs de la JSR 355 vont surtout tirer partit de l'instruction de la JVM introduite en Java 7
+                pour les langages dynamique : « InvokeDynamic ». L'idée, c'est de se rendre résistants à de potentiels
+                futurs choix de mise en œuvre en générant cette classe interne à la volée.
             </aside>
         </section>
 
@@ -1671,6 +1878,50 @@ fun longComputation(x: Int): Int {
                         fn parametric_predicate(x: i64) -> impl FnMut(&i64) -> bool {
                             let c = long_computation(x);
                             move |y| { y % c == 0 }
+                        }
+
+                        fn main() {
+                            let a_range = 1 .. 100;
+                            let predicate = parametric_predicate(3);
+                            let filtered_range = a_range.filter(predicate);
+                            println!("{:?}", filtered_range.collect::&lt;Vec&lt;i64&gt;&gt;())
+                        }
+
+                        // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
+
+            </code><div class="lang">Rust</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="rust" style="max-height: 800px" data-noescape>
+
+                        fn long_computation(x: i64) -> i64 { x * x }
+
+                        fn parametric_predicate(x: i64) -> <span class="ch">impl FnMut(&i64) -> bool</span> {
+                            let c = long_computation(x);
+                            move <span class="ch">|y| { y % c == 0 }</span>
+                        }
+
+                        fn main() {
+                            let a_range = 1 .. 100;
+                            let predicate = parametric_predicate(3);
+                            let filtered_range = a_range.filter(predicate);
+                            println!("{:?}", filtered_range.collect::&lt;Vec&lt;i64&gt;&gt;())
+                        }
+
+                        // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
+
+            </code><div class="lang">Rust</div></pre>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="rust" style="max-height: 800px" data-noescape>
+
+                        fn long_computation(x: i64) -> i64 { x * x }
+
+                        fn parametric_predicate(x: i64) -> impl FnMut(&i64) -> bool {
+                            let c = long_computation(x);
+                            <span class="ch">move</span> |y| { y % <span class="ch">c</span> == 0 }
                         }
 
                         fn main() {

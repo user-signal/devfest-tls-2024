@@ -12,7 +12,7 @@ public class Main {
 
     public static IntPredicate parametricPredicate(int x) {
         var c = longComputation(x);
-        return (int y) -> y % c == 0;
+        return y -> y % c == 0;
     }
 
     public static void main(String[] args) {

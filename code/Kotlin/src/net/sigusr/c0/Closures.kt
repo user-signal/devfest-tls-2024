@@ -3,7 +3,7 @@ package net.sigusr.c0
 
 fun main() {
     val aList = 1..100
-    val filteredList = aList.filter { x -> x % 2 == 0 }
+    val filteredList = aList.filter { x: Int -> x % 2 == 0 }
     println(filteredList)
 
     /*
