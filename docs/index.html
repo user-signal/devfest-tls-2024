@@ -1864,16 +1864,16 @@ fun longComputation(x: Int): Int {
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
         BootstrapMethods:
-          0: #80 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
-                Ljava/lang/invoke/MethodHandles$Lookup;
-                Ljava/lang/String;Ljava/lang/invoke/MethodType;
-                Ljava/lang/invoke/MethodType;
-                Ljava/lang/invoke/MethodHandle;
-                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+          0: #94 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
+                        Ljava/lang/invoke/MethodHandles$Lookup;
+                        Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                        Ljava/lang/invoke/MethodType;
+                        Ljava/lang/invoke/MethodHandle;
+                        Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
             Method arguments:
-              #87 (I)Z
-              #89 REF_invokeStatic net/sigusr/Main.lambda$parametricPredicate$0:(II)Z
-              #87 (I)Z
+              #79 (I)Z
+              #81 REF_invokeStatic Main.lambda$parametricPredicate$0:(II)Z
+              #79 (I)Z
 
             </code></pre>
             <aside class="notes">
@@ -1884,16 +1884,16 @@ fun longComputation(x: Int): Int {
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
         BootstrapMethods:
-          0: #80 REF_invokeStatic java/lang/invoke/<span class="ch">LambdaMetafactory</span>.metafactory:(
-                Ljava/lang/invoke/MethodHandles$Lookup;
-                Ljava/lang/String;Ljava/lang/invoke/MethodType;
-                Ljava/lang/invoke/MethodType;
-                Ljava/lang/invoke/MethodHandle;
-                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+          0: #94 REF_invokeStatic java/lang/invoke/<span class="ch">LambdaMetafactory</span>.metafactory:(
+                        Ljava/lang/invoke/MethodHandles$Lookup;
+                        Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                        Ljava/lang/invoke/MethodType;
+                        Ljava/lang/invoke/MethodHandle;
+                        Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
             Method arguments:
-              #87 (I)Z
-              #89 REF_invokeStatic net/sigusr/Main.lambda$parametricPredicate$0:(II)Z
-              #87 (I)Z
+              #79 (I)Z
+              #81 REF_invokeStatic Main.lambda$parametricPredicate$0:(II)Z
+              #79 (I)Z
 
             </code></pre>
             <aside class="notes">
@@ -1902,6 +1902,10 @@ fun longComputation(x: Int): Int {
 
         <section>
             <h1>Pour Conclure</h1>
+            <aside class="notes">
+                Le fonctions anonymes liées lexicalement ont tellement fait leur chemin qu'on les retrouve dans des
+                langages sans processus de récupération automatique de la mémoire comme C++ ou Rust.
+            </aside>
         </section>
 
         <section>
@@ -1924,6 +1928,14 @@ fun longComputation(x: Int): Int {
                         // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
 
             </code><div class="lang">Rust</div></pre>
+            <aside class="notes">
+                Dans le cas de Rust ça n'est pas particulièrement étonnant. Son concepteur initial, Graydon Hoare, fin
+                connaisseur de la mise en œuvre des langages de programmation et qui se décrit comme un « language
+                engineer », est un amateur de d'OCaml. D'ailleurs les premières versions de Rust, avant qui ne soit
+                « self hosted », étaient écrite en OCaml.
+                <br><br>
+                Et effectivement à regarder rapidement notre exemple fil rouge en Rust on n'est pas dépaysé !
+            </aside>
         </section>
 
         <section>
@@ -1946,6 +1958,10 @@ fun longComputation(x: Int): Int {
                         // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
 
             </code><div class="lang">Rust</div></pre>
+            <aside class="notes">
+                La déclaration d'un type fonctionnel est à mi-chemin entre Kotlin et Java, et l'écriture d'une lambda
+                en elle-même n'a rien de révolutionnaire.
+            </aside>
         </section>
 
         <section>
@@ -1968,6 +1984,16 @@ fun longComputation(x: Int): Int {
                         // [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99]
 
             </code><div class="lang">Rust</div></pre>
+            <aside class="notes">
+                Tout au plus les impératifs liés au modèle de gestion mémoire de Rust imposent quelques subtilités,
+                comme ici l'usage du mot clef « move » pour gérer la capture de la variable « c » qui doit survivre
+                à l'invocation de « parametric_predicate ».
+                <br><br>
+                Ce que l'on pourra retenir de tout ça c'est qu'une lambda, une fonction anonyme, peut être dynamiquement
+                ou lexicalement liée. Et que dans le second cas pour gérer la capture de son environnement in faut une
+                représentation des valeurs fonctionnelles que l'on appelle closure. Que les stratégies de mises en œuvre
+                sont nombreuses et tiennent compte des spécificités du langage.
+            </aside>
         </section>
 
         <section>
