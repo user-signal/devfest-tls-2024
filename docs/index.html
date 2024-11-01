@@ -1702,8 +1702,6 @@ fun longComputation(x: Int): Int {
             </aside>
         </section>
 
-
-
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
@@ -1722,6 +1720,75 @@ fun longComputation(x: Int): Int {
                 des interfaces déjà existantes qui auraient la bonne forme, comme « Runnable ». Après cette forme de
                 « SAM conversion » est aussi disponible en Kotlin, alors pour s'être privé d'une syntaxe explicite, je
                 n'en sais rien.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+
+                                public static IntPredicate parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return new IntPredicate() {
+                                        @Override
+                                        public boolean test(int value) {
+                                            return parametricPredicateLambda(c, value);
+                                        }
+                                    };
+                                }
+
+            </code></pre>
+            <aside class="notes">
+                En tout cas la stratégie de compilation retenue pour Java ressemble plutôt à ça.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static boolean <span class="ch">parametricPredicateLambda</span>(int c, int yy) { return yy % c == 0; }
+
+                                public static IntPredicate parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return new IntPredicate() {
+                                        @Override
+                                        public boolean test(int value) {
+                                            return parametricPredicateLambda(c, value);
+                                        }
+                                    };
+                                }
+
+            </code></pre>
+            <aside class="notes">
+                On dispose toujours de notre fonction lambda-liftée... Enfin « desugared » dans la terminologie de Java.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+
+                                public static IntPredicate parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return <span class="ch">new IntPredicate() {</span>
+                                        <span class="ch">@Override</span>
+                                        <span class="ch">public boolean test(int value) {</span>
+                                            <span class="ch">return parametricPredicateLambda(c, value);</span>
+                                        <span class="ch">}</span>
+                                    <span class="ch">}</span>;
+                                }
+
+            </code></pre>
+            <aside class="notes">
+                Mais la traduction de la lambda lexicalement liée, la closure, s'appuie sur le mécanisme de classe
+                anonyme de Java. C'est-à-dire, une classe créée localement à partir de l'interface fonctionnelle cible.
+                Et il se trouve que ce type de classe interne accède, par principe, au contexte dans lequel elle est
+                créée. Donc dans notre exemple à « c ».
+                <br><br>
+                Si c'est là bien le principe retenu pour les lambdas en Java, il est pourtant mis en œuvre avec une
+                subtilité...
             </aside>
         </section>
 
