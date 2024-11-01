@@ -1267,23 +1267,42 @@ fun longComputation(x: Int): Int {
 
         <section>
             <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 2fr">
-                <div style="grid-column: 1; grid-row: 1">
+                <div style="grid-column: 2; grid-row: 1">
                     <img src="./images/Haskell-logo.png" alt="">
                 </div>
-                <div class="fragment" data-fragment-index="1" style="grid-column: 1; grid-row: 2">
+                <div class="fragment" data-fragment-index="1" style="grid-column: 2; grid-row: 2">
                     <a href="https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0956796800000319"><img style="border: solid black 1px; margin-top: 2.5em" src="./images/Haskell.png" alt=""></a>
                 </div>
-                <div style="grid-column: 2; grid-row: 1">
+                <div style="grid-column: 1; grid-row: 1">
                     <img src="./images/OCaml-logo.png" alt="">
                 </div>
-                <div class="fragment" data-fragment-index="1" style="grid-column: 2; grid-row: 2">
+                <div class="fragment" data-fragment-index="1" style="grid-column: 1; grid-row: 2">
                     <a href="https://inria.hal.science/inria-00070049/document"><img style="border: solid black 1px; margin-top: 2.5em" src="./images/OCaml.png" alt=""></a>
                 </div>
             </div>
             <aside class="notes">
                 C'est d'ailleurs le monde de la programmation fonctionnelle, tout au long de la fin du 20ᵉ siècle, qui a poussé
                 dans ce sens (avec ici deux emblématiques représentants, Haskell et OCaml), emportant dans son sillage le monde
-                lispien.
+                lispien. Ici, vous avez deux rapports décrivant la mise en œuvre de l'un et l'autre. Et dans les deux cas la
+                notion de closure fait intégralement partie de la machine viiruelle (ou de l'environnement d'exécution) du
+                langage.
+            </aside>
+        </section>
+
+        <section>
+            <img style="margin-top: 3em; margin-bottom: 100%" src="./images/OcamlClosures.png" alt="">
+            <aside class="notes">
+                Dans le cas d'OCaml, il y est dit qu'une valeur fonctionnelle est « évidemment » représenté pas une closure,
+                c'est-à-dire une paire pointeur de code / environnement de liaison des variables. Il y est aussi expliqué qu'elles
+                sont allouée dans une space encore différent du tas pour de subtiles raisons de récupération mémoire.
+            </aside>
+        </section>
+
+        <section>
+            <img style="margin-top: 2em; margin-bottom: 100%" src="./images/HaskellClosures.png" alt="">
+            <aside class="notes">
+                Pour Haskell, comme le montre ce schéma, c'est un peu plus compliqué, ne serait-ce que du fait de choix de mise en
+                œuvre d'un langage paresseux ! Mais si on y prête attention on retrouve encore le couple pointeur de code / environnement.
             </aside>
         </section>
 
@@ -1583,6 +1602,8 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                Voilà à quoi ressemble notre exemple en Java. J'ai utilisé ici la version 21 plutôt que la 8 avec la
+                fonctionnalité classe anonyme et méthode 'main' d'instance pour qu'il ressemble plus à la version Kotlin.
             </aside>
         </section>
 
@@ -1613,6 +1634,7 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                La syntaxe pour le lambda est assez commune et proche de celle de Kotlin (aux accolades près).
             </aside>
         </section>
 
@@ -1643,6 +1665,8 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                En revanche, il n'y a pas de syntaxe pour décrire un type fonctionnel. Ici le type de retour de
+                « parametricPredicate » est nominatif, c'est une interface.
             </aside>
         </section>
 
@@ -1658,6 +1682,7 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                Mais pas n'importe qu'elle interface. C'est une « Single Abstract Method » ou « SAM » interface...
             </aside>
         </section>
 
@@ -1673,6 +1698,7 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                ... qui est annotée « @FunctionalInterface ».
             </aside>
         </section>
 
@@ -1690,6 +1716,12 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                Comme je l'ai déjà dit, une closure ressemble à un objet de disposant que d'une seule méthode pouvant
+                accéder aux champs de l'objet. C'est cette similitude qui est exploitée ici. On assimile une certaine
+                forme d'interface au type d'une lambda. On est là dans la recherche de rétrocompatibilité, pour exploiter
+                des interfaces déjà existantes qui auraient la bonne forme, comme « Runnable ». Après cette forme de
+                « SAM conversion » est aussi disponible en Kotlin, alors pour s'être privé d'une syntaxe explicite, je
+                n'en sais rien.
             </aside>
         </section>
 
@@ -1718,13 +1750,15 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                On va descendre un peu plus dans la soute et jeter un œil rapidement au bytecode généré par le compilateur,
+                grâce à la commande « javap » sorte de dés-assembleur pour le code de la JVM.
             </aside>
         </section>
 
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
 
-          private static boolean <span class="ch">lambda$parametricPredicate$0(int, int)</span>;
+          private static boolean <span class="ch">lambda$parametricPredicate$0</span>(int, int);
             descriptor: (II)Z
             flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
             Code:
@@ -1746,6 +1780,9 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                Et en fouinant dans le résultat, une première chose qui saute aux yeux, c'est notre fameuse
+                fonction anonyme lambda-liftée, ici appelé « lambda$parametricPredicate$0 ». On voit bien
+                qu'elle a deux paramètres au lieu d'un et qu'elle retourne un booléen.
             </aside>
         </section>
 
@@ -1769,8 +1806,7 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
-                Fondamentalement la technique retenue est peu ou prou celle que je viens de décrire. On fera plutôt
-                appel à une instance classe interne pour matérialiser la closure.
+                On retrouve aussi « parametricPredicate » qui doit retourner une valeur fonction de type « IntPredicate ».
             </aside>
         </section>
 
@@ -1794,9 +1830,9 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
-                Mais les concepteurs de la JSR 355 vont surtout tirer partit de l'instruction de la JVM introduite en Java 7
+                Les concepteurs de la JSR 335 vont tirer partit de l'instruction de la JVM introduite en Java 7
                 pour les langages dynamique : « InvokeDynamic ». L'idée, c'est de se rendre résistants à de potentiels
-                futurs choix de mise en œuvre en générant cette classe interne à la volée.
+                futurs choix de mise en œuvre en générant cette classe interne instance de « IntPredicate » à la volée.
             </aside>
         </section>
 
@@ -1820,9 +1856,7 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
-                Mais les concepteurs de la JSR 355 vont surtout tirer partit de l'instruction de la JVM introduite en Java 7
-                pour les langages dynamique : « InvokeDynamic ». L'idée, c'est de se rendre résistants à de potentiels
-                futurs choix de mise en œuvre en générant cette classe interne à la volée.
+
             </aside>
         </section>
 
@@ -1867,7 +1901,7 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
-            <h1>Conclusion</h1>
+            <h1>Pour Conclure</h1>
         </section>
 
         <section>
@@ -1943,12 +1977,16 @@ fun longComputation(x: Int): Int {
                 </div>
             </div>
             <h1 style="margin-top: 1em">Merci</h1>
-            <div style="display: grid; grid: 'one two three four' / 1fr 1fr 1fr 1fr; margin-bottom: 100%; margin-top: 2em">
+            <div style="display: grid; grid: 'one two three' / 1fr 1fr 1fr; margin-bottom: 100%; margin-top: 2em">
                 <div style="justify-self: center; grid-area: one">
                     <div>Feedback</div>
                     <img src="./images/feedback.png" alt="">
                 </div>
-                <div style="justify-self: center; grid-area: four">
+                <div style="justify-self: center; grid-area: two">
+                    <div>Code</div>
+                    <img src="./images/code.png" alt="">
+                </div>
+                <div style="justify-self: center; grid-area: three">
                     <div>Présentation</div>
                     <img src="./images/presentation.png" alt="">
                 </div>
