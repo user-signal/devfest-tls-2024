@@ -1728,14 +1728,18 @@ fun longComputation(x: Int): Int {
 
                                 public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
 
-                                public static IntPredicate parametricPredicate(int x) {
-                                    var c = longComputation(x);
-                                    return new IntPredicate() {
-                                        @Override
-                                        public boolean test(int value) {
-                                            return parametricPredicateLambda(c, value);
-                                        }
-                                    };
+                                public static class Closure implements IntPredicate {
+
+                                    private final int c;
+
+                                    public Closure(int c) {
+                                        this.c = c;
+                                    }
+
+                                    @Override
+                                    public boolean test(int value) {
+                                        return parametricPredicateLambda(c, value);
+                                    }
                                 }
 
             </code></pre>
@@ -1749,19 +1753,23 @@ fun longComputation(x: Int): Int {
 
                                 public static boolean <span class="ch">parametricPredicateLambda</span>(int c, int yy) { return yy % c == 0; }
 
-                                public static IntPredicate parametricPredicate(int x) {
-                                    var c = longComputation(x);
-                                    return new IntPredicate() {
-                                        @Override
-                                        public boolean test(int value) {
-                                            return parametricPredicateLambda(c, value);
-                                        }
-                                    };
+                                public static class Closure implements IntPredicate {
+
+                                    private final int c;
+
+                                    public Closure(int c) {
+                                        this.c = c;
+                                    }
+
+                                    @Override
+                                    public boolean test(int value) {
+                                        return parametricPredicateLambda(c, value);
+                                    }
                                 }
 
             </code></pre>
             <aside class="notes">
-                On dispose toujours de notre fonction lambda-liftée... Enfin « desugared » dans la terminologie de Java.
+                 On dispose toujours de notre fonction lambda-liftée... Enfin « desugared » dans la terminologie de Java.
             </aside>
         </section>
 
@@ -1770,25 +1778,97 @@ fun longComputation(x: Int): Int {
 
                                 public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
 
-                                public static IntPredicate parametricPredicate(int x) {
-                                    var c = longComputation(x);
-                                    return <span class="ch">new IntPredicate() {</span>
-                                        <span class="ch">@Override</span>
-                                        <span class="ch">public boolean test(int value) {</span>
-                                            <span class="ch">return parametricPredicateLambda(c, value);</span>
-                                        <span class="ch">}</span>
-                                    <span class="ch">}</span>;
+                                public static class <span class="ch">Closure</span> implements <span class="ch">IntPredicate</span> {
+
+                                    private final int c;
+
+                                    public Closure(int c) {
+                                        this.c = c;
+                                    }
+
+                                    @Override
+                                    public boolean test(int value) {
+                                        return parametricPredicateLambda(c, value);
+                                    }
                                 }
 
             </code></pre>
             <aside class="notes">
-                Mais la traduction de la lambda lexicalement liée, la closure, s'appuie sur le mécanisme de classe
-                anonyme de Java. C'est-à-dire, une classe créée localement à partir de l'interface fonctionnelle cible.
-                Et il se trouve que ce type de classe interne accède, par principe, au contexte dans lequel elle est
-                créée. Donc dans notre exemple à « c ».
+                Mais la traduction de la lambda lexicalement liée, la closure, s'appuie sur une classe créée localement à partir de
+                l'interface fonctionnelle cible.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+
+                                public static class Closure implements IntPredicate {
+
+                                    private final int <span class="ch">c</span>;
+
+                                    public <span class="ch">Closure(int c)</span> {
+                                        this.c = c;
+                                    }
+
+                                    @Override
+                                    public boolean test(int value) {
+                                        return parametricPredicateLambda(c, value);
+                                    }
+                                }
+
+            </code></pre>
+            <aside class="notes">
+                Elle comporte un champ pour stocker la valeur de la variable capturée et un constructeur pour la
+                créer avec en fournissant la valeur à capturer.
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+
+                                public static class Closure implements IntPredicate {
+
+                                    private final int c;
+
+                                    public Closure(int c) {
+                                        this.c = c;
+                                    }
+
+                                    @Override
+                                    public boolean <span class="ch">test</span>(int value) {
+                                        return parametricPredicateLambda(c, value);
+                                    }
+                                }
+
+            </code></pre>
+            <aside class="notes">
+                Et d'une mise œuvre de la « Single Abstract Method » qui s'appuie sur la fonction anonyme
+                lambda liftée... .
+            </aside>
+        </section>
+
+        <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+                                public static int longComputation(int x) {
+                                    return x * x;
+                                }
+
+                                public static IntPredicate parametricPredicate(int x) {
+                                    var c = longComputation(x);
+                                    return new <span class="ch">Closure(c)</span>;
+                                }
+
+            </code></pre>
+            <aside class="notes">
+                Et comme tout à l'heure, il ne reste plus qu'à créer et retourner la closure dans « parametricPredicate ».
                 <br><br>
                 Si c'est là bien le principe retenu pour les lambdas en Java, il est pourtant mis en œuvre avec une
-                subtilité...
+                subtilité..
             </aside>
         </section>
 
@@ -1923,7 +2003,10 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
-
+                Cette instruction référence une méthode Java dite d'amorçage (« Bootstrap ») décrite à l'index 0 d'une table des méthodes
+                d'amorçage. L'idée, c'est que la méthode que l'on va appeler effectivement n'est pas connue avant l'exécution de cette méthode.
+                Elle va littéralement construire le point d'appel d'une autre méthode, prenant un entier en paramètre et retournant un
+                « IntPredicate », à la volée.
             </aside>
         </section>
 
@@ -1944,6 +2027,8 @@ fun longComputation(x: Int): Int {
 
             </code></pre>
             <aside class="notes">
+                Et quand on cherche ladite table des méthodes d'amorçage, on trouve effectivement la description d'une
+                méthode statique « metafactory » de la classe « LambdaMetafactory ».
             </aside>
         </section>
 
@@ -1968,27 +2053,70 @@ fun longComputation(x: Int): Int {
         </section>
 
         <section>
+            <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
+
+        BootstrapMethods:
+          0: #94 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
+                        Ljava/lang/invoke/MethodHandles$Lookup;
+                        Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                        Ljava/lang/invoke/MethodType;
+                        Ljava/lang/invoke/MethodHandle;
+                        Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+            Method arguments:
+              #79 (I)Z
+              #81 REF_invokeStatic <span class="ch">Main.lambda$parametricPredicate$0:(II)Z</span>
+              #79 (I)Z
+
+            </code></pre>
+            <aside class="notes">
+                Sans trop rentrer dans des détails qui dépassent le cadre de cette présentation, on voit qu'elle prend
+                comme argument la fonction lambda-liftée « lambda$parametricPredicate$0 ». Et son travail va consister
+                à construire une classe similaire à la classe « Closure » de mon exemple précédent, et à générer l'appel
+                à son constructeur avec la valeur de « c » en paramètre. Cette méthode d'amorçage est écrite en Java et
+                vous pouvez facilement en consulter le code qui se trouve dans la runtime. D'ailleurs pour générer cette
+                classe, elle s'appuie sur un clone de la bibliothèque de manipulation de bytecode « ASM ».
+            </aside>
+        </section>
+
+        <section>
             <div style="margin-top: 5em; margin-bottom: 100%;">
                 <object data="./images/Indy/1.svg"></object>
             </div>
+            <aside class="notes">
+                Tout se passe comme dans le schéma suivant: l'instruction « invokedynamic » est exécutée dans le flux de
+                bytecode...
+            </aside>
         </section>
 
         <section>
             <div style="margin-top: 5em; margin-bottom: 100%;">
                 <object data="./images/Indy/2.svg"></object>
             </div>
+            <aside class="notes">
+                ... la méthode de bootstrap correspondante est invoquée ...
+            </aside>
         </section>
 
         <section>
             <div style="margin-top: 5em; margin-bottom: 100%;">
                 <object data="./images/Indy/3.svg"></object>
             </div>
+            <aside class="notes">
+                ... qui produit une classe à la volée et « CallSite », ou point d'appel, pour son constructeur prenant
+                en argument la valeur de la variable « c ».
+
+            </aside>
         </section>
 
         <section>
             <div style="margin-top: 5em; margin-bottom: 100%;">
                 <object data="./images/Indy/4.svg"></object>
             </div>
+            <aside class="notes">
+                Mais dans le cas des lambdas, ce call site est de type constant (personne ne viendra le modifier comme
+                celà pourrait arriver dans un langage dynamique). Donc tout appel ultérieur sautera directement au
+                « call site » et le JIT pourra s'en donner à cœur joie pour optimiser le tout.
+            </aside>
         </section>
 
         <section>
