@@ -459,7 +459,7 @@ html * {
 }
 
 .reveal .ch {
-  background-color: #657b83;
+  background-color: rgba(101, 123, 131, 0.5);
 }
 
 .reveal .code {
