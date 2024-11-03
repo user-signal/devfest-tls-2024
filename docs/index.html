@@ -1600,7 +1600,7 @@ fun longComputation(x: Int): Int {
 
                                 // [0,9,18,27,36,45,54,63,72,81,90,99]
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Voilà à quoi ressemble notre exemple en Java. J'ai utilisé ici la version 21 plutôt que la 8 avec la
                 fonctionnalité classe anonyme et méthode 'main' d'instance pour qu'il ressemble plus à la version Kotlin.
@@ -1632,7 +1632,7 @@ fun longComputation(x: Int): Int {
 
                                 // [0,9,18,27,36,45,54,63,72,81,90,99]
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 La syntaxe pour le lambda est assez commune et proche de celle de Kotlin (aux accolades près).
             </aside>
@@ -1663,7 +1663,7 @@ fun longComputation(x: Int): Int {
 
                                 // [0,9,18,27,36,45,54,63,72,81,90,99]
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 En revanche, il n'y a pas de syntaxe pour décrire un type fonctionnel. Ici le type de retour de
                 « parametricPredicate » est nominatif, c'est une interface.
@@ -1680,7 +1680,7 @@ fun longComputation(x: Int): Int {
 
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Mais pas n'importe qu'elle interface. C'est une « Single Abstract Method » ou « SAM » interface...
             </aside>
@@ -1696,7 +1696,7 @@ fun longComputation(x: Int): Int {
 
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 ... qui est annotée « @FunctionalInterface ».
             </aside>
@@ -1712,7 +1712,7 @@ fun longComputation(x: Int): Int {
 
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Comme je l'ai déjà dit, une closure ressemble à un objet de disposant que d'une seule méthode pouvant
                 accéder aux champs de l'objet. C'est cette similitude qui est exploitée ici. On assimile une certaine
@@ -1742,7 +1742,7 @@ fun longComputation(x: Int): Int {
                                     }
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 En tout cas la stratégie de compilation retenue pour Java ressemble plutôt à ça.
             </aside>
@@ -1767,7 +1767,7 @@ fun longComputation(x: Int): Int {
                                     }
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                  On dispose toujours de notre fonction lambda-liftée... Enfin « desugared » dans la terminologie de Java.
             </aside>
@@ -1792,7 +1792,7 @@ fun longComputation(x: Int): Int {
                                     }
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Mais la traduction de la lambda lexicalement liée, la closure, s'appuie sur une classe créée localement à partir de
                 l'interface fonctionnelle cible.
@@ -1818,7 +1818,7 @@ fun longComputation(x: Int): Int {
                                     }
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Elle comporte un champ pour stocker la valeur de la variable capturée et un constructeur pour la
                 créer avec en fournissant la valeur à capturer.
@@ -1844,7 +1844,7 @@ fun longComputation(x: Int): Int {
                                     }
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Et d'une mise œuvre de la « Single Abstract Method » qui s'appuie sur la fonction anonyme
                 lambda liftée... .
@@ -1863,7 +1863,7 @@ fun longComputation(x: Int): Int {
                                     return new <span class="ch">Closure(c)</span>;
                                 }
 
-            </code></pre>
+            </code><div class="lang">Java</div></pre>
             <aside class="notes">
                 Et comme tout à l'heure, il ne reste plus qu'à créer et retourner la closure dans « parametricPredicate ».
                 <br><br>
@@ -1875,27 +1875,27 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
 
-          private static boolean lambda$parametricPredicate$0(int, int);
-            descriptor: (II)Z
-            flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
-            Code:
-              stack=2, locals=2, args_size=2
-                 0: iload_1
-                 1: iload_0
-                 2: irem
-                 3: ifne          10
-                 6: iconst_1
-                 7: goto          11
-                10: iconst_0
-                11: ireturn
-              LineNumberTable:
-                line 15: 0
-              StackMapTable: number_of_entries = 2
-                frame_type = 10 /* same */
-                frame_type = 64 /* same_locals_1_stack_item */
-                  stack = [ int ]
+                  private static boolean lambda$parametricPredicate$0(int, int);
+                    descriptor: (II)Z
+                    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
+                    Code:
+                      stack=2, locals=2, args_size=2
+                         0: iload_1
+                         1: iload_0
+                         2: irem
+                         3: ifne          10
+                         6: iconst_1
+                         7: goto          11
+                        10: iconst_0
+                        11: ireturn
+                      LineNumberTable:
+                        line 15: 0
+                      StackMapTable: number_of_entries = 2
+                        frame_type = 10 /* same */
+                        frame_type = 64 /* same_locals_1_stack_item */
+                          stack = [ int ]
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 On va descendre un peu plus dans la soute et jeter un œil rapidement au bytecode généré par le compilateur,
                 grâce à la commande « javap » sorte de dés-assembleur pour le code de la JVM.
@@ -1905,27 +1905,27 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
 
-          private static boolean <span class="ch">lambda$parametricPredicate$0</span>(int, int);
-            descriptor: (II)Z
-            flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
-            Code:
-              stack=2, locals=2, args_size=2
-                 0: iload_1
-                 1: iload_0
-                 2: irem
-                 3: ifne          10
-                 6: iconst_1
-                 7: goto          11
-                10: iconst_0
-                11: ireturn
-              LineNumberTable:
-                line 15: 0
-              StackMapTable: number_of_entries = 2
-                frame_type = 10 /* same */
-                frame_type = 64 /* same_locals_1_stack_item */
-                  stack = [ int ]
+                  private static boolean <span class="ch">lambda$parametricPredicate$0</span>(int, int);
+                    descriptor: (II)Z
+                    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
+                    Code:
+                      stack=2, locals=2, args_size=2
+                         0: iload_1
+                         1: iload_0
+                         2: irem
+                         3: ifne          10
+                         6: iconst_1
+                         7: goto          11
+                        10: iconst_0
+                        11: ireturn
+                      LineNumberTable:
+                        line 15: 0
+                      StackMapTable: number_of_entries = 2
+                        frame_type = 10 /* same */
+                        frame_type = 64 /* same_locals_1_stack_item */
+                          stack = [ int ]
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 Et en fouinant dans le résultat, une première chose qui saute aux yeux, c'est notre fameuse
                 fonction anonyme lambda-liftée, ici appelé « lambda$parametricPredicate$0 ». On voit bien
@@ -1936,22 +1936,22 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="Java" style="max-height: 800px" data-noescape>
 
-          public static java.util.function.IntPredicate parametricPredicate(int);
-            descriptor: (I)Ljava/util/function/IntPredicate;
-            flags: (0x0009) ACC_PUBLIC, ACC_STATIC
-            Code:
-              stack=1, locals=2, args_size=1
-                 0: iload_0
-                 1: invokestatic  #7                  // Method longComputation:(I)I
-                 4: istore_1
-                 5: iload_1
-                 6: invokedynamic #13,  0             // InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;
-                11: areturn
-              LineNumberTable:
-                line 14: 0
-                line 15: 5
+                  public static java.util.function.IntPredicate parametricPredicate(int);
+                    descriptor: (I)Ljava/util/function/IntPredicate;
+                    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+                    Code:
+                      stack=1, locals=2, args_size=1
+                         0: iload_0
+                         1: invokestatic  #7        // Method longComputation:(I)I
+                         4: istore_1
+                         5: iload_1
+                         6: invokedynamic #13,  0   // InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;
+                        11: areturn
+                      LineNumberTable:
+                        line 14: 0
+                        line 15: 5
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 On retrouve aussi « parametricPredicate » qui doit retourner une valeur fonction de type « IntPredicate ».
             </aside>
@@ -1960,22 +1960,22 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-          public static java.util.function.IntPredicate parametricPredicate(int);
-            descriptor: (I)Ljava/util/function/IntPredicate;
-            flags: (0x0009) ACC_PUBLIC, ACC_STATIC
-            Code:
-              stack=1, locals=2, args_size=1
-                 0: iload_0
-                 1: invokestatic  #7                  // Method longComputation:(I)I
-                 4: istore_1
-                 5: iload_1
-                 6: <span class="ch">invokedynamic</span> #13,  0             // InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;
-                11: areturn
-              LineNumberTable:
-                line 14: 0
-                line 15: 5
+                  public static java.util.function.IntPredicate parametricPredicate(int);
+                    descriptor: (I)Ljava/util/function/IntPredicate;
+                    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+                    Code:
+                      stack=1, locals=2, args_size=1
+                         0: iload_0
+                         1: invokestatic  #7        // Method longComputation:(I)I
+                         4: istore_1
+                         5: iload_1
+                         6: <span class="ch">invokedynamic</span> #13,  0   // InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;
+                        11: areturn
+                      LineNumberTable:
+                        line 14: 0
+                        line 15: 5
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 Les concepteurs de la JSR 335 vont tirer partit de l'instruction de la JVM introduite en Java 7
                 pour les langages dynamique : « InvokeDynamic ». L'idée, c'est de se rendre résistants à de potentiels
@@ -1986,22 +1986,22 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-          public static java.util.function.IntPredicate parametricPredicate(int);
-            descriptor: (I)Ljava/util/function/IntPredicate;
-            flags: (0x0009) ACC_PUBLIC, ACC_STATIC
-            Code:
-              stack=1, locals=2, args_size=1
-                 0: iload_0
-                 1: invokestatic  #7                  // Method longComputation:(I)I
-                 4: istore_1
-                 5: iload_1
-                 6: <span class="ch">invokedynamic</span> #13,  0             <span class="ch">// InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;</span>
-                11: areturn
-              LineNumberTable:
-                line 14: 0
-                line 15: 5
+                  public static java.util.function.IntPredicate parametricPredicate(int);
+                    descriptor: (I)Ljava/util/function/IntPredicate;
+                    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+                    Code:
+                      stack=1, locals=2, args_size=1
+                         0: iload_0
+                         1: invokestatic  #7        // Method longComputation:(I)I
+                         4: istore_1
+                         5: iload_1
+                         6: <span class="ch">invokedynamic</span> #13,  0   <span class="ch">// InvokeDynamic #0:test:(I)Ljava/util/function/IntPredicate;</span>
+                        11: areturn
+                      LineNumberTable:
+                        line 14: 0
+                        line 15: 5
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 Cette instruction référence une méthode Java dite d'amorçage (« Bootstrap ») décrite à l'index 0 d'une table des méthodes
                 d'amorçage. L'idée, c'est que la méthode que l'on va appeler effectivement n'est pas connue avant l'exécution de cette méthode.
@@ -2013,19 +2013,19 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-        BootstrapMethods:
-          0: #94 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
-                        Ljava/lang/invoke/MethodHandles$Lookup;
-                        Ljava/lang/String;Ljava/lang/invoke/MethodType;
-                        Ljava/lang/invoke/MethodType;
-                        Ljava/lang/invoke/MethodHandle;
-                        Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
-            Method arguments:
-              #79 (I)Z
-              #81 REF_invokeStatic Main.lambda$parametricPredicate$0:(II)Z
-              #79 (I)Z
+                BootstrapMethods:
+                  0: #94 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
+                                Ljava/lang/invoke/MethodHandles$Lookup;
+                                Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                                Ljava/lang/invoke/MethodType;
+                                Ljava/lang/invoke/MethodHandle;
+                                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+                    Method arguments:
+                      #79 (I)Z
+                      #81 REF_invokeStatic Main.lambda$parametricPredicate$0:(II)Z
+                      #79 (I)Z
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 Et quand on cherche ladite table des méthodes d'amorçage, on trouve effectivement la description d'une
                 méthode statique « metafactory » de la classe « LambdaMetafactory ».
@@ -2035,19 +2035,19 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-        BootstrapMethods:
-          0: #94 REF_invokeStatic java/lang/invoke/<span class="ch">LambdaMetafactory</span>.metafactory:(
-                        Ljava/lang/invoke/MethodHandles$Lookup;
-                        Ljava/lang/String;Ljava/lang/invoke/MethodType;
-                        Ljava/lang/invoke/MethodType;
-                        Ljava/lang/invoke/MethodHandle;
-                        Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
-            Method arguments:
-              #79 (I)Z
-              #81 REF_invokeStatic Main.lambda$parametricPredicate$0:(II)Z
-              #79 (I)Z
+                BootstrapMethods:
+                  0: #94 REF_invokeStatic java/lang/invoke/<span class="ch">LambdaMetafactory</span>.metafactory:(
+                                Ljava/lang/invoke/MethodHandles$Lookup;
+                                Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                                Ljava/lang/invoke/MethodType;
+                                Ljava/lang/invoke/MethodHandle;
+                                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+                    Method arguments:
+                      #79 (I)Z
+                      #81 REF_invokeStatic Main.lambda$parametricPredicate$0:(II)Z
+                      #79 (I)Z
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
             </aside>
         </section>
@@ -2055,19 +2055,19 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-        BootstrapMethods:
-          0: #94 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
-                        Ljava/lang/invoke/MethodHandles$Lookup;
-                        Ljava/lang/String;Ljava/lang/invoke/MethodType;
-                        Ljava/lang/invoke/MethodType;
-                        Ljava/lang/invoke/MethodHandle;
-                        Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
-            Method arguments:
-              #79 (I)Z
-              #81 REF_invokeStatic <span class="ch">Main.lambda$parametricPredicate$0:(II)Z</span>
-              #79 (I)Z
+                BootstrapMethods:
+                  0: #94 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(
+                                Ljava/lang/invoke/MethodHandles$Lookup;
+                                Ljava/lang/String;Ljava/lang/invoke/MethodType;
+                                Ljava/lang/invoke/MethodType;
+                                Ljava/lang/invoke/MethodHandle;
+                                Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+                    Method arguments:
+                      #79 (I)Z
+                      #81 REF_invokeStatic <span class="ch">Main.lambda$parametricPredicate$0:(II)Z</span>
+                      #79 (I)Z
 
-            </code></pre>
+            </code><div class="lang">Bytecode</div></pre>
             <aside class="notes">
                 Sans trop rentrer dans des détails qui dépassent le cadre de cette présentation, on voit qu'elle prend
                 comme argument la fonction lambda-liftée « lambda$parametricPredicate$0 ». Et son travail va consister
