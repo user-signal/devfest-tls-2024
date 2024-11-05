@@ -86,7 +86,7 @@
      showgrid="false"
      inkscape:zoom="0.38250057"
      inkscape:cx="1137.2532"
-     inkscape:cy="322.87533"
+     inkscape:cy="322.87534"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
      inkscape:window-x="0"
@@ -203,7 +203,7 @@
        sodipodi:role="line"
        x="325.11493"
        y="525.74554"
-       id="tspan45540">Lambda0: { y -&gt; c % y == 0}</tspan></text>
+       id="tspan45540">Lambda0: { y -&gt; y % c == 0}</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:29.3333px;line-height:1.25;font-family:Iosevka;-inkscape-font-specification:'Iosevka, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"

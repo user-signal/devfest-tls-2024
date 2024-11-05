@@ -71,7 +71,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.5409375"
-     inkscape:cx="757.94338"
+     inkscape:cx="757.94339"
      inkscape:cy="322.5881"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
@@ -176,5 +176,5 @@
        sodipodi:role="line"
        x="668.45264"
        y="523.83728"
-       id="tspan45540">Lambda0: { y -&gt; c % y == 0}</tspan></text>
+       id="tspan45540">Lambda0: { y -&gt; y % c == 0}</tspan></text>
 </svg>

@@ -202,5 +202,5 @@
        sodipodi:role="line"
        x="325.11493"
        y="525.74554"
-       id="tspan45540">Lambda0: { y -&gt; c % y == 0}</tspan></text>
+       id="tspan2548">Lambda0: { y -&gt; y % c == 0}</tspan></text>
 </svg>

@@ -630,7 +630,7 @@
 
                                 fun parametricPredicate(x: Int): (Int) -> Boolean {
                                     val c = longComputation(x)
-                                    return { y -> c % y == 0 }
+                                    return { y -> y % c == 0 }
                                 }
 
                                 fun main() {
@@ -672,7 +672,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -716,7 +716,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -754,7 +754,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -792,7 +792,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = <span class="ch">longComputation(x)</span>
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -831,7 +831,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = <span class="ch">longComputation(x)</span>
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -870,7 +870,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = <span class="ch">longComputation(x)</span>
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -908,7 +908,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return <span class="ch">{ y -> c % y == 0 }</span>
+    return <span class="ch">{ y -> y % c == 0 }</span>
 }
 
                     </code></pre>
@@ -948,7 +948,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -987,7 +987,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -1026,7 +1026,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -1168,7 +1168,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return <span class="ch">{ y -> c % y == 0 }</span>
+    return <span class="ch">{ y -> y % c == 0 }</span>
 }
 
                     </code></pre>
@@ -1209,7 +1209,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -1249,7 +1249,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -1290,7 +1290,7 @@ fun main() {
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = longComputation(x)
-    return { y -> c % y == 0 }
+    return { y -> y % c == 0 }
 }
 
                     </code></pre>
@@ -1415,7 +1415,7 @@ fun longComputation(x: Int): Int {
             </code><div class="lang">Kotlin</div></pre>
             <pre class="fragment" style="font-size: 1.1ex; margin-top: 1em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
 
-                        fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0
+                        fun parametricPredicateLambda(c: Int, y: Int): Boolean = y % c == 0
 
                         fun parametricPredicate(x: Int): (Int) -> Boolean {
                             val c = longComputation(x)
@@ -1440,7 +1440,7 @@ fun longComputation(x: Int): Int {
             </code><div class="lang">Kotlin</div></pre>
             <pre style="font-size: 1.1ex; margin-top: 1em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
 
-                        <span class="ch">fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0</span>
+                        <span class="ch">fun parametricPredicateLambda(c: Int, y: Int): Boolean = y % c == 0</span>
 
                         fun parametricPredicate(x: Int): (Int) -> Boolean {
                             val c = longComputation(x)
@@ -1465,7 +1465,7 @@ fun longComputation(x: Int): Int {
             </code><div class="lang">Kotlin</div></pre>
             <pre style="font-size: 1.1ex; margin-top: 1em; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
 
-                        fun parametricPredicateLambda(c: Int, yy: Int): Boolean = yy % c == 0
+                        fun parametricPredicateLambda(c: Int, y: Int): Boolean = y % c == 0
 
                         fun parametricPredicate(x: Int): (Int) -> Boolean {
                             val c = longComputation(x)
@@ -1776,7 +1776,7 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+                                public static boolean parametricPredicateLambda(int c, int y) { return y % c == 0; }
 
                                 public static class Closure implements IntPredicate {
 
@@ -1801,7 +1801,7 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-                                public static boolean <span class="ch">parametricPredicateLambda</span>(int c, int yy) { return yy % c == 0; }
+                                public static boolean <span class="ch">parametricPredicateLambda</span>(int c, int y) { return y % c == 0; }
 
                                 public static class Closure implements IntPredicate {
 
@@ -1826,7 +1826,7 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+                                public static boolean parametricPredicateLambda(int c, int y) { return y % c == 0; }
 
                                 public static class <span class="ch">Closure</span> implements <span class="ch">IntPredicate</span> {
 
@@ -1852,7 +1852,7 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+                                public static boolean parametricPredicateLambda(int c, int y) { return y % c == 0; }
 
                                 public static class Closure implements IntPredicate {
 
@@ -1878,7 +1878,7 @@ fun longComputation(x: Int): Int {
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em; margin-bottom: 100%"><code class="java" style="max-height: 800px" data-noescape>
 
-                                public static boolean parametricPredicateLambda(int c, int yy) { return yy % c == 0; }
+                                public static boolean parametricPredicateLambda(int c, int y) { return y % c == 0; }
 
                                 public static class Closure implements IntPredicate {
 
