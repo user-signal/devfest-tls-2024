@@ -791,6 +791,46 @@ fun main() {
                 <div style="grid-area: center">
                     <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
 fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return { y -> y % c == 0 }
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem/3.svg"></object>
+                </div>
+            </div>
+            <aside class="notes">
+                Ce qui génère un nouvel enregistrement d'activation pour elle sur la pile. À son tour « longComputation »
+                est appelée avec 3 en argument.
+            </aside>
+        </section>
+
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = <span class="ch">parametricPredicate(3)</span>
+    if (predicate(81)) println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
     val c = <span class="ch">longComputation(x)</span>
     return { y -> y % c == 0 }
 }
@@ -850,8 +890,45 @@ fun longComputation(x: Int): Int {
                 </div>
             </div>
             <aside class="notes">
-                Et un nouvel enregistrement d'activation lui est allouée. « longComputation » produit et retourne son
-                résultat 9.
+                Et un nouvel enregistrement d'activation lui est allouée.
+            </aside>
+        </section>
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = <span class="ch">parametricPredicate(3)</span>
+    if (predicate(81)) println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = <span class="ch">longComputation(x)</span>
+    return { y -> y % c == 0 }
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return <span class="ch">x * x</span>
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem/4b.svg"></object>
+                </div>
+            </div>
+            <aside class="notes">
+                « longComputation » produit et retourne son résultat 9.
             </aside>
         </section>
 
@@ -923,7 +1000,7 @@ fun longComputation(x: Int): Int {
                     </code></pre>
                 </div>
                 <div style="grid-area: bottom; margin-bottom: 100%;">
-                    <object data-fragment-index="4" data="./images/funarg-problem/5.svg"></object>
+                    <object data-fragment-index="4" data="./images/funarg-problem/5b.svg"></object>
                 </div>
             </div>
             <aside class="notes">
@@ -1188,9 +1265,47 @@ fun longComputation(x: Int): Int {
             </div>
             <aside class="notes">
                 Reprenons le déroulé de notre exemple là où le problème apparait. Retourner un « pointeur » sur le code
-                de la fonction anonyme ne suffit pas. Il faut aussi fournir des élements de son environnement qui feraient
-                défault ultérieurement : les valeurs de ses variables libres. Celles qui ne font pas partie des paramètres
-                de la lambda.
+                de la fonction anonyme ne suffit pas.
+            </aside>
+        </section>
+
+
+        <section>
+            <div style="margin-top: 1em; display: grid; grid: [row1-start] 'left center right' [row1-end][row1-start] 'bottom bottom bottom' [row1-end] / 1fr 1fr 1fr">
+                <div style="grid-area: left">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun main() {
+    val c = 42
+    val predicate: (Int) -> Boolean = <span class="ch">parametricPredicate(3)</span>
+    if (predicate(81)) println("Ok") else println("Ko")
+}
+                    </code></pre>
+                </div>
+                <div style="grid-area: center">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun parametricPredicate(x: Int): (Int) -> Boolean {
+    val c = longComputation(x)
+    return <span class="ch">{ y -> y % c == 0 }</span>
+}
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: right">
+                    <pre style="max-height: 800px; font-size: 0.8ex; margin-top: 0"><code class="Kotlin" data-noescape>
+fun longComputation(x: Int): Int {
+    return x * x
+}
+
+
+                    </code></pre>
+                </div>
+                <div style="grid-area: bottom; margin-bottom: 100%;">
+                    <object data-fragment-index="4" data="./images/funarg-problem-solved/5b.svg"></object>
+                </div>
+            </div>
+            <aside class="notes">
+                RIl faut aussi fournir des élements de son environnement qui feraient défault ultérieurement : les valeurs
+                de ses variables libres. Celles qui ne font pas partie des paramètres de la lambda.
             </aside>
         </section>
 
