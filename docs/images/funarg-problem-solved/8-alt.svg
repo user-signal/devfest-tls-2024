@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="8-alt.svg"
+   sodipodi:docname="8.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -84,9 +84,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.5409375"
-     inkscape:cx="780.12709"
-     inkscape:cy="322.5881"
+     inkscape:zoom="1.5300023"
+     inkscape:cx="641.8291"
+     inkscape:cy="323.20213"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
      inkscape:window-x="0"
@@ -155,7 +155,7 @@
        sodipodi:role="line"
        id="tspan845-54"
        x="469.12164"
-       y="279.36209">c: 9</tspan></text>
+       y="279.36209">c: </tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;line-height:1.25;font-family:Iosevka;-inkscape-font-specification:'Iosevka, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none"
@@ -232,4 +232,8 @@
        x="325.11493"
        y="525.74554"
        id="tspan45540">Lambda0: { y -&gt; y % c == 0}</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.13385832;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:1.13385832, 1.13385832;stroke-dashoffset:0;marker-end:url(#Arrow1Lend)"
+     d="m 507.0733,272.57493 h 931.3789 v -91.63866 h -167.1154"
+     id="path3511" />
 </svg>
