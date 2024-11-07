@@ -256,27 +256,27 @@
 <!--            </aside>-->
         </section>
 
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+<!--        <section>-->
+<!--            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>-->
 
-                        aList.filter({ x -> x % 2 == 0 })
+<!--                        aList.filter(<span class="ch">{ x -> x % 2 == 0 }</span>)-->
 
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+<!--            </code><div class="lang">Kotlin</div></pre>-->
+<!--            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>-->
 
-                        aList.filter({ x<span class="ch">: Int</span> -> x % 2 == 0 })
+<!--                        aList.filter({ x<span class="ch">: Int</span> -> x % 2 == 0 })-->
 
-            </code><div class="lang">Kotlin</div></pre>
-            <aside class="notes">
-                <ul>
-                    <li>Inférence type</li>
-                </ul>
-            </aside>
+<!--            </code><div class="lang">Kotlin</div></pre>-->
+<!--            <aside class="notes">-->
+<!--                <ul>-->
+<!--                    <li>Inférence type</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
 <!--            <aside class="notes">-->
 <!--                Kotlin, comme beaucoup de langages aujourd'hui, dispose de capacités d'inférence de type. Ce qui permet-->
 <!--                dans une certaine mesure de s'économiser quelques annotations de type.-->
 <!--            </aside>-->
-        </section>
+<!--        </section>-->
 
         <section>
             <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
@@ -284,7 +284,7 @@
                         aList.filter({ x -> x % 2 == 0 })
 
             </code><div class="lang">Kotlin</div></pre>
-            <pre class="fragment" style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
+            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape="">
 
                         aList.filter({ <span class="ch">it</span> % 2 == 0 })
 
@@ -621,67 +621,67 @@
 <!--            </aside>-->
         </section>
 
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+<!--        <section>-->
+<!--            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>-->
 
-                        val parametricPredicate: (Int) -> (Int) -> Boolean = { x ->
-                            val c = longComputation(x);
-                            { y -> y % c == 0 }
-                        }
+<!--                        val parametricPredicate: (Int) -> (Int) -> Boolean = { x ->-->
+<!--                            val c = longComputation(x);-->
+<!--                            { y -> y % c == 0 }-->
+<!--                        }-->
 
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+<!--            </code><div class="lang">Kotlin</div></pre>-->
+<!--            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>-->
 
-                        fun main() {
-                            val aList = 1..100
-                            val predicate = parametricPredicate(3)
-                            println(aList.filter(predicate))
+<!--                        fun main() {-->
+<!--                            val aList = 1..100-->
+<!--                            val predicate = parametricPredicate(3)-->
+<!--                            println(aList.filter(predicate))-->
 
-                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
-                        }
+<!--                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */-->
+<!--                        }-->
 
-            </code><div class="lang">Kotlin</div></pre>
-            <aside class="notes">
-                <ul>
-                    <li>un pas de plus...</li>
-                </ul>
-            </aside>
+<!--            </code><div class="lang">Kotlin</div></pre>-->
+<!--            <aside class="notes">-->
+<!--                <ul>-->
+<!--                    <li>un pas de plus...</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
 <!--            <aside class="notes">-->
 <!--                Soit dit en passant, on aurait aussi pu faire un pas de plus et dire que « parametricPredicate » est...-->
 <!--            </aside>-->
-        </section>
+<!--        </section>-->
 
-        <section>
-            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>
+<!--        <section>-->
+<!--            <pre style="font-size: 1.1ex; margin-top: 5em"><code class="kotlin" style="max-height: 800px" data-noescape>-->
 
-                        val parametricPredicate: <span class="ch">(Int) -> (Int) -> Boolean</span> = { x ->
-                            val c = longComputation(x);
-                            { y -> y % c == 0 }
-                        }
+<!--                        val parametricPredicate: <span class="ch">(Int) -> (Int) -> Boolean</span> = { x ->-->
+<!--                            val c = longComputation(x);-->
+<!--                            { y -> y % c == 0 }-->
+<!--                        }-->
 
-            </code><div class="lang">Kotlin</div></pre>
-            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>
+<!--            </code><div class="lang">Kotlin</div></pre>-->
+<!--            <pre style="font-size: 1.1ex; margin-top: 1ex; margin-bottom: 100%"><code class="kotlin" style="max-height: 800px" data-noescape>-->
 
-                        fun main() {
-                            val aList = 1..100
-                            val predicate = parametricPredicate(3)
-                            println(aList.filter(predicate))
+<!--                        fun main() {-->
+<!--                            val aList = 1..100-->
+<!--                            val predicate = parametricPredicate(3)-->
+<!--                            println(aList.filter(predicate))-->
 
-                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */
-                        }
+<!--                            /* [9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 99] */-->
+<!--                        }-->
 
-            </code><div class="lang">Kotlin</div></pre>
-            <aside class="notes">
-                <ul>
-                    <li>variable qui reçoit une fonction...</li>
-                    <li>mais bon...</li>
-                </ul>
-            </aside>
+<!--            </code><div class="lang">Kotlin</div></pre>-->
+<!--            <aside class="notes">-->
+<!--                <ul>-->
+<!--                    <li>variable qui reçoit une fonction...</li>-->
+<!--                    <li>mais bon...</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
 <!--            <aside class="notes">-->
 <!--                ... une variable qui reçoit une fonction de Int qui retourne une fonction de Int vers Boolean.-->
 <!--                Mais bon, restons là...-->
 <!--            </aside>-->
-        </section>
+<!--        </section>-->
 
         <section>
             <h1>Lisp 1.5</h1>
@@ -1392,7 +1392,8 @@ fun longComputation(x: Int): Int {
                 </div>
                 <div class="fragment">
                     <div style="grid-column: 2; grid-row: 1/2">
-                        <a href="https://media.githubusercontent.com/media/sarabander/sicp-pdf/master/sicp.pdf"><img src="./images/SICP.png" alt=""></a>
+<!--                        <a href="https://media.githubusercontent.com/media/sarabander/sicp-pdf/master/sicp.pdf"><img src="./images/SICP.png" alt=""></a>-->
+                        <a href="https://dspace.mit.edu/bitstream/handle/1721.1/5753/AIM-443.pdf"><img style="border: thin solid black" src="./images/LambdaTheUltimate.png" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -1405,7 +1406,9 @@ fun longComputation(x: Int): Int {
                     <li>Java, Sun 1994, Oracle depuis 2010.</li>
                     <li>Verse, Epic Games, Simon Peyton-Jones</li>
                     <li>SCHEME 75, Gerald Jay Sussmann « Structure et interprétation des programmes informatiques »</li>
-                </ul>
+                    <li>« λ the ultimate » papers</li>
+                    <li>partit de la liaison lexicale</li>
+                    <li>explication</li>                </ul>
             </aside>
 <!--            <aside class="notes">-->
 <!--                Jusqu'à croiser la route de...-->
@@ -1422,27 +1425,27 @@ fun longComputation(x: Int): Int {
 <!--            </aside>-->
         </section>
 
-        <section>
-            <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto">
-                <div>
-                    <div style="grid-column: 1; grid-row: 1">
-                        <img src="./images/Guy_Steele.jpg" alt="">
-                    </div>
-                    <div style="grid-column: 1; grid-row: 2">Guy L. Steele Jr.</div>
-                </div>
-                <div>
-                    <div style="grid-column: 2; grid-row: 1/2">
-                        <a href="https://dspace.mit.edu/bitstream/handle/1721.1/5753/AIM-443.pdf"><img style="border: thin solid black" src="./images/LambdaTheUltimate.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <aside class="notes">
-                <ul>
-                    <li>« λ the ultimate » papers</li>
-                    <li>partit de la liaison lexicale</li>
-                    <li>explication</li>
-                </ul>
-            </aside>
+<!--        <section>-->
+<!--            <div style="margin-bottom: 100%; margin-top: 3em; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto">-->
+<!--                <div>-->
+<!--                    <div style="grid-column: 1; grid-row: 1">-->
+<!--                        <img src="./images/Guy_Steele.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <div style="grid-column: 1; grid-row: 2">Guy L. Steele Jr.</div>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <div style="grid-column: 2; grid-row: 1/2">-->
+<!--                        <a href="https://dspace.mit.edu/bitstream/handle/1721.1/5753/AIM-443.pdf"><img style="border: thin solid black" src="./images/LambdaTheUltimate.png" alt=""></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <aside class="notes">-->
+<!--                <ul>-->
+<!--                    <li>« λ the ultimate » papers</li>-->
+<!--                    <li>partit de la liaison lexicale</li>-->
+<!--                    <li>explication</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
 <!--            <aside class="notes">-->
 <!--                Il est aussi l'auteur des « λ the ultimate » papers. C'est une série d'articles parfois coécrits avec-->
 <!--                Sussmann, qui prend le partit de la liaison lexicale. Il s'agit de faire en sorte, même au prix d'un-->
@@ -1450,8 +1453,8 @@ fun longComputation(x: Int): Int {
 <!--                avaient au moment de leur définition et non au moment de l'exécution.-->
 <!--                <br><br>-->
 <!--                Et au travers de multiples exemples, il montre toute l'utilité de ce concept.-->
-            </aside>
-        </section>
+<!--            </aside>-->
+<!--        </section>-->
 
         <section>
             <div style="margin-top: 5em; margin-bottom: 100%;  display: grid; grid-template-columns: 3fr 2fr">
@@ -1762,36 +1765,36 @@ fun longComputation(x: Int): Int {
 <!--            </aside>-->
         </section>
 
-        <section>
-            <img style="margin-top: 3em; margin-bottom: 100%" src="./images/OcamlClosures.png" alt="">
-            <aside class="notes">
-                <ul>
-                    <li> valeur fonctionnelle est « évidemment » représenté pas une closure</li>
-                    <li>subtilités récupération mémoire.</li>
-                </ul>
-            </aside>
+<!--        <section>-->
+<!--            <img style="margin-top: 3em; margin-bottom: 100%" src="./images/OcamlClosures.png" alt="">-->
+<!--            <aside class="notes">-->
+<!--                <ul>-->
+<!--                    <li> valeur fonctionnelle est « évidemment » représenté pas une closure</li>-->
+<!--                    <li>subtilités récupération mémoire.</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
 <!--            <aside class="notes">-->
 <!--                Dans le cas d'OCaml, il y est dit qu'une valeur fonctionnelle est « évidemment » représenté pas une closure,-->
 <!--                c'est-à-dire une paire pointeur de code / environnement de liaison des variables. Il y est aussi expliqué qu'elles-->
 <!--                sont allouée dans une space encore différent du tas pour de subtiles raisons de récupération mémoire.-->
 <!--            </aside>-->
-        </section>
+<!--        </section>-->
 
-        <section>
-            <img style="margin-top: 2em; margin-bottom: 100%" src="./images/HaskellClosures.png" alt="">
-            <aside class="notes">
-                <ul>
-                    <li>un peu plus compliqué</li>
-                    <li>langage paresseux</li>
-                    <li>thunk</li>
-                    <li>couple pointeur de code / environnement</li>
-                </ul>
-            </aside>
+<!--        <section>-->
+<!--            <img style="margin-top: 2em; margin-bottom: 100%" src="./images/HaskellClosures.png" alt="">-->
+<!--            <aside class="notes">-->
+<!--                <ul>-->
+<!--                    <li>un peu plus compliqué</li>-->
+<!--                    <li>langage paresseux</li>-->
+<!--                    <li>thunk</li>-->
+<!--                    <li>couple pointeur de code / environnement</li>-->
+<!--                </ul>-->
+<!--            </aside>-->
 <!--            <aside class="notes">-->
 <!--                Pour Haskell, comme le montre ce schéma, c'est un peu plus compliqué, ne serait-ce que du fait de choix de mise en-->
 <!--                œuvre d'un langage paresseux ! Mais si on y prête attention on retrouve encore le couple pointeur de code / environnement.-->
 <!--            </aside>-->
-        </section>
+<!--        </section>-->
 
         <section>
             <h1>Clojure</h1>
