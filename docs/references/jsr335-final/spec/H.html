@@ -1,0 +1,847 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part H: Default Methods</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_H_Default_Methods skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part H: Default Methods</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#H9">9</a>&nbsp;- <a href="#H9.1.1.2">9.1.1.2</a>&nbsp;- <a href="#H9.1.4">9.1.4</a>&nbsp;- <a href="#H9.2">9.2</a>&nbsp;- <a href="#H9.4">9.4</a>&nbsp;- <a href="#H9.4.1">9.4.1</a>&nbsp;- <a href="#H9.4.3">9.4.3</a>&nbsp;- <a href="#H9.6">9.6</a>&nbsp;- <a href="#H9.6.1">9.6.1</a>&nbsp;- <a href="#H8.1.1.1">8.1.1.1</a>&nbsp;- <a href="#H8.1.3">8.1.3</a>&nbsp;- <a href="#H8.1.5">8.1.5</a>&nbsp;- <a href="#H8.4.3.1">8.4.3.1</a>&nbsp;- <a href="#H8.4.8">8.4.8</a>&nbsp;- <a href="#H8.4.8.1">8.4.8.1</a>&nbsp;- <a href="#H8.4.8.2">8.4.8.2</a>&nbsp;- <a href="#H8.4.8.4">8.4.8.4</a>&nbsp;- <a href="#H8.8.7.1">8.8.7.1</a>&nbsp;- <a href="#H15.8">15.8</a>&nbsp;- <a href="#H15.8.3">15.8.3</a>&nbsp;- <a href="#H15.8.4">15.8.4</a>&nbsp;- <a href="#H15.11.2">15.11.2</a>&nbsp;- <a href="#H15.12">15.12</a>&nbsp;- <a href="#H15.12.1">15.12.1</a>&nbsp;- <a href="#H15.12.2.5">15.12.2.5</a>&nbsp;- <a href="#H15.12.3">15.12.3</a>&nbsp;- <a href="#H15.12.4.1">15.12.4.1</a>&nbsp;- <a href="#H15.12.4.4">15.12.4.4</a>&nbsp;- <a href="#H6">6</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>A <i>default method</i> is a method that is declared in an interface with the modifier <code style="background-color:inherit;font-size:medium">default</code>.  Its body provides a default implementation for any class that implements the interface without overriding the method.  This allows new functionality to be added to existing (and perhaps already widely-distributed) interfaces.  More generally, it provides a mechanism for multiple inheritance of behavior.
+</p><p>An interface may also declare <code style="background-color:inherit;font-size:medium">static</code> methods, which work in much the same way as <code style="background-color:inherit;font-size:medium">static</code> methods in classes, except that they are not inherited.  Often, an interface is the most appropriate place to declare methods that produce or manipulate objects of the interface type.
+</p><p>An interface method that is neither <code style="background-color:inherit;font-size:medium">default</code> nor <code style="background-color:inherit;font-size:medium">static</code> is implicitly <code style="background-color:inherit;font-size:medium">abstract</code>.
+</p><p>An interface <em>I</em> inherits from its direct superinterfaces all <code style="background-color:inherit;font-size:medium">abstract</code> and default methods that are members of a superinterface, not overridden by a declaration in <em>I</em>, and not already overridden by another method in a superinterface of <em>I</em>.
+</p><p>Similarly, a class <em>C</em> inherits from its direct superclass and direct superinterfaces all <code style="background-color:inherit;font-size:medium">abstract</code> and default methods that are members of a supertype, not overridden by a declaration in <em>C</em> <i>nor</i> a concrete method inherited from the superclass of <em>C</em>, and not already overridden by another method in a supertype of <em>C</em>.
+</p><p>Notably, this implies that a method inherited from a superclass of <em>C</em> can override a default or <code style="background-color:inherit;font-size:medium">abstract</code> method in a superinterface of <em>C</em>.  We say the superclass method overrides the superinterface method <i>from <em>C</em></i>.  In contrast, an inherited interface method never overrides any methods other than those already overridden at its declaration site.
+</p><p>It is a compile-time error if <em>I</em> or <em>C</em> inherits a default method whose signature is override-equivalent with another method inherited by <em>I</em>. This is the case whether the other method is <code style="background-color:inherit;font-size:medium">abstract</code> or not.
+</p><p>This error condition can be avoided by declaring a new method that overrides, and thus prevents the inheritance of, all conflicting methods.
+</p><p>An overridden default method can be accessed by using a method invocation expression of the form <code style="background-color:inherit;font-size:medium"><em>InterfaceName</em>.super.<em>m</em>()</code>.  The named interface must be a direct superinterface of the type declaration immediately enclosing the expression.
+</p><p>A <code style="background-color:inherit;font-size:medium">this</code> expression may appear in a default method body; its type is the type of the enclosing interface.  Similarly, an anonymous or local class may be declared in a default method body, so the enclosing instance of an inner class may have an interface type.
+</p><p>To avoid confusion with the <code style="background-color:inherit;font-size:medium">default</code> modifier, the access level given implicitly to unmodified declarations in classes is now referred to as <i>package</i> access rather than <i>default</i> access.
+</p>
+<div id="H9"></div>
+<h3> <span class="mw-headline" id="9_Interfaces_.5BModified.5D"> 9 Interfaces [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9" class="external text" rel="nofollow">JLS 9</a></small>
+</p><p>An interface declaration introduces a new reference type whose members are classes, interfaces, constants, and <del>abstract</del> methods.  This type has no <del>implementation</del> <u>instance variables, and typically declares one or more <code style="background-color:inherit;font-size:medium">abstract</code> methods;</u> otherwise unrelated classes can implement <u>the interface</u> by providing implementations for its abstract methods.  <u>Interfaces may not be directly instantiated.</u>
+</p><p>...
+</p><p>An interface may be declared to be a <i>direct extension</i> of one or more other interfaces, meaning that it <del>implicitly specifies</del> <u>inherits</u> all the member types, <del>abstract</del> <u>instance</u> methods, and constants of the interfaces it extends, except for any <u>members that it may override or hide.</u>
+</p><p>A class may be declared to <i>directly implement</i> one or more interfaces, meaning that any instance of the class implements all the <code style="background-color:inherit;font-size:medium">abstract</code> methods specified by the interface or interfaces.  A class necessarily implements all the interfaces that its direct superclasses and direct superinterfaces do.  This (multiple) interface inheritance allows objects to support (multiple) common behaviors without sharing <del>any implementation</del> <u>a superclass</u>.
+</p><p>...
+</p>
+<div id="H9.1.1.2"></div>
+<h3> <span class="mw-headline" id="9.1.1.2_strictfp_Interfaces_.5BModified.5D"> 9.1.1.2 <code style="background-color:inherit;font-size:medium">strictfp</code> Interfaces [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.1.1.2" class="external text" rel="nofollow">JLS 9.1.1.2</a></small>
+</p><p><span class="norm-dynamic">
+The effect of the <code style="background-color:inherit;font-size:medium">strictfp</code> modifier is to make all <code style="background-color:inherit;font-size:medium">float</code> or <code style="background-color:inherit;font-size:medium">double</code> expressions within the interface declaration be explicitly FP-strict (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.4" class="external text" rel="nofollow">15.4</a>).<span class="assertion-id"> [jls-9.1.1.2-100]</span></span>
+</p><p><span class="norm-static">
+This implies that <u>all methods declared in the interface, and</u> all nested types declared in the interface, are implicitly <code style="background-color:inherit;font-size:medium">strictfp</code>.<span class="assertion-id"> [jls-9.1.1.2-110]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous sentence mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.1.3" class="external text" rel="nofollow">8.1.1.3</a>.</div></blockquote>
+<div id="H9.1.4"></div>
+<h3> <span class="mw-headline" id="9.1.4_Interface_Body_and_Member_Declarations_.5BModified.5D"> 9.1.4 Interface Body and Member Declarations [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.1.4" class="external text" rel="nofollow">JLS 9.1.4</a></small>
+</p><p>...
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+InterfaceMemberDeclaration:
+  ConstantDeclaration
+  <del>AbstractMethodDeclaration</del>
+  <u>InterfaceMethodDeclaration</u>
+  ClassDeclaration
+  InterfaceDeclaration
+  ';'
+</pre>
+<p>...
+</p>
+<div id="H9.2"></div>
+<h3> <span class="mw-headline" id="9.2_Interface_Members_.5BModified.5D"> 9.2 Interface Members [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.2" class="external text" rel="nofollow">JLS 9.2</a></small>
+</p><p><span class="norm-static">
+The members of an interface are:<span class="assertion-id"> [jls-9.2-100]</span></span>
+</p>
+<ul>
+<li><span class="norm-static"> Those members declared in the interface.<span class="assertion-id"> [jls-9.2-100-A]</span></span></li>
+<li><span class="norm-static"> Those members inherited from direct superinterfaces.<span class="assertion-id"> [jls-9.2-100-B]</span></span></li>
+<li><span class="norm-static"> If an interface has no direct superinterfaces, then the interface implicitly declares a <code style="background-color:inherit;font-size:medium">public abstract</code> member method <em>m</em> with signature <em>s</em>, return type <em>r</em>, and <code style="background-color:inherit;font-size:medium">throws</code> clause <em>t</em> corresponding to each <code style="background-color:inherit;font-size:medium">public</code> instance method <em>m</em> with signature <em>s</em>, return type <em>r</em>, and <code style="background-color:inherit;font-size:medium">throws</code> clause <em>t</em> declared in <code style="background-color:inherit;font-size:medium">Object</code>, unless <u>an <code style="background-color:inherit;font-size:medium">abstract</code></u> method with the same signature, same return type, and a compatible <code style="background-color:inherit;font-size:medium">throws</code> clause is explicitly declared by the interface.<span class="assertion-id"> [jls-9.2-100-C]</span></span>
+
+<p><span class="norm-error"> It is a compile-time error if the interface explicitly declares such a method <em>m</em> in the case where <em>m</em> is declared to be <code style="background-color:inherit;font-size:medium">final</code> in <code style="background-color:inherit;font-size:medium">Object</code>.<span class="assertion-id"> [jls-9.2-100-C.1]</span></span></p>
+<p><span class="norm-error"> It follows that <u>it</u> is a compile-time error if the interface declares a method with a signature that is override-equivalent (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) to a <code style="background-color:inherit;font-size:medium">public</code> method of <code style="background-color:inherit;font-size:medium">Object</code>, but has a different return type, <del>or</del> <u>has an</u> incompatible <code style="background-color:inherit;font-size:medium">throws</code> clause, <u>or is not <code style="background-color:inherit;font-size:medium">abstract</code></u>.<span class="assertion-id"> [jls-9.2-100-C.2]</span></span></p>
+</li></ul>
+<p><span class="norm-static">
+The interface inherits, from the interfaces it extends, all members of those interfaces, except for fields, classes, and interfaces that it hides, <del>and</del> <u><code style="background-color:inherit;font-size:medium">abstract</code> or default</u> methods that it overrides, <u>and <code style="background-color:inherit;font-size:medium">static</code> methods</u>.<span class="assertion-id"> [jls-9.2-110]</span></span>
+</p><p>Fields, methods, and member types of an interface type may have the same name, since they are used in different contexts and are disambiguated by different lookup procedures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.5" class="external text" rel="nofollow">6.5</a>).  However, this is discouraged as a matter of style.
+</p>
+<div id="H9.4"></div>
+<h3> <span class="mw-headline" id="9.4_Abstract_Method_Declarations_.5BModified.5D"> 9.4 <del>Abstract</del> Method Declarations [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4" class="external text" rel="nofollow">JLS 9.4</a></small>
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+<u>InterfaceMethodDeclaration</u>:
+  <u>InterfaceMethodModifiers<sub>opt</sub></u> TypeParameters<sub>opt</sub> Result
+                      MethodDeclarator Throws<sub>opt</sub> <u>MethodBody</u>
+
+<u>InterfaceMethodModifiers</u>:
+  <u>InterfaceMethodModifier</u>
+  <u>InterfaceMethodModifiers InterfaceMethodModifier</u>
+
+<u>InterfaceMethodModifier</u>: one of
+  Annotation 'public' 'abstract' <u>'default' 'static' 'strictfp'</u>
+</pre>
+<p><u>The following is repeated from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.7" class="external text" rel="nofollow">8.4.7</a> to make the presentation here clearer:</u>
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+<u>MethodBody</u>:
+  <u>Block</u>
+  <u>';'</u>
+</pre>
+<p><span class="norm-error">
+If an annotation <em>a</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.7" class="external text" rel="nofollow">9.7</a>) on a method declaration corresponds to an annotation type <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.6" class="external text" rel="nofollow">9.6</a>) and <em>T</em> has a (meta-)annotation <em>m</em> that corresponds to <code style="background-color:inherit;font-size:medium">java.lang.annotation.Target</code>, then <em>m</em> must have an element whose value is <code style="background-color:inherit;font-size:medium">java.lang.annotation.ElementType.METHOD</code>, or a compile-time error occurs.<span class="assertion-id"> [jls-9.4-110]</span></span>
+</p><p><span class="norm-static">
+Every method declaration in the body of an interface is implicitly <code style="background-color:inherit;font-size:medium">public</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>).<span class="assertion-id"> [jls-9.4-120]</span></span>
+</p><p>It is permitted, but discouraged as a matter of style, to redundantly specify the <code style="background-color:inherit;font-size:medium">public</code> <del>and/or <code style="background-color:inherit;font-size:medium">abstract</code></del> modifier for a method declared in an interface.
+</p><p><span class="norm-static">
+<u>A <i>default method</i> is a method that is declared in an interface with the <code style="background-color:inherit;font-size:medium">default</code> modifier; its body is always represented by a block.  It provides a default implementation for any class that implements the interface without overriding the method.  Default methods are distinct from <i>concrete</i> methods (<a href="H.html#H8.4.3.1" title="Lambda H" class="mw-redirect">8.4.3.1</a>), which are declared in classes.</u><span class="assertion-id"> [jsr335-9.4-125]</span></span>
+</p><p><span class="norm-static">
+<u>An interface can declare <code style="background-color:inherit;font-size:medium">static</code> methods, which are invoked without reference to a particular object.</u><span class="assertion-id"> [jsr335-9.4-127]</span></span>
+</p><p><span class="norm-error">
+<u>It is a compile-time error to use the name of a type parameter of any surrounding declaration in the header or body of a <code style="background-color:inherit;font-size:medium">static</code> method.</u><span class="assertion-id"> [jsr335-9.4-128]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous sentence mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.2" class="external text" rel="nofollow">8.4.3.2</a>.</div></blockquote>
+<p><span class="norm-static">
+<u>An interface method lacking a <code style="background-color:inherit;font-size:medium">default</code> modifier or a <code style="background-color:inherit;font-size:medium">static</code> modifier</u> is implicitly <code style="background-color:inherit;font-size:medium">abstract</code>, so its body is always represented by a semicolon, not a block.  <u>The declaration may optionally include the <code style="background-color:inherit;font-size:medium">abstract</code> keyword.</u><span class="assertion-id"> [jls-9.4-130]</span></span>
+</p><p><span class="norm-dynamic">
+<u>The effect of the <code style="background-color:inherit;font-size:medium">strictfp</code> modifier is to make all <code style="background-color:inherit;font-size:medium">float</code> or <code style="background-color:inherit;font-size:medium">double</code> expressions within the method body be explicitly FP-strict (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.4" class="external text" rel="nofollow">15.4</a>).</u><span class="assertion-id"> [jsr335-9.4-135]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous sentence mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.5" class="external text" rel="nofollow">8.4.3.5</a>.</div></blockquote>
+<p><span class="norm-error">
+It is a compile-time error if the same modifier appears more than once on a method declared in an interface.<span class="assertion-id"> [jls-9.4-200]</span></span>
+</p><p><span class="norm-error">
+<u>It is a compile-time error if a method is declared with more than one of the modifiers <code style="background-color:inherit;font-size:medium">abstract</code>, <code style="background-color:inherit;font-size:medium">default</code>, or <code style="background-color:inherit;font-size:medium">static</code>.</u><span class="assertion-id"> [jsr335-9.4-202]</span></span>
+</p><p><span class="norm-error">
+<u>It is a compile-time error if an abstract method declaration contains the keyword <code style="background-color:inherit;font-size:medium">strictfp</code>.</u><span class="assertion-id"> [jsr335-9.4-205]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a method declared in an interface is declared <u><code style="background-color:inherit;font-size:medium">native</code>, <code style="background-color:inherit;font-size:medium">synchronized</code>, or <code style="background-color:inherit;font-size:medium">final</code></u> <del>because <code style="background-color:inherit;font-size:medium">static</code> methods cannot be <code style="background-color:inherit;font-size:medium">abstract</code></del>.<span class="assertion-id"> [jls-9.4-210]</span></span>
+</p><p><del><span class="norm-error">It is a compile-time error if a method declared in an interface is <code style="background-color:inherit;font-size:medium">strictfp</code> or <code style="background-color:inherit;font-size:medium">native</code> or <code style="background-color:inherit;font-size:medium">synchronized</code> because those keywords describe implementation properties rather than interface properties.<span class="assertion-id"> [jls-9.4-220]</span></span></del>
+</p><p><del>However, a method declared in an interface may be implemented by a method that is declared <code style="background-color:inherit;font-size:medium">strictfp</code> or <code style="background-color:inherit;font-size:medium">native</code> or <code style="background-color:inherit;font-size:medium">synchronized</code> in a class that implements the interface.</del>
+</p><p><del><span class="norm-error">It is a compile-time error if a method declared in an interface is declared <code style="background-color:inherit;font-size:medium">final</code>.<span class="assertion-id"> [jls-9.4-240]</span></span></del>
+</p><p><del>However, a method declared in an interface may be implemented by a method that is declared <code style="background-color:inherit;font-size:medium">final</code> in a class that implements the interface.</del>
+</p><p><span class="norm-error">
+It is a compile-time error for the body of an interface to declare, explicitly or implicitly, two methods with override-equivalent signatures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>).<span class="assertion-id"> [jls-9.4-260]</span></span>
+</p><p>However, an interface may inherit several <u>abstract</u> methods with such signatures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4.1" class="external text" rel="nofollow">9.4.1</a>).
+</p><p><span class="norm-static">
+A method in an interface may be generic.  The rules for type parameters of a generic method in an interface are the same as for a generic method in a class.<span class="assertion-id"> [jls-9.4-300]</span></span>
+</p>
+<div id="H9.4.1"></div>
+<h3> <span class="mw-headline" id="9.4.1_Inheritance_and_Overriding_.5BModified.5D"> 9.4.1 Inheritance and Overriding [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4.1" class="external text" rel="nofollow">JLS 9.4.1</a></small>
+</p><p><span class="norm-static">
+An interface <u><em>I</em></u> <i>inherits</i> from its direct superinterfaces all <u><code style="background-color:inherit;font-size:medium">abstract</code> and default</u> methods <u><em>m</em> for which all of the following are true:</u><span class="assertion-id"> [jls-9.4.1-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>m</em> is a member of a direct superinterface, <em>J</em>, of <em>I</em>.</u><span class="assertion-id"> [jsr335-9.4.1-100-A]</span></span>
+</li><li> <span class="norm-static"> <u>No non-<code style="background-color:inherit;font-size:medium">static</code> method declared in <em>I</em> has a signature that is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m</em>.</u><span class="assertion-id"> [jsr335-9.4.1-100-B]</span></span>
+</li><li> <span class="norm-static"> <u>There exists no method <em>m'</em> that is a member of a direct superinterface, <em>J'</em>, of <em>I</em> (<em>m</em> distinct from <em>m'</em>, <em>J</em> distinct from <em>J'</em>), such that <em>m'</em> overrides the declaration of <em>m</em> from <em>J'</em>.</u><span class="assertion-id"> [jsr335-9.4.1-100-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+<u>An interface does not inherit <code style="background-color:inherit;font-size:medium">static</code> methods from its superinterfaces.</u><span class="assertion-id"> [jsr335-9.4.1-15]</span></span>
+</p><p><span class="norm-static">
+An instance method <em>m<sub>1</sub></em><u>,</u> declared <u>or inherited by</u> an interface <em>I</em><u>,</u> <i>overrides <u>from <em>I</em></u></i> another instance method, <em>m<sub>2</sub></em>, declared in interface <em>J</em><u>,</u> iff both of the following are true:<span class="assertion-id"> [jls-9.4.1.1-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>I</em> is a subinterface of <em>J</em>.<span class="assertion-id"> [jls-9.4.1.1-100-A]</span></span>
+</li><li> <span class="norm-static"> The signature of <em>m<sub>1</sub></em> is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m<sub>2</sub></em>.<span class="assertion-id"> [jls-9.4.1.1-100-B]</span></span>
+</li></ul>
+<p><u>An overridden default method can be accessed by using a method invocation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) that contains the keyword <code style="background-color:inherit;font-size:medium">super</code> qualified by a superinterface name.</u>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous sentence mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.1" class="external text" rel="nofollow">8.4.8.1</a>.</div></blockquote>
+<p><span class="norm-error">
+<u>It is a compile-time error if an interface declares a <code style="background-color:inherit;font-size:medium">static</code> method whose signature is a subsignature of an instance method inherited from a superinterface.</u><span class="assertion-id"> [jsr335-9.4.1-10]</span></span>
+</p><p><span class="norm-error">
+If a method declaration <em>d<sub>1</sub></em> with return type <em>R<sub>1</sub></em> overrides <del>or hides</del> the declaration of another method <em>d<sub>2</sub></em> with return type <em>R<sub>2</sub></em>, then <em>d<sub>1</sub></em> must be return-type-substitutable (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.5" class="external text" rel="nofollow">8.4.5</a>) for <em>d<sub>2</sub></em>, or a compile-time error occurs.<span class="assertion-id"> [jls-9.4.1.2-100]</span></span>
+</p><p><span class="norm-error">
+Furthermore, if <em>R<sub>1</sub></em> is not a subtype of <em>R<sub>2</sub></em>, a compile-time unchecked warning occurs.<span class="assertion-id"> [jls-9.4.1.2-110]</span></span>
+</p><p><span class="norm-error">
+Moreover, a method declaration must not have a <code style="background-color:inherit;font-size:medium">throws</code> clause that conflicts (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.6" class="external text" rel="nofollow">8.4.6</a>) with that of any method that it overrides; otherwise, a compile-time error occurs.<span class="assertion-id"> [jls-9.4.1.2-200]</span></span>
+</p><p><u>The presence or absence of the <code style="background-color:inherit;font-size:medium">strictfp</code> modifier has absolutely no effect on the rules for overriding methods.  For example, it is permitted for a method that is not FP-strict to override an FP-strict method and it is permitted for an FP-strict method to override a method that is not FP-strict.</u>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous paragraph mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.1" class="external text" rel="nofollow">8.4.8.1</a>.</div></blockquote>
+<p>...
+</p><p>It is possible for an interface to inherit several methods with override-equivalent signatures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>).
+</p><p><span class="norm-error">
+<u>It is a compile-time error if an interface <em>I</em> inherits a default method whose signature is override-equivalent with another method inherited by <em>I</em>.  This is the case whether the other method is <code style="background-color:inherit;font-size:medium">abstract</code> or <code style="background-color:inherit;font-size:medium">default</code>.</u><span class="assertion-id"> [jsr335-9.4.1-50]</span></span>
+</p><p><span class="norm-static">
+<u>Otherwise, all the inherited methods are <code style="background-color:inherit;font-size:medium">abstract</code>, and</u> the interface is considered to inherit all the methods.<span class="assertion-id"> [jls-9.4.1.3-100]</span></span>
+</p><p><span class="norm-error">
+However, one of the inherited methods must be return-type-substitutable for every other inherited method; otherwise, a compile-time error occurs.  (The <code style="background-color:inherit;font-size:medium">throws</code> clauses do not cause errors in this case.)<span class="assertion-id"> [jls-9.4.1.3-110]</span></span>
+</p><p><u>These error conditions can be avoided by declaring a new method that overrides, and thus prevents the inheritance of, all conflicting methods.</u>
+</p><p>There might be several paths by which the same method declaration is inherited from an interface.  This fact causes no difficulty and never, of itself, results in a compile-time error.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The example stating that "methods declared in interfaces are <code style="background-color:inherit;font-size:medium">abstract</code> and thus contain no implementation" should be removed and replaced to include examples of default methods overriding abstract methods and vice versa.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>
+<p>The third clause in the inheritance definition prevents a subinterface from re-inheriting a method that has already been overridden by another of its superinterfaces.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface I {
+  default String name() { return &quot;unnamed&quot;; }
+}
+interface J extends I {
+  default String name() { return getClass().getName(); }
+}
+interface K extends I {}
+
+interface Child extends J, K {}
+</pre>
+<p>The interface <code style="background-color:inherit;font-size:medium">Child</code> above inherits <code style="background-color:inherit;font-size:medium">J.name</code> from <code style="background-color:inherit;font-size:medium">J</code> but not <code style="background-color:inherit;font-size:medium">I.name</code> from <code style="background-color:inherit;font-size:medium">K</code>, because <code style="background-color:inherit;font-size:medium">I.name</code> has already been overridden by <code style="background-color:inherit;font-size:medium">J</code>.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>Naturally, when two different default methods with matching signatures are inherited by a subinterface, there is a behavioral conflict; we actively detect this conflict and notify the developer with an error, rather than waiting for the problem to arise when a concrete class is compiled.
+</p><p>Similarly, when an abstract and a default method with matching signatures are inherited, we produce an error.  In this case, it would be possible to give priority to one or the other—perhaps we would assume that the default method provides a reasonable implementation for the abstract method, too.  But this is risky, since other than the coincidental name and signature, we have no reason to believe that the default method behaves consistently with the abstract method's contract—the default method may not have even existed when the subinterface was originally developed.  It is safer in this situation to ask the user to actively assert that the default implementation is appropriate (via an overriding declaration).
+</p><p>In contrast, the longstanding behavior for inherited concrete instance methods in classes is that they override abstract methods declared in interfaces (<a href="H.html#H8.4.8" title="Lambda H" class="mw-redirect">see 8.4.8</a>).  The same argument about potential contract violation applies here, but in this case there is an inherent imbalance between classes and interfaces.  We prefer, in order to preserve the independent nature of class hierarchies, to minimize class-interface clashes by simply giving priority to concrete instance methods.
+</p>
+</div></li></ol></div></blockquote>
+<div id="H9.4.3"></div>
+<h3> <span class="mw-headline" id="9.4.3_Interface_Method_Body_.5BNew.5D"> 9.4.3 Interface Method Body [New] </span></h3>
+<p>A default method has a block body.  This block of code provides an implementation of the method in the event that a class implements the interface but does not provide its own implementation of the method.
+</p><p>A static method also has a block body, which provides the implementation of the method.
+</p><p><span class="norm-error">
+It is a compile-time error if an interface method declaration is <code style="background-color:inherit;font-size:medium">abstract</code> (explicitly or implicitly) and has a block for its body.<span class="assertion-id"> [jsr335-9.4.3-10]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if an interface method declaration is <code style="background-color:inherit;font-size:medium">default</code> or <code style="background-color:inherit;font-size:medium">static</code> and has a semicolon for its body.<span class="assertion-id"> [jsr335-9.4.3-12]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The above mimic <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.7" class="external text" rel="nofollow">8.4.7</a>.</div></blockquote>
+<p><span class="norm-error">
+It is a compile-time error if a default method is override-equivalent with a non-<code style="background-color:inherit;font-size:medium">private</code> method of the class <code style="background-color:inherit;font-size:medium">Object</code>, because any class implementing the interface will inherit its own implementation of the method.<span class="assertion-id"> [jsr335-9.4.3-20]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error for the body of a <code style="background-color:inherit;font-size:medium">static</code> method to attempt to reference the current object using the keyword <code style="background-color:inherit;font-size:medium">this</code> or the keyword <code style="background-color:inherit;font-size:medium">super</code>.<span class="assertion-id"> [jsr335-9.4.3-22]</span></span>
+</p><p><span class="norm-error">
+If a method is declared <code style="background-color:inherit;font-size:medium">void</code>, then its body must not contain any <code style="background-color:inherit;font-size:medium">return</code> statement (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.17" class="external text" rel="nofollow">14.17</a>) that has an <em>Expression</em>, or a compile-time error occurs.<span class="assertion-id"> [jsr335-9.4.3-30]</span></span>
+</p><p><span class="norm-error">
+If a method is declared to have a return type, then every <code style="background-color:inherit;font-size:medium">return</code> statement (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.17" class="external text" rel="nofollow">14.17</a>) in its body must have an <em>Expression</em>, or a compile-time error occurs.<span class="assertion-id"> [jsr335-9.4.3-40]</span></span>
+</p><p><span class="norm-error">
+If a method is declared to have a return type, then a compile-time error occurs if the body of the method can complete normally (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.1" class="external text" rel="nofollow">14.1</a>).<span class="assertion-id"> [jsr335-9.4.3-50]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous three sentences mimic <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.7" class="external text" rel="nofollow">8.4.7</a>.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>The prohibition against declaring one of the <code style="background-color:inherit;font-size:medium">Object</code> methods as a default method may be surprising.  There are, after all, cases like <code style="background-color:inherit;font-size:medium">java.util.List</code> in which the behavior of <code style="background-color:inherit;font-size:medium">toString</code> and <code style="background-color:inherit;font-size:medium">equals</code> are precisely defined.  The motivation becomes clearer, however, when some broader design decisions are well-understood:
+</p>
+<ul><li> First, methods inherited from a superclass are allowed to override methods inherited from superinterfaces.  So every implementing class would automatically override an interface's <code style="background-color:inherit;font-size:medium">toString</code> default.  This is Java's longstanding behavior, and it's not something we wish to change with the design of default methods, because that would conflict with the goal of allowing interfaces to unobtrusively evolve, only providing default behavior when the class, through its normal hierarchy, doesn't already have it.
+</li><li> Second, interfaces do <i>not</i> inherit from <code style="background-color:inherit;font-size:medium">Object</code>, even though they implicitly declare many of the same methods (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.2" class="external text" rel="nofollow">9.2</a>).  So there is no common ancestor for <code style="background-color:inherit;font-size:medium">toString</code> declared in <code style="background-color:inherit;font-size:medium">Object</code> and <code style="background-color:inherit;font-size:medium">toString</code> declared in an interface; at best, if both were candidates for inheritance by a class, they would conflict.  Working around this problem would require awkward commingling of the class and interface inheritance trees.
+</li><li> Third, use cases for declaring <code style="background-color:inherit;font-size:medium">Object</code> methods in interfaces typically assume a linear interface hierarchy; the feature does not generalize very well to multiple inheritance scenarios.
+</li><li> Fourth, the <code style="background-color:inherit;font-size:medium">Object</code> methods are so fundamental that it seems dangerous to allow an arbitrary superinterface to silently add a default method that changes their behavior.
+</li></ul>
+<p>The interface is free, however, to define another method that provides behavior useful for classes that override the <code style="background-color:inherit;font-size:medium">Object</code> methods.  For example, the <code style="background-color:inherit;font-size:medium">java.util.List</code> interface could declare a <code style="background-color:inherit;font-size:medium">elementString</code> method that produces the string described by the contract of <code style="background-color:inherit;font-size:medium">toString</code>; implementors could then simply delegate to this method.
+</p>
+For further discussion, see <a href="http://mail.openjdk.java.net/pipermail/lambda-dev/2013-March/008435.html" class="external free" rel="nofollow">http://mail.openjdk.java.net/pipermail/lambda-dev/2013-March/008435.html</a>.</div></blockquote>
+<div id="H9.6"></div>
+<h3> <span class="mw-headline" id="9.6_Annotation_Types_.5BModified.5D"> 9.6 Annotation Types [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.6" class="external text" rel="nofollow">JLS 9.6</a></small>
+</p><p>...
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+AnnotationTypeDeclaration:
+  InterfaceModifiers<sub>opt</sub> '@' 'interface' Identifier AnnotationTypeBody
+
+AnnotationTypeBody:
+  '{' AnnotationType<del>Element</del><u>Member</u>Declarations<sub>opt</sub> '}'
+
+AnnotationType<del>Element</del><u>Member</u>Declarations:
+  AnnotationType<del>Element</del><u>Member</u>Declaration
+  AnnotationType<del>Element</del><u>Member</u>Declarations AnnotationType<del>Element</del><u>Member</u>Declaration
+</pre>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The renamings and restructurings in this and the next section are simply for clarification.</div></blockquote>
+<div id="H9.6.1"></div>
+<h3> <span class="mw-headline" id="9.6.1_Annotation_Type_Elements_.5BModified.5D"> 9.6.1 Annotation Type Elements [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.6.1" class="external text" rel="nofollow">JLS 9.6.1</a></small>
+</p><p>...
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+AnnotationType<del>Element</del><u>Member</u>Declaration:
+  <u>AnnotationTypeElementDeclaration</u>
+  ConstantDeclaration
+  ClassDeclaration
+  InterfaceDeclaration
+  <del>EnumDeclaration</del>
+  <del>AnnotationTypeDeclaration</del>
+  ';'
+  
+<u>AnnotationTypeElementDeclaration:</u>
+  <del>AbstractMethodModifiers<sub>opt</sub></del> <u>AnnotationTypeElementModifiers<sub>opt</sub></u>
+              Type Identifier '(' ')' Dims<sub>opt</sub> DefaultValue<sub>opt</sub> ';'
+
+<u>AnnotationTypeElementModifiers:</u>
+  <u>AnnotationTypeElementModifier</u>
+  <u>AnnotationTypeElementModifiers AnnotationTypeElementModifier</u>
+  
+<u>AnnotationTypeElementModifier: one of</u>
+  <u>Annotation 'public' 'abstract'</u>
+  
+DefaultValue:
+  'default' ElementValue
+</pre>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>
+<p>A few changes are made here for clarification, but the only substantial change is to introduce the production <code style="background-color:inherit;font-size:medium">AnnotationTypeElementModifiers</code> to replace <code style="background-color:inherit;font-size:medium">AbstractMethodModifiers</code> (now renamed <code style="background-color:inherit;font-size:medium">InterfaceMethodModifiers</code>).  This is to avoid allowing the new interface method modifiers on annotation type element declarations.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>While we've expanded the variety of methods that can be declared in interfaces in general (including <code style="background-color:inherit;font-size:medium">static</code> methods and <code style="background-color:inherit;font-size:medium">default</code> methods), to avoid confusion we prefer <i>not</i> to expand the variety of methods that can be declared in annotation types.
+</p><p>Note that is is still possible, however, for an annotation type to inherit a default method from its implicit superinterface, <code style="background-color:inherit;font-size:medium">Annotation</code> (though no such default method exists currently).
+</p>
+</div></li></ol></div></blockquote>
+<div id="H8.1.1.1"></div>
+<h3> <span class="mw-headline" id="8.1.1.1_abstract_Classes_.5BModified.5D"> 8.1.1.1 <code style="background-color:inherit;font-size:medium">abstract</code> Classes [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.1.1" class="external text" rel="nofollow">JLS 8.1.1.1</a></small>
+</p><p>An <code style="background-color:inherit;font-size:medium">abstract</code> class is a class that is incomplete, or to be considered incomplete.
+</p><p><span class="norm-static">
+Normal classes may have <code style="background-color:inherit;font-size:medium">abstract</code> methods (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.1" class="external text" rel="nofollow">8.4.3.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4" class="external text" rel="nofollow">9.4</a>), that is, methods that are declared but not yet implemented, only if they are <code style="background-color:inherit;font-size:medium">abstract</code> classes.<span class="assertion-id"> [jls-8.1.1.1-110]</span></span>
+</p><p><span class="norm-error">
+If a normal class that is not <code style="background-color:inherit;font-size:medium">abstract</code> contains an <code style="background-color:inherit;font-size:medium">abstract</code> method, then a compile-time error occurs.<span class="assertion-id"> [jls-8.1.1.1-120]</span></span>
+</p><p>...
+</p><p><span class="norm-static">
+A class <em>C</em> has <code style="background-color:inherit;font-size:medium">abstract</code> methods if <del>any</del> <u>either</u> of the following is true:<span class="assertion-id"> [jls-8.1.1.1-200]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>Any of the member methods (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.2" class="external text" rel="nofollow">8.2</a>) of <em>C</em>—either declared or inherited—is <code style="background-color:inherit;font-size:medium">abstract</code>.</u><span class="assertion-id"> [jsr335-8.1.1.1-200-A]</span></span>
+</li><li> <span class="norm-static"> Any of <em>C</em>'s superclasses has an <code style="background-color:inherit;font-size:medium">abstract</code> method <u>declared with package access, and there exists no method that overrides the <code style="background-color:inherit;font-size:medium">abstract</code> method from <em>C</em> or from a superclass of <em>C</em>.</u><span class="assertion-id"> [jsr335-8.1.1.1-200-B]</span></span>
+</li></ul>
+<p><span class="norm-error">
+It is a compile-time error if an attempt is made to create an instance of an <code style="background-color:inherit;font-size:medium">abstract</code> class using a class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>).<span class="assertion-id"> [jls-8.1.1.1-300]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+These changes are not meant to substantively change the definition of an abstract class, but rather to clarify the existing meaning.  We interpret the previous clause requiring that, for every abstract method, <em>C</em> "declares [or] inherits a method that implements it", to mean that the abstract method is overridden in <em>C</em> or in some supertype of <em>C</em> (and thus the abstract method would not be inherited by <em>C</em>).</div></blockquote>
+<div id="H8.1.3"></div>
+<h3> <span class="mw-headline" id="8.1.3_Inner_Classes_and_Enclosing_Instances_.5BModified.5D"> 8.1.3 Inner Classes and Enclosing Instances [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.3" class="external text" rel="nofollow">JLS 8.1.3</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+An inner class <em>C</em> is a <i>direct inner class of a class <u>or interface</u> <em>O</em></i> if <em>O</em> is the immediately lexically enclosing <del>class</del> <u>type declaration</u> of <em>C</em> and the declaration of <em>C</em> does not occur in a static context.<span class="assertion-id"> [jls-8.1.3-300]</span></span>
+</p><p><span class="norm-static">
+A class <em>C</em> is an <i>inner class of class <u>or interface</u> <em>O</em></i> if it is either a direct inner class of <em>O</em> or an inner class of an inner class of <em>O</em>.<span class="assertion-id"> [jls-8.1.3-310]</span></span>
+</p><p><span class="norm-static">
+A class <u>or interface</u> <em>O</em> is the <i>zeroth lexically enclosing <del>class</del> <u>type declaration</u></i> of itself.<span class="assertion-id"> [jls-8.1.3-320]</span></span>
+</p><p><span class="norm-static">
+A class <u>or interface</u> <em>O</em> is the <i>n'th lexically enclosing <del>class</del> <u>type declaration</u> of a class <em>C</em></i> if it is the immediately enclosing <del>class</del> <u>type declaration</u> of the <em>n-1</em>'th lexically enclosing <del>class</del> <u>type declaration</u> of <em>C</em>.<span class="assertion-id"> [jls-8.1.3-330]</span></span>
+</p><p><span class="norm-static">
+An instance <em>i</em> of a direct inner class <em>C</em> of a class <u>or interface</u> <em>O</em> is associated with an instance of <em>O</em>, known as the <i>immediately enclosing instance</i> of <em>i</em>.  The immediately enclosing instance of an object, if any, is determined when the object is created (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.2" class="external text" rel="nofollow">15.9.2</a>).<span class="assertion-id"> [jls-8.1.3-400]</span></span>
+</p><p>...
+</p><p><span class="norm-static">
+For every superclass <em>S</em> of <em>C</em> which is itself a direct inner class of a class <u>or interface</u> <em>SO</em>, there is an instance of <em>SO</em> associated with <em>i</em>, known as the <i>immediately enclosing instance of <em>i</em> with respect to <em>S</em></i>.  The immediately enclosing instance of an object with respect to its class' direct superclass, if any, is determined when the superclass constructor is invoked via an explicit constructor invocation statement.<span class="assertion-id"> [jls-8.1.3-440]</span></span>
+</p><p><span class="norm-static">
+When an inner class (whose declaration does not occur in a static context) refers to an instance variable that is a member of a lexically enclosing class, the variable of the corresponding lexically enclosing instance is used.<span class="assertion-id"> [jls-8.1.3-500]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>Similar changes to the <i>lexically enclosing class</i> terminology should be made in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.7.1" class="external text" rel="nofollow">8.8.7.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.1" class="external text" rel="nofollow">13.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.2" class="external text" rel="nofollow">15.9.2</a>.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>It is unusual, but possible, for an enclosing type of an inner class to be an interface.  Such a class can only be declared inside of a default method body (<a href="H.html#H9.4" title="Lambda H" class="mw-redirect">9.4</a>).  This includes, for example, the following cases:
+</p>
+<ul><li> An anonymous class declared in a default method body.
+</li><li> A local class declared in a default method body.
+</li><li> A member class of an anonymous class declared in a default method body.
+</li></ul>
+Note that only the outermost enclosing type declaration of an inner class can be an interface—all other enclosing type declarations are inner classes, and it is impossible to declare an "inner interface."</div></blockquote>
+<div id="H8.1.5"></div>
+<h3> <span class="mw-headline" id="8.1.5_Superinterfaces_.5BModified.5D"> 8.1.5 Superinterfaces [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.5" class="external text" rel="nofollow">JLS 8.1.5</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+Unless the class being declared is <code style="background-color:inherit;font-size:medium">abstract</code>, <u>all the abstract member methods</u> of each direct superinterface must be implemented <u>(<a href="H.html#H8.4.8.1" title="Lambda H" class="mw-redirect">8.4.8.1</a>)</u> either by a declaration in this class or by an existing method declaration inherited from the direct superclass <u>or a direct superinterface</u>, because a class that is not abstract is not permitted to have abstract methods (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.1.1" class="external text" rel="nofollow">8.1.1.1</a>).<span class="assertion-id"> [jls-8.1.5-500]</span></span>
+</p><p><u>Each default method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4.3" class="external text" rel="nofollow">9.4.3</a>) of a superinterface of the class may optionally be overridden by a method in the class; if not, the default method is typically inherited and its behavior is as specified by its default body.</u>
+</p><p><span class="norm-static">
+It is permitted for a single method declaration in a class to implement methods of more than one superinterface.<span class="assertion-id"> [jls-8.1.5-510]</span></span>
+</p><p>...
+</p>
+<div id="H8.4.3.1"></div>
+<h3> <span class="mw-headline" id="8.4.3.1_abstract_Methods_.5BAddendum.5D"> 8.4.3.1 <code style="background-color:inherit;font-size:medium">abstract</code> Methods [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.1" class="external text" rel="nofollow">JLS 8.4.3.1</a></small>
+</p><p><span class="norm-static">
+If a method declared by a class is not <code style="background-color:inherit;font-size:medium">abstract</code>, it may be referred to as a <i>concrete</i> method.<span class="assertion-id"> [jsr335-8.4.3.1-10]</span></span>
+</p>
+<div id="H8.4.8"></div>
+<h3> <span class="mw-headline" id="8.4.8_Inheritance.2C_Overriding.2C_and_Hiding_.5BModified.5D"> 8.4.8 Inheritance, Overriding, and Hiding [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8" class="external text" rel="nofollow">JLS 8.4.8</a></small>
+</p><p><span class="norm-static">
+A class <em>C</em> <i>inherits</i> from its direct superclass <del>and direct superinterfaces</del> all <u>concrete (both <code style="background-color:inherit;font-size:medium">static</code> and instance)</u> <del><code style="background-color:inherit;font-size:medium">abstract</code> and non-<code style="background-color:inherit;font-size:medium">abstract</code></del> methods <u><em>m</em></u> of the superclass <del>and superinterfaces</del> <u>for which all of the following are true:</u><span class="assertion-id"> [jls-8.4.8-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>m</em> is a member of the direct superclass of <em>C</em>.</u><span class="assertion-id"> [jsr335-8.4.8-100-A]</span></span>
+</li><li> <span class="norm-static"> <u><em>m</em> is</u> <code style="background-color:inherit;font-size:medium">public</code>, <code style="background-color:inherit;font-size:medium">protected</code>, or declared with <del>default</del> <u>package</u> access in the same package as <em>C</em>.<span class="assertion-id"> [jsr335-8.4.8-100-B]</span></span>
+</li><li> <span class="norm-static"> <u>No method declared in <em>C</em> has a signature that is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m</em>.</u><span class="assertion-id"> [jsr335-8.4.8-100-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+<u>A class does not inherit <code style="background-color:inherit;font-size:medium">static</code> methods from its superinterfaces.</u><span class="assertion-id"> [jsr335-8.4.8-15]</span></span>
+</p><p><span class="norm-static">
+<u>A class <em>C</em> <i>inherits</i> from its direct superclass and direct superinterfaces all <code style="background-color:inherit;font-size:medium">abstract</code> and default (<a href="H.html#H9.4" title="Lambda H" class="mw-redirect">9.4</a>) methods <em>m</em> for which all of the following are true:</u><span class="assertion-id"> [jsr335-8.4.8-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>m</em> is a member of the direct superclass or a direct superinterface, <em>D</em>, of <em>C</em>.</u><span class="assertion-id"> [jsr335-8.4.8-20-A]</span></span>
+</li><li> <span class="norm-static"> <u><em>m</em> is</u> <code style="background-color:inherit;font-size:medium">public</code>, <code style="background-color:inherit;font-size:medium">protected</code>, or declared with <del>default</del> <u>package</u> access in the same package as <em>C</em>.<span class="assertion-id"> [jsr335-8.4.8-20-E]</span></span>
+</li><li> <span class="norm-static"> <u>No method declared in <em>C</em> has a signature that is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m</em>.</u><span class="assertion-id"> [jsr335-8.4.8-20-B]</span></span>
+</li><li> <span class="norm-static"> <u>No concrete method inherited by <em>C</em> from its direct superclass has a signature that is a subsignature of the signature of <em>m</em>.</u><span class="assertion-id"> [jsr335-8.4.8-20-C]</span></span>
+</li><li> <span class="norm-static"> <u>There exists no method <em>m'</em> that is a member of the direct superclass or a direct superinterface, <em>D'</em>, of <em>C</em> (<em>m</em> distinct from <em>m'</em>, <em>D</em> distinct from <em>D'</em>), such that <em>m'</em> overrides the declaration of <em>m</em> from <em>D'</em>.</u><span class="assertion-id"> [jsr335-8.4.8-20-D]</span></span>
+</li></ul>
+<p><del><span class="norm-static">If the method not inherited is declared in a class, or the method not inherited is declared in an interface and the new declaration is <code style="background-color:inherit;font-size:medium">abstract</code>, then the new declaration is said to <i>override</i> it.<span class="assertion-id"> [jls-8.4.8-200]</span></span></del>
+</p><p><del><span class="norm-static">If the method not inherited is <code style="background-color:inherit;font-size:medium">abstract</code> and the new declaration is not <code style="background-color:inherit;font-size:medium">abstract</code>, then the new declaration is said to <i>implement</i> it.<span class="assertion-id"> [jls-8.4.8-210]</span></span></del>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> This definition of inheritance achieves two goals:
+<ul><li> Clarify that it is possible for an inherited concrete method to prevent the inheritance of an abstract or default method.  (Later we will assert that the concrete method overrides the abstract or default method "from <em>C</em>".)  This has always been the case (for abstract methods), but it has been poorly specified.
+</li><li> Introduce, for classes, the rule that one supertype method can prevent the inheritance of another supertype method if the former  "already" overrides the latter.  This is the same as the rule for interfaces, and prevents conflicts in which multiple default methods are inherited, even though one implementation is clearly meant to supersede the other.
+</li></ul>
+</div></li>
+<li style="margin-bottom:12px;"><div> The definitions of "override" and "implement" retracted here are inconsistent with those in the following section.  There doesn't seem to be a need to provide a separate definition here.
+</div></li></ol></div></blockquote>
+<div id="H8.4.8.1"></div>
+<h3> <span class="mw-headline" id="8.4.8.1_Overriding_.28by_Instance_Methods.29_.5BModified.5D"> 8.4.8.1 Overriding (by Instance Methods) [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.1" class="external text" rel="nofollow">JLS 8.4.8.1</a></small>
+</p><p><span class="norm-static">
+An instance method <em>m<sub>1</sub></em>, declared <u>or inherited by</u> class <em>C</em>, <u><i>overrides from <em>C</em></i></u> another <del>instance</del> method <em>m<sub>2</sub></em>, declared in class <em>A</em>, iff all of the following are true:<span class="assertion-id"> [jls-8.4.8.1-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>A</em> is a superclass of <em>C</em></u> <del><em>C</em> is a subclass of <em>A</em></del>.<span class="assertion-id"> [jls-8.4.8.1-100-A]</span></span>
+</li><li> <span class="norm-static"> <u><em>C</em> does not inherit <em>m<sub>2</sub></em>.</u><span class="assertion-id"> [jsr335-8.4.8.1-100-D]</span></span>
+</li><li> <span class="norm-static"> The signature of <em>m<sub>1</sub></em> is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m<sub>2</sub></em>.<span class="assertion-id"> [jls-8.4.8.1-100-B]</span></span>
+</li><li> <span class="norm-static"> <u>One of</u> <del>Either</del>:<span class="assertion-id"> [jls-8.4.8.1-100-C]</span></span>
+<ul><li> <span class="norm-static"> <em>m<sub>2</sub></em> is <code style="background-color:inherit;font-size:medium">public</code>.<span class="assertion-id"> [jls-8.4.8.1-100-C-1]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is</u> <code style="background-color:inherit;font-size:medium">protected</code>.<span class="assertion-id"> [jsr335-8.4.8.1-100-C-3]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is</u> declared with <u>package</u> <del>default</del> access in the same package as <em>C</em>, <u>and either <em>C</em> declares <em>m<sub>1</sub></em> or <em>m<sub>2</sub></em> is a member of the direct superclass of <em>C</em></u>.<span class="assertion-id"> [jsr335-8.4.8.1-100-C-4]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is declared with package access and <em>m<sub>1</sub></em> overrides <em>m<sub>2</sub></em> from some superclass of <em>C</em>.</u><span class="assertion-id"> [jsr335-8.4.8.1-100-C-5]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is declared with package access</u> and <em>m<sub>1</sub></em> overrides a method <em>m<sub>3</sub></em> <u>from <em>C</em></u> (<em>m<sub>3</sub></em> distinct from <em>m<sub>1</sub></em>, <em>m<sub>3</sub></em> distinct from <em>m<sub>2</sub></em>), such that <em>m<sub>3</sub></em> overrides <em>m<sub>2</sub></em> <u>from some superclass of <em>C</em></u>.<span class="assertion-id"> [jls-8.4.8.1-100-C-2]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-static">
+<u>An instance method <em>m<sub>1</sub></em>, declared or inherited by class <em>C</em>, <i>overrides from <em>C</em></i> another method <em>m<sub>2</sub></em>, declared in an interface <em>I</em>, iff all of the following are true:</u><span class="assertion-id"> [jsr335-8.4.8.1-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u><em>I</em> is a superinterface of <em>C</em>.</u><span class="assertion-id"> [jsr335-8.4.8.1-20-A]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>2</sub></em> is an <code style="background-color:inherit;font-size:medium">abstract</code> or default method.</u><span class="assertion-id"> [jsr335-8.4.8.1-20-C]</span></span>
+</li><li> <span class="norm-static"> <u>The signature of <em>m<sub>1</sub></em> is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m<sub>2</sub></em>.</u><span class="assertion-id"> [jsr335-8.4.8.1-20-B]</span></span>
+</li></ul>
+<p><span class="norm-static">
+<u>If a non-<code style="background-color:inherit;font-size:medium">abstract</code> method <em>m<sub>1</sub></em> overrides an <code style="background-color:inherit;font-size:medium">abstract</code> method <em>m<sub>2</sub></em> from a class <em>C</em></u>, then <em>m<sub>1</sub></em> is said to <i>implement</i> <u><em>m<sub>2</sub></em> <i>from <em>C</em></i></u>.<span class="assertion-id"> [jsr335-8.4.8.1-30]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> Previously, the overriding relationship between a method declared in a class and a method declared in an interface was unspecified.  That has been fixed.
+</div></li>
+<li style="margin-bottom:12px;"><div> Most of the other changes here are to extend the notion of overriding to handle methods that override another from some subclass of their declaring class.  This can happen in two ways:
+<ul><li> A concrete instance method in a generic superclass can, under certain parameterizations, have the same signature as an abstract method in that class.  In this case, the concrete method is inherited and the abstract method is not (as described above).  The inherited method should then be considered to override its abstract peer <i>from <em>C</em></i>.  (This scenario is complicated by package access: if <em>C</em> is in a different package, then <em>m<sub>2</sub></em> would not have been inherited anyway, and should not be considered overridden.)
+</li><li> An inherited superclass method can override a superinterface method.  (Happily, package access is not a concern here.)
+</li></ul>
+</div></li></ol></div></blockquote>
+<div id="H8.4.8.2"></div>
+<h3> <span class="mw-headline" id="8.4.8.2_Hiding_.28by_Class_Methods.29_.5BModified.5D"> 8.4.8.2 Hiding (by Class Methods) [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.2" class="external text" rel="nofollow">JLS 8.4.8.2</a></small>
+</p><p><span class="norm-static">
+If a class <u><em>C</em></u> declares <u>or inherits</u> a <code style="background-color:inherit;font-size:medium">static</code> method <em>m</em>, then <del>the declaration</del> <em>m</em> is said to <i>hide <u>in <em>C</em></u></i> any method <em>m'</em>, where the signature of <em>m</em> is a subsignature (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>) of the signature of <em>m'</em>, in the superclasses and superinterfaces of <del>the class</del> <u><em>C</em></u> that would otherwise be accessible to code in <del>the class</del> <u><em>C</em></u>.<span class="assertion-id"> [jls-8.4.8.2-100]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a <code style="background-color:inherit;font-size:medium">static</code> method hides an instance method.<span class="assertion-id"> [jls-8.4.8.2-110]</span></span>
+</p><p>...
+</p>
+<div id="H8.4.8.4"></div>
+<h3> <span class="mw-headline" id="8.4.8.4_Inheriting_Methods_with_Override-Equivalent_Signatures_.5BModified.5D"> 8.4.8.4 Inheriting Methods with Override-Equivalent Signatures [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.4" class="external text" rel="nofollow">JLS 8.4.8.4</a></small>
+</p><p>It is possible for a class to inherit multiple methods with override-equivalent signatures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>).
+</p><p><span class="norm-error">
+It is a compile-time error if a class <em>C</em> inherits a concrete method whose signature is <del>a subsignature of</del> <u>override-equivalent with</u> another <del>concrete</del> method inherited by <em>C</em>.  <del>This can happen if a superclass is generic, and it has two methods that were distinct in the generic declaration, but have the same signature in the particular invocation used.</del><span class="assertion-id"> [jls-8.4.8.4-110]</span></span>
+</p><p><span class="norm-error">
+<u>It is a compile-time error if a class <em>C</em> inherits a default method whose signature is override-equivalent with another method inherited by <em>C</em>, unless there exists an <code style="background-color:inherit;font-size:medium">abstract</code> method declared in a superclass of <em>C</em> and inherited by <em>C</em> that is override-equivalent with the two methods.</u><span class="assertion-id"> [jls-8.4.8.4-112]</span></span>
+</p><p><u>Note that this exception does not apply if all override-equivalent <code style="background-color:inherit;font-size:medium">abstract</code> methods inherited by <em>C</em> were declared in interfaces.</u>
+</p><p><del><span class="norm-static">Otherwise, there are two possible cases:<span class="assertion-id"> [jls-8.4.8.4-120]</span></span></del>
+</p><p><del><span class="norm-static">If one of the inherited methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, ...<span class="assertion-id"> [jls-8.4.8.4-120-A]</span></span></del>
+</p><p><span class="norm-static">
+<del>If all the inherited methods are <code style="background-color:inherit;font-size:medium">abstract</code></del> <u>Otherwise, the set of override-equivalent methods consists of at least one <code style="background-color:inherit;font-size:medium">abstract</code> method and zero or more default methods;</u> then the class is necessarily an <code style="background-color:inherit;font-size:medium">abstract</code> class and is considered to inherit all the <del><code style="background-color:inherit;font-size:medium">abstract</code></del> methods.<span class="assertion-id"> [jls-8.4.8.4-120-B]</span></span>
+</p><p><span class="norm-error">
+One of the inherited methods must be return-type-substitutable for every other inherited method; otherwise, a compile-time error occurs.  (The <code style="background-color:inherit;font-size:medium">throws</code> clauses do not cause errors in this case.)<span class="assertion-id"> [jls-8.4.8.4-120-B.1]</span></span>
+</p><p><u>These error conditions can be avoided by declaring a new method that overrides, and thus prevents the inheritance of, all conflicting methods.</u>
+</p><p>There might be several paths by which the same method declaration <del>might be</del> <u>is</u> inherited from an interface.  This fact causes no difficulty and never, of itself, results in a compile-time error.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> This is a dramatic simplification of this section, because the special rule allowing a concrete inherited method to "override" an abstract inherited method was eliminated in favor of a more accurate definition of inheritance (<a href="H.html#H8.4.8" title="Lambda H" class="mw-redirect">8.4.8</a>).  The special rules for this scenario are no longer necessary, because they are covered by the usual rules for overriding (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.3" class="external text" rel="nofollow">8.4.8.3</a>).
+<p>This section is now small enough that it may be preferable to merge it with another section.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> An exception to the strict default-abstract and default-default conflict rules is made when an <code style="background-color:inherit;font-size:medium">abstract</code> method is declared in a superclass: this assertion of abstract-ness coming from the superclass hierarchy essentially trumps the default, making the default method act as if it were abstract.  However, the abstract superclass method does not override the default method(s), because interfaces are still allowed to refine the <i>signature</i> of the abstract method coming from the class hierarchy.
+</div></li></ol></div></blockquote>
+<div id="H15.8"></div>
+<h3> <span class="mw-headline" id="15.8_Primary_Expressions_.5BModified.5D"> 15.8 Primary Expressions [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8" class="external text" rel="nofollow">JLS 15.8</a></small>
+</p><p>...
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+PrimaryNoNewArray:
+  Literal
+  Type '.' 'class'
+  'void' '.' 'class'
+  'this'
+  <del>ClassName</del> <u>TypeName</u> '.' 'this'
+  ...
+</pre>
+<p>...
+</p>
+<div id="H15.8.3"></div>
+<h3> <span class="mw-headline" id="15.8.3_this_.5BModified.5D"> 15.8.3 <code style="background-color:inherit;font-size:medium">this</code> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.3" class="external text" rel="nofollow">JLS 15.8.3</a></small>
+</p><p><span class="norm-error">
+The keyword <code style="background-color:inherit;font-size:medium">this</code> may be used only in the body of an instance method, <u>default method</u>, instance initializer, or constructor, or in the initializer of an instance variable of a class.  If it appears anywhere else, a compile-time error occurs.<span class="assertion-id"> [jls-15.8.3-100]</span></span>
+</p><p><span class="norm-dynamic">
+When used as a primary expression, the keyword <code style="background-color:inherit;font-size:medium">this</code> denotes a value that is a reference to the object for which the instance <u>or default</u> method was invoked (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>), or to the object being constructed.<span class="assertion-id"> [jls-15.8.3-200]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>Additional text about lambda expressions was added here in Part B, <a href="B.html#B15.8.3" title="Lambda B" class="mw-redirect">15.8.3</a>.</div></blockquote>
+<p><span class="norm-static">
+The type of <code style="background-color:inherit;font-size:medium">this</code> is the class <u>or interface type <em>T</em></u> within which the keyword <code style="background-color:inherit;font-size:medium">this</code> occurs.<span class="assertion-id"> [jls-15.8.3-210]</span></span>
+</p><p><span class="norm-dynamic">
+At run-time, the class of the actual object referred to may be <u><em>T</em>, if it is a class type, or a class that is a subtype of <em>T</em></u>.<span class="assertion-id"> [jls-15.8.3-220]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+Default methods provide the unique ability to access <code style="background-color:inherit;font-size:medium">this</code> inside of an interface.  (All other interface members are either abstract methods or <code style="background-color:inherit;font-size:medium">static</code>.  As a result, it is possible for <code style="background-color:inherit;font-size:medium">this</code> to have an interface type.</div></blockquote>
+<div id="H15.8.4"></div>
+<h3> <span class="mw-headline" id="15.8.4_Qualified_this_.5BModified.5D"> 15.8.4 Qualified <code style="background-color:inherit;font-size:medium">this</code> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.4" class="external text" rel="nofollow">JLS 15.8.4</a></small>
+</p><p>Any lexically enclosing instance (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.3" class="external text" rel="nofollow">8.1.3</a>) can be referred to by explicitly qualifying the keyword <code style="background-color:inherit;font-size:medium">this</code>.
+</p><p><span class="norm-static">
+Let <del><em>C</em></del> <u><em>T</em></u> be the <del>class</del> <u>type</u> denoted by <del><em>ClassName</em></del> <u><em>TypeName</em></u>.  Let <em>n</em> be an integer such that <del><em>C</em></del> <u><em>T</em></u> is the <em>n</em>'th lexically enclosing <del>class</del> <u>type declaration</u> of the class <u>or interface</u> in which the qualified <code style="background-color:inherit;font-size:medium">this</code> expression appears.<span class="assertion-id"> [jls-15.8.4-110]</span></span>
+</p><p><span class="norm-dynamic">
+The value of an expression of the form <em><del>ClassName</del> <u>TypeName</u> <code style="background-color:inherit;font-size:medium">. this</code></em> is the <em>n</em>'th lexically enclosing instance of <code style="background-color:inherit;font-size:medium">this</code>.<span class="assertion-id"> [jls-15.8.4-120]</span></span>
+</p><p><span class="norm-static">
+The type of the expression is <del><em>C</em></del> <u><em>T</em></u>.<span class="assertion-id"> [jls-15.8.4-200]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if the current class <u>or interface</u> is not an inner class of <del><em>C</em></del> <u><em>T</em></u> or <del><em>C</em></del> <u><em>T</em></u> itself.<span class="assertion-id"> [jls-15.8.4-210]</span></span>
+</p>
+<div id="H15.11.2"></div>
+<h3> <span class="mw-headline" id="15.11.2_Accessing_Superclass_Members_using_super_.5BModified.5D"> 15.11.2 Accessing Superclass Members using <code style="background-color:inherit;font-size:medium">super</code> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.11.2" class="external text" rel="nofollow">JLS 15.11.2</a></small>
+</p><p>...
+</p><p><span class="norm-error">
+The forms using the keyword <code style="background-color:inherit;font-size:medium">super</code> are valid only in an instance method, instance initializer, constructor, or in the initializer of an instance variable of a class.  If they appear anywhere else, a compile-time error occurs.<span class="assertion-id"> [jls-15.11.2-200]</span></span>
+</p><p>These are exactly the same situations in which the keyword <code style="background-color:inherit;font-size:medium">this</code> may be used <u>in a class declaration</u> (<a href="H.html#H15.8.3" title="Lambda H" class="mw-redirect">15.8.3</a>).
+</p><p>...
+</p>
+<div id="H15.12"></div>
+<h3> <span class="mw-headline" id="15.12_Method_Invocation_Expressions_.5BModified.5D"> 15.12 Method Invocation Expressions [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">JLS 15.12</a></small>
+</p><p>A method invocation expression is used to invoke a class or instance method.
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+MethodInvocation:
+  MethodName '(' ArgumentList<sub>opt</sub> ')'
+  Primary '.' NonWildTypeArguments<sub>opt</sub> Identifier '(' ArgumentList<sub>opt</sub> ')'
+  'super' '.' NonWildTypeArguments<sub>opt</sub> Identifier '(' ArgumentList<sub>opt</sub> ')'
+  <del>ClassName</del> <u>TypeName</u> '.' 'super' '.'
+          NonWildTypeArguments<sub>opt</sub> Identifier '(' ArgumentList<sub>opt</sub> ')'
+  TypeName '.' NonWildTypeArguments Identifier '(' ArgumentList<sub>opt</sub> ')'
+</pre>
+<p>...
+</p>
+<div id="H15.12.1"></div>
+<h3> <span class="mw-headline" id="15.12.1_Compile-Time_Step_1:_Determine_Class_or_Interface_to_Search_.5BModified.5D"> 15.12.1 Compile-Time Step 1: Determine Class or Interface to Search [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.1" class="external text" rel="nofollow">JLS 15.12.1</a></small>
+</p><p><span class="norm-static">
+The first step in processing a method invocation at compile time is to figure out the name of the method to be invoked and which class or interface to check for definitions of methods of that name.  There are several cases to consider, depending on the form that precedes the left parenthesis, as follows.<span class="assertion-id"> [jls-15.12.1-100]</span></span>
+</p>
+<ul>
+<li><span class="norm-static"> If the form is <em>MethodName</em>, then there are three subcases:<span class="assertion-id"> [jls-15.12.1-100-A]</span></span><ul>
+
+<li><span class="norm-static"> If it is a simple name, that is, just an <em>Identifier</em>, then ...<span class="assertion-id"> [jls-15.12.1-100-A-1]</span></span></li>
+<li><span class="norm-static"> If it is a qualified name of the form <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> Identifier</em>, then the name of the method is the <em>Identifier</em> and the <del>class</del> <u>type</u> to search is the one named by the <em>TypeName</em>.<span class="assertion-id"> [jls-15.12.1-100-A-2]</span></span>
+
+<p><del><span class="norm-error"> If <em>TypeName</em> is the name of an interface rather than a class, then a compile-time error occurs, because this form can invoke only <code style="background-color:inherit;font-size:medium">static</code> methods and interfaces have no <code style="background-color:inherit;font-size:medium">static</code> methods.<span class="assertion-id"> [jls-15.12.1-100-A-2.1]</span></span></del></p>
+</li>
+<li><span class="norm-static"> In all other cases, the qualified name has the form <em>FieldName <code style="background-color:inherit;font-size:medium">.</code> Identifier</em>. ...<span class="assertion-id"> [jls-15.12.1-100-A-3]</span></span></li>
+</ul></li>
+<li><span class="norm-static">If the form is <em>Primary <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, ...<span class="assertion-id"> [jls-15.12.1-100-B]</span></span></li>
+<li><span class="norm-static">
+If the form is <em><code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then the name of the method is the <em>Identifier</em> and the class to be searched is the superclass of the class whose declaration contains the method invocation.<span class="assertion-id"> [jls-15.12.1-100-C]</span></span>
+
+<p><span class="norm-error">
+Let <em>T</em> be the type declaration immediately enclosing the method invocation.  It is a compile-time error if <em>T</em> is the class <code style="background-color:inherit;font-size:medium">Object</code> or <em>T</em> is an interface.<span class="assertion-id"> [jls-15.12.1-100-C.1]</span></span>
+</p></li>
+<li><span class="norm-static">
+If the form is <em><del>ClassName</del> <u>TypeName</u> <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then the name of the method is the <em>Identifier</em>.<span class="assertion-id"> [jls-15.12.1-100-D]</span></span>
+
+<p><span class="norm-error">
+<u>It is a compile-time error if <em>TypeName</em> denotes neither a class nor an interface.</u><span class="assertion-id"> [jsr335-15.12.1-100-Y]</span></span>
+</p>
+<p><span class="norm-static">
+<u>If <em>TypeName</em> denotes a class, <em>C</em>, then</u> the class to be searched is the superclass of <u><em>C</em></u>.<span class="assertion-id"> [jls-15.12.1-100-D']</span></span>
+</p>
+<p><span class="norm-error">
+It is a compile-time error if <em>C</em> is not a lexically enclosing class of the current class.<span class="assertion-id"> [jls-15.12.1-100-D.1]</span></span>
+</p>
+<p><span class="norm-error">
+It is a compile-time error if <em>C</em> is the class <code style="background-color:inherit;font-size:medium">Object</code>.<span class="assertion-id"> [jls-15.12.1-100-D.2]</span></span>
+</p>
+<p><span class="norm-static">
+<u>Otherwise, <em>TypeName</em> denotes the interface to be searched, <em>I</em>.</u><span class="assertion-id"> [jsr335-15.12.1-100-Z]</span></span>
+</p>
+<p><span class="norm-error">
+<u>Let <em>T</em> be the type declaration immediately enclosing the method invocation.  It is a compile-time error if <em>I</em> is not a direct superinterface of <em>T</em>, or if there exists some other direct superclass or direct superinterface of <em>T</em>, <em>J</em>, such that <em>J</em> is a subtype of <em>I</em>.</u><span class="assertion-id"> [jsr335-15.12.1-100-Z1]</span></span>
+</p>
+<p><del><span class="norm-error"> Let <em>T</em> be the type declaration immediately enclosing the method invocation.  It is a compile-time error if <em>T</em> is the class <code style="background-color:inherit;font-size:medium">Object</code> or <em>T</em> is an interface.<span class="assertion-id"> [jls-15.12.1-100-D.3]</span></span></del></p></li>
+<li><span class="norm-static">
+If the form is <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments Identifier</em>, then the name of the method is the <em>Identifier</em> and the <del>class</del> <u>type</u> to be searched is the <del>class <em>C</em> denoted</del> <u>enclosing class type or direct superinterface type referenced</u>  by <em>TypeName</em>.<span class="assertion-id"> [jls-15.12.1-100-E]</span></span>
+
+<p><del><span class="norm-error"> If <em>TypeName</em> is the name of an interface rather than a class, then a compile-time error occurs, because this form can invoke only <code style="background-color:inherit;font-size:medium">static</code> methods and interfaces have no <code style="background-color:inherit;font-size:medium">static</code> methods.<span class="assertion-id"> [jls-15.12.1-100-E.1]</span></span></del></p></li>
+</ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>The <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code></em> syntax is overloaded: traditionally, the name refers to a lexically enclosing class, and the target is the superclass of this class (i.e., as if the invocation were an unqualified <code style="background-color:inherit;font-size:medium">super</code> from the lexically enclosing class).
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+class Superclass { void foo() { System.out.println(&quot;Hi&quot;); } }
+
+class Subclass1 extends Superclass {
+  void foo() { throw new UnsupportedOperationException(); }
+  Runnable tweak = new Runnable() {
+    void run() {
+      Subclass1.super.foo(); // gets the 'println' behavior
+    }
+  };
+}
+</pre>
+<p>To support invocation of default methods in superinterfaces, the name may also refer to a direct superinterface of the current class or interface, and the target is that superinterface.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Superinterface { default void foo() { System.out.println(&quot;Hi&quot;); } }
+
+class Subclass2 implements Superinterface {
+  void foo() { throw new UnsupportedOperationException(); }
+  void tweak() {
+    Superinterface.super.foo(); // gets the 'println' behavior
+  }
+}
+</pre>
+<p>No syntax supports a combination of these forms—invoking a superinterface method of a lexically enclosing class (i.e., as if the invocation were of the form <em>Interface <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code></em> from the lexically enclosing class).
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+class Subclass3 implements Superinterface {
+  void foo() { throw new UnsupportedOperationException(); }
+  Runnable tweak = new Runnable() {
+    void run() {
+      Subclass3.Superinterface.super.foo(); // NOT SUPPORTED
+    }
+  };
+}
+</pre>
+There is unlikely to be much need for such syntax; the workaround is to introduce a private method in the lexically enclosing class that performs the interface <code style="background-color:inherit;font-size:medium">super</code> call.</div></blockquote>
+<div id="H15.12.2.5"></div>
+<h3> <span class="mw-headline" id="15.12.2.5_Choosing_the_Most_Specific_Method_.5BModified.5D"> 15.12.2.5 Choosing the Most Specific Method [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.5" class="external text" rel="nofollow">JLS 15.12.2.5</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+It is possible that no method is the most specific, because there are two or more methods that are maximally specific.  In this case:<span class="assertion-id"> [jls-15.12.2.5-530]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If all the maximally specific methods have override-equivalent signatures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.2" class="external text" rel="nofollow">8.4.2</a>), then:<span class="assertion-id"> [jls-15.12.2.5-530-A]</span></span>
+<ul><li> <span class="norm-static"> If exactly one of the maximally specific methods is <del>not declared <code style="background-color:inherit;font-size:medium">abstract</code></del> <u>concrete</u>, it is the most specific method.<span class="assertion-id"> [jls-15.12.2.5-530-A-1]</span></span>
+</li><li> <span class="norm-static"> Otherwise, if all the maximally specific methods are <del>declared</del> <code style="background-color:inherit;font-size:medium">abstract</code> <u>or default</u>, and the signatures of all the maximally specific methods have the same erasure (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.6" class="external text" rel="nofollow">4.6</a>), then the most specific method is chosen arbitrarily among the subset of the maximally specific methods that have the most specific return type.<span class="assertion-id"> [jls-15.12.2.5-530-A-2]</span></span><p><span class="norm-static"> However, the most specific method is considered <u>i) to be <code style="background-color:inherit;font-size:medium">abstract</code>, and ii)</u> to throw a checked exception if and only if that exception or its erasure is declared in the <code style="background-color:inherit;font-size:medium">throws</code> clauses of each of the maximally specific methods.<span class="assertion-id"> [jls-15.12.2.5-530-A-2.1]</span></span></p>
+</li></ul>
+</li><li> <span class="norm-error"> Otherwise, we say the method invocation is <i>ambiguous</i>, and a compile-time error occurs.<span class="assertion-id"> [jls-15.12.2.5-530-B]</span></span>
+</li></ul>
+<div id="H15.12.3"></div>
+<h3> <span class="mw-headline" id="15.12.3_Compile-Time_Step_3:_Is_the_Chosen_Method_Appropriate.3F_.5BModified.5D"> 15.12.3 Compile-Time Step 3: Is the Chosen Method Appropriate? [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">JLS 15.12.3</a></small>
+</p><p>...
+</p><p><span class="norm-error">
+<u>If the method invocation has, before the left parenthesis, the form <em>ExpressionName <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> or <em>Primary <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then the compile-time declaration must not be a <code style="background-color:inherit;font-size:medium">static</code> method declared in an interface, or a compile-time error occurs.</u><span class="assertion-id"> [jsr335-15.12.3-10]</span></span>
+</p><p>...
+</p><p><span class="norm-error">
+If the method invocation has, before the left parenthesis, the form <em><del>ClassName</del> <u>TypeName</u> <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">.</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then:<span class="assertion-id"> [jls-15.12.3-140]</span></span>
+</p>
+<ul><li> <span class="norm-error"> If the compile-time declaration is <code style="background-color:inherit;font-size:medium">abstract</code>, a compile-time error occurs.<span class="assertion-id"> [jls-15.12.3-140-A]</span></span>
+</li><li> <span class="norm-error"> If the method invocation occurs in a static context, a compile-time error occurs.<span class="assertion-id"> [jls-15.12.3-140-B]</span></span>
+</li><li> <del><span class="norm-error"> Otherwise, let <em>C</em> be the class denoted by <em>ClassName</em>.  If the invocation is not directly enclosed by <em>C</em> or an inner class of <em>C</em>, then a compile-time error occurs.<span class="assertion-id"> [jls-15.12.3-140-C]</span></span></del>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous check is redundant: the same error is asserted in <a href="H.html#H15.12.1" title="Lambda H" class="mw-redirect">15.12.1</a>.</div></blockquote>
+<ul><li> <span class="norm-error"> <u>Otherwise, if the <em>TypeName</em> denotes an interface, let <em>T</em> be the type declaration immediately enclosing the method invocation.  A compile-time error occurs if there exists a method, distinct from the compile-time declaration, that overrides (<a href="H.html#H9.4.1" title="Lambda H" class="mw-redirect">9.4.1</a>) the compile-time declaration from a direct superclass or direct superinterface of <em>T</em>.</u><span class="assertion-id"> [jsr335-15.12.3-140-D]</span></span>
+</li></ul>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+In the case that a superinterface overrides a method declared in a grandparent interface, this rule prevents the child from "skipping" the override by simply adding the grandparent to its list of direct superinterfaces.  The appropriate way to access functionality of a grandparent is through the direct superinterface, and only if that interface chooses to expose the desired behavior.  (Alternately, the developer is free to define his own additional superinterface that exposes the desired behavior with a <code style="background-color:inherit;font-size:medium">super</code> method invocation.)</div></blockquote>
+<div id="H15.12.4.1"></div>
+<h3> <span class="mw-headline" id="15.12.4.1_Compute_Target_Reference_.28If_Necessary.29_.5BModified.5D"> 15.12.4.1 Compute Target Reference (If Necessary) [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.1" class="external text" rel="nofollow">JLS 15.12.4.1</a></small>
+</p><p><span class="norm-dynamic">
+There are several cases to consider, depending on which of the five productions for <em>MethodInvocation</em> (<a href="H.html#H15.12" title="Lambda H" class="mw-redirect">15.12</a>) is involved:<span class="assertion-id"> [jls-15.12.4.1-100]</span></span>
+</p><p>...
+</p>
+<ul><li> <span class="norm-dynamic"> If the fourth production for <em>MethodInvocation</em>, <em><del>ClassName</del> <u>TypeName</u> <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code></em>, is involved, then <u>if <em>TypeName</em> denotes a class,</u> the target reference is the value of <em><del>ClassName</del> <u>TypeName</u> <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">this</code></em>; <u>otherwise, the target reference is the value of <code style="background-color:inherit;font-size:medium">this</code></u>.<span class="assertion-id"> [jls-15.12.4.1-120-D]</span></span>
+</li></ul>
+<p>...
+</p>
+<div id="H15.12.4.4"></div>
+<h3> <span class="mw-headline" id="15.12.4.4_Locate_Method_to_Invoke_.5BModified.5D"> 15.12.4.4 Locate Method to Invoke [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.4" class="external text" rel="nofollow">JLS 15.12.4.4</a></small>
+</p><p>...
+</p><p><span class="norm-dynamic">
+The dynamic method lookup uses the following procedure to search class <em>S</em>, and then the superclasses <u>and superinterfaces</u> of class <em>S</em>, as necessary, for method <em>m</em>.<span class="assertion-id"> [jls-15.12.4.4-230]</span></span>
+</p><p><span class="norm-dynamic">
+Let <em>X</em> be the compile-time type of the target reference of the method invocation.  Then:<span class="assertion-id"> [jls-15.12.4.4-240]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> If class <em>S</em> contains a declaration for a <del>non-<code style="background-color:inherit;font-size:medium">abstract</code></del> method named <em>m</em> with the same descriptor (same number of parameters, the same parameter types, and the same return type) required by the method invocation as determined at compile time (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">15.12.3</a>), then:<span class="assertion-id"> [jls-15.12.4.4-240-A]</span></span>
+<ul><li> <span class="norm-dynamic"> If the invocation mode is <code style="background-color:inherit;font-size:medium">super</code> or <code style="background-color:inherit;font-size:medium">interface</code>, then this is the method to be invoked, and the procedure terminates.<span class="assertion-id"> [jls-15.12.4.4-240-A-1]</span></span>
+</li><li> <span class="norm-dynamic"> If the invocation mode is <code style="background-color:inherit;font-size:medium">virtual</code>, and <u>the accessibility of <em>m</em> is such that</u> the declaration in <em>S</em> <del>overrides</del> <u>can override</u> (<a href="H.html#H8.4.8.1" title="Lambda H" class="mw-redirect">8.4.8.1</a>) <em>X.m</em>, then the method declared in <em>S</em> is the method to be invoked, and the procedure terminates.<span class="assertion-id"> [jls-15.12.4.4-240-A-2]</span></span>
+</li><li> <del><span class="norm-error"> If the invocation mode is <code style="background-color:inherit;font-size:medium">virtual</code>, and the declaration in <em>S</em> does not override <em>X.m</em>, and moreover <em>X.m</em> is declared <code style="background-color:inherit;font-size:medium">abstract</code>, then an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> is thrown.<span class="assertion-id"> [jls-15.12.4.4-240-A-3]</span></span></del>
+</li></ul>
+</li><li> <span class="norm-dynamic"> Otherwise, if <em>S</em> has a superclass, <del>this same</del> <u>the</u> lookup procedure <u>of steps 1 and 2</u> is performed recursively using the direct superclass of <em>S</em> in place of <em>S</em>; the method to be invoked, <u>if any,</u> is the result of the recursive invocation of this lookup procedure.<span class="assertion-id"> [jls-15.12.4.4-240-B]</span></span>
+</li><li> <span class="norm-dynamic"> <u>If no method is found by the previous two steps, the superinterfaces of <em>S</em> are searched for a suitable method.  A set of candidates is considered with the following properties: i) each method is declared in a (direct or indirect) superinterface of <em>S</em>; ii) each method has the name and descriptor required by the method invocation; iii) each method is non-<code style="background-color:inherit;font-size:medium">static</code>; iv) for each method, where the method's declaring interface is <em>I</em>, there is no other method satisfying (i) through (iii) that is declared in a subinterface of <em>I</em>.  If this set contains a <code style="background-color:inherit;font-size:medium">default</code> method, one such method is the method to be invoked.  Otherwise, an <code style="background-color:inherit;font-size:medium">abstract</code> method in the set is selected as the method to be invoked.</u><span class="assertion-id"> [jsr335-15.12.4.4-240-C]</span></span>
+</li></ul>
+<p><span class="norm-error"> <u>After dynamic method lookup, various errors may occur:</u><span class="assertion-id"> [jsr335-15.12.4.4-242]</span></span>
+</p>
+<ul><li> <span class="norm-error"> <u>If the method to invoke is <code style="background-color:inherit;font-size:medium">abstract</code>, an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> is thrown.</u><span class="assertion-id"> [jsr335-15.12.4.4-242-A]</span></span>
+</li><li> <span class="norm-error"> <u>If the method to invoke is <code style="background-color:inherit;font-size:medium">default</code>, and more than one <code style="background-color:inherit;font-size:medium">default</code> method appears in the set of candidates in step 3, above, an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code> is thrown.</u><span class="assertion-id"> [jsr335-15.12.4.4-242-B]</span></span>
+</li><li> <span class="norm-error"> <u>If the invocation mode is <code style="background-color:inherit;font-size:medium">interface</code> and the selected method is not <code style="background-color:inherit;font-size:medium">public</code>, an <code style="background-color:inherit;font-size:medium">IllegalAccessError</code> is thrown.</u><span class="assertion-id"> [jsr335-15.12.4.4-242-C]</span></span>
+</li></ul>
+<p>The above procedure <del>(if it terminates without error)</del> will find a non-<code style="background-color:inherit;font-size:medium">abstract</code>, accessible method to invoke, provided that all classes and interfaces in the program have been consistently compiled.  However, if this is not the case, then <del>various errors may occur.  The specification of</del> <u>additional details of</u> the behavior of a Java virtual machine <del>under these circumstances is</del> <u>are</u> given by <i>The Java Virtual Machine Specification</i>.
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>The substantial change here is to explain how a default method may be selected for invocation, and it mirrors the JVM selection behavior described in <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>.  Additional changes are made as bug fixes, for correctness.  Specifically:
+</p>
+<ul><li> It was incorrect to say that only non-<code style="background-color:inherit;font-size:medium">abstract</code> methods would be matched by the search.
+</li><li> Because overriding, as defined in <a href="H.html#H8.4.8.1" title="Lambda H" class="mw-redirect">8.4.8.1</a>, may involve generic substitution and other type analysis, it is more precise to say simply that <code style="background-color:inherit;font-size:medium">virtual</code> invocation will test for appropriate accessibility.
+</li><li> When, during a <code style="background-color:inherit;font-size:medium">virtual</code> search, a matching method does not override <em>m</em>, it is not the case that an error occurs—instead, the search continues.
+</li><li> Given consistently-compiled classes, the type checker has already proven that no runtime error will occur.  So there is no need for the "if it terminates without error" qualifier.</div></blockquote>
+</li></ul>
+<div id="H6"></div>
+<h3> <span class="mw-headline" id="6_Names_.5BModified.5D"> 6 Names [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6" class="external text" rel="nofollow">JLS 6</a></small>
+</p><p>...
+</p><p>Access control (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>) can be specified in a class, interface, method, or field declaration to control when <i>access</i> to a member is allowed.  Access is a different concept from scope.  Access specified the part of the program text within which the declared entity can be referred to be a qualified name, a field access expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.11" class="external text" rel="nofollow">15.11</a>), or a method invocation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) in which the method is not specified by a simple name.  <u>In the absence of an access modifier, most declarations have package access, allowing access</u> anywhere within the package that contains its declaration; other possibilities are <code style="background-color:inherit;font-size:medium">public</code>, <code style="background-color:inherit;font-size:medium">protected</code>, and <code style="background-color:inherit;font-size:medium">private</code>.
+</p><p>...
+</p>
+<div id="H6.6.1"></div>
+<h3> <span class="mw-headline" id="6.6.1_Determining_Accessibility_.5BModified.5D"> 6.6.1 Determining Accessibility [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6.1" class="external text" rel="nofollow">JLS 6.6.1</a></small>
+</p>
+<ul><li> <span class="norm-static"> A package is always accessible.<span class="assertion-id"> [jls-6.6.1-100-A]</span></span>
+</li><li> <span class="norm-static"> If a class or interface type is declared <code style="background-color:inherit;font-size:medium">public</code>, then it may be accessed by any code, provided that the compilation unit (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.3" class="external text" rel="nofollow">7.3</a>) in which it is declared is observable.<span class="assertion-id"> [jls-6.6.1-100-B]</span></span><p><span class="norm-static"> If a <del>top level</del> class or interface type is <del>not declared <code style="background-color:inherit;font-size:medium">public</code></del> <u>declared with package access</u>, then it may be accessed only from within the package in which it is declared.<span class="assertion-id"> [jls-6.6.1-100-B.1]</span></span></p><p><span class="norm-static"> <u>A class or interface declared without an access modifier implicitly has package access.</u><span class="assertion-id"> [jsr335-6.6.1-100-B.2]</span></span></p>
+</li><li> <span class="norm-static"> An array type is accessible if and only if its element type is accessible.<span class="assertion-id"> [jls-6.6.1-100-C]</span></span>
+</li><li> <span class="norm-static"> A member (class, interface, field, or method) of a reference <del>(class, interface, or array)</del> type or a constructor of a class type is accessible only if the type is accessible and the member or constructor is declared to permit access:<span class="assertion-id"> [jls-6.6.1-100-D]</span></span>
+<ul><li> <span class="norm-static"> If the member or constructor is declared <code style="background-color:inherit;font-size:medium">public</code>, then access is permitted.<span class="assertion-id"> [jls-6.6.1-100-D-1]</span></span><p><span class="norm-static"> All members of interfaces <u>lacking access modifiers</u> are implicitly <code style="background-color:inherit;font-size:medium">public</code>.<span class="assertion-id"> [jls-6.6.1-100-D-1.1]</span></span></p>
+</li><li> <span class="norm-static"> Otherwise, if the member or constructor is declared <code style="background-color:inherit;font-size:medium">protected</code>, then access is permitted only when one of the following is true:<span class="assertion-id"> [jls-6.6.1-100-D-2]</span></span>
+<ul><li> <span class="norm-static"> Access to the member or constructor occurs from within the package containing the class in which the protected member or constructor is declared.<span class="assertion-id"> [jls-6.6.1-100-D-2-1]</span></span>
+</li><li> <span class="norm-static"> Access is correct as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6.2" class="external text" rel="nofollow">6.6.2</a>.<span class="assertion-id"> [jls-6.6.1-100-D-2-2]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> Otherwise, <u>if the member or constructor is declared with package access, then access</u> is permitted only when the access occurs from within the package in which the type is declared.<span class="assertion-id"> [jls-6.6.1-100-D-4]</span></span><p><span class="norm-static"> <u>A class member or constructor declared without an access modifier implicitly has package access.</u><span class="assertion-id"> [jsr335-6.6.1-100-D-4.1]</span></span>
+</li><li> <span class="norm-static"> Otherwise, <del>if</del> the member or constructor is declared <code style="background-color:inherit;font-size:medium">private</code>, <del>then</del> <u>and</u> access is permitted if and only if it occurs within the body of the top level class (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.6" class="external text" rel="nofollow">7.6</a>) that encloses the declaration of the member or constructor.<span class="assertion-id"> [jls-6.6.1-100-D-3]</span></span>
+</li></ul>
+</li></ul>
+<p>...
+</p><p>Example 6.6-4. Access to <del>Default</del> <u>Package</u>-Access Fields, Methods, and Constructors
+</p><p>If none of the access modifiers <code style="background-color:inherit;font-size:medium">public</code>, <code style="background-color:inherit;font-size:medium">protected</code>, or <code style="background-color:inherit;font-size:medium">private</code> are specified, a class member or constructor <u>has package access: it</u> is accessible throughout the package that contains the declaration of the class in which the class member is declared, but the class member or constructor is not accessible in any other package.
+</p><p>If a <code style="background-color:inherit;font-size:medium">public</code> class has a method or constructor with <del>default</del> <u>package</u> access, then this method or constructor is not accessible to or inherited by a subclass declared outside this package.
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>Incidental uses of the word "default" or "none" in reference to accessibility should also be replaced with "package" in the following sections: <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.4" class="external text" rel="nofollow">4.4</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.4.1" class="external text" rel="nofollow">7.4.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.8.3" class="external text" rel="nofollow">8.4.8.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-12.html#jls-12.3.3" class="external text" rel="nofollow">12.3.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13" class="external text" rel="nofollow">13</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.4.7" class="external text" rel="nofollow">13.4.7</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.1" class="external text" rel="nofollow">15.12.2.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.3" class="external text" rel="nofollow">15.12.4.3</a>.</div></blockquote>
+<div id="H7.6"></div>
+<h3> <span class="mw-headline" id="7.6_Top_Level_Type_Declarations_.5BModified.5D"> 7.6 Top Level Type Declarations [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.6" class="external text" rel="nofollow">JLS 7.6</a></small>
+</p><p>...
+</p><p><del>By default</del> <u>In the absence of an access modifier</u>, the top level types declared in a package <u>have package access: they</u> are accessible only within the compilation units of that package<u>.</u> <del>but</del> A type may be declared to be <code style="background-color:inherit;font-size:medium">public</code> to grant access to the type from code in other packages (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.1" class="external text" rel="nofollow">8.1.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.1.1" class="external text" rel="nofollow">9.1.1</a>).
+</p><p>...
+</p>
+<div id="H13.5.3"></div>
+<h3> <span class="mw-headline" id="13.5.3_Interface_Members_.5BModified.5D"> 13.5.3 Interface Members [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.5.3" class="external text" rel="nofollow">JLS 13.5.3</a></small>
+</p><p>Adding <u>an <code style="background-color:inherit;font-size:medium">abstract</code></u> method to an interface does not break compatibility with pre-existing binaries.
+</p><p>...
+</p>
+<div id="H13.5.6"></div>
+<h3> <span class="mw-headline" id="13.5.6_abstract_Method_Declarations_.5BModified.5D"> 13.5.6 <del><code style="background-color:inherit;font-size:medium">abstract</code></del> Method <u>Declarations</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.5.6" class="external text" rel="nofollow">JLS 13.5.6</a></small>
+</p><p>The considerations for changing <code style="background-color:inherit;font-size:medium">abstract</code> method declarations in interfaces <del>are the same as</del> <u>include</u> those for <code style="background-color:inherit;font-size:medium">abstract</code> methods in classes, as described in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.4.14" class="external text" rel="nofollow">13.4.14</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.4.15" class="external text" rel="nofollow">13.4.15</a>, <u><a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.4.19" class="external text" rel="nofollow">13.4.19</a></u>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.4.21" class="external text" rel="nofollow">13.4.21</a>, and <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-13.html#jls-13.4.23" class="external text" rel="nofollow">13.4.23</a>.
+</p><p><u>Adding a <code style="background-color:inherit;font-size:medium">default</code> method, or changing a method from <code style="background-color:inherit;font-size:medium">abstract</code> to <code style="background-color:inherit;font-size:medium">default</code>, does not break linkage compatibility with pre-existing binaries, but may cause an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code> if a pre-existing binary attempts to invoke the method.  This error occurs if the qualifying type, <em>T</em>, is a subtype of two interfaces, <em>I</em> and <em>J</em>, where both <em>I</em> and <em>J</em> declare a <code style="background-color:inherit;font-size:medium">default</code> method with the same signature and result type, and neither <em>I</em> nor <em>J</em> is a subinterface of the other.</u>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div>
+<p>Strictly speaking, adding a default method is a binary-compatible change, even if it introduces errors at compile time or invocation time, because it does not introduce errors at link time.
+</p><p>Practically speaking, the risk of accidental clashes occurring by introducing a default method are similar to those associated with adding a new method to a non-<code style="background-color:inherit;font-size:medium">final</code> class.  (In the event of a clash, adding a method to a class is unlikely to trigger a <code style="background-color:inherit;font-size:medium">LinkageError</code>, but an accidental override of the method in a child can lead to unpredictable method behavior.  Both changes can cause errors at compile time.)
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>The following illustrates how adding a default method can result in an invocation-time error.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Painter {
+  default void draw() {
+    System.out.println(&quot;Here's a picture...&quot;);
+  }
+}
+
+interface Cowboy {
+}
+
+class CowboyArtist implements Cowboy, Painter {
+  public static void main(String... args) {
+    new CowboyArtist().draw();
+  }
+}
+</pre>
+<p>Running <code style="background-color:inherit;font-size:medium">CowboyArtist</code> will print <code style="background-color:inherit;font-size:medium">Here's a picture...</code>.
+</p><p>Now consider a scenario in which a default method is added to <code style="background-color:inherit;font-size:medium">Cowboy</code> without recompiling <code style="background-color:inherit;font-size:medium">CowboyArtist</code>.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+interface Cowboy {
+  default void draw() {
+    System.out.println(&quot;Bang!&quot;);
+  }
+}
+</pre>
+<p>The class <code style="background-color:inherit;font-size:medium">CowboyArtist</code> will link without error, but running the <code style="background-color:inherit;font-size:medium">main</code> method will result in an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.
+</p>
+</div></li></ol></div></blockquote></p>
+
+
+
+</body></html>

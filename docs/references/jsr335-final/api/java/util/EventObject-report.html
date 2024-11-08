@@ -1,0 +1,223 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:EventObject [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:EventObject"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a> 
+</dd> 
+</dl>
+<dl> 
+<dt>Direct Known Subclasses:  </dt>
+<dd> 
+<a href="../../java/awt/AWTEvent.html" title="class in java.awt" target="_parent">AWTEvent</a>, <a href="../../java/beans/beancontext/BeanContextEvent.html" title="class in java.beans.beancontext" target="_parent">BeanContextEvent</a>, <a href="../../javax/swing/event/CaretEvent.html" title="class in javax.swing.event" target="_parent">CaretEvent</a>, <a href="../../javax/swing/event/ChangeEvent.html" title="class in javax.swing.event" target="_parent">ChangeEvent</a>, <a href="../../javax/sql/ConnectionEvent.html" title="class in javax.sql" target="_parent">ConnectionEvent</a>, <a href="../../java/awt/dnd/DragGestureEvent.html" title="class in java.awt.dnd" target="_parent">DragGestureEvent</a>, <a href="../../java/awt/dnd/DragSourceEvent.html" title="class in java.awt.dnd" target="_parent">DragSourceEvent</a>, <a href="../../java/awt/dnd/DropTargetEvent.html" title="class in java.awt.dnd" target="_parent">DropTargetEvent</a>, <a href="../../java/awt/datatransfer/FlavorEvent.html" title="class in java.awt.datatransfer" target="_parent">FlavorEvent</a>, <a href="../../javax/net/ssl/HandshakeCompletedEvent.html" title="class in javax.net.ssl" target="_parent">HandshakeCompletedEvent</a>, <a href="../../javax/swing/event/HyperlinkEvent.html" title="class in javax.swing.event" target="_parent">HyperlinkEvent</a>, <a href="../../javax/sound/sampled/LineEvent.html" title="class in javax.sound.sampled" target="_parent">LineEvent</a>, <a href="../../javax/swing/event/ListDataEvent.html" title="class in javax.swing.event" target="_parent">ListDataEvent</a>, <a href="../../javax/swing/event/ListSelectionEvent.html" title="class in javax.swing.event" target="_parent">ListSelectionEvent</a>, <a href="../../javax/swing/event/MenuEvent.html" title="class in javax.swing.event" target="_parent">MenuEvent</a>, <a href="../../javax/naming/event/NamingEvent.html" title="class in javax.naming.event" target="_parent">NamingEvent</a>, <a href="../../javax/naming/event/NamingExceptionEvent.html" title="class in javax.naming.event" target="_parent">NamingExceptionEvent</a>, <a href="../../java/util/prefs/NodeChangeEvent.html" title="class in java.util.prefs" target="_parent">NodeChangeEvent</a>, <a href="../../javax/management/Notification.html" title="class in javax.management" target="_parent">Notification</a>, <a href="../../javax/swing/event/PopupMenuEvent.html" title="class in javax.swing.event" target="_parent">PopupMenuEvent</a>, <a href="../../java/util/prefs/PreferenceChangeEvent.html" title="class in java.util.prefs" target="_parent">PreferenceChangeEvent</a>, <a href="../../javax/print/event/PrintEvent.html" title="class in javax.print.event" target="_parent">PrintEvent</a>, <a href="../../java/beans/PropertyChangeEvent.html" title="class in java.beans" target="_parent">PropertyChangeEvent</a>, <a href="../../javax/sql/RowSetEvent.html" title="class in javax.sql" target="_parent">RowSetEvent</a>, <a href="../../javax/swing/event/RowSorterEvent.html" title="class in javax.swing.event" target="_parent">RowSorterEvent</a>, <a href="../../javax/net/ssl/SSLSessionBindingEvent.html" title="class in javax.net.ssl" target="_parent">SSLSessionBindingEvent</a>, <a href="../../javax/sql/StatementEvent.html" title="class in javax.sql" target="_parent">StatementEvent</a>, <a href="../../javax/swing/event/TableColumnModelEvent.html" title="class in javax.swing.event" target="_parent">TableColumnModelEvent</a>, <a href="../../javax/swing/event/TableModelEvent.html" title="class in javax.swing.event" target="_parent">TableModelEvent</a>, <a href="../../javax/swing/event/TreeExpansionEvent.html" title="class in javax.swing.event" target="_parent">TreeExpansionEvent</a>, <a href="../../javax/swing/event/TreeModelEvent.html" title="class in javax.swing.event" target="_parent">TreeModelEvent</a>, <a href="../../javax/swing/event/TreeSelectionEvent.html" title="class in javax.swing.event" target="_parent">TreeSelectionEvent</a>, <a href="../../javax/swing/event/UndoableEditEvent.html" title="class in javax.swing.event" target="_parent">UndoableEditEvent</a>, <a href="../../javax/naming/ldap/UnsolicitedNotificationEvent.html" title="class in javax.naming.ldap" target="_parent">UnsolicitedNotificationEvent</a>                                  
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">EventObject</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+implements <a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a>
+</pre>
+<div class="block">
+<p> The root class from which all event state objects shall be derived.            </p>
+<p> All Events are constructed with a reference to the object, the "source", that is logically deemed to be the object upon which the Event in question initially occurred upon.                             </p>
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.1</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../serialized-form.html#java.util.EventObject" target="_parent">Serialized Form </a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:source [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:source"></a><a name="source"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>source</h4>
+<pre>protected transient&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a> source</pre>
+<div class="block">The object on which the Event initially occurred.       </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:EventObject-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:EventObject-java.lang.Object-"></a><a name="EventObject-java.lang.Object-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>EventObject</h4>
+<pre>public&nbsp;EventObject(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;source)</pre>
+<div class="block">Constructs a prototypical Event.   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>source</code> - The object on which the Event initially occurred.          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if source is null.      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getSource-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getSource--"></a><a name="getSource--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSource</h4>
+<pre>public&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;getSource()</pre>
+<div class="block">The object on which the Event initially occurred.       </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The object on which the Event initially occurred.       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:toString-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:toString--"></a><a name="toString--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;toString()</pre>
+<div class="block">Returns a String representation of this EventObject.      </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Object.html#toString--" target="_parent">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A a String representation of this EventObject.      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:RunnableScheduledFuture [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:RunnableScheduledFuture"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>V</code> - The result type returned by this Future's <code>get</code> method           </dd> 
+</dl>
+<dl> 
+<dt>All Superinterfaces: </dt>
+<dd> 
+<a href="../../../java/lang/Comparable.html" title="interface in java.lang" target="_parent">Comparable</a>&lt;<a href="../../../java/util/concurrent/Delayed.html" title="interface in java.util.concurrent" target="_parent">Delayed</a>&gt;, <a href="../../../java/util/concurrent/Delayed.html" title="interface in java.util.concurrent" target="_parent">Delayed</a>, <a href="../../../java/util/concurrent/Future.html" title="interface in java.util.concurrent" target="_parent">Future</a>&lt;V&gt;, <a href="../../../java/lang/Runnable.html" title="interface in java.lang" target="_parent">Runnable</a>, <a href="../../../java/util/concurrent/RunnableFuture.html" title="interface in java.util.concurrent" target="_parent">RunnableFuture</a>&lt;V&gt;, <a href="../../../java/util/concurrent/ScheduledFuture.html" title="interface in java.util.concurrent" target="_parent">ScheduledFuture</a>&lt;V&gt;      </dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">RunnableScheduledFuture&lt;V&gt;</span>
+extends <a href="../../../java/util/concurrent/RunnableFuture.html" title="interface in java.util.concurrent" target="_parent">RunnableFuture</a>&lt;V&gt;, <a href="../../../java/util/concurrent/ScheduledFuture.html" title="interface in java.util.concurrent" target="_parent">ScheduledFuture</a>&lt;V&gt;</pre>
+<div class="block">A <a href="../../../java/util/concurrent/ScheduledFuture.html" title="interface in java.util.concurrent" target="_parent"><code>ScheduledFuture</code></a> that is <a href="../../../java/lang/Runnable.html" title="interface in java.lang" target="_parent"><code>Runnable</code></a>. Successful execution of the <code>run</code> method causes completion of the <code>Future</code> and allows access to its results.                     </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/util/concurrent/FutureTask.html" title="class in java.util.concurrent" target="_parent"><code>FutureTask</code></a>, <a href="../../../java/util/concurrent/Executor.html" title="interface in java.util.concurrent" target="_parent"><code>Executor</code></a>  
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:isPeriodic-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:isPeriodic--"></a><a name="isPeriodic--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isPeriodic</h4>
+<pre>boolean&nbsp;isPeriodic()</pre>
+<div class="block">Returns <code>true</code> if this task is periodic. A periodic task may re-run according to some schedule. A non-periodic task can be run only once.                       </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if this task is periodic      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

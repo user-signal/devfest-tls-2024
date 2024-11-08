@@ -1,0 +1,554 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part B: Lambda Expressions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_B_Lambda_Expressions skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part B: Lambda Expressions</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#B15.27">15.27</a>&nbsp;- <a href="#B15.27.1">15.27.1</a>&nbsp;- <a href="#B15.27.2">15.27.2</a>&nbsp;- <a href="#B3.9">3.9</a>&nbsp;- <a href="#B3.12">3.12</a>&nbsp;- <a href="#B4.12.3">4.12.3</a>&nbsp;- <a href="#B4.12.4">4.12.4</a>&nbsp;- <a href="#B6.3">6.3</a>&nbsp;- <a href="#B6.4">6.4</a>&nbsp;- <a href="#B8.1.3">8.1.3</a>&nbsp;- <a href="#B14.15">14.15</a>&nbsp;- <a href="#B14.16">14.16</a>&nbsp;- <a href="#B14.17">14.17</a>&nbsp;- <a href="#B14.18">14.18</a>&nbsp;- <a href="#B14.20">14.20</a>&nbsp;- <a href="#B15.8.3">15.8.3</a>&nbsp;- <a href="#B16">16</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>A lambda expression is like a method: it provides a list of formal parameters and a body—an expression or block—expressed in terms of those parameters.
+</p><p>Examples of lambda expressions:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+s -&gt; s.length()
+
+(int x, int y) -&gt; x+y
+
+() -&gt; 42
+
+(x, y, z) -&gt; {
+  if (true) return x;
+  else {
+    int result = y;
+    for (int i = 1; i &lt; z; i++)
+      result *= i;
+    return result;
+  }
+}
+</pre>
+<p>This particular syntax was chosen principally because something similar has been generally well-received in other Java-like languages (C# and Scala), and a clearly "better" alternative did not present itself. It has the advantage over alternate proposals of minimizing bracketing noise around simple lambda expressions.  When some extra bracketing is needed to visually distinguish either the full lambda expression or its body expression, parentheses are naturally supported (just as in other cases in which operator precedence is unclear).
+</p><p>The formal parameters of a lambda expression may have either declared types or inferred types. We refer to a lambda expression whose formal parameters have declared types as <i>explicitly-typed</i>, and a lambda expression whose formal parameters have inferred types as <i>implicitly-typed</i>.  The parameter types of an implicitly-typed lambda are derived from the functional interface type targeted by the expression.
+</p><p>A lambda body is either a single expression or a block. Like a method body, a lambda body describes code that will be executed whenever an invocation occurs.
+</p><p>Unlike code appearing in anonymous class declarations, the meaning of names and the <code style="background-color:inherit;font-size:medium">this</code> and <code style="background-color:inherit;font-size:medium">super</code> keywords appearing in a lambda body are the same as in the surrounding context (except that lambda parameters introduce new names).
+</p><p>For both lambda bodies and inner classes, local variables in the enclosing context can only be referenced if they are <code style="background-color:inherit;font-size:medium">final</code> or <i>effectively final</i>. A variable is <i>effectively final</i> if it is never assigned to after its initialization.
+</p><p>Block lambda bodies that don't return anything are considered <i>void-compatible</i>; block lambda bodies that return a value from every execution path are considered <i>value-compatible</i>. In a value-compatible lambda body, the <i>result expressions</i> are any expressions that may produce an invocation's value.
+</p>
+<div id="B15.27"></div>
+<h3> <span class="mw-headline" id="15.27_Lambda_Expressions_.5BNew.5D"> 15.27 Lambda Expressions [New] </span></h3>
+<p>A lambda expression is like a method: it provides a list of formal parameters and a body—an expression or block—expressed in terms of those parameters.
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+LambdaExpression:
+  LambdaParameters '-&gt;' LambdaBody
+
+LambdaParameters:
+  Identifier
+  '(' FormalParameterList<sub>opt</sub> ')'
+  '(' InferredFormalParameterList ')'
+
+InferredFormalParameterList:
+  Identifier
+  InferredFormalParameterList ',' Identifier
+
+LambdaBody:
+  Expression
+  Block
+</pre>
+<p>The following definitions from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a> are repeated here for convenience:
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+FormalParameterList:
+  LastFormalParameter
+  FormalParameters ',' LastFormalParameter
+
+FormalParameters:
+  FormalParameter
+  FormalParameters, FormalParameter
+
+FormalParameter:
+  VariableModifiers<sub>opt</sub> Type VariableDeclaratorId
+
+LastFormalParameter:
+  VariableModifiers<sub>opt</sub> Type '...' VariableDeclaratorId
+  FormalParameter
+</pre>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Examples of lambda expressions:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+() -&gt; {}                     // No parameters; result is void
+
+() -&gt; 42                     // No parameters, expression body
+() -&gt; null                   // No parameters, expression body
+() -&gt; { return 42; }         // No parameters, block body with return
+() -&gt; { System.gc(); }       // No parameters, void block body
+
+() -&gt; {
+  if (true) return 12;
+  else {
+    int result = 15;
+    for (int i = 1; i &lt; 10; i++)
+      result *= i;
+    return result;
+  }
+}                          // Complex block body with returns
+
+(int x) -&gt; x+1             // Single declared-type parameter
+(int x) -&gt; { return x+1; } // Single declared-type parameter
+(x) -&gt; x+1                 // Single inferred-type parameter
+x -&gt; x+1                   // Parens optional for single inferred-type case
+
+(String s) -&gt; s.length()   // Single declared-type parameter
+(Thread t) -&gt; { t.start(); } // Single declared-type parameter
+s -&gt; s.length()              // Single inferred-type parameter
+t -&gt; { t.start(); }          // Single inferred-type parameter
+
+(int x, int y) -&gt; x+y      // Multiple declared-type parameters
+(x,y) -&gt; x+y               // Multiple inferred-type parameters
+(final int x) -&gt; x+1       // Modified declared-type parameter
+(x, final y) -&gt; x+y        // Illegal: can't modify inferred-type parameters
+(x, int y) -&gt; x+y          // Illegal: can't mix inferred and declared types
+</pre>
+</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> This particular syntax was chosen principally because something similar has been generally well-received in other Java-like languages (C# and Scala), and a clearly "better" alternative did not present itself.  It has the advantage over alternate proposals of minimizing bracketing noise around simple lambda expressions; this is especially noticeable when a lambda expression is an argument to a method, or when the body is another lambda expression.  It also clearly distinguishes between its expression and statement forms, which avoids ambiguities or over-reliance on '<code style="background-color:inherit;font-size:medium">;</code>' tokens.
+<p>When some extra bracketing is needed to visually distinguish either the full lambda expression or its body expression, parentheses are naturally supported (just as in other cases in which operator precedence is unclear).
+</p><p>There is no special nullary form: a lambda expression with 0 arguments is expressed as <code style="background-color:inherit;font-size:medium">() -&gt; ...</code>.  The obvious special-case syntax, <code style="background-color:inherit;font-size:medium">-&gt; ...</code>, does not work because it introduces an ambiguity between argument lists and casts: <code style="background-color:inherit;font-size:medium">(x) -&gt; ...</code>.
+</p><p>A nice property of this syntax for block bodies is that established conventions for indenting and line-breaking other block-like syntax extend quite naturally to lambda expressions.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> This syntax introduces some new parsing challenges, although they are similar in scope to what is already handled by the Java grammar.
+<p>Java has always had an ambiguity between types and expressions after a '<code style="background-color:inherit;font-size:medium">(</code>' token (what follows may be a cast or a parenthesized expression).  This was made worse in Java 5, which reused the binary operators '<code style="background-color:inherit;font-size:medium">&lt;</code>' and '<code style="background-color:inherit;font-size:medium">&gt;</code>' in types.
+</p><p>Lambda expressions introduce a new possibility: the tokens following '<code style="background-color:inherit;font-size:medium">(</code>' may describe a type, an expression, or a lambda parameter list.  Some tokens (annotations, <code style="background-color:inherit;font-size:medium">final</code>) are unique to parameter lists, while in other cases there are certain patterns that must be interpreted as parameter lists (two names in a row, a '<code style="background-color:inherit;font-size:medium">,</code>' not nested inside of '<code style="background-color:inherit;font-size:medium">&lt;</code>' and '<code style="background-color:inherit;font-size:medium">&gt;</code>').  And sometimes the ambiguity cannot be resolved until a '<code style="background-color:inherit;font-size:medium">-&gt;</code>' is encountered, after a '<code style="background-color:inherit;font-size:medium">)</code>'.  The simplest way to think of how this might be efficiently parsed is with a state machine: each state represents a subset of possible interpretations (type, expression, or parameters), and when the machine transitions to a state in which the set is a singleton, the parser knows which case it is.  This does not map very elegantly to a fixed-lookahead grammar, however.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Lambda expressions cannot introduce type parameters.  While it would make sense semantically to do so, the natural syntax (preceding the parameter list with a type parameter list) introduces messy ambiguities.  For example:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">foo( (x) &lt; y , z &gt; (w) -&gt; v )</pre>
+<p>This could be an invocation of <code style="background-color:inherit;font-size:medium">foo</code> with one argument (a generic lambda cast to type <code style="background-color:inherit;font-size:medium">x</code>), or it could be an invocation of <code style="background-color:inherit;font-size:medium">foo</code> with two arguments, both the results of comparisons, the second comparing <code style="background-color:inherit;font-size:medium">z</code> with a lambda expression.  (Strictly speaking, a lambda expression is meaningless as an operand to a binary '<code style="background-color:inherit;font-size:medium">&gt;</code>', but that is a tenuous assumption on which to build the grammar.)
+</p><p>There is a precedent for ambiguity resolution involving casts, which essentially prohibits the use of <code style="background-color:inherit;font-size:medium">-</code> and <code style="background-color:inherit;font-size:medium">+</code> following a non-primitive cast, but to extend that principle to generic lambdas involves invasive, messy changes to the grammar.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Section <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.27" class="external text" rel="nofollow">15.27</a> currently defines the <i>Expression</i> grammar production.  To reasonably accommodate the chapter structure without drastically changing section numbers, this grammar production has been moved to <a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a> and 15.27 has been repurposed to address lambda expressions.
+</div></li></ol></div></blockquote>
+<div id="B15.27.1"></div>
+<h3> <span class="mw-headline" id="15.27.1_Lambda_Parameters_.5BNew.5D"> 15.27.1 Lambda Parameters [New] </span></h3>
+<p><span class="norm-static">
+The formal parameters of a lambda expression may have either declared types or inferred types.  These styles cannot be mixed: it is not possible for a lambda expression to declare the types of some of its parameters but leave others to be inferred.  Only parameters with declared types can have modifiers.<span class="assertion-id"> [jsr335-15.27.1-10]</span></span>
+</p><p><span class="norm-static">
+We refer to a lambda expression whose formal parameters have declared types as <i>explicitly-typed</i>, and a lambda expression whose formal parameters have inferred types as <i>implicitly-typed</i>.  Lambda expressions with 0 parameters are explicitly-typed.<span class="assertion-id"> [jsr335-15.27.1-12]</span></span>
+</p><p><span class="norm-static">
+The syntax for formal parameters with declared types is the same as the syntax for the parameters of a method declaration (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a>).<span class="assertion-id"> [jsr335-15.27.1-20]</span></span>
+</p><p><span class="norm-static">
+The declared type of a formal parameter is denoted by the <em>Type</em> that appears in its parameter specifier, followed by any bracket pairs that follow the <em>Identifier</em> in the declarator, except for a variable arity parameter, whose declared type is an array type whose component type is the <em>Type</em> that appears in its parameter specifier.<span class="assertion-id"> [jsr335-15.27.1-21]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous paragraph comes from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a> "Formal Parameters."</div></blockquote>
+<p>If the formal parameters have inferred types, then these types are derived (<a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>) from the functional interface type targeted by the lambda expression.
+</p><p><span class="norm-error">
+It is a compile-time error if a lambda parameter has the name <code style="background-color:inherit;font-size:medium">_</code> (that is, a single underscore character).<span class="assertion-id"> [jsr335-15.27.1-23]</span></span>
+</p><p>The use of the variable name <code style="background-color:inherit;font-size:medium">_</code> in any context is discouraged; future versions of the Java Programming Language may reserve this name as a keyword and/or give it special semantics.
+</p><p><span class="norm-error">
+If an annotation <em>a</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.7" class="external text" rel="nofollow">9.7</a>) on a formal parameter corresponds to an annotation type <em>T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.6" class="external text" rel="nofollow">9.6</a>), and <em>T</em> has a (meta-)annotation <em>m</em> that corresponds to <code style="background-color:inherit;font-size:medium">java.lang.annotation.Target</code>, then <em>m</em> must have an element whose value is <code style="background-color:inherit;font-size:medium">java.lang.annotation.ElementType.PARAMETER</code>, or a compile-time error occurs.<span class="assertion-id"> [jsr335-15.27.1-22]</span></span>
+</p><p><span class="norm-static">
+The scope and shadowing of a formal parameter is specified in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.3" class="external text" rel="nofollow">6.3</a> and <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.4" class="external text" rel="nofollow">6.4</a>.<span class="assertion-id"> [jsr335-15.27.1-30]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error for a lambda expression to declare two formal parameters with the same name. (That is, their declarations mention the same <em>Identifier</em>.)<span class="assertion-id"> [jsr335-15.27.1-40]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a formal parameter that is declared final is assigned to within the body of the lambda expression.<span class="assertion-id"> [jsr335-15.27.1-50]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error to use mixed array notation (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.2" class="external text" rel="nofollow">10.2</a>) for a variable arity parameter.<span class="assertion-id"> [jsr335-15.27.1-60]</span></span>
+</p><p><span class="norm-dynamic">
+When the lambda expression is invoked (via a method invocation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>)), the values of the actual argument expressions initialize newly created parameter variables, each of the declared or inferred type, before execution of the lambda body. The <em>Identifier</em> that appears in the <em>VariableDeclaratorId</em> or the <em>InferredFormalParameterList</em> may be used as a simple name in the lambda body to refer to the formal parameter.<span class="assertion-id"> [jsr335-15.27.1-70]</span></span>
+</p><p><span class="norm-dynamic">
+A lambda parameter of type <code style="background-color:inherit;font-size:medium">float</code> always contains an element of the float value set (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2.3" class="external text" rel="nofollow">4.2.3</a>); similarly, a lambda parameter of type <code style="background-color:inherit;font-size:medium">double</code> always contains an element of the double value set. It is not permitted for a lambda parameter of type <code style="background-color:inherit;font-size:medium">float</code> to contain an element of the float-extended-exponent value set that is not also an element of the float value set, nor for a lambda parameter of type <code style="background-color:inherit;font-size:medium">double</code> to contain an element of the double-extended-exponent value set that is not also an element of the double value set.<span class="assertion-id"> [jsr335-15.27.1-80]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous seven paragraphs are derived from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a> "Formal Parameters."</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> When the lambda parameters' types are inferred, the same lambda expression body can be interpreted in many different ways, depending on the context in which it appears.  Specifically, the types of expressions in the body (including return statement values), the checked exceptions thrown, and the type-correctness of the code all depend on the formal parameters' inferred types.
+<p>This implies that inference of parameter types must occur <i>before</i> attempting to type-check the body of the lambda expression.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> There is no distinction made between the following lambda parameter lists:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+(int... x) -&gt; ..
+(int[] x) -&gt; ..
+</pre>
+<p>Consistent with the rules for overriding, either can be used, whether the functional interface's abstract method is varargs or not.  Since lambda expressions are never directly invoked, introducing <code style="background-color:inherit;font-size:medium">int...</code> where the functional interface uses <code style="background-color:inherit;font-size:medium">int[]</code> can have no impact on the surrounding program.  And, of course, in the lambda body, a varargs parameter is treated just like an array parameter.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>The <code style="background-color:inherit;font-size:medium">_</code> character has special meaning in other languages with lambda expressions; to avoid confusion, we reserve it here.  Future versions of Java may give the <code style="background-color:inherit;font-size:medium">_</code> name special semantics—for example, to indicate an unnamed parameter.
+</p>
+</div></li></ol></div></blockquote>
+<div id="B15.27.2"></div>
+<h3> <span class="mw-headline" id="15.27.2_Lambda_Body_.5BNew.5D"> 15.27.2 Lambda Body [New] </span></h3>
+<p><span class="norm-static">
+A lambda body is either a single expression or a block (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.2" class="external text" rel="nofollow">14.2</a>).<span class="assertion-id"> [jsr335-15.27.2-10]</span></span>
+</p><p>Like a method body, a lambda body describes code that will be executed whenever an invocation occurs.
+</p><p><span class="norm-static">
+Unlike code appearing in anonymous class declarations, the meaning of names and the <code style="background-color:inherit;font-size:medium">this</code> and <code style="background-color:inherit;font-size:medium">super</code> keywords appearing in a lambda body, along with the accessibility of referenced declarations, are the same as in the surrounding context (except that lambda parameters introduce new names).<span class="assertion-id"> [jsr335-15.27.2-20]</span></span>
+</p><p><span class="norm-static">
+A block lambda body is <i>void-compatible</i> if every return statement in the block has the form <code style="background-color:inherit;font-size:medium">return;</code>.<span class="assertion-id"> [jsr335-15.27.2-30]</span></span>
+</p><p><span class="norm-static">
+A block lambda body is <i>value-compatible</i> if it cannot complete normally (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.21" class="external text" rel="nofollow">14.21</a>) and every return statement in the block has the form <code style="background-color:inherit;font-size:medium">return <em>Expression</em>;</code>.<span class="assertion-id"> [jsr335-15.27.2-31]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a block lambda body is neither void-compatible nor value-compatible.<span class="assertion-id"> [jsr335-15.27.2-40]</span></span>
+</p><p>Note that some block lambda bodies, such as <code style="background-color:inherit;font-size:medium">{ throw new RuntimeException(); }</code> are <i>both</i> void-compatible and value-compatible.
+</p><p><span class="norm-static">
+In a value-compatible block lambda body, the <i>result expressions</i> are any expressions that may produce an invocation's value.  Specifically, for each <code style="background-color:inherit;font-size:medium">return</code> statement (<a href="B.html#B14.17" title="Lambda B" class="mw-redirect">14.17</a>) of the form <em><code style="background-color:inherit;font-size:medium">return</code> Expression <code style="background-color:inherit;font-size:medium">;</code></em> contained by the body, the <em>Expression</em> is a result expression.<span class="assertion-id"> [jsr335-15.27.2-50]</span></span>
+</p><p><span class="norm-error">
+Any local variable, formal parameter, or exception handler parameter used but not declared in a lambda expression must be either declared <code style="background-color:inherit;font-size:medium">final</code> or effectively final (<a href="B.html#B4.12.4" title="Lambda B" class="mw-redirect">4.12.4</a>).<span class="assertion-id"> [jsr335-15.27.2-60]</span></span>
+</p><p><span class="norm-error">
+Any local variable used but not declared in a lambda body must be definitely assigned (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-16.html#jls-16" class="external text" rel="nofollow">16</a>) before the lambda body.<span class="assertion-id"> [jsr335-15.27.2-70]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The previous two paragraphs mimic <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.3" class="external text" rel="nofollow">8.1.3</a>, Inner Classes and Enclosing Instances.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Examples of void- and value-compatible:<br />
+</p><p>These are value-compatible:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+() -&gt; { return &quot;done&quot;; }
+() -&gt; { if (cond) return 1; else return 0; }
+</pre>
+<p>These are void-compatible:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+() -&gt; {}
+() -&gt; { System.out.println(&quot;done&quot;); }
+</pre>
+<p>These are both:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+() -&gt; { throw new RuntimeException(); }
+() -&gt; { while (true); }
+</pre>
+<p>This is neither:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+() -&gt; { if (cond) return &quot;done&quot;; System.out.println(&quot;done&quot;); }
+</pre></div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> <div id="B15.27.2-.231"></div>
+<p>The transparency of <code style="background-color:inherit;font-size:medium">this</code> (both explicit and implicit) in the body of a lambda expression—that is, treating it the same as in the surrounding context—allows more flexibility for VM optimizations, and prevents the meaning of unqualified names in the body from being dependent on overload resolution.
+</p><p>Practically speaking, it is unusual for a lambda to need to talk about itself (either to call itself recursively or to invoke its other methods), while it is more common to want to use names to refer to things in the enclosing class that would otherwise be shadowed (<code style="background-color:inherit;font-size:medium">this</code>, <code style="background-color:inherit;font-size:medium">toString()</code>).  (This assertion is based on some analysis of existing code with anonymous inner classes.)
+</p><p>If it is necessary for a lambda expression to refer to itself (as if via <code style="background-color:inherit;font-size:medium">this</code>), a method reference or an anonymous inner class should be used instead.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The handling of void/value compatible and the meaning of names serve to minimize the dependency on a particular target type in the given context, which is useful both for implementations and for user understanding.  While expressions can be assigned different types during overload resolution depending on the target type, the meaning of unqualified names and basic structure of the lambda body do not change.
+<p>It's worth noting that the void/value compatible definition is not a strictly structural property: "can complete normally" depends on the values of constant expressions, and these may include names that reference constant variables.
+</p>
+</div></li></ol></div></blockquote>
+<div id="B3.12"></div>
+<h3> <span class="mw-headline" id="3.12_Operators_.5BModified.5D"> 3.12 Operators [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.12" class="external text" rel="nofollow">JLS 3.12</a></small>
+</p><p><span class="norm-static">
+<del>37</del> <u>38</u> tokens are the <i>operators</i>, formed from ASCII characters.<span class="assertion-id"> [jls-3.12-100]</span></span>
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+Operator: one of
+  ...
+  '&gt;&gt;='
+  '&gt;&gt;&gt;='
+  <u>'-&gt;'</u>
+</pre>
+<div id="B4.12.3"></div>
+<h3> <span class="mw-headline" id="4.12.3_Kinds_of_Variables_.5BModified.5D"> 4.12.3 Kinds of Variables [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.3" class="external text" rel="nofollow">JLS 4.12.3</a></small>
+</p><p>There are <del>seven</del> <u>eight</u> kinds of variables:
+</p>
+<ol><li> A <i>class variable</i> ...
+</li><li> An <i>instance variable</i> ...
+</li><li> <i>Array components</i> ...
+</li><li> <i>Method parameters</i> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a>) name argument values passed to a method.  For every parameter declared in a method declaration, a new parameter variable is created each time that method is invoked (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>).  The new variable is initialized with the corresponding argument value from the method invocation.  The method parameter effectively ceases to exist when the execution of the body of the method is complete.
+</li><li> <i>Constructor parameters</i> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.1" class="external text" rel="nofollow">8.8.1</a>) name argument values passed to a constructor.  For every parameter declared in a constructor declaration, a new parameter variable is created each time a class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>) or explicit constructor invocation (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.7" class="external text" rel="nofollow">8.8.7</a>) invokes that constructor.  The new variable is initialized with the corresponding argument value from the creation expression or constructor invocation.  The constructor parameter effectively ceases to exist when the execution of the body of the constructor is complete.
+</li><li> <u><i>Lambda parameters</i> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.27.1" class="external text" rel="nofollow">15.27.1</a>) name argument values passed to a lambda expression body (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.27.2" class="external text" rel="nofollow">15.27.2</a>).  For every parameter declared in a lambda expression, a new parameter variable is created each time a method implemented by the lambda body is invoked (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>).  The new variable is initialized with the corresponding argument value from the method invocation.  The lambda parameter effectively ceases to exist when the execution of the lambda expression body is complete.</u>
+</li><li> An <i>exception parameter</i> ...
+</li><li> <i>Local variables</i> ...
+</li></ol>
+<p>...
+</p>
+<div id="B4.12.4"></div>
+<h3> <span class="mw-headline" id="4.12.4_Final_Variables_.5BAddendum.5D"> 4.12.4 Final Variables [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.4" class="external text" rel="nofollow">JLS 4.12.4</a></small>
+</p><p>Certain variables that are not declared <code style="background-color:inherit;font-size:medium">final</code> may instead be considered <i>effectively final</i>.
+</p><p><span class="norm-static">
+A local variable or a method, constructor, lambda, or exception parameter is <i>effectively final</i> if it is not final but it never occurs as the left hand operand of an assignment operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>) or as the operand of a prefix or postfix increment or decrement operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.14" class="external text" rel="nofollow">15.14</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.15" class="external text" rel="nofollow">15.15</a>).<span class="assertion-id"> [jsr335-4.12.4-10]</span></span>
+</p><p><span class="norm-static">
+In addition, a local variable whose declaration lacks an initializer is <i>effectively final</i> if all of the following are true:<span class="assertion-id"> [jsr335-4.12.4-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> It is not final.<span class="assertion-id"> [jsr335-4.12.4-20-A]</span></span>
+</li><li> <span class="norm-static"> Whenever it occurs as the left-hand operand of an assignment operator, it is definitely unassigned and not definitely assigned before the assignment (that is, it is definitely unassigned and not definitely assigned after the right-hand operand of the assignment) (<a href="B.html#B16" title="Lambda B" class="mw-redirect">16</a>).<span class="assertion-id"> [jsr335-4.12.4-20-B]</span></span>
+</li><li> <span class="norm-static"> It never occurs as the operand of a prefix or postfix increment or decrement operator.<span class="assertion-id"> [jsr335-4.12.4-20-C]</span></span>
+</li></ul>
+<p>If a variable is effectively final, adding the <code style="background-color:inherit;font-size:medium">final</code> modifier to its declaration will not introduce any compile-time errors.  Conversely, a local variable or parameter that is declared <code style="background-color:inherit;font-size:medium">final</code> in a valid program becomes effectively final if the <code style="background-color:inherit;font-size:medium">final</code> modifier is removed.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Examples of <i>effectively final</i>:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+void m1(int x) {
+   int y = 1;
+   foo(() -&gt; x+y);
+   // Legal: x and y are both effectively final.
+ }
+
+ void m2(int x) {
+   int y;
+   y = 1;
+   foo(() -&gt; x+y);
+   // Legal: x and y are both effectively final.
+ }
+
+ void m3(int x) {
+   int y;
+   if (..) y = 1;
+   foo(() -&gt; x+y);
+   // Illegal: y is effectively final, but not definitely assigned.
+ }
+
+ void m4(int x) {
+   int y;
+   if (..) y = 1;
+   else y = 2;
+   foo(() -&gt; x+y);
+   // Legal: x and y are both effectively final.
+ }
+
+ void m5(int x) {
+   int y;
+   if (..) y = 1;
+   y = 2;
+   foo(() -&gt; x+y);
+   // Illegal: y is not effectively final.
+ }
+
+ void m6(int x) {
+   foo(() -&gt; x+1);
+   x++;
+   // Illegal: x is not effectively final.
+ }
+
+ void m7(int x) {
+   foo(() -&gt; x=1);
+   // Illegal: x is not effectively final.
+ }
+
+ void m8() {
+   int y;
+   foo(() -&gt; y=1);
+   // Illegal: y is not definitely assigned before the lambda (see 15.27.2)
+ }
+
+void m9(String[] arr) {
+  for (String s : arr) {
+    foo(() -&gt; s);
+    // Legal: s is effectively final (it is a new variable on each iteration)
+  }
+}
+
+void m10(String[] arr) {
+  for (int i = 0; i &lt; arr.length; i++) {
+    foo(() -&gt; arr[i]);
+    // Illegal: i is not effectively final (it is incremented)
+  }
+}
+</pre></div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> Mitigating the problem of inner classes (now lambda expressions) being unable to capture non-final local variables is one of the stated goals of this project (see <a href="http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-4.html" class="external text" rel="nofollow">"State of the Lambda"</a>).
+<p>"Effectively final" is a concept introduced with Java SE 7 for improved exception handling.  (<a href="http://jcip.net/" class="external text" rel="nofollow"><i>Java Concurrency in Practice</i></a> similarly discusses "effectively immutable" variables.)  We've broadened the definition here to include all non-field variables.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The effectively-final restriction prohibits access to dynamically-changing local variables, as the final restriction did before it; it simply reduces the clerical burden on programmers.  Capture of mutable local variables introduces many concurrency-related problems.
+<p>This restriction includes standard loop variables, but not for-each loop variables, which are treated as distinct for each iteration of the loop (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.14.2" class="external text" rel="nofollow">see 14.14.2</a>).  For background reading on how C# arrived at a similar interpretation of loop variables, see <a href="http://blogs.msdn.com/ericlippert/archive/2009/11/12/closing-over-the-loop-variable-considered-harmful.aspx" class="external text" rel="nofollow">Eric Lippert's blog posts</a> on the topic.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> <div id="B4.12.4-.233"></div>
+<p>Guaranteeing that <i>effectively final</i> and "legally declarable as <code style="background-color:inherit;font-size:medium">final</code>" are equivalent is tricky.  The goal is that it should be possible to add or remove a <code style="background-color:inherit;font-size:medium">final</code> keyword to any variable that is initially either declared <code style="background-color:inherit;font-size:medium">final</code> or effectively final without impacting the validity of the program.  (As far as variable capture is concerned, anyway; there are other parts of the language that, for various reasons, depend on a variable being explicitly <code style="background-color:inherit;font-size:medium">final</code> and an effectively-final variable cannot act as a substitute.)
+</p>
+</div></li></ol></div></blockquote>
+<div id="B6.3"></div>
+<h3> <span class="mw-headline" id="6.3_Scope_of_a_Declaration_.5BModified.5D"> 6.3 Scope of a Declaration [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.3" class="external text" rel="nofollow">JLS 6.3</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+The scope of a formal parameter of a <u>method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a>), constructor (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.1" class="external text" rel="nofollow">8.8.1</a>), or lambda expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.27" class="external text" rel="nofollow">15.27</a>)</u> is the entire body of the <u>method, constructor, or lambda expression</u>.<span class="assertion-id"> [jls-6.3-340]</span></span>
+</p><p>...
+</p>
+<div id="B6.4"></div>
+<h3> <span class="mw-headline" id="6.4_Shadowing_and_Obscuring_.5BModified.5D"> 6.4 Shadowing and Obscuring [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.4" class="external text" rel="nofollow">JLS 6.4</a></small>
+</p><p><span class="norm-static">
+A local variable (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.4" class="external text" rel="nofollow">14.4</a>), formal parameter (<u><a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.1" class="external text" rel="nofollow">8.4.1</a>, <a href="B.html#B15.27.1" title="Lambda B" class="mw-redirect">15.27.1</a></u>), exception parameter (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.20" class="external text" rel="nofollow">14.20</a>), and local class (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.3" class="external text" rel="nofollow">14.3</a>) can only be referred to using a simple name (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.2" class="external text" rel="nofollow">6.2</a>), not a qualified name (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>).<span class="assertion-id"> [jls-6.4-100]</span></span>
+</p><p>Some declarations are not permitted within the scope of a local variable, formal parameter, exception parameter, or local class declaration because it would be impossible to distinguish between the declared entities using only simple names.
+</p><p>For example, if the name of a formal parameter of a method could be redeclared as the name of a local variable in the method body, then the local variable would shadow the formal parameter and the formal parameter would no longer be visible—an undesirable outcome.
+</p><p><span class="norm-error">
+It is a compile-time error if the name of a formal parameter is <u>used to declare a new variable within the body of the method, constructor, or lambda expression, unless the new variable is declared within a class declaration contained by the method, constructor, or lambda expression.</u><span class="assertion-id"> [jls-6.4-200]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if the name of a local variable <em>v</em> is <u>used to declare a new variable within the scope of <em>v</em>, unless the new variable is declared within a class whose declaration is within the scope of <em>v</em>.</u><span class="assertion-id"> [jls-6.4-210]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if the name of an exception parameter is <u>used to declare a new variable within the <em>Block</em> of the <code style="background-color:inherit;font-size:medium">catch</code> clause, unless the new variable is declared within a class declaration contained by the <em>Block</em> of the <code style="background-color:inherit;font-size:medium">catch</code> clause.</u><span class="assertion-id"> [jls-6.4-230]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if the name of a local class <em>C</em> is <u>used to declare a new local class within the scope of <em>C</em>, unless the new local class is declared within another class whose declaration is within the scope of <em>C</em>.</u><span class="assertion-id"> [jls-6.4-220]</span></span>
+</p><p><del><span class="norm-error">
+It is a compile-time error if the name of a variable declared in a <em>ResourceSpecification</em> of a <code style="background-color:inherit;font-size:medium">try</code>-with-resources statement (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.20.3" class="external text" rel="nofollow">14.20.3</a>) is redeclared within the <code style="background-color:inherit;font-size:medium">try</code> <em>Block</em> as a local variable of the directly enclosing method, constructor, or initializer block, or as an exception parameter of a <code style="background-color:inherit;font-size:medium">catch</code> clause in a <code style="background-color:inherit;font-size:medium">try</code> statement of the directly enclosing method or initializer block.<span class="assertion-id"> [jls-6.4-240]</span></span></del>
+</p><p><del>The translation of a <code style="background-color:inherit;font-size:medium">try</code>-with-resources statement implies the rule above.</del>
+</p><p><u>As an exception to the general restriction, these rules</u> allow redeclaration in certain nested class declarations (i.e. local classes (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.3" class="external text" rel="nofollow">14.3</a>) and anonymous classes (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>)) <u>that occur within the variable's or local class's scope.</u>
+</p><p>[Example] ...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> There are two design alternatives for handling name clashes created by lambda parameters and other variables declared in lambda expressions.
+<ul><li> Mimicking class declarations: like local classes, lambda expressions introduce a new "level" for names, and all variable names outside the expression can be redeclared.
+</li><li> A "local" strategy: like catch clauses, for loops, and blocks, lambda expressions operate at the same "level" as the enclosing context, and local variables outside the expression cannot be shadowed.
+</li></ul>
+<p>The above rules use the local strategy: there is no special dispensation that allows a variable declared in a lambda expression to shadow a variable declared in an enclosing method.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The approach to expressing these rules is somewhat different than JLS 7, because phrases like "local variable of the directly enclosing method" do not very accurately describe local variables declared in a lambda body (possibly within multiple levels of nesting).  The presentation above clearly distinguishes between declarations in nested class declarations (allowed) and declarations in nested lambda expressions (prohibited).
+</div></li>
+<li style="margin-bottom:12px;"><div> The rule for <em>ResourceSpecification</em> variables was removed for clarity.  Like the variable of an enhanced <code style="background-color:inherit;font-size:medium">for</code> loop, the resource variable is a local variable (i.e., it is not called out as a separate kind of variable in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.12.3" class="external text" rel="nofollow">4.12.3</a>) and is covered by the local variable rule; this interpretation is further reinforced by the fact that the translation of <code style="background-color:inherit;font-size:medium">try</code>-with-resources generates a local variable, as alluded to in the redacted text.
+</div></li>
+<li style="margin-bottom:12px;"><div> In principle, the revised rule for local classes is not general enough, as it does not make an exception for a class of the same name declared within the local class itself.  However, this case is already prohibited by a separate rule: a class can never have the same name as a class that encloses it (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1" class="external text" rel="nofollow">8.1</a>).
+</div></li></ol></div></blockquote>
+<div id="B8.1.3"></div>
+<h3> <span class="mw-headline" id="8.1.3_Inner_Classes_and_Enclosing_Instances_.5BModified.5D"> 8.1.3 Inner Classes and Enclosing Instances [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.3" class="external text" rel="nofollow">JLS 8.1.3</a></small>
+</p><p>...
+</p><p><span class="norm-error">
+Any local variable, formal parameter, or exception parameter used but not declared in an inner class must be <u>either declared <code style="background-color:inherit;font-size:medium">final</code> or effectively final (<a href="B.html#B4.12.4" title="Lambda B" class="mw-redirect">4.12.4</a>)</u>.<span class="assertion-id"> [jls-8.1.3-510]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This extends support for effectively final variable capture to local classes (including anonymous classes) in addition to lambda expressions.</div></blockquote>
+<div id="B14.15"></div>
+<h3> <span class="mw-headline" id="14.15_The_break_Statement_.5BModified.5D"> 14.15 The <code style="background-color:inherit;font-size:medium">break</code> Statement [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.15" class="external text" rel="nofollow">JLS 14.15</a></small>
+</p><p>...
+</p><p><span class="norm-error">
+A <code style="background-color:inherit;font-size:medium">break</code> statement must refer to a label within the immediately enclosing method, constructor,<u>initializer, or lambda body</u>.  There are no non-local jumps.  If no labeled statement with <em>Identifier</em> as its label in the immediately enclosing method, constructor, <u>initializer, or lambda body</u> contains the <code style="background-color:inherit;font-size:medium">break</code> statement, a compile-time error occurs.<span class="assertion-id"> [jls-14.15-320]</span></span>
+</p><p>...
+</p>
+<div id="B14.16"></div>
+<h3> <span class="mw-headline" id="14.16_The_continue_Statement_.5BModified.5D"> 14.16 The <code style="background-color:inherit;font-size:medium">continue</code> Statement [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.16" class="external text" rel="nofollow">JLS 14.16</a></small>
+</p><p>...
+</p><p><span class="norm-error">
+A <code style="background-color:inherit;font-size:medium">continue</code> statement must refer to a label within the immediately enclosing method, constructor,<u>initializer, or lambda body</u>.  There are no non-local jumps.  If no labeled statement with <em>Identifier</em> as its label in the immediately enclosing method, constructor, <u>initializer, or lambda body</u> contains the <code style="background-color:inherit;font-size:medium">continue</code> statement, a compile-time error occurs.<span class="assertion-id"> [jls-14.16-330]</span></span>
+</p><p>...
+</p>
+<div id="B14.17"></div>
+<h3> <span class="mw-headline" id="14.17_The_return_Statement_.5BModified.5D"> 14.17 The <code style="background-color:inherit;font-size:medium">return</code> Statement [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.17" class="external text" rel="nofollow">JLS 14.17</a></small>
+</p><p><span class="norm-dynamic">
+A <code style="background-color:inherit;font-size:medium">return</code> statement returns control to the invoker of a method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4" class="external text" rel="nofollow">8.4</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) or constructor (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8" class="external text" rel="nofollow">8.8</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>).<span class="assertion-id"> [jls-14.17.100]</span></span>
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+ReturnStatement:
+  'return' Expression_opt ';'
+</pre>
+<p><span class="norm-static">
+A <code style="background-color:inherit;font-size:medium">return</code> statement is <i>contained</i> in the innermost constructor, method, <u>initializer, or lambda expression</u> whose body encloses the <code style="background-color:inherit;font-size:medium">return</code> statement.<span class="assertion-id"> [jls-14.17-120]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if a <code style="background-color:inherit;font-size:medium">return</code> statement is contained in an instance initializer or a static initializer (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.6" class="external text" rel="nofollow">8.6</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.7" class="external text" rel="nofollow">8.7</a>).<span class="assertion-id"> [jls-14.17.200]</span></span>
+</p><p><span class="norm-error">
+A <code style="background-color:inherit;font-size:medium">return</code> statement with no <i>Expression</i> must be contained in <u>one of the following, or a compile-time error occurs:</u><span class="assertion-id"> [jls-14.17-300]</span></span>
+</p>
+<ul><li> <span class="norm-error"> A method <u>(<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4" class="external text" rel="nofollow">8.4</a>)</u> that is declared, using the keyword <code style="background-color:inherit;font-size:medium">void</code>, not to return any value<span class="assertion-id"> [jls-14.17-300-A]</span></span>
+</li><li> <span class="norm-error"> A constructor (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8" class="external text" rel="nofollow">8.8</a>)<span class="assertion-id"> [jls-14.17-300-B]</span></span>
+</li><li> <span class="norm-error"> <u>A lambda expression (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>)</u><span class="assertion-id"> [jls-14.17-300-C]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+A <code style="background-color:inherit;font-size:medium">return</code> statement with no <i>Expression</i> attempts to transfer control to the invoker of the <u>method, constructor, or lambda body</u> that contains it.  To be precise, a <code style="background-color:inherit;font-size:medium">return</code> statement with no <i>Expression</i> always completes abruptly, the reason being a return with no value.<span class="assertion-id"> [jls-14.17-310]</span></span>
+</p><p><span class="norm-error">
+A <code style="background-color:inherit;font-size:medium">return</code> statement with an <i>Expression</i> must be contained in <u>one of the following, or a compile-time error occurs:</u><span class="assertion-id"> [jls-14.17-400]</span></span>
+</p>
+<ul><li> <span class="norm-error"> A <u>method</u> that is declared to return a value<span class="assertion-id"> [jls-14.17-400-A]</span></span>
+</li><li> <span class="norm-error"> <u>A lambda expression</u><span class="assertion-id"> [jls-14.17-400-B]</span></span>
+</li></ul>
+<p><span class="norm-error">
+The <i>Expression</i> must denote a variable or a value <del>of some type <em>T</em></del>, or a compile-time error occurs.<span class="assertion-id"> [jls-14.17-410]</span></span>
+</p><p><span class="norm-error">
+<u>When a <code style="background-color:inherit;font-size:medium">return</code> statement with an <i>Expression</i> appears in a method declaration, the <i>Expression</i></u> must be assignable (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.2.4" class="external text" rel="nofollow">5.2.4</a>) to the declared result type of the method, or a compile-time error occurs.<span class="assertion-id"> [jls-14.17-420]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The equivalent assignable check for return statements in lambda expressions is covered in Part E (<a href="E.html#E15.27.3" title="Lambda E" class="mw-redirect">15.27.3</a>).</div></blockquote>
+<p><span class="norm-dynamic">
+A <code style="background-color:inherit;font-size:medium">return</code> statement with an <i>Expression</i> attempts to transfer control to the invoker of the method <u>or lambda body</u> that contains it; the value of the <i>Expression</i> becomes the value of the method invocation.  More precisely, ...<span class="assertion-id"> [jls-14.17-430]</span></span>
+</p><p>...
+</p>
+<div id="B14.18"></div>
+<h3> <span class="mw-headline" id="14.18_The_throw_Statement_.5BModified.5D"> 14.18 The <code style="background-color:inherit;font-size:medium">throw</code> Statement [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.18" class="external text" rel="nofollow">JLS 14.18</a></small>
+</p><p>...
+</p><p><span class="norm-dynamic">
+If a <code style="background-color:inherit;font-size:medium">throw</code> statement is contained in a method declaration <u>or a lambda expression</u>, but its value is not caught by some <code style="background-color:inherit;font-size:medium">try</code> statement that contains it, then the invocation of the method completes abruptly because of the <code style="background-color:inherit;font-size:medium">throw</code>.<span class="assertion-id"> [jls-14.18-510]</span></span>
+</p><p>...
+</p>
+<div id="B14.20"></div>
+<h3> <span class="mw-headline" id="14.20_The_try_Statement_.5BModified.5D"> 14.20 The <code style="background-color:inherit;font-size:medium">try</code> Statement [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.20" class="external text" rel="nofollow">JLS 14.20</a></small>
+</p><p>...
+</p><p><del><span class="norm-static"> In a uni-<code style="background-color:inherit;font-size:medium">catch</code> clause, an exception parameter that is not declared <code style="background-color:inherit;font-size:medium">final</code> (implicitly or explicitly) is considered <i>effectively final</i> if it never occurs within its scope as the left-hand operand of an assignment operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>).<span class="assertion-id"> [jls-14.20-620]</span></span></del>
+</p><p>An implicitly final exception parameter is <code style="background-color:inherit;font-size:medium">final</code> by virtue of its declaration, while an effectively final exception parameter is (as it were) <code style="background-color:inherit;font-size:medium">final</code> by virtue of how it is used.  An exception parameter of a multi-<code style="background-color:inherit;font-size:medium">catch</code> clause is implicitly final, so will never occur as the left-hand operand of an assignment operator, but is <i>not</i> considered effectively final.
+</p><p><del>If an exception parameter is effectively final (in a uni-<code style="background-color:inherit;font-size:medium">catch</code> clause) or implicitly final (in a multi-<code style="background-color:inherit;font-size:medium">catch</code> clause), then adding an explicit <code style="background-color:inherit;font-size:medium">final</code> modifier to its declaration will not introduce any compile-time errors.  However, if the exception parameter <i>of a uni-<code style="background-color:inherit;font-size:medium">catch</code> clause</i> is explicitly declared <code style="background-color:inherit;font-size:medium">final</code>, then removing the <code style="background-color:inherit;font-size:medium">final</code> modifier may introduce compile-time errors.  This is because the exception parameter, while still effectively final, can no longer be referenced by, for example, local classes.  On the other hand, if there are no compile-time errors, it is possible to further change the program so that the exception parameter is re-assigned and no longer effectively final.</del>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The definition and discussion about <i>effectively final</i> is superseded by <a href="B.html#B4.12.4" title="Lambda B" class="mw-redirect">4.12.4</a>, above.  The note about how the implicit finality of a multi-<code style="background-color:inherit;font-size:medium">catch</code> clause is different than effective finality is still useful, though.</div></blockquote>
+<div id="B15.8.3"></div>
+<h3> <span class="mw-headline" id="15.8.3_this_.5BModified.5D"> 15.8.3 <code style="background-color:inherit;font-size:medium">this</code> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.3" class="external text" rel="nofollow">JLS 15.8.3</a></small>
+</p><p><span class="norm-error">
+The keyword <code style="background-color:inherit;font-size:medium">this</code> may be used only in the body of an instance method, instance initializer, or constructor, or in the initializer of an instance variable of a class.  If it appears anywhere else, a compile-time error occurs.<span class="assertion-id"> [jls-15.8.3-100]</span></span>
+</p><p><span class="norm-dynamic">
+When used as a primary expression, the keyword <code style="background-color:inherit;font-size:medium">this</code> denotes a value that is a reference to the object for which the instance method was invoked (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>), or to the object being constructed.<span class="assertion-id"> [jls-15.8.3-200]</span></span>
+</p><p><u>Note that a lambda expression (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>) is <i>not</i> a method declaration.  The keyword <code style="background-color:inherit;font-size:medium">this</code> is only allowed in a lambda expression if it is allowed in the context in which the lambda expression appears; the object denoted by <code style="background-color:inherit;font-size:medium">this</code> appearing in a lambda body is the same as the object denoted by <code style="background-color:inherit;font-size:medium">this</code> in the surrounding context.</u>
+</p><p>...
+</p>
+<div id="B16"></div>
+<h3> <span class="mw-headline" id="16_Definite_Assignment_.5BModified.5D"> 16 Definite Assignment [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-16.html#jls-16" class="external text" rel="nofollow">JLS 16</a></small>
+</p><p>...
+</p><p>Throughout the rest of this chapter, we will, unless explicitly stated otherwise, write <em>V</em> to represent an <u>in-scope (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.3" class="external text" rel="nofollow">6.3</a>)</u> local variable or <del>a</del> blank <code style="background-color:inherit;font-size:medium">final</code> field <del>(for rules of definite assignment) or a blank final variable (for rules of definite unassignment)</del>.
+</p><p>...
+</p>
+
+
+</body></html>

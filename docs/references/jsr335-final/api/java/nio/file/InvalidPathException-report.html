@@ -1,0 +1,295 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:InvalidPathException [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:InvalidPathException"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">InvalidPathException</span>
+extends <a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a>
+</pre>
+<div class="block">Unchecked exception thrown when path string cannot be converted into a <a href="../../../java/nio/file/Path.html" title="interface in java.nio.file" target="_parent"><code>Path</code></a> because the path string contains invalid characters, or the path string is invalid for other file system specific reasons.                              </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../serialized-form.html#java.nio.file.InvalidPathException" target="_parent">Serialized Form </a> 
+</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:InvalidPathException-java.lang.String-java.lang.String-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:InvalidPathException-java.lang.String-java.lang.String-int-"></a><a name="InvalidPathException-java.lang.String-java.lang.String-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>InvalidPathException</h4>
+<pre>public&nbsp;InvalidPathException(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;input,
+                            <a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;reason,
+                            int&nbsp;index)</pre>
+<div class="block">Constructs an instance from the given input string, reason, and error index.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>input</code> - the input string     </dd>
+<dd> 
+<code>reason</code> - a string explaining why the input was rejected          </dd>
+<dd> 
+<code>index</code> - the index at which the error occurred, or <tt>-1</tt> if the index is not known                 </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if either the input or reason strings are <tt>null</tt>           
+</dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the error index is less than <tt>-1</tt>          
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:InvalidPathException-java.lang.String-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:InvalidPathException-java.lang.String-java.lang.String-"></a><a name="InvalidPathException-java.lang.String-java.lang.String-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>InvalidPathException</h4>
+<pre>public&nbsp;InvalidPathException(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;input,
+                            <a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;reason)</pre>
+<div class="block">Constructs an instance from the given input string and reason. The resulting object will have an error index of <tt>-1</tt>.                   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>input</code> - the input string     </dd>
+<dd> 
+<code>reason</code> - a string explaining why the input was rejected          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if either the input or reason strings are <tt>null</tt>           
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getInput-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getInput--"></a><a name="getInput--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInput</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getInput()</pre>
+<div class="block">Returns the input string.   </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the input string  </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getReason-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getReason--"></a><a name="getReason--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getReason</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getReason()</pre>
+<div class="block">Returns a string explaining why the input string was rejected.         </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the reason string  </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getIndex-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getIndex--"></a><a name="getIndex--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIndex</h4>
+<pre>public&nbsp;int&nbsp;getIndex()</pre>
+<div class="block">Returns an index into the input string of the position at which the error occurred, or <tt>-1</tt> if this position is not known.                      </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the error index  </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getMessage-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getMessage--"></a><a name="getMessage--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getMessage</h4>
+<pre>public&nbsp;<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;getMessage()</pre>
+<div class="block">Returns a string describing the error. The resulting string consists of the reason string followed by a colon character (<tt>':'</tt>), a space, and the input string. If the error index is defined then the string <tt>" at index "   </tt> followed by the index, in decimal, is inserted after the reason string and before the colon character.                                                    </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/Throwable.html#getMessage--" target="_parent">getMessage</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/lang/Throwable.html" title="class in java.lang" target="_parent">Throwable</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a string describing the error    </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

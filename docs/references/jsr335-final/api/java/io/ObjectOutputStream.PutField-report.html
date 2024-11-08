@@ -1,0 +1,508 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ObjectOutputStream.PutField [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ObjectOutputStream.PutField"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>Enclosing class: </dt>
+<dd> 
+<a href="../../java/io/ObjectOutputStream.html" title="class in java.io" target="_parent">ObjectOutputStream</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract static class <span class="typeNameLabel">ObjectOutputStream.PutField</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">Provide programmatic access to the persistent fields to be written to ObjectOutput.           </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.2</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:PutField-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:PutField--"></a><a name="PutField--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>PutField</h4>
+<pre>public&nbsp;PutField()</pre>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-boolean-"></a><a name="put-java.lang.String-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         boolean&nbsp;val)</pre>
+<div class="block">Put the value of the named boolean field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>boolean</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-byte- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-byte-"></a><a name="put-java.lang.String-byte-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         byte&nbsp;val)</pre>
+<div class="block">Put the value of the named byte field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>byte</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-char- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-char-"></a><a name="put-java.lang.String-char-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         char&nbsp;val)</pre>
+<div class="block">Put the value of the named char field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>char</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-short- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-short-"></a><a name="put-java.lang.String-short-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         short&nbsp;val)</pre>
+<div class="block">Put the value of the named short field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>short</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-int-"></a><a name="put-java.lang.String-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         int&nbsp;val)</pre>
+<div class="block">Put the value of the named int field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>int</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-long-"></a><a name="put-java.lang.String-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         long&nbsp;val)</pre>
+<div class="block">Put the value of the named long field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>long</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-float- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-float-"></a><a name="put-java.lang.String-float-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         float&nbsp;val)</pre>
+<div class="block">Put the value of the named float field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>float</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-double- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-double-"></a><a name="put-java.lang.String-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         double&nbsp;val)</pre>
+<div class="block">Put the value of the named double field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not <code>double</code>                                
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-java.lang.String-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-java.lang.String-java.lang.Object-"></a><a name="put-java.lang.String-java.lang.Object-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;void&nbsp;put(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name,
+                         <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;val)</pre>
+<div class="block">Put the value of the named Object field into the persistent field.           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the name of the serializable field        </dd>
+<dd> 
+<code>val</code> - the value to assign to the field (which may be <code>null</code>)             </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>name</code> does not match the name of a serializable field for the class whose fields are being written, or if the type of the named field is not a reference type                                  </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:write-java.io.ObjectOutput- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:write-java.io.ObjectOutput-"></a><a name="write-java.io.ObjectOutput-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>write</h4>
+<pre>
+<a href="../../java/lang/Deprecated.html" title="annotation in java.lang" target="_parent">@Deprecated</a>
+public abstract&nbsp;void&nbsp;write(<a href="../../java/io/ObjectOutput.html" title="interface in java.io" target="_parent">ObjectOutput</a>&nbsp;out)
+                                throws <a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a>
+</pre>
+<div class="block"> 
+<span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">This method does not write the values contained by this <code>PutField</code> object in a proper format, and may result in corruption of the serialization stream. The correct way to write <code>PutField</code> data is by calling the <a href="../../java/io/ObjectOutputStream.html#writeFields--" target="_parent"><code>ObjectOutputStream.writeFields()</code></a> method.                                     </span> 
+</div>
+<div class="block">Write the data and fields to the specified ObjectOutput stream, which must be the same stream that produced this <code>PutField</code> object.                    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>out</code> - the stream to write the data and fields to           </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/io/IOException.html" title="class in java.io" target="_parent">IOException</a></code> - if I/O errors occur while writing to the underlying stream            </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if the specified stream is not the same stream that produced this <code>PutField</code> object                </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

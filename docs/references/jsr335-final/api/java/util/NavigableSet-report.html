@@ -1,0 +1,760 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:NavigableSet [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:NavigableSet"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - the type of elements maintained by this set          </dd> 
+</dl>
+<dl> 
+<dt>All Superinterfaces: </dt>
+<dd> 
+<a href="../../java/util/Collection.html" title="interface in java.util" target="_parent">Collection</a>&lt;E&gt;, <a href="../../java/lang/Iterable.html" title="interface in java.lang" target="_parent">Iterable</a>&lt;E&gt;, <a href="../../java/util/Set.html" title="interface in java.util" target="_parent">Set</a>&lt;E&gt;, <a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;E&gt;    </dd> 
+</dl>
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../java/util/concurrent/ConcurrentSkipListSet.html" title="class in java.util.concurrent" target="_parent">ConcurrentSkipListSet</a>, <a href="../../java/util/TreeSet.html" title="class in java.util" target="_parent">TreeSet</a>  
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">NavigableSet&lt;E&gt;</span>
+extends <a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;E&gt;</pre>
+<div class="block">A <a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent"><code>SortedSet</code></a> extended with navigation methods reporting closest matches for given search targets. Methods <code>lower</code>, <code>floor</code>, <code>ceiling</code>, and <code>higher</code> return elements respectively less than, less than or equal, greater than or equal, and greater than a given element, returning <code>null</code> if there is no such element. A <code>NavigableSet</code> may be accessed and traversed in either ascending or descending order. The <code>descendingSet</code> method returns a view of the set with the senses of all relational and directional methods inverted. The performance of ascending operations and views is likely to be faster than that of descending ones. This interface additionally defines methods <code>pollFirst</code> and <code>pollLast</code> that return and remove the lowest and highest element, if one exists, else returning <code>null</code>. Methods <code>subSet</code>, <code>headSet</code>, and <code>tailSet</code> differ from the like-named <code>SortedSet</code> methods in accepting additional arguments describing whether lower and upper bounds are inclusive versus exclusive. Subsets of any <code>NavigableSet</code> must implement the <code>NavigableSet</code> interface.<p> The return values of navigation methods may be ambiguous in implementations that permit <code>null</code> elements. However, even in this case the result can be disambiguated by checking <code>contains(null)</code>. To avoid such issues, implementations of this interface are encouraged to <em>not</em> permit insertion of <code>null</code> elements. (Note that sorted sets of <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a> elements intrinsically do not permit <code>null</code>.)                                                         </p>
+<p>Methods <a href="../../java/util/NavigableSet.html#subSet-E-E-" target="_parent"><code>subSet(E, E) </code></a>, <a href="../../java/util/NavigableSet.html#headSet-E-" target="_parent"><code>headSet(E)</code></a>, and <a href="../../java/util/NavigableSet.html#tailSet-E-" target="_parent"><code>tailSet(E)</code></a> are specified to return <code>SortedSet</code> to allow existing implementations of <code>SortedSet</code> to be compatibly retrofitted to implement <code>NavigableSet</code>, but extensions and implementations of this interface are encouraged to override these methods to return <code>NavigableSet</code>.                                      </p>
+<p>This interface is a member of the <a href="http://download.oracle.com/javase/7/docs/technotes/guides/collections/index.html" target="_parent"> Java Collections Framework   </a>.       </p>                                                                                                                                                       
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:lower-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"><a name="method:lower-E-"></a><a name="lower-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lower</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;lower(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;e)</pre>
+<div class="block">Returns the greatest element in this set strictly less than the given element, or <code>null</code> if there is no such element.                    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e</code> - the value to match      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the greatest element less than <code>e</code>, or <code>null</code> if there is no such element             </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified element cannot be compared with the elements currently in the set                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified element is null and this set does not permit null elements                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="floor-java.lang.Object-"></a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:floor-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:floor-E-"></a><a name="floor-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>floor</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;floor(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;e)</pre>
+<div class="block">Returns the greatest element in this set less than or equal to the given element, or <code>null</code> if there is no such element.                      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e</code> - the value to match      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the greatest element less than or equal to <code>e</code>, or <code>null</code> if there is no such element                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified element cannot be compared with the elements currently in the set                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified element is null and this set does not permit null elements                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="ceiling-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ceiling-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ceiling-E-"></a><a name="ceiling-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ceiling</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;ceiling(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;e)</pre>
+<div class="block">Returns the least element in this set greater than or equal to the given element, or <code>null</code> if there is no such element.                      </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e</code> - the value to match      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the least element greater than or equal to <code>e</code>, or <code>null</code> if there is no such element                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified element cannot be compared with the elements currently in the set                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified element is null and this set does not permit null elements                </dd>   
+</dl>
+</li>
+</ul> 
+<a name="higher-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:higher-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:higher-E-"></a><a name="higher-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>higher</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;higher(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;e)</pre>
+<div class="block">Returns the least element in this set strictly greater than the given element, or <code>null</code> if there is no such element.                    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e</code> - the value to match      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the least element greater than <code>e</code>, or <code>null</code> if there is no such element             </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if the specified element cannot be compared with the elements currently in the set                </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the specified element is null and this set does not permit null elements                </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:pollFirst-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:pollFirst--"></a><a name="pollFirst--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pollFirst</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;pollFirst()</pre>
+<div class="block">Retrieves and removes the first (lowest) element, or returns <code>null</code> if this set is empty.              </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the first element, or <code>null</code> if this set is empty         </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:pollLast-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:pollLast--"></a><a name="pollLast--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pollLast</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;pollLast()</pre>
+<div class="block">Retrieves and removes the last (highest) element, or returns <code>null</code> if this set is empty.              </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the last element, or <code>null</code> if this set is empty         </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:iterator-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:iterator--"></a><a name="iterator--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>iterator</h4>
+<pre>
+<a href="../../java/util/Iterator.html" title="interface in java.util" target="_parent">Iterator</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;iterator()</pre>
+<div class="block">Returns an iterator over the elements in this set, in ascending order.           </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/Collection.html#iterator--" target="_parent">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/Collection.html" title="interface in java.util" target="_parent">Collection</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Iterable.html#iterator--" target="_parent">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Iterable.html" title="interface in java.lang" target="_parent">Iterable</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/Set.html#iterator--" target="_parent">iterator</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/Set.html" title="interface in java.util" target="_parent">Set</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an iterator over the elements in this set, in ascending order          </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:descendingSet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:descendingSet--"></a><a name="descendingSet--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingSet</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;descendingSet()</pre>
+<div class="block">Returns a reverse order view of the elements contained in this set. The descending set is backed by this set, so changes to the set are reflected in the descending set, and vice-versa. If either set is modified while an iteration over either set is in progress (except through the iterator's own <code>remove</code> operation), the results of the iteration are undefined.<p>The returned set has an ordering equivalent to <tt><a href="../../java/util/Collections.html#reverseOrder-java.util.Comparator-" target="_parent"><code>Collections.reverseOrder</code></a>(comparator())</tt>. The expression <code>s.descendingSet().descendingSet()</code> returns a view of <code>s</code> essentially equivalent to <code>s</code>.                    </p>                                                            
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a reverse order view of this set      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:descendingIterator-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:descendingIterator--"></a><a name="descendingIterator--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingIterator</h4>
+<pre>
+<a href="../../java/util/Iterator.html" title="interface in java.util" target="_parent">Iterator</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;descendingIterator()</pre>
+<div class="block">Returns an iterator over the elements in this set, in descending order. Equivalent in effect to <code>descendingSet().iterator()</code>.                </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an iterator over the elements in this set, in descending order          </dd> 
+</dl>
+</li>
+</ul> 
+<a name="subSet-java.lang.Object-boolean-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:subSet-E-boolean-E-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:subSet-E-boolean-E-boolean-"></a><a name="subSet-E-boolean-E-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subSet</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;subSet(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;fromElement,
+                       boolean&nbsp;fromInclusive,
+                       <a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;toElement,
+                       boolean&nbsp;toInclusive)</pre>
+<div class="block">Returns a view of the portion of this set whose elements range from <code>fromElement</code> to <code>toElement</code>. If <code>fromElement</code> and <code>toElement</code> are equal, the returned set is empty unless <code>fromInclusive</code> and <code>toInclusive</code> are both true. The returned set is backed by this set, so changes in the returned set are reflected in this set, and vice-versa. The returned set supports all optional set operations that this set supports.<p>The returned set will throw an <code>IllegalArgumentException</code> on an attempt to insert an element outside its range.                </p>                                                                  
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromElement</code> - low endpoint of the returned set        </dd>
+<dd> 
+<code>fromInclusive</code> - <code>true</code> if the low endpoint is to be included in the returned view               </dd>
+<dd> 
+<code>toElement</code> - high endpoint of the returned set        </dd>
+<dd> 
+<code>toInclusive</code> - <code>true</code> if the high endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this set whose elements range from <code>fromElement</code>, inclusive, to <code>toElement</code>, exclusive                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromElement</code> and <code>toElement</code> cannot be compared to one another using this set's comparator (or, if the set has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if <code>fromElement</code> or <code>toElement</code> cannot be compared to elements currently in the set.                                                 </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromElement</code> or <code>toElement</code> is null and this set does not permit null elements                </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>fromElement</code> is greater than <code>toElement</code>; or if this set itself has a restricted range, and <code>fromElement</code> or <code>toElement</code> lies outside the bounds of the range.                            </dd>   
+</dl>
+</li>
+</ul> 
+<a name="headSet-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:headSet-E-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:headSet-E-boolean-"></a><a name="headSet-E-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headSet</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;headSet(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;toElement,
+                        boolean&nbsp;inclusive)</pre>
+<div class="block">Returns a view of the portion of this set whose elements are less than (or equal to, if <code>inclusive</code> is true) <code>toElement</code>. The returned set is backed by this set, so changes in the returned set are reflected in this set, and vice-versa. The returned set supports all optional set operations that this set supports.<p>The returned set will throw an <code>IllegalArgumentException</code> on an attempt to insert an element outside its range.                </p>                                                      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>toElement</code> - high endpoint of the returned set        </dd>
+<dd> 
+<code>inclusive</code> - <code>true</code> if the high endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this set whose elements are less than (or equal to, if <code>inclusive</code> is true) <code>toElement</code>                    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>toElement</code> is not compatible with this set's comparator (or, if the set has no comparator, if <code>toElement</code> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>toElement</code> cannot be compared to elements currently in the set.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>toElement</code> is null and this set does not permit null elements              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this set itself has a restricted range, and <code>toElement</code> lies outside the bounds of the range                   </dd>   
+</dl>
+</li>
+</ul> 
+<a name="tailSet-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:tailSet-E-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:tailSet-E-boolean-"></a><a name="tailSet-E-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailSet</h4>
+<pre>
+<a href="../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;tailSet(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;fromElement,
+                        boolean&nbsp;inclusive)</pre>
+<div class="block">Returns a view of the portion of this set whose elements are greater than (or equal to, if <code>inclusive</code> is true) <code>fromElement</code>. The returned set is backed by this set, so changes in the returned set are reflected in this set, and vice-versa. The returned set supports all optional set operations that this set supports.<p>The returned set will throw an <code>IllegalArgumentException</code> on an attempt to insert an element outside its range.                </p>                                                      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromElement</code> - low endpoint of the returned set        </dd>
+<dd> 
+<code>inclusive</code> - <code>true</code> if the low endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this set whose elements are greater than or equal to <code>fromElement</code>                
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromElement</code> is not compatible with this set's comparator (or, if the set has no comparator, if <code>fromElement</code> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>fromElement</code> cannot be compared to elements currently in the set.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromElement</code> is null and this set does not permit null elements              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this set itself has a restricted range, and <code>fromElement</code> lies outside the bounds of the range                   </dd>   
+</dl>
+</li>
+</ul> 
+<a name="subSet-java.lang.Object-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:subSet-E-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:subSet-E-E-"></a><a name="subSet-E-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subSet</h4>
+<pre>
+<a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;subSet(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;fromElement,
+                    <a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;toElement)</pre>
+<div class="block">Returns a view of the portion of this set whose elements range from <tt>fromElement</tt>, inclusive, to <tt>toElement</tt>, exclusive. (If <tt>fromElement</tt> and <tt>toElement</tt> are equal, the returned set is empty.) The returned set is backed by this set, so changes in the returned set are reflected in this set, and vice-versa. The returned set supports all optional set operations that this set supports.<p>The returned set will throw an <tt>IllegalArgumentException</tt> on an attempt to insert an element outside its range.                </p>
+<p>Equivalent to <code>subSet(fromElement, true, toElement, false)   </code>.  </p>                                                             
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/SortedSet.html#subSet-E-E-" target="_parent">subSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromElement</code> - low endpoint (inclusive) of the returned set         </dd>
+<dd> 
+<code>toElement</code> - high endpoint (exclusive) of the returned set         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this set whose elements range from <tt>fromElement</tt>, inclusive, to <tt>toElement</tt>, exclusive                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <tt>fromElement</tt> and <tt>toElement</tt> cannot be compared to one another using this set's comparator (or, if the set has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if <tt>fromElement</tt> or <tt>toElement</tt> cannot be compared to elements currently in the set.                                                 </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>fromElement</tt> or <tt>toElement</tt> is null and this set does not permit null elements                </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <tt>fromElement</tt> is greater than <tt>toElement</tt>; or if this set itself has a restricted range, and <tt>fromElement</tt> or <tt>toElement</tt> lies outside the bounds of the range                            </dd>    
+</dl>
+</li>
+</ul> 
+<a name="headSet-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:headSet-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:headSet-E-"></a><a name="headSet-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headSet</h4>
+<pre>
+<a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;headSet(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;toElement)</pre>
+<div class="block">Returns a view of the portion of this set whose elements are strictly less than <tt>toElement</tt>. The returned set is backed by this set, so changes in the returned set are reflected in this set, and vice-versa. The returned set supports all optional set operations that this set supports.<p>The returned set will throw an <tt>IllegalArgumentException</tt> on an attempt to insert an element outside its range.                </p>
+<p>Equivalent to <code>headSet(toElement, false) </code>.  </p>                                                
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/SortedSet.html#headSet-E-" target="_parent">headSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>toElement</code> - high endpoint (exclusive) of the returned set         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this set whose elements are strictly less than <tt>toElement</tt>              
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <tt>toElement</tt> is not compatible with this set's comparator (or, if the set has no comparator, if <tt>toElement</tt> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <tt>toElement</tt> cannot be compared to elements currently in the set.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>toElement</tt> is null and this set does not permit null elements              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this set itself has a restricted range, and <tt>toElement</tt> lies outside the bounds of the range                   </dd>    
+</dl>
+</li>
+</ul> 
+<a name="tailSet-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:tailSet-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:tailSet-E-"></a><a name="tailSet-E-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>tailSet</h4>
+<pre>
+<a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;&nbsp;tailSet(<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&nbsp;fromElement)</pre>
+<div class="block">Returns a view of the portion of this set whose elements are greater than or equal to <tt>fromElement</tt>. The returned set is backed by this set, so changes in the returned set are reflected in this set, and vice-versa. The returned set supports all optional set operations that this set supports.<p>The returned set will throw an <tt>IllegalArgumentException</tt> on an attempt to insert an element outside its range.                </p>
+<p>Equivalent to <code>tailSet(fromElement, true) </code>.  </p>                                                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/util/SortedSet.html#tailSet-E-" target="_parent">tailSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/util/SortedSet.html" title="interface in java.util" target="_parent">SortedSet</a>&lt;<a href="../../java/util/NavigableSet.html" title="type parameter in NavigableSet" target="_parent">E</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromElement</code> - low endpoint (inclusive) of the returned set         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this set whose elements are greater than or equal to <tt>fromElement</tt>                
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <tt>fromElement</tt> is not compatible with this set's comparator (or, if the set has no comparator, if <tt>fromElement</tt> does not implement <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <tt>fromElement</tt> cannot be compared to elements currently in the set.                                             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>fromElement</tt> is null and this set does not permit null elements              </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this set itself has a restricted range, and <tt>fromElement</tt> lies outside the bounds of the range                   </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

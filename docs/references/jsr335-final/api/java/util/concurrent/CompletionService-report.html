@@ -1,0 +1,281 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:CompletionService [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:CompletionService"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../../java/util/concurrent/ExecutorCompletionService.html" title="class in java.util.concurrent" target="_parent">ExecutorCompletionService</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">CompletionService&lt;V&gt;</span>
+</pre>
+<div class="block">A service that decouples the production of new asynchronous tasks from the consumption of the results of completed tasks. Producers <code>submit</code> tasks for execution. Consumers <code>take</code> completed tasks and process their results in the order they complete. A <code>CompletionService</code> can for example be used to manage asynchronous I/O, in which tasks that perform reads are submitted in one part of a program or system, and then acted upon in a different part of the program when the reads complete, possibly in a different order than they were requested.<p>Typically, a <code>CompletionService</code> relies on a separate <a href="../../../java/util/concurrent/Executor.html" title="interface in java.util.concurrent" target="_parent"><code>Executor</code></a> to actually execute the tasks, in which case the <code>CompletionService</code> only manages an internal completion queue. The <a href="../../../java/util/concurrent/ExecutorCompletionService.html" title="class in java.util.concurrent" target="_parent"><code>ExecutorCompletionService</code></a> class provides an implementation of this approach.                                </p>
+<p>Memory consistency effects: Actions in a thread prior to submitting a task to a <code>CompletionService</code><a href="package-summary.html#MemoryVisibility" target="_parent"><i>happen-before</i></a> actions taken by that task, which in turn <i>happen-before</i> actions following a successful return from the corresponding <code>take()</code>.                                </p>                                                                                       
+</div>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:submit-java.util.concurrent.Callable- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:submit-java.util.concurrent.Callable-"></a><a name="submit-java.util.concurrent.Callable-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>submit</h4>
+<pre>
+<a href="../../../java/util/concurrent/Future.html" title="interface in java.util.concurrent" target="_parent">Future</a>&lt;<a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&gt;&nbsp;submit(<a href="../../../java/util/concurrent/Callable.html" title="interface in java.util.concurrent" target="_parent">Callable</a>&lt;<a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&gt;&nbsp;task)</pre>
+<div class="block">Submits a value-returning task for execution and returns a Future representing the pending results of the task. Upon completion, this task may be taken or polled.                         </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>task</code> - the task to submit      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a Future representing pending completion of the task       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/concurrent/RejectedExecutionException.html" title="class in java.util.concurrent" target="_parent">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution          </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the task is null       </dd>   
+</dl>
+</li>
+</ul> 
+<a name="submit-java.lang.Runnable-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:submit-java.lang.Runnable-V- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:submit-java.lang.Runnable-V-"></a><a name="submit-java.lang.Runnable-V-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>submit</h4>
+<pre>
+<a href="../../../java/util/concurrent/Future.html" title="interface in java.util.concurrent" target="_parent">Future</a>&lt;<a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&gt;&nbsp;submit(<a href="../../../java/lang/Runnable.html" title="interface in java.lang" target="_parent">Runnable</a>&nbsp;task,
+                 <a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&nbsp;result)</pre>
+<div class="block">Submits a Runnable task for execution and returns a Future representing that task. Upon completion, this task may be taken or polled.                     </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>task</code> - the task to submit      </dd>
+<dd> 
+<code>result</code> - the result to return upon successful completion         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a Future representing pending completion of the task, and whose <code>get()</code> method will return the given result value upon completion                   </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/concurrent/RejectedExecutionException.html" title="class in java.util.concurrent" target="_parent">RejectedExecutionException</a></code> - if the task cannot be scheduled for execution          </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the task is null       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:take-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:take--"></a><a name="take--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>take</h4>
+<pre>
+<a href="../../../java/util/concurrent/Future.html" title="interface in java.util.concurrent" target="_parent">Future</a>&lt;<a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&gt;&nbsp;take()
+        throws <a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a>
+</pre>
+<div class="block">Retrieves and removes the Future representing the next completed task, waiting if none are yet present.               </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the Future representing the next completed task      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a></code> - if interrupted while waiting      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:poll-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:poll--"></a><a name="poll--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>poll</h4>
+<pre>
+<a href="../../../java/util/concurrent/Future.html" title="interface in java.util.concurrent" target="_parent">Future</a>&lt;<a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&gt;&nbsp;poll()</pre>
+<div class="block">Retrieves and removes the Future representing the next completed task, or <code>null</code> if none are present.               </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the Future representing the next completed task, or <code>null</code> if none are present            </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:poll-long-java.util.concurrent.TimeUnit- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:poll-long-java.util.concurrent.TimeUnit-"></a><a name="poll-long-java.util.concurrent.TimeUnit-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>poll</h4>
+<pre>
+<a href="../../../java/util/concurrent/Future.html" title="interface in java.util.concurrent" target="_parent">Future</a>&lt;<a href="../../../java/util/concurrent/CompletionService.html" title="type parameter in CompletionService" target="_parent">V</a>&gt;&nbsp;poll(long&nbsp;timeout,
+               <a href="../../../java/util/concurrent/TimeUnit.html" title="enum in java.util.concurrent" target="_parent">TimeUnit</a>&nbsp;unit)
+        throws <a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a>
+</pre>
+<div class="block">Retrieves and removes the Future representing the next completed task, waiting if necessary up to the specified wait time if none are yet present.                       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>timeout</code> - how long to wait before giving up, in units of <code>unit</code>             
+</dd>
+<dd> 
+<code>unit</code> - a <code>TimeUnit</code> determining how to interpret the <code>timeout</code> parameter           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the Future representing the next completed task or <code>null</code> if the specified waiting time elapses before one is present                  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a></code> - if interrupted while waiting      </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

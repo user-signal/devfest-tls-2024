@@ -1,0 +1,323 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ErrorManager [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ErrorManager"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">ErrorManager</span>
+extends <a href="../../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">ErrorManager objects can be attached to Handlers to process any error that occurs on a Handler during Logging.<p> When processing logging output, if a Handler encounters problems then rather than throwing an Exception back to the issuer of the logging call (who is unlikely to be interested) the Handler should call its associated ErrorManager.                                    </p>                 
+</div>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:GENERIC_FAILURE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:GENERIC_FAILURE"></a><a name="GENERIC_FAILURE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>GENERIC_FAILURE</h4>
+<pre>public static final&nbsp;int GENERIC_FAILURE</pre>
+<div class="block">GENERIC_FAILURE is used for failure that don't fit into one of the other categories.             </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.logging.ErrorManager.GENERIC_FAILURE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:WRITE_FAILURE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:WRITE_FAILURE"></a><a name="WRITE_FAILURE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>WRITE_FAILURE</h4>
+<pre>public static final&nbsp;int WRITE_FAILURE</pre>
+<div class="block">WRITE_FAILURE is used when a write to an output stream fails.          </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.logging.ErrorManager.WRITE_FAILURE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:FLUSH_FAILURE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:FLUSH_FAILURE"></a><a name="FLUSH_FAILURE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>FLUSH_FAILURE</h4>
+<pre>public static final&nbsp;int FLUSH_FAILURE</pre>
+<div class="block">FLUSH_FAILURE is used when a flush to an output stream fails.          </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.logging.ErrorManager.FLUSH_FAILURE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:CLOSE_FAILURE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:CLOSE_FAILURE"></a><a name="CLOSE_FAILURE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CLOSE_FAILURE</h4>
+<pre>public static final&nbsp;int CLOSE_FAILURE</pre>
+<div class="block">CLOSE_FAILURE is used when a close of an output stream fails.          </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.logging.ErrorManager.CLOSE_FAILURE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:OPEN_FAILURE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:OPEN_FAILURE"></a><a name="OPEN_FAILURE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OPEN_FAILURE</h4>
+<pre>public static final&nbsp;int OPEN_FAILURE</pre>
+<div class="block">OPEN_FAILURE is used when an open of an output stream fails.          </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.logging.ErrorManager.OPEN_FAILURE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:FORMAT_FAILURE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:FORMAT_FAILURE"></a><a name="FORMAT_FAILURE"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>FORMAT_FAILURE</h4>
+<pre>public static final&nbsp;int FORMAT_FAILURE</pre>
+<div class="block">FORMAT_FAILURE is used when formatting fails for any reason.        </div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../constant-values.html#java.util.logging.ErrorManager.FORMAT_FAILURE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:ErrorManager-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:ErrorManager--"></a><a name="ErrorManager--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ErrorManager</h4>
+<pre>public&nbsp;ErrorManager()</pre>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:error-java.lang.String-java.lang.Exception-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:error-java.lang.String-java.lang.Exception-int-"></a><a name="error-java.lang.String-java.lang.Exception-int-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>error</h4>
+<pre>public&nbsp;void&nbsp;error(<a href="../../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;msg,
+                  <a href="../../../java/lang/Exception.html" title="class in java.lang" target="_parent">Exception</a>&nbsp;ex,
+                  int&nbsp;code)</pre>
+<div class="block">The error method is called when a Handler failure occurs.<p> This method may be overridden in subclasses. The default behavior in this base class is that the first call is reported to System.err, and subsequent calls are ignored.                            </p>         
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>msg</code> - a descriptive string (may be null)        </dd>
+<dd> 
+<code>ex</code> - an exception (may be null)       </dd>
+<dd> 
+<code>code</code> - an error code defined in ErrorManager        </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

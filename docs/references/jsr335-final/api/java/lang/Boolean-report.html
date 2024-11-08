@@ -1,0 +1,913 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Boolean [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Boolean"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a>, <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent">Comparable</a>&lt;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&gt;  </dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public final class <span class="typeNameLabel">Boolean</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+implements <a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a>, <a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent">Comparable</a>&lt;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&gt;</pre>
+<div class="block">The Boolean class wraps a value of the primitive type <code>boolean</code> in an object. An object of type <code>Boolean</code> contains a single field whose type is <code>boolean</code>.<p> In addition, this class provides many methods for converting a <code>boolean</code> to a <code>String</code> and a <code>String</code> to a <code>boolean</code>, as well as other constants and methods useful when dealing with a <code>boolean</code>.                                 </p>                          
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.0</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../serialized-form.html#java.lang.Boolean" target="_parent">Serialized Form </a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:TRUE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:TRUE"></a><a name="TRUE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TRUE</h4>
+<pre>public static final&nbsp;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a> TRUE</pre>
+<div class="block">The <code>Boolean</code> object corresponding to the primitive value <code>true</code>.        </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:FALSE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:FALSE"></a><a name="FALSE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>FALSE</h4>
+<pre>public static final&nbsp;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a> FALSE</pre>
+<div class="block">The <code>Boolean</code> object corresponding to the primitive value <code>false</code>.        </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:TYPE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:TYPE"></a><a name="TYPE"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>TYPE</h4>
+<pre>public static final&nbsp;<a href="../../java/lang/Class.html" title="class in java.lang" target="_parent">Class</a>&lt;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&gt; TYPE</pre>
+<div class="block">The Class object representing the primitive type boolean.       </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.1</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Boolean-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Boolean-boolean-"></a><a name="Boolean-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Boolean</h4>
+<pre>public&nbsp;Boolean(boolean&nbsp;value)</pre>
+<div class="block">Allocates a <code>Boolean</code> object representing the <code>value</code> argument.<p> 
+<b>Note: It is rarely appropriate to use this constructor. Unless a <i>new</i> instance is required, the static factory <a href="../../java/lang/Boolean.html#valueOf-boolean-" target="_parent"><code>valueOf(boolean)</code></a> is generally a better choice. It is likely to yield significantly better space and time performance.                                  </b> 
+</p>       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>value</code> - the value of the <code>Boolean</code>.       </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Boolean-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Boolean-java.lang.String-"></a><a name="Boolean-java.lang.String-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Boolean</h4>
+<pre>public&nbsp;Boolean(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;s)</pre>
+<div class="block">Allocates a <code>Boolean</code> object representing the value <code>true</code> if the string argument is not <code>null</code> and is equal, ignoring case, to the string <code>"true"</code>. Otherwise, allocate a <code>Boolean</code> object representing the value <code>false</code>. Examples:<p> 
+<code>new Boolean("True") </code> produces a <code>Boolean</code> object that represents <code>true</code>.<br> 
+<code>new Boolean("yes") </code> produces a <code>Boolean</code> object that represents <code>false</code>.                </p>                                 
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - the string to be converted to a <code>Boolean</code>.          </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:parseBoolean-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:parseBoolean-java.lang.String-"></a><a name="parseBoolean-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parseBoolean</h4>
+<pre>public static&nbsp;boolean&nbsp;parseBoolean(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;s)</pre>
+<div class="block">Parses the string argument as a boolean. The <code>boolean</code> returned represents the value <code>true</code> if the string argument is not <code>null</code> and is equal, ignoring case, to the string <code>"true"</code>.<p> Example: <code>Boolean.parseBoolean("True")</code> returns <code>true</code>.<br> Example: <code>Boolean.parseBoolean("yes")</code> returns <code>false</code>.        </p>                             
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - the <code>String</code> containing the boolean representation to be parsed           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the boolean represented by the string argument      </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:booleanValue-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:booleanValue--"></a><a name="booleanValue--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>booleanValue</h4>
+<pre>public&nbsp;boolean&nbsp;booleanValue()</pre>
+<div class="block">Returns the value of this <code>Boolean</code> object as a boolean primitive.          </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the primitive <code>boolean</code> value of this object.      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:valueOf-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:valueOf-boolean-"></a><a name="valueOf-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>valueOf</h4>
+<pre>public static&nbsp;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&nbsp;valueOf(boolean&nbsp;b)</pre>
+<div class="block">Returns a <code>Boolean</code> instance representing the specified <code>boolean</code> value. If the specified <code>boolean</code> value is <code>true</code>, this method returns <code>Boolean.TRUE</code>; if it is <code>false</code>, this method returns <code>Boolean.FALSE</code>. If a new <code>Boolean</code> instance is not required, this method should generally be used in preference to the constructor <a href="../../java/lang/Boolean.html#Boolean-boolean-" target="_parent"><code>Boolean(boolean)</code></a>, as this method is likely to yield significantly better space and time performance.                                                            </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>b</code> - a boolean value.     </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a <code>Boolean</code> instance representing <code>b</code>.    </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.4</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:valueOf-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:valueOf-java.lang.String-"></a><a name="valueOf-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>valueOf</h4>
+<pre>public static&nbsp;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&nbsp;valueOf(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;s)</pre>
+<div class="block">Returns a <code>Boolean</code> with a value represented by the specified string. The <code>Boolean</code> returned represents a true value if the string argument is not <code>null</code> and is equal, ignoring case, to the string <code>"true"</code>.                                 </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - a string.    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the <code>Boolean</code> value represented by the string.      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:toString-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:toString-boolean-"></a><a name="toString-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public static&nbsp;<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;toString(boolean&nbsp;b)</pre>
+<div class="block">Returns a <code>String</code> object representing the specified boolean. If the specified boolean is <code>true</code>, then the string <code>"true"</code> will be returned, otherwise the string <code>"false"</code> will be returned.                           </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>b</code> - the boolean to be converted       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the string representation of the specified <code>boolean</code>      
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.4</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:toString-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:toString--"></a><a name="toString--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;toString()</pre>
+<div class="block">Returns a <code>String</code> object representing this Boolean's value. If this object represents the value <code>true</code>, a string equal to <code>"true"</code> is returned. Otherwise, a string equal to <code>"false"</code> is returned.                             </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Object.html#toString--" target="_parent">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a string representation of this object.     </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:hashCode-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:hashCode--"></a><a name="hashCode--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hashCode</h4>
+<pre>public&nbsp;int&nbsp;hashCode()</pre>
+<div class="block">Returns a hash code for this <code>Boolean</code> object.       </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Object.html#hashCode--" target="_parent">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the integer <code>1231</code> if this object represents <code>true</code>; returns the integer <code>1237</code> if this object represents <code>false</code>.                </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Object.html#equals-java.lang.Object-" target="_parent"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../java/lang/System.html#identityHashCode-java.lang.Object-" target="_parent"><code>System.identityHashCode(java.lang.Object)</code></a>  
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:hashCode-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:hashCode-boolean-"></a><a name="hashCode-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hashCode</h4>
+<pre>public static&nbsp;int&nbsp;hashCode(boolean&nbsp;value)</pre>
+<div class="block">Returns a hash code for a <code>boolean</code> value; compatible with <code>Boolean.hashCode()</code>.          </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>value</code> - the value to hash      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a hash code value for a <code>boolean</code> value.       </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:equals-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:equals-java.lang.Object-"></a><a name="equals-java.lang.Object-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>equals</h4>
+<pre>public&nbsp;boolean&nbsp;equals(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;obj)</pre>
+<div class="block">Returns <code>true</code> if and only if the argument is not <code>null</code> and is a <code>Boolean</code> object that represents the same <code>boolean</code> value as this object.                        </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Object.html#equals-java.lang.Object-" target="_parent">equals</a></code>&nbsp;in class&nbsp;<code><a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>obj</code> - the object to compare with.       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if the Boolean objects represent the same value; <code>false</code> otherwise.           </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Object.html#hashCode--" target="_parent"><code>Object.hashCode()</code></a>, <a href="../../java/util/HashMap.html" title="class in java.util" target="_parent"><code>HashMap</code></a>  
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getBoolean-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getBoolean-java.lang.String-"></a><a name="getBoolean-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBoolean</h4>
+<pre>public static&nbsp;boolean&nbsp;getBoolean(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;name)</pre>
+<div class="block">Returns <code>true</code> if and only if the system property named by the argument exists and is equal to the string <code>"true"</code>. (Beginning with version 1.0.2 of the Java<small><sup>TM</sup></small> platform, the test of this string is case insensitive.) A system property is accessible through <code>getProperty</code>, a method defined by the <code>System</code> class.<p> If there is no property with the specified name, or if the specified name is empty or null, then <code>false</code> is returned.                      </p>                                                  
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>name</code> - the system property name.      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the <code>boolean</code> value of the system property.      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/SecurityException.html" title="class in java.lang" target="_parent">SecurityException</a></code> - for the same reasons as <a href="../../java/lang/System.html#getProperty-java.lang.String-" target="_parent"><code>System.getProperty</code></a>        
+</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/System.html#getProperty-java.lang.String-" target="_parent"><code>System.getProperty(java.lang.String)</code></a>, <a href="../../java/lang/System.html#getProperty-java.lang.String-java.lang.String-" target="_parent"><code>System.getProperty(java.lang.String, java.lang.String) </code></a>  
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:compareTo-java.lang.Boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:compareTo-java.lang.Boolean-"></a><a name="compareTo-java.lang.Boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compareTo</h4>
+<pre>public&nbsp;int&nbsp;compareTo(<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&nbsp;b)</pre>
+<div class="block">Compares this <code>Boolean</code> instance with another.     </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Comparable.html#compareTo-T-" target="_parent">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent">Comparable</a>&lt;<a href="../../java/lang/Boolean.html" title="class in java.lang" target="_parent">Boolean</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>b</code> - the <code>Boolean</code> instance to be compared        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>zero if this object represents the same boolean value as the argument; a positive value if this object represents true and the argument represents false; and a negative value if this object represents false and the argument represents true                                      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the argument is <code>null</code>       
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a> 
+</dd>      
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:compare-boolean-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:compare-boolean-boolean-"></a><a name="compare-boolean-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compare</h4>
+<pre>public static&nbsp;int&nbsp;compare(boolean&nbsp;x,
+                          boolean&nbsp;y)</pre>
+<div class="block">Compares two <code>boolean</code> values. The value returned is identical to what would be returned by:<pre>
+    Boolean.valueOf(x).compareTo(Boolean.valueOf(y))
+ </pre>              
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>x</code> - the first <code>boolean</code> to compare       </dd>
+<dd> 
+<code>y</code> - the second <code>boolean</code> to compare       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value <code>0</code> if <code>x == y  </code>; a value less than <code>0</code> if <code>!x &amp;&amp; y  </code>; and a value greater than <code>0</code> if <code>x &amp;&amp; !y  </code>                   
+</dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.7</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:logicalAnd-boolean-boolean- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:logicalAnd-boolean-boolean-"></a><a name="logicalAnd-boolean-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">logicalAnd</span>
+</h4>
+<pre>
+<span class="diff-html-added">public</span> <span class="diff-html-added">static&nbsp;boolean&nbsp;logicalAnd(boolean&nbsp;a,</span>
+                                 <span class="diff-html-added">boolean&nbsp;b)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">the</span> <span class="diff-html-added">result</span> <span class="diff-html-added">of</span> <span class="diff-html-added">applying</span> <span class="diff-html-added">the</span> <span class="diff-html-added">logical</span> <span class="diff-html-added">AND</span> <span class="diff-html-added">operator</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">specified</span> <code><span class="diff-html-added">boolean</span></code> <span class="diff-html-added">operands.</span>             
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">a</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">first</span> <span class="diff-html-added">operand</span>     
+</dd>
+<dd> 
+<code><span class="diff-html-added">b</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">second</span> <span class="diff-html-added">operand</span>     
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">the</span> <span class="diff-html-added">logical</span> <span class="diff-html-added">AND</span> <span class="diff-html-added">of</span> <code><span class="diff-html-added">a</span></code> <span class="diff-html-added">and</span> <code><span class="diff-html-added">b</span></code>      
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd> 
+<dt> 
+<span class="seeLabel"><span class="diff-html-added">See</span> <span class="diff-html-added">Also:</span> </span>   
+</dt>
+<dd> 
+<a href="../../java/util/function/BinaryOperator.html" title="interface in java.util.function" target="_parent"><code><span class="diff-html-added">BinaryOperator</span></code></a> 
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:logicalOr-boolean-boolean- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:logicalOr-boolean-boolean-"></a><a name="logicalOr-boolean-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">logicalOr</span>
+</h4>
+<pre>
+<span class="diff-html-added">public</span> <span class="diff-html-added">static&nbsp;boolean&nbsp;logicalOr(boolean&nbsp;a,</span>
+                                <span class="diff-html-added">boolean&nbsp;b)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">the</span> <span class="diff-html-added">result</span> <span class="diff-html-added">of</span> <span class="diff-html-added">applying</span> <span class="diff-html-added">the</span> <span class="diff-html-added">logical</span> <span class="diff-html-added">OR</span> <span class="diff-html-added">operator</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">specified</span> <code><span class="diff-html-added">boolean</span></code> <span class="diff-html-added">operands.</span>             
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">a</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">first</span> <span class="diff-html-added">operand</span>     
+</dd>
+<dd> 
+<code><span class="diff-html-added">b</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">second</span> <span class="diff-html-added">operand</span>     
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">the</span> <span class="diff-html-added">logical</span> <span class="diff-html-added">OR</span> <span class="diff-html-added">of</span> <code><span class="diff-html-added">a</span></code> <span class="diff-html-added">and</span> <code><span class="diff-html-added">b</span></code>      
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd> 
+<dt> 
+<span class="seeLabel"><span class="diff-html-added">See</span> <span class="diff-html-added">Also:</span> </span>   
+</dt>
+<dd> 
+<a href="../../java/util/function/BinaryOperator.html" title="interface in java.util.function" target="_parent"><code><span class="diff-html-added">BinaryOperator</span></code></a> 
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:logicalXor-boolean-boolean- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:logicalXor-boolean-boolean-"></a><a name="logicalXor-boolean-boolean-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">logicalXor</span>
+</h4>
+<pre>
+<span class="diff-html-added">public</span> <span class="diff-html-added">static&nbsp;boolean&nbsp;logicalXor(boolean&nbsp;a,</span>
+                                 <span class="diff-html-added">boolean&nbsp;b)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">the</span> <span class="diff-html-added">result</span> <span class="diff-html-added">of</span> <span class="diff-html-added">applying</span> <span class="diff-html-added">the</span> <span class="diff-html-added">logical</span> <span class="diff-html-added">XOR</span> <span class="diff-html-added">operator</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">specified</span> <code><span class="diff-html-added">boolean</span></code> <span class="diff-html-added">operands.</span>             
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">a</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">first</span> <span class="diff-html-added">operand</span>     
+</dd>
+<dd> 
+<code><span class="diff-html-added">b</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">second</span> <span class="diff-html-added">operand</span>     
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">the</span> <span class="diff-html-added">logical</span> <span class="diff-html-added">XOR</span> <span class="diff-html-added">of</span> <code><span class="diff-html-added">a</span></code> <span class="diff-html-added">and</span> <code><span class="diff-html-added">b</span></code>      
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd> 
+<dt> 
+<span class="seeLabel"><span class="diff-html-added">See</span> <span class="diff-html-added">Also:</span> </span>   
+</dt>
+<dd> 
+<a href="../../java/util/function/BinaryOperator.html" title="interface in java.util.function" target="_parent"><code><span class="diff-html-added">BinaryOperator</span></code></a> 
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

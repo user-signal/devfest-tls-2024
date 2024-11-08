@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><diffreport><diff><table border="0" cellpadding="1" cellspacing="0" width="100%"><tr><td><h3 class="ctxid">class:Executor [NONE]</h3></td></tr><tr><td><table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%"><tr valign="top"><td bgcolor="#FFFFFF" colspan="1"><div class="description"> <a start_ctx_id="class:Executor"/><ul class="blockList"><li class="blockList"><dl> <dt>All Known Subinterfaces:  </dt><dd> <a href="../../../java/util/concurrent/ExecutorService.html" title="interface in java.util.concurrent">ExecutorService</a>, <a href="../../../java/util/concurrent/ScheduledExecutorService.html" title="interface in java.util.concurrent">ScheduledExecutorService</a>  </dd> </dl><dl> <dt>All Known Implementing Classes:   </dt><dd> <a href="../../../java/util/concurrent/AbstractExecutorService.html" title="class in java.util.concurrent">AbstractExecutorService</a>, <a href="../../../java/util/concurrent/ForkJoinPool.html" title="class in java.util.concurrent">ForkJoinPool</a>, <a href="../../../java/util/concurrent/ScheduledThreadPoolExecutor.html" title="class in java.util.concurrent">ScheduledThreadPoolExecutor</a>, <a href="../../../java/util/concurrent/ThreadPoolExecutor.html" title="class in java.util.concurrent">ThreadPoolExecutor</a>    </dd> </dl> <hr/> <br/><pre>public interface <span class="typeNameLabel">Executor</span></pre><div class="block">An object that executes submitted <a href="../../../java/lang/Runnable.html" title="interface in java.lang"><code>Runnable</code></a> tasks. This interface provides a way of decoupling task submission from the mechanics of how each task will be run, including details of thread use, scheduling, etc. An <code>Executor</code> is normally used instead of explicitly creating threads. For example, rather than invoking <code>new Thread(new(RunnableTask())).start() </code> for each of a set of tasks, you might use:<pre>
+ Executor executor = <em>anExecutor</em>;
+ executor.execute(new RunnableTask1());
+ executor.execute(new RunnableTask2());
+ ...
+ </pre> However, the <code>Executor</code> interface does not strictly require that execution be asynchronous. In the simplest case, an executor can run the submitted task immediately in the caller's thread:<pre> 
+<code>
+ class DirectExecutor implements Executor {
+   public void execute(Runnable r) {
+     r.run();
+   }
+ }</code></pre> More typically, tasks are executed in some thread other than the caller's thread. The executor below spawns a new thread for each task.<pre> 
+<code>
+ class ThreadPerTaskExecutor implements Executor {
+   public void execute(Runnable r) {
+     new Thread(r).start();
+   }
+ }</code></pre> Many <code>Executor</code> implementations impose some sort of limitation on how and when tasks are scheduled. The executor below serializes the submission of tasks to a second executor, illustrating a composite executor.<pre> 
+<code>
+ class SerialExecutor implements Executor {
+   final Queue&lt;Runnable&gt; tasks = new ArrayDeque&lt;Runnable&gt;();
+   final Executor executor;
+   Runnable active;
+
+   SerialExecutor(Executor executor) {
+     this.executor = executor;
+   }
+
+   public synchronized void execute(final Runnable r) {
+     tasks.offer(new Runnable() {
+       public void run() {
+         try {
+           r.run();
+         } finally {
+           scheduleNext();
+         }
+       }
+     });
+     if (active == null) {
+       scheduleNext();
+     }
+   }
+
+   protected synchronized void scheduleNext() {
+     if ((active = tasks.poll()) != null) {
+       executor.execute(active);
+     }
+   }
+ }</code></pre> The <code>Executor</code> implementations provided in this package implement <a href="../../../java/util/concurrent/ExecutorService.html" title="interface in java.util.concurrent"><code>ExecutorService</code></a>, which is a more extensive interface. The <a href="../../../java/util/concurrent/ThreadPoolExecutor.html" title="class in java.util.concurrent"><code>ThreadPoolExecutor</code></a> class provides an extensible thread pool implementation. The <a href="../../../java/util/concurrent/Executors.html" title="class in java.util.concurrent"><code>Executors</code></a> class provides convenient factory methods for these Executors.<p>Memory consistency effects: Actions in a thread prior to submitting a <code>Runnable</code> object to an <code>Executor</code><a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a> its execution begins, perhaps in another thread.                      </p>                                                                                                                                                                              </div><dl> <dt> <span class="simpleTagLabel">Since:</span>   </dt><dd>1.5</dd> </dl>  </li></ul> </div> <a end_ctx_id="class:Executor"/> </td></tr></table></td></tr></table><table border="0" cellpadding="1" cellspacing="0" width="100%"><tr><td><h3 class="ctxid">method:execute-java.lang.Runnable- [NONE]</h3></td></tr><tr><td><table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%"><tr valign="top"><td bgcolor="#FFFFFF" colspan="1"> <a start_ctx_id="method:execute-java.lang.Runnable-"/><a name="execute-java.lang.Runnable-"/><ul class="blockListLast"><li class="blockList"><h4>execute</h4><pre>void execute(<a href="../../../java/lang/Runnable.html" title="interface in java.lang">Runnable</a> command)</pre><div class="block">Executes the given command at some time in the future. The command may execute in a new thread, in a pooled thread, or in the calling thread, at the discretion of the <code>Executor</code> implementation.                                 </div><dl> <dt> <span class="paramLabel">Parameters:</span>   </dt><dd> <code>command</code> - the runnable task     </dd> <dt> <span class="throwsLabel">Throws:</span>   </dt><dd> <code><a href="../../../java/util/concurrent/RejectedExecutionException.html" title="class in java.util.concurrent">RejectedExecutionException</a></code> - if this task cannot be accepted for execution          </dd><dd> <code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang">NullPointerException</a></code> - if command is null      </dd>  </dl></li></ul> <a end_ctx_id="method:execute-java.lang.Runnable-"/>  </td></tr></table></td></tr></table></diff></diffreport>

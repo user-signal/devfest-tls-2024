@@ -1,0 +1,140 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:InheritableThreadLocal [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:InheritableThreadLocal"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">InheritableThreadLocal&lt;T&gt;</span>
+extends <a href="../../java/lang/ThreadLocal.html" title="class in java.lang" target="_parent">ThreadLocal</a>&lt;T&gt;</pre>
+<div class="block">This class extends <tt>ThreadLocal</tt> to provide inheritance of values from parent thread to child thread: when a child thread is created, the child receives initial values for all inheritable thread-local variables for which the parent has values. Normally the child's values will be identical to the parent's; however, the child's value can be made an arbitrary function of the parent's by overriding the <tt>childValue</tt> method in this class.<p>Inheritable thread-local variables are used in preference to ordinary thread-local variables when the per-thread-attribute being maintained in the variable (e.g., User ID, Transaction ID) must be automatically transmitted to any child threads that are created.                                  </p>                                                                   
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.2</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/ThreadLocal.html" title="class in java.lang" target="_parent"><code>ThreadLocal</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:InheritableThreadLocal-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:InheritableThreadLocal--"></a><a name="InheritableThreadLocal--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>InheritableThreadLocal</h4>
+<pre>public&nbsp;InheritableThreadLocal()</pre>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:childValue-T- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"><a name="method:childValue-T-"></a><a name="childValue-T-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>childValue</h4>
+<pre>protected&nbsp;<a href="../../java/lang/InheritableThreadLocal.html" title="type parameter in InheritableThreadLocal" target="_parent">T</a>&nbsp;childValue(<a href="../../java/lang/InheritableThreadLocal.html" title="type parameter in InheritableThreadLocal" target="_parent">T</a>&nbsp;parentValue)</pre>
+<div class="block">Computes the child's initial value for this inheritable thread-local variable as a function of the parent's value at the time the child thread is created. This method is called from within the parent thread before the child is started.<p> This method merely returns its input argument, and should be overridden if a different behavior is desired.                 </p>                                      
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>parentValue</code> - the parent thread's value      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the child thread's initial value    </dd>  
+</dl>
+</li>
+</ul>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

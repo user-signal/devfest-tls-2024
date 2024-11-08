@@ -1,0 +1,91 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Cloneable [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="contentContainer">
+<div class="description"> 
+<a name="class:Cloneable"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Known Subinterfaces:  </dt>
+<dd> 
+<a href="../../java/security/acl/AclEntry.html" title="interface in java.security.acl" target="_parent">AclEntry</a>, <a href="../../javax/naming/directory/Attribute.html" title="interface in javax.naming.directory" target="_parent">Attribute</a>, <a href="../../java/text/AttributedCharacterIterator.html" title="interface in java.text" target="_parent">AttributedCharacterIterator</a>, <a href="../../javax/naming/directory/Attributes.html" title="interface in javax.naming.directory" target="_parent">Attributes</a>, <a href="../../java/security/cert/CertPathBuilderResult.html" title="interface in java.security.cert" target="_parent">CertPathBuilderResult</a>, <a href="../../java/security/cert/CertPathParameters.html" title="interface in java.security.cert" target="_parent">CertPathParameters</a>, <a href="../../java/security/cert/CertPathValidatorResult.html" title="interface in java.security.cert" target="_parent">CertPathValidatorResult</a>, <a href="../../java/security/cert/CertSelector.html" title="interface in java.security.cert" target="_parent">CertSelector</a>, <a href="../../java/security/cert/CertStoreParameters.html" title="interface in java.security.cert" target="_parent">CertStoreParameters</a>, <a href="../../java/text/CharacterIterator.html" title="interface in java.text" target="_parent">CharacterIterator</a>, <a href="../../java/security/cert/CRLSelector.html" title="interface in java.security.cert" target="_parent">CRLSelector</a>, <a href="../../javax/management/Descriptor.html" title="interface in javax.management" target="_parent">Descriptor</a>, <a href="../../org/ietf/jgss/GSSCredential.html" title="interface in org.ietf.jgss" target="_parent">GSSCredential</a>, <a href="../../javax/naming/Name.html" title="interface in javax.naming" target="_parent">Name</a>              
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">Cloneable</span>
+</pre>
+<div class="block">A class implements the <code>Cloneable</code> interface to indicate to the <a href="../../java/lang/Object.html#clone--" target="_parent"><code>Object.clone()</code></a> method that it is legal for that method to make a field-for-field copy of instances of that class.<p> Invoking Object's clone method on an instance that does not implement the <code>Cloneable</code> interface results in the exception <code>CloneNotSupportedException</code> being thrown.                     </p>
+<p> By convention, classes that implement this interface should override <tt>Object.clone</tt> (which is protected) with a public method. See <a href="../../java/lang/Object.html#clone--" target="_parent"><code>Object.clone()</code></a> for details on overriding this method.                         </p>
+<p> Note that this interface does <i>not</i> contain the <tt>clone</tt> method. Therefore, it is not possible to clone an object merely by virtue of the fact that it implements this interface. Even if the clone method is invoked reflectively, there is no guarantee that it will succeed.                                              </p>                            
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.0</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/CloneNotSupportedException.html" title="class in java.lang" target="_parent"><code>CloneNotSupportedException</code></a>, <a href="../../java/lang/Object.html#clone--" target="_parent"><code>Object.clone()</code></a>  
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part J: Java Virtual Machine</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_J_Java_Virtual_Machine skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part J: Java Virtual Machine</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#JJVMS-4.6">JVMS-4.6</a>&nbsp;- <a href="#JJVMS-4.9.1">JVMS-4.9.1</a>&nbsp;- <a href="#JJVMS-4.9.2">JVMS-4.9.2</a>&nbsp;- <a href="#JJVMS-4.4.8">JVMS-4.4.8</a>&nbsp;- <a href="#JJVMS-5.4.3.3">JVMS-5.4.3.3</a>&nbsp;- <a href="#JJVMS-5.4.3.4">JVMS-5.4.3.4</a>&nbsp;- <a href="#JJVMS-5.4.5">JVMS-5.4.5</a>&nbsp;- <a href="#JJVMS-6.5.invokeinterface">JVMS-6.5.invokeinterface</a>&nbsp;- <a href="#JJVMS-6.5.invokespecial">JVMS-6.5.invokespecial</a>&nbsp;- <a href="#JJVMS-6.5.invokestatic">JVMS-6.5.invokestatic</a>&nbsp;- <a href="#JJVMS-6.5.invokevirtual">JVMS-6.5.invokevirtual</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>Changes to the Java Virtual Machine are necessary to support the implementation of default methods.  Methods declared in interface class files need not be declared <code style="background-color:inherit;font-size:medium">abstract</code>, and thus can carry a <code style="background-color:inherit;font-size:medium">Code</code> attribute.  Methods declared in interface class files may also be <code style="background-color:inherit;font-size:medium">private</code> or <code style="background-color:inherit;font-size:medium">static</code>.  The <code style="background-color:inherit;font-size:medium">invokespecial</code> and <code style="background-color:inherit;font-size:medium">invokestatic</code> instructions may refer to interface methods.  The rules for method resolution and invocation (via <code style="background-color:inherit;font-size:medium">invokeinterface</code>, <code style="background-color:inherit;font-size:medium">invokespecial</code>, <code style="background-color:inherit;font-size:medium">invokestatic</code>, and <code style="background-color:inherit;font-size:medium">invokevirtual</code>) are enhanced to support execution of code in interfaces.
+</p>
+<div id="JJVMS-4.6"></div>
+<h3> <span class="mw-headline" id="JVMS_4.6_Methods_.5BModified.5D"> JVMS 4.6 Methods [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.6" class="external text" rel="nofollow">JVMS 4.6</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+Methods of classes may set any of the flags in Table 4.5.  However, a specific method of a class may have at most one of its <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code>, <code style="background-color:inherit;font-size:medium">ACC_PROTECTED</code>, and <code style="background-color:inherit;font-size:medium">ACC_PUBLIC</code> flags set (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3" class="external text" rel="nofollow">8.4.3</a>).<span class="assertion-id"> [jvms-4.6-200-A.5]</span></span>
+</p><p><span class="norm-static">
+<u>Methods of interfaces may set any of the flags in Table 4.5 except <code style="background-color:inherit;font-size:medium">ACC_PROTECTED</code>, <code style="background-color:inherit;font-size:medium">ACC_FINAL</code>, <code style="background-color:inherit;font-size:medium">ACC_NATIVE</code>, and <code style="background-color:inherit;font-size:medium">ACC_SYNCHRONIZED</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4" class="external text" rel="nofollow">9.4</a>); they must have exactly one of the <code style="background-color:inherit;font-size:medium">ACC_PUBLIC</code> or <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code> flags set.</u><span class="assertion-id"> [jsr335-4.6-200-A.10]</span></span>
+</p><p><span class="norm-static">
+<u>An interface method in a class file whose version number is not 52.0 or above</u> must have <u>its</u> <code style="background-color:inherit;font-size:medium">ACC_ABSTRACT</code> and <code style="background-color:inherit;font-size:medium">ACC_PUBLIC</code> flags set <del>they may have their <code style="background-color:inherit;font-size:medium">ACC_VARARGS</code>, <code style="background-color:inherit;font-size:medium">ACC_BRIDGE</code>, and <code style="background-color:inherit;font-size:medium">ACC_SYNTHETIC</code> flags set and must not have any of the other flags in Table 4.5 set (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.4" class="external text" rel="nofollow">9.4</a>)</del>.<span class="assertion-id"> [jvms-4.6-200-A.6]</span></span>
+</p><p><span class="norm-static">
+If a specific method <u>of a class or interface</u> has its <code style="background-color:inherit;font-size:medium">ACC_ABSTRACT</code> flag set, it must not have any of its <code style="background-color:inherit;font-size:medium">ACC_FINAL</code>, <code style="background-color:inherit;font-size:medium">ACC_NATIVE</code>, <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code>, <code style="background-color:inherit;font-size:medium">ACC_STATIC</code>, <code style="background-color:inherit;font-size:medium">ACC_STRICT</code>, or <code style="background-color:inherit;font-size:medium">ACC_SYNCHRONIZED</code> flags set (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.1" class="external text" rel="nofollow">8.4.3.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.3" class="external text" rel="nofollow">8.4.3.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.3.4" class="external text" rel="nofollow">8.4.3.4</a>).<span class="assertion-id"> [jsr335-4.6-200-A.11]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+Interface methods prior to version 52.0 must be <code style="background-color:inherit;font-size:medium">abstract</code>, and thus must not be <code style="background-color:inherit;font-size:medium">private</code>, <code style="background-color:inherit;font-size:medium">static</code>, or <code style="background-color:inherit;font-size:medium">strictfp</code>; they are also prohibited from having <code style="background-color:inherit;font-size:medium">Code</code> attributes (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.3" class="external text" rel="nofollow">4.7.3</a>).  In version 52.0, an interface method may be non-abstract and thus is free to use these flags and have a <code style="background-color:inherit;font-size:medium">Code</code> attribute.</div></blockquote>
+<div id="JJVMS-4.9.1"></div>
+<h3> <span class="mw-headline" id="JVMS_4.9.1_Static_Constraints_.5BModified.5D"> JVMS 4.9.1 Static Constraints [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.9.1" class="external text" rel="nofollow">JVMS 4.9.1</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+The static constraints on the operands of instructions in the <code style="background-color:inherit;font-size:medium">code</code> array are as follows:<span class="assertion-id"> [jvms-4.9.1-120]</span></span>
+</p><p>...
+</p>
+<ul><li> <span class="norm-static"> The indexbyte operands of each <code style="background-color:inherit;font-size:medium">invokevirtual</code> <del><code style="background-color:inherit;font-size:medium">invokespecial</code>, and <code style="background-color:inherit;font-size:medium">invokestatic</code></del> instruction must represent a valid index into the <code style="background-color:inherit;font-size:medium">constant_pool</code> table.  The constant pool entry referenced by that index must be of type <code style="background-color:inherit;font-size:medium">CONSTANT_Methodref</code>.<span class="assertion-id"> [jvms-4.9.1-120-G]</span></span>
+</li><li> <span class="norm-static"> <u>The indexbyte operands of each <code style="background-color:inherit;font-size:medium">invokespecial</code> and <code style="background-color:inherit;font-size:medium">invokestatic</code> instruction must represent a valid index into the <code style="background-color:inherit;font-size:medium">constant_pool</code> table.  The constant pool entry referenced by that index must be either of type <code style="background-color:inherit;font-size:medium">CONSTANT_Methodref</code> or, if the constant pool appears in a class file whose version number is 52.0 or above, of type <code style="background-color:inherit;font-size:medium">CONSTANT_InterfaceMethodref</code>.</u><span class="assertion-id"> [jsr335-4.9.1-120-T]</span></span>
+</li></ul>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+In order to invoke <code style="background-color:inherit;font-size:medium">static</code> and <code style="background-color:inherit;font-size:medium">private</code> methods in interfaces, <code style="background-color:inherit;font-size:medium">InterfaceMethodrefs</code> must be supported by the <code style="background-color:inherit;font-size:medium">invokestatic</code> and <code style="background-color:inherit;font-size:medium">invokespecial</code> instructions.  In addition, this change allows non-<code style="background-color:inherit;font-size:medium">static</code>, non-<code style="background-color:inherit;font-size:medium">abstract</code> methods appearing in a direct superinterface to be invoked via <code style="background-color:inherit;font-size:medium">invokespecial</code>.</div></blockquote>
+<div id="JJVMS-4.9.2"></div>
+<h3> <span class="mw-headline" id="JVMS_4.9.2_Structural_Constraints_.5BModified.5D"> JVMS 4.9.2 Structural Constraints [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.9.2" class="external text" rel="nofollow">JVMS 4.9.2</a></small>
+</p><p><span class="norm-static">
+The structural constraints on the <code style="background-color:inherit;font-size:medium">code</code> array specify constraints on relationships between Java virtual machine instructions.  The structural constraints are as follows:<span class="assertion-id"> [jvms-4.9.2-100]</span></span>
+</p><p>...
+</p>
+<ul><li> <span class="norm-static"> Each <code style="background-color:inherit;font-size:medium">invokespecial</code> instruction must name an instance initialization method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>), <u>or must reference</u> a method in the current class <u>or interface</u>, <del>or</del> a method in a superclass of the current class <u>or interface</u>, <u>or a method in a direct superinterface of the current class or interface</u>.<span class="assertion-id"> [jvms-4.9.2-120-G]</span></span><p><span class="norm-static"> If an <code style="background-color:inherit;font-size:medium">invokespecial</code> instruction names an instance initialization method <del>from</del> <u>referenced in</u> a class that is not the current class or a superclass, and the target reference on the operand stack is a class instance created by an earlier <code style="background-color:inherit;font-size:medium">new</code> instruction, then <code style="background-color:inherit;font-size:medium">invokespecial</code> must name an instance initialization method <del>from</del> <u>referenced in</u> the class of that class instance.<span class="assertion-id"> [jvms-4.9.2-120-G.2]</span></span></p>
+</li></ul>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> A clause is added to support <code style="background-color:inherit;font-size:medium">invokespecial</code> of default methods in a superinterface.  References to a superinterface method must point to a <i>direct</i> superinterface; this is in contrast to references to a superclass method, which can point to any superclass.  This is because i) the search path for a closer match of an interface method (as required by the <code style="background-color:inherit;font-size:medium">ACC_SUPER</code> flag) is not clear if the reference is not to a direct superinterface, and ii) there is no practical need for more flexibility (note that a reference can <i>resolve</i> to a method in an ancestor interface, even if the interface is not named directly).  In retrospect, the ideal probably would have been to make a similar restriction on invocations of superclass methods.
+</div></li>
+<li style="margin-bottom:12px;"><div> The introduction of phrases like "referenced in" is a clarification of existing behavior: the check is against the class appearing in the <code style="background-color:inherit;font-size:medium">Methodref</code> or <code style="background-color:inherit;font-size:medium">InterfaceMethodref</code>, <i>not</i> the declaring class of the resolved method.
+</div></li></ol></div></blockquote>
+<div id="JJVMS-4.4.8"></div>
+<h3> <span class="mw-headline" id="JVMS_4.4.8_The_CONSTANT_MethodHandle_info_Structure_.5BModified.5D"> JVMS 4.4.8 The <code style="background-color:inherit;font-size:medium">CONSTANT_MethodHandle_info</code> Structure [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.8" class="external text" rel="nofollow">JVMS 4.4.8</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+If the value of the <code style="background-color:inherit;font-size:medium">reference_kind</code> item is 5 (<code style="background-color:inherit;font-size:medium">REF_invokeVirtual</code>) <del>6 (<code style="background-color:inherit;font-size:medium">REF_invokeStatic</code>), 7 (<code style="background-color:inherit;font-size:medium">REF_invokeSpecial</code>),</del> or 8 (<code style="background-color:inherit;font-size:medium">REF_newInvokeSpecial</code>), then the <code style="background-color:inherit;font-size:medium">constant_pool</code> entry at that index must be a <code style="background-color:inherit;font-size:medium">CONSTANT_Methodref_info</code> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.2" class="external text" rel="nofollow">4.4.2</a>) structure representing a class's method or constructor (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>) for which a method handle is to be created.<span class="assertion-id"> [jvms-4.4.8-200-C.2]</span></span>
+</p><p><span class="norm-static">
+<u>If the value of the <code style="background-color:inherit;font-size:medium">reference_kind</code> item is 6 (<code style="background-color:inherit;font-size:medium">REF_invokeStatic</code>) or 7 (<code style="background-color:inherit;font-size:medium">REF_invokeSpecial</code>), then the <code style="background-color:inherit;font-size:medium">constant_pool</code> entry at that index must be either a <code style="background-color:inherit;font-size:medium">CONSTANT_Methodref_info</code> structure or, if the constant pool appears in a class file whose version number is 52.0 or above, a <code style="background-color:inherit;font-size:medium">CONSTANT_InterfaceMethodref</code> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.2" class="external text" rel="nofollow">4.4.2</a>) structure representing a class's or interface's method for which a method handle is to be created.</u><span class="assertion-id"> [jsr335-4.4.8-200-C.6]</span></span>
+</p><p><span class="norm-static">
+If the value of the <code style="background-color:inherit;font-size:medium">reference_kind</code> item is 9 (<code style="background-color:inherit;font-size:medium">REF_invokeInterface</code>), then the <code style="background-color:inherit;font-size:medium">constant_pool</code> entry at that index must be a <code style="background-color:inherit;font-size:medium">CONSTANT_InterfaceMethodref_info</code> <del>(<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.4.2" class="external text" rel="nofollow">4.4.2</a>)</del> structure representing an interface's method for which a method handle is to be created.<span class="assertion-id"> [jsr335-4.4.8-200-C.3]</span></span>
+</p><p>...
+</p>
+<div id="JJVMS-5.4.3.3"></div>
+<h3> <span class="mw-headline" id="JVMS_5.4.3.3_Method_Resolution_.5BModified.5D"> JVMS 5.4.3.3 Method Resolution [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.3" class="external text" rel="nofollow">JVMS 5.4.3.3</a></small>
+</p><p><span class="norm-dynamic">
+To resolve an unresolved symbolic reference from <em>D</em> to a method in a class <em>C</em>, the symbolic reference to <em>C</em> given by the method reference is first resolved (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.1" class="external text" rel="nofollow">5.4.3.1</a>).  Therefore, any exception that can be thrown as a result of failure of resolution of a class reference can be thrown as a result of method resolution.  If the reference to <em>C</em> can be successfully resolved, exceptions relating to the resolution of the method reference itself can be thrown.<span class="assertion-id"> [jvms-5.4.3.3-100]</span></span>
+</p><p><span class="norm-dynamic">
+When resolving a method reference:<span class="assertion-id"> [jvms-5.4.3.3-200]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> Method resolution checks whether <em>C</em> is a class or an interface.<span class="assertion-id"> [jvms-5.4.3.3-200-A]</span></span>
+<ul><li> <span class="norm-dynamic"> If <em>C</em> is an interface, method resolution throws an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.<span class="assertion-id"> [jvms-5.4.3.3-200-A-1]</span></span>
+</li></ul>
+</li><li> <span class="norm-dynamic"> Method resolution attempts to look up the referenced method in <em>C</em> and its superclasses: ...<span class="assertion-id"> [jvms-5.4.3.3-200-B]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, method resolution attempts to locate the referenced method in <del>any of</del> the superinterfaces of the specified class <em>C</em>:<span class="assertion-id"> [jvms-5.4.3.3-200-C]</span></span>
+<ul><li> <span class="norm-dynamic"> <u>If the <i>maximally-specific superinterface methods</i> (defined below) of <em>C</em> for the name and descriptor specified by the method reference include exactly one method that does not have set its <code style="background-color:inherit;font-size:medium">ACC_ABSTRACT</code> flag, then this method is chosen and method lookup succeeds.</u><span class="assertion-id"> [jsr335-5.4.3.3-200-C-3]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise</u>, if any superinterface of <em>C</em> declares a method with the name and descriptor specified by the method reference <u>that has set neither its <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code> flag nor its <code style="background-color:inherit;font-size:medium">ACC_STATIC</code> flag, one of these is arbitrarily chosen and</u> method lookup succeeds.<span class="assertion-id"> [jvms-5.4.3.3-200-C-1]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, method lookup fails.<span class="assertion-id"> [jvms-5.4.3.3-200-C-2]</span></span>
+</li></ul>
+</li></ul>
+<p><span class="norm-static">
+<u>A <i>maximally-specific superinterface method</i> of a class or interface <em>C</em> for a particular method name and descriptor is any method for which the following conditions hold:</u><span class="assertion-id"> [jsr335-5.4.3.3-25]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>The method is declared in a superinterface (direct or indirect) of <em>C</em>.</u><span class="assertion-id"> [jsr335-5.4.3.3-25-A]</span></span>
+</li><li> <span class="norm-static"> <u>The method is declared with the specified name and descriptor.</u><span class="assertion-id"> [jsr335-5.4.3.3-25-B]</span></span>
+</li><li> <span class="norm-static"> <u>The method has set neither its <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code> flag nor its <code style="background-color:inherit;font-size:medium">ACC_STATIC</code> flag.</u><span class="assertion-id"> [jsr335-5.4.3.3-25-C]</span></span>
+</li><li> <span class="norm-static"> <u>Where the method is declared in interface <em>I</em>, there exists no other maximally-specific superinterface method of <em>C</em> for the given name and descriptor that is declared in a subinterface of <em>I</em>.</u><span class="assertion-id"> [jsr335-5.4.3.3-25-D]</span></span>
+</li></ul>
+<p><span class="norm-dynamic"> If method lookup fails, method resolution throws a <code style="background-color:inherit;font-size:medium">NoSuchMethodError</code>.<span class="assertion-id"> [jvms-5.4.3.3-210-A]</span></span>
+</p><p><span class="norm-dynamic"> <del>If method lookup succeeds and the method is <code style="background-color:inherit;font-size:medium">abstract</code>, but <em>C</em> is not <code style="background-color:inherit;font-size:medium">abstract</code>, method resolution throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.</del><span class="assertion-id"> [jvms-5.4.3.3-210-B]</span></span>
+</p><p><span class="norm-dynamic"> <del>Otherwise, if</del> <u>If method lookup succeeds and</u> the referenced method is not accessible (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.4" class="external text" rel="nofollow">5.4.4</a>) to <em>D</em>, method resolution throws an <code style="background-color:inherit;font-size:medium">IllegalAccessError</code>.<span class="assertion-id"> [jvms-5.4.3.3-210-C]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> When resolution searches for a method in the class's superinterfaces, we prefer to identify a maximally-specific non-abstract method.  This is because it is possible that this is the method that will be <i>selected</i> and invoked by an <code style="background-color:inherit;font-size:medium">invoke</code> instruction, and so we want to ensure that class loader constraints are performed for this method.
+<p>Otherwise, the result is nondeterministic.  This is not new: the specification has never identified exactly which method is chosen, and how "ties" should be broken.  In the past, this was mostly an unobservable distinction.  However, now that the set of interface methods is more heterogenous, care must be taken to avoid more serious problems with nondeterministic behavior.
+</p><p>Thus:
+</p>
+<ul><li> Superinterface methods that are <code style="background-color:inherit;font-size:medium">private</code> and <code style="background-color:inherit;font-size:medium">static</code> are ignored by resolution.  This is consistent with the Java language view of these declarations, which says that they are not inherited.  They can still be referenced, of course, by directly naming the interface in which they are declared, via an <code style="background-color:inherit;font-size:medium">InterfaceMethodref</code>.  (In retrospect, it might be more consistent with the Java language to give the same treatment to private methods in classes...)
+</li><li> Any behavior controlled by the resolved method should not depend on whether the method is <code style="background-color:inherit;font-size:medium">abstract</code> or not.
+</li></ul>
+</div></li>
+<li style="margin-bottom:12px;"><div> The check that the resolved method is not <code style="background-color:inherit;font-size:medium">abstract</code> unless the named class is also <code style="background-color:inherit;font-size:medium">abstract</code> has been removed.  This is a rather ad hoc check, and conflicts with the nondeterministic choice of interface methods, as explained above.  The effect of removing the check is to allow <code style="background-color:inherit;font-size:medium">abstract</code> methods in non-<code style="background-color:inherit;font-size:medium">abstract</code> classes to be invoked, assuming that the object for the invocation has a concrete implementation of the method.
+<p>This change is retroactive for all class versions.
+</p>
+</div></li></ol></div></blockquote>
+<div id="JJVMS-5.4.3.4"></div>
+<h3> <span class="mw-headline" id="JVMS_5.4.3.4_Interface_Method_Resolution_.5BModified.5D"> JVMS 5.4.3.4 Interface Method Resolution [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.4" class="external text" rel="nofollow">JVMS 5.4.3.4</a></small>
+</p><p><span class="norm-dynamic">
+To resolve an unresolved symbolic reference from <em>D</em> to an interface method in an interface <em>C</em>, the symbolic reference to <em>C</em> given by the interface method reference is first resolved (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.1" class="external text" rel="nofollow">5.4.3.1</a>).  Therefore, any exception that can be thrown as a result of failure of resolution of an interface reference can be thrown as a result of interface method resolution.  If the reference to <em>C</em> can be successfully resolved, exceptions relating to the resolution of the method reference itself can be thrown.<span class="assertion-id"> [jvms-5.4.3.4-100]</span></span>
+</p><p><span class="norm-dynamic">
+When resolving an interface method reference:<span class="assertion-id"> [jvms-5.4.3.4-200]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic">If <em>C</em> is not an interface, interface method resolution throws an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.<span class="assertion-id"> [jvms-5.4.3.4-200-A]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if <em>C</em> declares a method with the name and descriptor specified by the interface method reference, method lookup succeeds.</u><span class="assertion-id"> [jsr335-5.4.3.4-200-D]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if the class <code style="background-color:inherit;font-size:medium">Object</code> declares a method with the name and descriptor specified by the interface method reference that has set its <code style="background-color:inherit;font-size:medium">ACC_PUBLIC</code> flag and does <i>not</i> have set its <code style="background-color:inherit;font-size:medium">ACC_STATIC</code> flag, method lookup succeeds.</u><span class="assertion-id"> [jsr335-5.4.3.4-200-E]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if the <i>maximally-specific superinterface methods</i> (<a href="J.html#JJVMS-5.4.3.3" title="Lambda J" class="mw-redirect">JVMS-5.4.3.3</a>) of <em>C</em> for the name and descriptor specified by the method reference include exactly one method that does not have set its <code style="background-color:inherit;font-size:medium">ACC_ABSTRACT</code> flag, then this method is chosen and method lookup succeeds.</u><span class="assertion-id"> [jsr335-5.4.3.4-200-F]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if any superinterface of <em>C</em> declares a method with the name and descriptor specified by the method reference that has set neither its <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code> flag nor its <code style="background-color:inherit;font-size:medium">ACC_STATIC</code> flag, one of these is arbitrarily chosen and method lookup succeeds.</u><span class="assertion-id"> [jsr335-5.4.3.4-200-G]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise,</u> interface method resolution throws a <code style="background-color:inherit;font-size:medium">NoSuchMethodError</code>.<span class="assertion-id"> [jsr335-5.4.3.4-200-H]</span></span>
+</li></ul>
+<p><span class="norm-dynamic"> <u>If method lookup succeeds and the referenced method is not accessible (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.4" class="external text" rel="nofollow">5.4.4</a>) to <em>D</em>, method resolution throws an <code style="background-color:inherit;font-size:medium">IllegalAccessError</code>.</u><span class="assertion-id"> [jsr335-5.4.3.4-210]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The clause about access is added because resolution may pick a <code style="background-color:inherit;font-size:medium">private</code> method of interface <em>C</em>.
+</div></li>
+<li style="margin-bottom:12px;"><div> An oversight in previous iterations of the JVM Specification allowed non-public and static methods of the class <code style="background-color:inherit;font-size:medium">Object</code> to be the result of interface method resolution.  Such results were not consistent with the Java language's inheritance model (see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.2" class="external text" rel="nofollow">9.2</a>), nor were they properly handled downstream (such as in the specification for <code style="background-color:inherit;font-size:medium">invokeinterface</code>).  This is corrected by disallowing resolution to such methods.
+</div></li></ol></div></blockquote>
+<div id="JJVMS-5.4.5"></div>
+<h3> <span class="mw-headline" id="JVMS_5.4.5_Method_Overriding_.5BModified.5D"> JVMS 5.4.5 Method Overriding [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.5" class="external text" rel="nofollow">JVMS 5.4.5</a></small>
+</p><p><span class="norm-static">
+An instance method <em>m<sub>1</sub></em> declared in a class <em>C</em> overrides another instance method <em>m<sub>2</sub></em> declared in a class <em>A</em> iff <u>either <em>m<sub>1</sub></em> is the same as <em>m<sub>2</sub></em>, or</u> all of the following are true:<span class="assertion-id"> [jvms-5.4.5-100]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <em>C</em> is a subclass of <em>A</em>.<span class="assertion-id"> [jvms-5.4.5-100-A]</span></span>
+</li><li> <span class="norm-static"> <em>m<sub>2</sub></em> has the same name and descriptor as <em>m<sub>1</sub></em>.<span class="assertion-id"> [jvms-5.4.5-100-B]</span></span>
+</li><li> <span class="norm-static"> <u><em>m<sub>1</sub></em> is not marked <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code>.</u><span class="assertion-id"> [jsr335-5.4.5-100-D]</span></span>
+</li><li> <span class="norm-static"> Either:<span class="assertion-id"> [jvms-5.4.5-100-C]</span></span>
+<ul><li> <span class="norm-static"> <em>m<sub>2</sub></em> is marked <code style="background-color:inherit;font-size:medium">ACC_PUBLIC</code>; or is marked <code style="background-color:inherit;font-size:medium">ACC_PROTECTED</code>; or is marked neither <code style="background-color:inherit;font-size:medium">ACC_PUBLIC</code> nor <code style="background-color:inherit;font-size:medium">ACC_PROTECTED</code> nor <code style="background-color:inherit;font-size:medium">ACC_PRIVATE</code> and belongs to the same run-time package as <em>C</em>, or<span class="assertion-id"> [jvms-5.4.5-100-C-A]</span></span>
+</li><li> <span class="norm-static"> <em>m<sub>1</sub></em> overrides a method <em>m<sub>3</sub></em>, <em>m<sub>3</sub></em> distinct from <em>m<sub>1</sub></em>, <em>m<sub>3</sub></em> distinct from <em>m<sub>2</sub></em>, such that <em>m<sub>3</sub></em> overrides <em>m<sub>2</sub></em>.<span class="assertion-id"> [jvms-5.4.5-100-C-B]</span></span>
+</li></ul>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+This is a bug fix to make the specification consistent with longstanding VM behavior, which is to skip over private methods during selection.  (It also clarifies that private methods can be considered to "override" themselves.)</div></blockquote>
+<div id="JJVMS-6.5.invokeinterface"></div>
+<h3> <span class="mw-headline" id="JVMS_6.5_invokeinterface_.5BModified.5D"> JVMS 6.5 invokeinterface [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokeinterface" class="external text" rel="nofollow">JVMS 6.5.invokeinterface</a></small>
+</p><p>...
+</p><p><span class="norm-dynamic"> Let <em>C</em> be the class of <em>objectref</em>.  The actual method to be invoked is selected by the following lookup procedure:<span class="assertion-id"> [jvms-6.5.invokeinterface.desc-200]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> If <em>C</em> contains a declaration for an instance method with the same name and descriptor as the resolved method, then this is the method to be invoked <del>and the lookup procedure terminates</del>.<span class="assertion-id"> [jvms-6.5.invokeinterface.desc-200-A]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, if <em>C</em> has a superclass, <u>a search for a declaration of an instance method with the same name and descriptor as the resolved method is performed, starting with the direct superclass of <em>C</em> and continuing with the direct superclass of that class, and so forth, until a match is found or no further superclasses exist.  If a match is found, it is the method to be invoked.</u><span class="assertion-id"> [jvms-6.5.invokeinterface.desc-200-B]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, the superinterfaces of <em>C</em> are searched for all maximally-specific methods (<a href="J.html#JJVMS-5.4.3.3" title="Lambda J" class="mw-redirect">JVMS-5.4.3.3</a>) that match the resolved method's name and descriptor:</u><span class="assertion-id"> [jsr335-6.5.invokeinterface.desc-200-D]</span></span>
+<ul><li> <span class="norm-dynamic"> <u>If exactly one of the maximally-specific matching methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, this is the method to be invoked.</u><span class="assertion-id"> [jsr335-6.5.invokeinterface.desc-200-D3]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if more than one of the maximally-specific matching methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code> is raised.</u><span class="assertion-id"> [jsr335-6.5.invokeinterface.desc-200-D4]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> is raised.<span class="assertion-id"> [jvms-6.5.invokeinterface.desc-200-C]</span></span>
+</li></ul>
+</li></ul>
+<p>...
+</p><p><span class="norm-dynamic">
+During resolution of the symbolic reference to the interface method, any of the exceptions pertaining to interface method resolution (<a href="J.html#JJVMS-5.4.3.4" title="Lambda J" class="mw-redirect">JVMS-5.4.3.4</a>) can be thrown.<span class="assertion-id"> [jvms-6.5.invokeinterface.linking-100]</span></span>
+</p><p><span class="norm-dynamic">
+<u>Otherwise, if the resolved method is a <code style="background-color:inherit;font-size:medium">static</code> method, the <code style="background-color:inherit;font-size:medium">invokeinterface</code> instruction throws an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.</u><span class="assertion-id"> [jsr335-6.5.invokeinterface.linking-20]</span></span>
+</p><p><span class="norm-dynamic">
+<u>Otherwise, if the resolved method is a <code style="background-color:inherit;font-size:medium">private</code> method, the <code style="background-color:inherit;font-size:medium">invokeinterface</code> instruction throws an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.</u><span class="assertion-id"> [jsr335-6.5.invokeinterface.linking-22]</span></span>
+</p><p><span class="norm-dynamic">
+Otherwise, if <em>objectref</em> is <code style="background-color:inherit;font-size:medium">null</code>, the <code style="background-color:inherit;font-size:medium">invokeinterface</code> instruction throws a <code style="background-color:inherit;font-size:medium">NullPointerException</code>.<span class="assertion-id"> [jsr335-6.5.invokeinterface.runtime-100]</span></span>
+</p><p><span class="norm-dynamic">
+Otherwise, if the class of <em>objectref</em> does not implement the resolved interface, <em>invokeinterface</em> throws an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.<span class="assertion-id"> [jsr335-6.5.invokeinterface.runtime-110]</span></span>
+</p><p><del><span class="norm-dynamic"> Otherwise, if no method matching the resolved name and descriptor is selected, <code style="background-color:inherit;font-size:medium">invokeinterface</code> throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.<span class="assertion-id"> [jsr335-6.5.invokeinterface.runtime-120]</span></span></del>
+</p><p><span class="norm-dynamic">
+Otherwise, if the selected method is not <code style="background-color:inherit;font-size:medium">public</code>, <em>invokeinterface</em> throws an <code style="background-color:inherit;font-size:medium">IllegalAccessError</code>.<span class="assertion-id"> [jsr335-6.5.invokeinterface.runtime-130]</span></span>
+</p><p><span class="norm-dynamic">
+Otherwise, if the selected method is <code style="background-color:inherit;font-size:medium">abstract</code>, <code style="background-color:inherit;font-size:medium">invokeinterface</code> throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.<span class="assertion-id"> [jsr335-6.5.invokeinterface.runtime-140]</span></span>
+</p><p><span class="norm-dynamic">
+Otherwise, if the selected method is <code style="background-color:inherit;font-size:medium">native</code> ...<span class="assertion-id"> [jsr335-6.5.invokeinterface.runtime-150]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The selection logic is modified so that a non-<code style="background-color:inherit;font-size:medium">abstract</code> method declared in a superinterface may be selected.  By design, this change is retroactive: an <code style="background-color:inherit;font-size:medium">invokeinterface</code> occurring in an old class file may have the effect of invoking a non-<code style="background-color:inherit;font-size:medium">abstract</code> interface method declared in a new class file.
+<p>Methods in interfaces are only considered if there is no matching method in the class hierarchy.
+</p><p>In the event that we must choose between two non-<code style="background-color:inherit;font-size:medium">abstract</code> methods in the superinterface hierarchy, with neither more specific than the other, an error occurs.  We do not attempt to disambiguate (for example, one may be the referenced method and one may be unrelated, but we do not prefer the referenced method).
+</p><p>On the other hand, if there are many <code style="background-color:inherit;font-size:medium">abstract</code> methods but only one non-<code style="background-color:inherit;font-size:medium">abstract</code> method, the non-<code style="background-color:inherit;font-size:medium">abstract</code> method is chosen (unless an <code style="background-color:inherit;font-size:medium">abstract</code> method is more specific).
+</p><p>Like method resolution, method selection ignores <code style="background-color:inherit;font-size:medium">private</code> and <code style="background-color:inherit;font-size:medium">static</code> methods declared in superinterfaces.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Like <code style="background-color:inherit;font-size:medium">invokevirtual</code>, <code style="background-color:inherit;font-size:medium">invokeinterface</code> does not allow the resolved method to be <code style="background-color:inherit;font-size:medium">static</code> (this was impossible in previous versions, assuming the class <code style="background-color:inherit;font-size:medium">Object</code> has no <code style="background-color:inherit;font-size:medium">static</code> methods).  Since <code style="background-color:inherit;font-size:medium">private</code> interface methods cannot be selected, we similarly report an error if the resolved method is <code style="background-color:inherit;font-size:medium">private</code>.
+</div></li>
+<li style="margin-bottom:12px;"><div> Given the restructured selection logic, it is no longer necessary to separately mandate an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> if nothing is found.  So that clause has been removed (but the behavior in that case is unchanged).
+</div></li></ol></div></blockquote>
+<div id="JJVMS-6.5.invokespecial"></div>
+<h3> <span class="mw-headline" id="JVMS_6.5_invokespecial_.5BModified.5D"> JVMS 6.5 invokespecial [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokespecial" class="external text" rel="nofollow">JVMS 6.5.invokespecial</a></small>
+</p><p>...
+</p><p><span class="norm-dynamic">
+The unsigned <em>indexbyte1</em> and <em>indexbyte2</em> are used to construct an index into the runtime constant pool of the current class (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.6" class="external text" rel="nofollow">2.6</a>), where the value of the index is <em>(indexbyte1 &lt;&lt; 8) | indexbyte2</em>.  The runtime constant pool item at that index must be a symbolic reference to a method <u>or an interface method</u> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.1" class="external text" rel="nofollow">5.1</a>), which gives the name and descriptor (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.3" class="external text" rel="nofollow">4.3.3</a>) of the method as well as a symbolic reference to the class <u>or interface</u> in which the method is to be found.  The named method is resolved <u>(<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.3" class="external text" rel="nofollow">5.4.3.3</a>, <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.4" class="external text" rel="nofollow">5.4.3.4</a>)</u>.  Finally, if the resolved method is <code style="background-color:inherit;font-size:medium">protected</code> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.6" class="external text" rel="nofollow">4.6</a>), and it is a member of a superclass of the current class, and the method is not declared in the same runtime package (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3" class="external text" rel="nofollow">5.3</a>) as the current class, then the class of <em>objectref</em> must be either the current class or a subclass of the current class, <u>or an <code style="background-color:inherit;font-size:medium">IllegalAccessError</code> is raised</u>.<span class="assertion-id"> [jvms-6.5.invokespecial.desc-100]</span></span>
+</p><p><span class="norm-dynamic">
+Next, <del>the resolved</del> <u>a</u> method is selected for invocation <u>according to the following rules.</u><span class="assertion-id"> [jsr335-6.5.invokespecial.desc-150]</span></span>
+</p><p><span class="norm-dynamic">
+<u>Let <em>C</em> be the class or interface named by the method reference or interface method reference</u>, unless all of the following conditions are true:<span class="assertion-id"> [jvms-6.5.invokespecial.desc-200]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> The <code style="background-color:inherit;font-size:medium">ACC_SUPER</code> flag (see Table 4.1, "Class access and property modifiers") is set for the current class.<span class="assertion-id"> [jvms-6.5.invokespecial.desc-200-A]</span></span>
+</li><li> <span class="norm-dynamic"> The class <del>of the resolved method</del> <u>named by the method reference</u> is a superclass <u>(not a superinterface)</u> of the current class.<span class="assertion-id"> [jvms-6.5.invokespecial.desc-200-B]</span></span>
+</li><li> <span class="norm-dynamic"> The resolved method is not an instance initialization method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>).<span class="assertion-id"> [jvms-6.5.invokespecial.desc-200-C]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+If the above conditions are true, <del>the actual method to be invoked is selected by the following lookup procedure</del> let <em>C</em>, <u>instead,</u> be the direct superclass of the current class.<span class="assertion-id"> [jsr335-6.5.invokespecial.desc-210]</span></span>
+</p><p><span class="norm-dynamic">
+<u>The method for invocation is selected as follows:</u><span class="assertion-id"> [jvms-6.5.invokespecial.desc-300]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> If <em>C</em> contains a declaration for an instance method with the same name and descriptor as the resolved method, then this method will be invoked. <del>The lookup procedure terminates</del>.<span class="assertion-id"> [jvms-6.5.invokespecial.desc-300-A]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, if <em>C</em> <u>is a class and</u> has a superclass, <u>a search for a declaration of an instance method with the same name and descriptor as the resolved method is performed, starting with the direct superclass of <em>C</em> and continuing with the direct superclass of that class, and so forth, until a match is found or no further superclasses exist.  If a match is found, it is the method to be invoked.</u><span class="assertion-id"> [jvms-6.5.invokespecial.desc-300-B]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if <em>C</em> is an interface and the class <code style="background-color:inherit;font-size:medium">Object</code> contains a declaration of a <code style="background-color:inherit;font-size:medium">public</code> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.6" class="external text" rel="nofollow">4.6</a>) instance method with the same name and descriptor as the resolved method, this is the method to be invoked.</u><span class="assertion-id"> [jvms-6.5.invokespecial.desc-300-E]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, the superinterfaces of <em>C</em> are searched for all maximally-specific methods (<a href="J.html#JJVMS-5.4.3.3" title="Lambda J" class="mw-redirect">JVMS-5.4.3.3</a>) that match the resolved method's name and descriptor:</u><span class="assertion-id"> [jsr335-6.5.invokespecial.desc-300-D]</span></span>
+<ul><li> <span class="norm-dynamic"> <u>If exactly one of the maximally-specific matching methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, this is the method to be invoked.</u><span class="assertion-id"> [jsr335-6.5.invokespecial.desc-300-D3]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if more than one of the maximally-specific matching methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code> is raised.</u><span class="assertion-id"> [jsr335-6.5.invokespecial.desc-300-D4]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> is raised.<span class="assertion-id"> [jvms-6.5.invokespecial.desc-300-C]</span></span>
+</li></ul>
+</li></ul>
+<p>...
+</p><p><span class="norm-dynamic">
+Otherwise, if <em>objectref</em> is <code style="background-color:inherit;font-size:medium">null</code>, the <code style="background-color:inherit;font-size:medium">invokespecial</code> instruction throws a <code style="background-color:inherit;font-size:medium">NullPointerException</code>.<span class="assertion-id"> [jvms-6.5.invokespecial.runtime-100]</span></span>
+</p><p><del><span class="norm-dynamic"> Otherwise if no method matching the resolved name and descriptor is selected, <code style="background-color:inherit;font-size:medium">invokespecial</code> throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.<span class="assertion-id"> [jvms-6.5.invokespecial.runtime-110]</span></span></del>
+</p><p><span class="norm-dynamic">
+Otherwise, if the selected method is <code style="background-color:inherit;font-size:medium">abstract</code>, <code style="background-color:inherit;font-size:medium">invokespecial</code> throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.<span class="assertion-id"> [jvms-6.5.invokespecial.runtime-120]</span></span>
+</p><p><span class="norm-dynamic">
+Otherwise, if the selected method is <code style="background-color:inherit;font-size:medium">native</code> ...<span class="assertion-id"> [jvms-6.5.invokespecial.runtime-130]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The <code style="background-color:inherit;font-size:medium">invokespecial</code> instruction is extended to:
+<ul><li> Handle invocation of a <code style="background-color:inherit;font-size:medium">private</code> interface method.
+</li><li> Handle invocation of a non-<code style="background-color:inherit;font-size:medium">abstract</code> interface method referenced via a direct superinterface.
+</li><li> Handle invocation of a non-<code style="background-color:inherit;font-size:medium">abstract</code> interface method referenced via a superclass.
+</li></ul>
+<p>In these cases, the rules for selection are essentially the same as those for <code style="background-color:inherit;font-size:medium">invokeinterface</code> (except that the search starts from a different class).
+</p><p>For simplicity of presentation, the selection logic has been changed to apply in all cases.  Sometimes this is redundant—in fact, with the exception of the <code style="background-color:inherit;font-size:medium">ACC_SUPER</code> trick performed for indirect superclass invocations, if selection produces a method, it will be the resolved method.  But, selection must also ensure that appropriate error checks (such as the <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>) are performed, to avoid nondeterminism.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The behavior of selection has been clarified slightly to account for the possibility that the <code style="background-color:inherit;font-size:medium">Methodref</code> resolves to an interface method, but this method has a closer match in a superclass.
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+public interface I { public abstract void m(); }
+public abstract class A implements I {}
+public class B extends A { public void m() { ... } }
+public class C extends B {
+  public void test() {
+    invokespecial A.m()V;
+  }
+}
+</pre>
+<p>The previous specification text suggested that this would be an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>, since since <code style="background-color:inherit;font-size:medium">I</code> is not "a superclass of the current class".  However, the behavior of the HotSpot VM here has been to select <code style="background-color:inherit;font-size:medium">B.m</code>.
+</p>
+</div></li></ol></div></blockquote>
+<div id="JJVMS-6.5.invokestatic"></div>
+<h3> <span class="mw-headline" id="JVMS_6.5_invokestatic_.5BModified.5D"> JVMS 6.5 invokestatic [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokestatic" class="external text" rel="nofollow">JVMS 6.5.invokestatic</a></small>
+</p><p>...
+</p><p><span class="norm-dynamic">
+The unsigned <em>indexbyte1</em> and <em>indexbyte2</em> are used to construct an index into the runtime constant pool of the current class (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.6" class="external text" rel="nofollow">2.6</a>), where the value of the index is <em>(indexbyte1 &lt;&lt; 8) | indexbyte2</em>.  The runtime constant pool item at that index must be a symbolic reference to a method <u>or an interface method</u> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.1" class="external text" rel="nofollow">5.1</a>), which gives the name and descriptor (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.3" class="external text" rel="nofollow">4.3.3</a>) of the method as well as a symbolic reference to the class <u>or interface</u> in which the method is to be found.  The named method is resolved (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.3" class="external text" rel="nofollow">5.4.3.3</a>).  The resolved method must not be an instance initialization method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>) or <del>the</del> <u>a</u> class or interface initialization method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>).  It must be <code style="background-color:inherit;font-size:medium">static</code>, and therefore cannot be <code style="background-color:inherit;font-size:medium">abstract</code>.<span class="assertion-id"> [jvms-6.5.invokestatic.desc-100]</span></span>
+</p><p><span class="norm-dynamic">
+On successful resolution of the method, the class <u>or interface</u> that declared the resolved method is initialized (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.5" class="external text" rel="nofollow">5.5</a>) if that class <u>or interface</u> has not already been initialized.<span class="assertion-id"> [jvms-6.5.invokestatic.desc-110]</span></span>
+</p><p>...
+</p><p><span class="norm-dynamic">
+Otherwise, if the resolved method is an instance method, the <em>invokestatic</em> instruction throws an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code>.<span class="assertion-id"> [jvms-6.5.invokestatic.linking-110]</span></span>
+</p><p><span class="norm-dynamic">
+Otherwise, if execution of this <em>invokestatic</em> instruction causes initialization of the referenced class <u>or interface</u>, <em>invokestatic</em> may throw an <code style="background-color:inherit;font-size:medium">Error</code> as detailed in <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.5" class="external text" rel="nofollow">5.5</a>.<span class="assertion-id"> [jvms-6.5.invokestatic.runtime-100]</span></span>
+</p><p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The <code style="background-color:inherit;font-size:medium">invokestatic</code> instruction is extended to handle invocation of a <code style="background-color:inherit;font-size:medium">static</code> interface method.</div></blockquote>
+<div id="JJVMS-6.5.invokevirtual"></div>
+<h3> <span class="mw-headline" id="JVMS_6.5_invokevirtual_.5BModified.5D"> JVMS 6.5 invokevirtual [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html#jvms-6.5.invokevirtual" class="external text" rel="nofollow">JVMS 6.5.invokevirtual</a></small>
+</p><p>...
+</p><p><span class="norm-dynamic">
+The unsigned <em>indexbyte1</em> and <em>indexbyte2</em> are used to construct an index into the runtime constant pool of the current class (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.6" class="external text" rel="nofollow">2.6</a>), where the value of the index is <em>(indexbyte1 &lt;&lt; 8) | indexbyte2</em>.  The runtime constant pool item at that index must be a symbolic reference to a method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.1" class="external text" rel="nofollow">5.1</a>), which gives the name and descriptor (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3.3" class="external text" rel="nofollow">4.3.3</a>) of the method as well as a symbolic reference to the class in which the method is to be found.  The named method is resolved (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.3.3" class="external text" rel="nofollow">5.4.3.3</a>).  The resolved method must not be an instance initialization method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>) or <del>the</del> <u>a</u> class or interface initialization method (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>).  Finally, if the resolved method is <code style="background-color:inherit;font-size:medium">protected</code> (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.6" class="external text" rel="nofollow">4.6</a>), and it is a member of a superclass of the current class, and the method is not declared in the same runtime package (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3" class="external text" rel="nofollow">5.3</a>) as the current class, then the class of <em>objectref</em> must be either the current class or a subclass of the current class.<span class="assertion-id"> [jvms-6.5.invokevirtual.desc-100]</span></span>
+</p><p><span class="norm-dynamic">
+If the resolved method is not signature polymorphic (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-2.html#jvms-2.9" class="external text" rel="nofollow">2.9</a>), then the <em>invokevirtual</em> instruction proceeds as follows.<span class="assertion-id"> [jvms-6.5.invokevirtual.desc-200]</span></span>
+</p><p><span class="norm-dynamic">
+Let <em>C</em> be the class of <em>objectref</em>.  The actual method to be invoked is selected by the following lookup procedure:<span class="assertion-id"> [jvms-6.5.invokevirtual.desc-210]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> If <em>C</em> contains a declaration for an instance method <em>M</em> that overrides (<a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.5" class="external text" rel="nofollow">5.4.5</a>) the resolved method, then <em>M</em> is the method to be invoked <del>and the lookup procedure terminates</del>.<span class="assertion-id"> [jvms-6.5.invokevirtual.desc-210-A]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, if <em>C</em> has a superclass, <u>a search for a declaration of an instance method that overrides the resolved method is performed, starting with the direct superclass of <em>C</em> and continuing with the direct superclass of that class, and so forth, until an overriding method is found or no further superclasses exist.  If an overriding method is found, it is the method to be invoked.</u><span class="assertion-id"> [jvms-6.5.invokevirtual.desc-210-B]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, the superinterfaces of <em>C</em> are searched for all maximally-specific methods (<a href="J.html#JJVMS-5.4.3.3" title="Lambda J" class="mw-redirect">JVMS-5.4.3.3</a>) that match the resolved method's name and descriptor:</u><span class="assertion-id"> [jsr335-6.5.invokevirtual.desc-210-D]</span></span>
+<ul><li> <span class="norm-dynamic"> <u>If exactly one of the maximally-specific matching methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, this is the method to be invoked.</u><span class="assertion-id"> [jsr335-6.5.invokevirtual.desc-210-D3]</span></span>
+</li><li> <span class="norm-dynamic"> <u>Otherwise, if more than one of the maximally-specific matching methods is not <code style="background-color:inherit;font-size:medium">abstract</code>, an <code style="background-color:inherit;font-size:medium">IncompatibleClassChangeError</code> is raised.</u><span class="assertion-id"> [jsr335-6.5.invokevirtual.desc-210-D4]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> is raised.<span class="assertion-id"> [jvms-6.5.invokevirtual.desc-210-C]</span></span>
+</li></ul>
+</li></ul>
+<p>...
+</p><p><span class="norm-dynamic"> Otherwise, if the resolved method is not signature polymorphic:<span class="assertion-id"> [jvms-6.5.invokevirtual.runtime-110]</span></span>
+</p>
+<ul><li> <del><span class="norm-dynamic"> If no method matching the resolved name and descriptor is selected, <code style="background-color:inherit;font-size:medium">invokevirtual</code> throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.<span class="assertion-id"> [jvms-6.5.invokevirtual.runtime-110-A]</span></span></del>
+</li><li> <span class="norm-dynamic"> <del>Otherwise</del> If the selected method is <code style="background-color:inherit;font-size:medium">abstract</code>, <code style="background-color:inherit;font-size:medium">invokevirtual</code> throws an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code>.<span class="assertion-id"> [jvms-6.5.invokevirtual.runtime-110-B]</span></span>
+</li><li> <span class="norm-dynamic"> Otherwise, if the selected method is <code style="background-color:inherit;font-size:medium">native</code> ...<span class="assertion-id"> [jvms-6.5.invokevirtual.runtime-110-C]</span></span>
+</li></ul>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> It is possible that the <code style="background-color:inherit;font-size:medium">Methodref</code> of an <code style="background-color:inherit;font-size:medium">invokevirtual</code> instruction resolves to an interface method.  In this case, it is possible that there is no overriding method in the class hierarchy, but that a non-<code style="background-color:inherit;font-size:medium">abstract</code> interface method matches the resolved method's signature.  The selection logic has been modified to match such a method, using the same rules as those for <code style="background-color:inherit;font-size:medium">invokeinterface</code>.
+<p>Again, this change is designed to be retroactive: an <code style="background-color:inherit;font-size:medium">invokevirtual</code> occurring in an old class file may have the effect of invoking a non-<code style="background-color:inherit;font-size:medium">abstract</code> interface method declared in a new class file.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Given the restructured selection logic, it is no longer necessary to separately mandate an <code style="background-color:inherit;font-size:medium">AbstractMethodError</code> if nothing is found.  So that clause has been removed (but the behavior in that case is unchanged).
+</div></li></ol></div></blockquote>
+
+
+
+</body></html>

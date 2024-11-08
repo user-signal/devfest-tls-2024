@@ -1,0 +1,628 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ConcurrentNavigableMap [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ConcurrentNavigableMap"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>K</code> - the type of keys maintained by this map          </dd>
+<dd> 
+<code>V</code> - the type of mapped values       </dd> 
+</dl>
+<dl> 
+<dt>All Superinterfaces: </dt>
+<dd> 
+<a href="../../../java/util/concurrent/ConcurrentMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentMap</a>&lt;K,V&gt;, <a href="../../../java/util/Map.html" title="interface in java.util" target="_parent">Map</a>&lt;K,V&gt;, <a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;K,V&gt;, <a href="../../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;K,V&gt;    </dd> 
+</dl>
+<dl> 
+<dt>All Known Implementing Classes:   </dt>
+<dd> 
+<a href="../../../java/util/concurrent/ConcurrentSkipListMap.html" title="class in java.util.concurrent" target="_parent">ConcurrentSkipListMap</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public interface <span class="typeNameLabel">ConcurrentNavigableMap&lt;K,V&gt;</span>
+extends <a href="../../../java/util/concurrent/ConcurrentMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentMap</a>&lt;K,V&gt;, <a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;K,V&gt;</pre>
+<div class="block">A <a href="../../../java/util/concurrent/ConcurrentMap.html" title="interface in java.util.concurrent" target="_parent"><code>ConcurrentMap</code></a> supporting <a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent"><code>NavigableMap</code></a> operations, and recursively so for its navigable sub-maps.<p>This interface is a member of the <a href="http://download.oracle.com/javase/7/docs/technotes/guides/collections/index.html" target="_parent"> Java Collections Framework   </a>.       </p>           
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.6</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:subMap-K-boolean-K-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"><a name="method:subMap-K-boolean-K-boolean-"></a><a name="subMap-K-boolean-K-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;subMap(<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;fromKey,
+                                   boolean&nbsp;fromInclusive,
+                                   <a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;toKey,
+                                   boolean&nbsp;toInclusive)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../java/util/NavigableMap.html#subMap-K-boolean-K-boolean-" target="_parent">NavigableMap</a></code>   </span> 
+</div>
+<div class="block">Returns a view of the portion of this map whose keys range from <code>fromKey</code> to <code>toKey</code>. If <code>fromKey</code> and <code>toKey</code> are equal, the returned map is empty unless <code>fromInclusive</code> and <code>toInclusive</code> are both true. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside of its range, or to construct a submap either of whose endpoints lie outside its range.                              </p>                                                                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#subMap-K-boolean-K-boolean-" target="_parent">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>fromInclusive</code> - <code>true</code> if the low endpoint is to be included in the returned view               </dd>
+<dd> 
+<code>toKey</code> - high endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>toInclusive</code> - <code>true</code> if the high endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys range from <code>fromKey</code> to <code>toKey</code>              
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> and <code>toKey</code> cannot be compared to one another using this map's comparator (or, if the map has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if <code>fromKey</code> or <code>toKey</code> cannot be compared to keys currently in the map.                                                 </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> or <code>toKey</code> is null and this map does not permit null keys                </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>fromKey</code> is greater than <code>toKey</code>; or if this map itself has a restricted range, and <code>fromKey</code> or <code>toKey</code> lies outside the bounds of the range                            </dd>    
+</dl>
+</li>
+</ul> 
+<a name="headMap-java.lang.Object-boolean-"></a> </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:headMap-K-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:headMap-K-boolean-"></a><a name="headMap-K-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;headMap(<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;toKey,
+                                    boolean&nbsp;inclusive)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../java/util/NavigableMap.html#headMap-K-boolean-" target="_parent">NavigableMap</a></code>   </span> 
+</div>
+<div class="block">Returns a view of the portion of this map whose keys are less than (or equal to, if <code>inclusive</code> is true) <code>toKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>                                                      
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#headMap-K-boolean-" target="_parent">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>toKey</code> - high endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>inclusive</code> - <code>true</code> if the high endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are less than (or equal to, if <code>inclusive</code> is true) <code>toKey</code>                    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>toKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>toKey</code> does not implement <a href="../../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>toKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>toKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>toKey</code> lies outside the bounds of the range                   </dd>    
+</dl>
+</li>
+</ul> 
+<a name="tailMap-java.lang.Object-boolean-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:tailMap-K-boolean- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:tailMap-K-boolean-"></a><a name="tailMap-K-boolean-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;tailMap(<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;fromKey,
+                                    boolean&nbsp;inclusive)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../java/util/NavigableMap.html#tailMap-K-boolean-" target="_parent">NavigableMap</a></code>   </span> 
+</div>
+<div class="block">Returns a view of the portion of this map whose keys are greater than (or equal to, if <code>inclusive</code> is true) <code>fromKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>                                                      
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#tailMap-K-boolean-" target="_parent">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint of the keys in the returned map           </dd>
+<dd> 
+<code>inclusive</code> - <code>true</code> if the low endpoint is to be included in the returned view               </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are greater than (or equal to, if <code>inclusive</code> is true) <code>fromKey</code>                    
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>fromKey</code> does not implement <a href="../../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>fromKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>fromKey</code> lies outside the bounds of the range                   </dd>    
+</dl>
+</li>
+</ul> 
+<a name="subMap-java.lang.Object-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:subMap-K-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:subMap-K-K-"></a><a name="subMap-K-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;subMap(<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;fromKey,
+                                   <a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;toKey)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../java/util/NavigableMap.html#subMap-K-K-" target="_parent">NavigableMap</a></code>   </span> 
+</div>
+<div class="block">Returns a view of the portion of this map whose keys range from <code>fromKey</code>, inclusive, to <code>toKey</code>, exclusive. (If <code>fromKey</code> and <code>toKey</code> are equal, the returned map is empty.) The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>
+<p>Equivalent to <code>subMap(fromKey, true, toKey, false)   </code>.  </p>                                                             
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#subMap-K-K-" target="_parent">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/SortedMap.html#subMap-K-K-" target="_parent">subMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint (inclusive) of the keys in the returned map            </dd>
+<dd> 
+<code>toKey</code> - high endpoint (exclusive) of the keys in the returned map            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys range from <code>fromKey</code>, inclusive, to <code>toKey</code>, exclusive                </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> and <code>toKey</code> cannot be compared to one another using this map's comparator (or, if the map has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if <code>fromKey</code> or <code>toKey</code> cannot be compared to keys currently in the map.                                                 </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> or <code>toKey</code> is null and this map does not permit null keys                </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>fromKey</code> is greater than <code>toKey</code>; or if this map itself has a restricted range, and <code>fromKey</code> or <code>toKey</code> lies outside the bounds of the range                            </dd>     
+</dl>
+</li>
+</ul> 
+<a name="headMap-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:headMap-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:headMap-K-"></a><a name="headMap-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;headMap(<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;toKey)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../java/util/NavigableMap.html#headMap-K-" target="_parent">NavigableMap</a></code>   </span> 
+</div>
+<div class="block">Returns a view of the portion of this map whose keys are strictly less than <code>toKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>
+<p>Equivalent to <code>headMap(toKey, false) </code>.  </p>                                                
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#headMap-K-" target="_parent">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/SortedMap.html#headMap-K-" target="_parent">headMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>toKey</code> - high endpoint (exclusive) of the keys in the returned map            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are strictly less than <code>toKey</code>              
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>toKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>toKey</code> does not implement <a href="../../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>toKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>toKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>toKey</code> lies outside the bounds of the range                   </dd>     
+</dl>
+</li>
+</ul> 
+<a name="tailMap-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:tailMap-K- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:tailMap-K-"></a><a name="tailMap-K-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tailMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;tailMap(<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&nbsp;fromKey)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../java/util/NavigableMap.html#tailMap-K-" target="_parent">NavigableMap</a></code>   </span> 
+</div>
+<div class="block">Returns a view of the portion of this map whose keys are greater than or equal to <code>fromKey</code>. The returned map is backed by this map, so changes in the returned map are reflected in this map, and vice-versa. The returned map supports all optional map operations that this map supports.<p>The returned map will throw an <code>IllegalArgumentException</code> on an attempt to insert a key outside its range.                </p>
+<p>Equivalent to <code>tailMap(fromKey, true) </code>.  </p>                                                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#tailMap-K-" target="_parent">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/SortedMap.html#tailMap-K-" target="_parent">tailMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>fromKey</code> - low endpoint (inclusive) of the keys in the returned map            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a view of the portion of this map whose keys are greater than or equal to <code>fromKey</code>                
+</dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/ClassCastException.html" title="class in java.lang" target="_parent">ClassCastException</a></code> - if <code>fromKey</code> is not compatible with this map's comparator (or, if the map has no comparator, if <code>fromKey</code> does not implement <a href="../../../java/lang/Comparable.html" title="interface in java.lang" target="_parent"><code>Comparable</code></a>). Implementations may, but are not required to, throw this exception if <code>fromKey</code> cannot be compared to keys currently in the map.                                             </dd>
+<dd> 
+<code><a href="../../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>fromKey</code> is null and this map does not permit null keys              </dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if this map itself has a restricted range, and <code>fromKey</code> lies outside the bounds of the range                   </dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:descendingMap-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:descendingMap--"></a><a name="descendingMap--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>descendingMap</h4>
+<pre>
+<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="interface in java.util.concurrent" target="_parent">ConcurrentNavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;&nbsp;descendingMap()</pre>
+<div class="block">Returns a reverse order view of the mappings contained in this map. The descending map is backed by this map, so changes to the map are reflected in the descending map, and vice-versa.<p>The returned map has an ordering equivalent to <a href="../../../java/util/Collections.html#reverseOrder-java.util.Comparator-" target="_parent"><code>Collections.reverseOrder</code></a><code>(comparator())</code>. The expression <code>m.descendingMap().descendingMap()</code> returns a view of <code>m</code> essentially equivalent to <code>m</code>.                    </p>                                
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#descendingMap--" target="_parent">descendingMap</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a reverse order view of this map      </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:navigableKeySet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:navigableKeySet--"></a><a name="navigableKeySet--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>navigableKeySet</h4>
+<pre>
+<a href="../../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&gt;&nbsp;navigableKeySet()</pre>
+<div class="block">Returns a <a href="../../../java/util/NavigableSet.html" title="interface in java.util" target="_parent"><code>NavigableSet</code></a> view of the keys contained in this map. The set's iterator returns the keys in ascending order. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. The set supports element removal, which removes the corresponding mapping from the map, via the <code>Iterator.remove</code>, <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations. It does not support the <code>add</code> or <code>addAll</code> operations.<p>The view's iterators and spliterators are <a href="package-summary.html#Weakly" target="_parent"><i>weakly consistent </i></a>.      </p>                                                                     
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#navigableKeySet--" target="_parent">navigableKeySet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a navigable set view of the keys in this map         </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:keySet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:keySet--"></a><a name="keySet--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>keySet</h4>
+<pre>
+<a href="../../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&gt;&nbsp;keySet()</pre>
+<div class="block">Returns a <a href="../../../java/util/NavigableSet.html" title="interface in java.util" target="_parent"><code>NavigableSet</code></a> view of the keys contained in this map. The set's iterator returns the keys in ascending order. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. The set supports element removal, which removes the corresponding mapping from the map, via the <code>Iterator.remove</code>, <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations. It does not support the <code>add</code> or <code>addAll</code> operations.<p>The view's iterators and spliterators are <a href="package-summary.html#Weakly" target="_parent"><i>weakly consistent </i></a>.      </p>
+<p>This method is equivalent to method <code>navigableKeySet</code>.      </p>                                                                     
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Map.html#keySet--" target="_parent">keySet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/Map.html" title="interface in java.util" target="_parent">Map</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/SortedMap.html#keySet--" target="_parent">keySet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/SortedMap.html" title="interface in java.util" target="_parent">SortedMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a navigable set view of the keys in this map         </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:descendingKeySet-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:descendingKeySet--"></a><a name="descendingKeySet--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>descendingKeySet</h4>
+<pre>
+<a href="../../../java/util/NavigableSet.html" title="interface in java.util" target="_parent">NavigableSet</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>&gt;&nbsp;descendingKeySet()</pre>
+<div class="block">Returns a reverse order <a href="../../../java/util/NavigableSet.html" title="interface in java.util" target="_parent"><code>NavigableSet</code></a> view of the keys contained in this map. The set's iterator returns the keys in descending order. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. The set supports element removal, which removes the corresponding mapping from the map, via the <code>Iterator.remove</code>, <code>Set.remove</code>, <code>removeAll</code>, <code>retainAll</code>, and <code>clear</code> operations. It does not support the <code>add</code> or <code>addAll</code> operations.<p>The view's iterators and spliterators are <a href="package-summary.html#Weakly" target="_parent"><i>weakly consistent </i></a>.      </p>                                                                       
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Specified by: </span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/NavigableMap.html#descendingKeySet--" target="_parent">descendingKeySet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../java/util/NavigableMap.html" title="interface in java.util" target="_parent">NavigableMap</a>&lt;<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">K</a>,<a href="../../../java/util/concurrent/ConcurrentNavigableMap.html" title="type parameter in ConcurrentNavigableMap" target="_parent">V</a>&gt;</code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a reverse order navigable set view of the keys in this map           </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

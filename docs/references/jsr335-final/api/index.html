@@ -1,0 +1,170 @@
+<html>
+<head>
+<title>JSR-335 Summary</title>
+</head>
+<body>
+<div>
+<h1>JSR 335 API Summary</h1>
+
+The API provided by JSR 335 includes both new classes and additions to existing
+classes. The new classes are located primarily in the existing
+<tt>java.util</tt> and <tt>java.lang.invoke</tt> packages and the new
+<tt>java.util.function</tt> and <tt>java.util.stream</tt> packages.  The
+<tt>java.util.function</tt> package contains general purpose functional
+interfaces that provide target types for lambda expressions and method
+references. The <tt>java.util.stream</tt> package contains the majority of the
+interfaces and classes for the Streams functionality. The new classes in the
+<tt>java.lang.invoke</tt> package provide runtime support for the lambda
+language and the new classes in the <tt>java.util</tt> package provide either
+integration of the Java Collections Framework with Streams or new general
+utility functionality used by the Steams feature.
+
+<p>Many additions to existing classes provide integration with the Streams
+feature. Other additions enhance the utility of existing interfaces and classes
+with methods that accept instances of functional interfaces (function values)
+such that those methods can be utilized with lambda expressions or method
+references
+</div>
+<div>
+<h2>New Packages</h2>
+<a href="api/java/util/function/package-summary.html">java.util.function</a><br/>
+<a href="api/java/util/stream/package-summary.html">java.util.stream</a><br/>
+</div>
+<div>
+<h2>Modified Packages</h2>
+<table border="1">
+<thead>
+<tr>
+<td>Package</td>
+<td>New Classes</td>
+<td>Modified Classes</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>java.io</td>
+<td>
+<a href="api/java/io/UncheckedIOException.html">UncheckedIOException</a><br/>
+</td>
+<td>
+<a href="java/io/BufferedReader.html">BufferedReader</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.lang</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/lang/AutoCloseable.html">AutoCloseable</a><br/>
+<a href="java/lang/ThreadLocal.html">ThreadLocal</a><br/>
+<a href="java/lang/String.html">String</a><br/>
+<a href="java/lang/Iterable.html">Iterable</a><br/>
+<a href="java/lang/CharSequence.html">CharSequence</a><br/>
+<a href="java/lang/Boolean.html">Boolean</a><br/>
+<a href="java/lang/Integer.html">Integer</a><br/>
+<a href="java/lang/Long.html">Long</a><br/>
+<a href="java/lang/Float.html">Float</a><br/>
+<a href="java/lang/Double.html">Double</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.lang.invoke</td>
+<td>
+<a href="api/java/lang/invoke/LambdaMetafactory.html">LambdaMetafactory</a><br/>
+<a href="api/java/lang/invoke/SerializedLambda.html">SerializedLambda</a><br/>
+<a href="api/java/lang/invoke/LambdaConversionException.html">LambdaConversionException</a><br/>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>java.nio.file</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/nio/file/Files.html">Files</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.util</td>
+<td>
+<a href="api/java/util/PrimitiveIterator.html">PrimitiveIterator</a><br/>
+<a href="api/java/util/PrimitiveIterator.OfDouble.html">PrimitiveIterator.OfDouble</a><br/>
+<a href="api/java/util/PrimitiveIterator.OfInt.html">PrimitiveIterator.OfInt</a><br/>
+<a href="api/java/util/PrimitiveIterator.OfLong.html">PrimitiveIterator.OfLong</a><br/>
+<a href="api/java/util/Spliterator.html">Spliterator</a><br/>
+<a href="api/java/util/Spliterator.OfDouble.html">Spliterator.OfDouble</a><br/>
+<a href="api/java/util/Spliterator.OfInt.html">Spliterator.OfInt</a><br/>
+<a href="api/java/util/Spliterator.OfLong.html">Spliterator.OfLong</a><br/>
+<a href="api/java/util/Spliterator.OfPrimitive.html">Spliterator.OfPrimitive</a><br/>
+<a href="api/java/util/DoubleSummaryStatistics.html">DoubleSummaryStatistics</a><br/>
+<a href="api/java/util/IntSummaryStatistics.html">IntSummaryStatistics</a><br/>
+<a href="api/java/util/LongSummaryStatistics.html">LongSummaryStatistics</a><br/>
+<a href="api/java/util/Optional.html">Optional</a><br/>
+<a href="api/java/util/OptionalDouble.html">OptionalDouble</a><br/>
+<a href="api/java/util/OptionalInt.html">OptionalInt</a><br/>
+<a href="api/java/util/OptionalLong.html">OptionalLong</a><br/>
+<a href="api/java/util/Spliterators.html">Spliterators</a><br/>
+<a href="api/java/util/Spliterators.AbstractDoubleSpliterator.html">Spliterators.AbstractDoubleSpliterator</a><br/>
+<a href="api/java/util/Spliterators.AbstractIntSpliterator.html">Spliterators.AbstractIntSpliterator</a><br/>
+<a href="api/java/util/Spliterators.AbstractLongSpliterator.html">Spliterators.AbstractLongSpliterator</a><br/>
+<a href="api/java/util/Spliterators.AbstractSpliterator.html">Spliterators.AbstractSpliterator</a><br/>
+<a href="api/java/util/SplittableRandom.html">SplittableRandom</a><br/>
+<a href="api/java/util/StringJoiner.html">StringJoiner</a><br/>
+</td>
+<td>
+<a href="java/util/Arrays.html">Arrays</a><br/>
+<a href="java/util/BitSet.html">BitSet</a><br/>
+<a href="java/util/Collection.html">Collection</a><br/>
+<a href="java/util/Comparator.html">Comparator</a><br/>
+<a href="java/util/Iterator.html">Iterator</a><br/>
+<a href="java/util/List.html">List</a><br/>
+<a href="java/util/Map.html">Map</a><br/>
+<a href="java/util/Map.Entry.html">Map.Entry</a><br/>
+<a href="java/util/LinkedHashMap.html">LinkedHashMap</a><br/>
+<a href="java/util/Random.html">Random</a><br/>
+<a href="java/util/TreeMap.html">TreeMap</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.util.concurrent</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/util/concurrent/ThreadLocalRandom.html">ThreadLocalRandom</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.util.jar</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/util/jar/JarFile.html">JarFile</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.util.zip</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/util/zip/ZipFile.html">ZipFile</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.util.logging</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/util/logging/Logger.html">Logger</a><br/>
+</td>
+</tr>
+<tr>
+<td>java.util.regex</td>
+<td>&nbsp;</td>
+<td>
+<a href="java/util/regex/Pattern.html">Pattern</a><br/>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div>
+<h2>Document References</h2>
+<a href="api/index.html">Full JavaDoc</a><br/>
+<a href="overview-summary.html">Specdiff for modified classes</a><br/>
+</div>
+</body>
+</html>

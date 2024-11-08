@@ -1,0 +1,720 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:EnumSet [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:EnumSet"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a>, <a href="../../java/lang/Cloneable.html" title="interface in java.lang" target="_parent">Cloneable</a>, <a href="../../java/lang/Iterable.html" title="interface in java.lang" target="_parent">Iterable</a>&lt;E&gt;, <a href="../../java/util/Collection.html" title="interface in java.util" target="_parent">Collection</a>&lt;E&gt;, <a href="../../java/util/Set.html" title="interface in java.util" target="_parent">Set</a>&lt;E&gt;     </dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">EnumSet&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;</span>
+extends <a href="../../java/util/AbstractSet.html" title="class in java.util" target="_parent">AbstractSet</a>&lt;E&gt;
+implements <a href="../../java/lang/Cloneable.html" title="interface in java.lang" target="_parent">Cloneable</a>, <a href="../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a>
+</pre>
+<div class="block">A specialized <a href="../../java/util/Set.html" title="interface in java.util" target="_parent"><code>Set</code></a> implementation for use with enum types. All of the elements in an enum set must come from a single enum type that is specified, explicitly or implicitly, when the set is created. Enum sets are represented internally as bit vectors. This representation is extremely compact and efficient. The space and time performance of this class should be good enough to allow its use as a high-quality, typesafe alternative to traditional <tt>int</tt>-based "bit flags." Even bulk operations (such as <tt>containsAll</tt> and <tt>retainAll</tt>) should run very quickly if their argument is also an enum set.<p>The iterator returned by the <tt>iterator</tt> method traverses the elements in their <i>natural order </i> (the order in which the enum constants are declared). The returned iterator is <i>weakly consistent </i>: it will never throw <a href="../../java/util/ConcurrentModificationException.html" title="class in java.util" target="_parent"><code>ConcurrentModificationException</code></a> and it may or may not show the effects of any modifications to the set that occur while the iteration is in progress.                                                      </p>
+<p>Null elements are not permitted. Attempts to insert a null element will throw <a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent"><code>NullPointerException</code></a>. Attempts to test for the presence of a null element or to remove one will, however, function properly.                               </p>
+<p>Like most collection implementations, <tt>EnumSet</tt> is not synchronized. If multiple threads access an enum set concurrently, and at least one of the threads modifies the set, it should be synchronized externally. This is typically accomplished by synchronizing on some object that naturally encapsulates the enum set. If no such object exists, the set should be "wrapped" using the <a href="../../java/util/Collections.html#synchronizedSet-java.util.Set-" target="_parent"><code>Collections.synchronizedSet(java.util.Set&lt;T&gt;)</code></a> method. This is best done at creation time, to prevent accidental unsynchronized access:<pre>
+ Set&lt;MyEnum&gt; s = Collections.synchronizedSet(EnumSet.noneOf(MyEnum.class));
+ </pre>                                                                       
+</p>
+<p>Implementation note: All basic operations execute in constant time. They are likely (though not guaranteed) to be much faster than their <a href="../../java/util/HashSet.html" title="class in java.util" target="_parent"><code>HashSet</code></a> counterparts. Even bulk operations execute in constant time if their argument is also an enum set.                                     </p>
+<p>This class is a member of the <a href="http://download.oracle.com/javase/7/docs/technotes/guides/collections/index.html" target="_parent"> Java Collections Framework   </a>.       </p>                                                                                               
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/EnumMap.html" title="class in java.util" target="_parent"><code>EnumMap</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:noneOf-java.lang.Class- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:noneOf-java.lang.Class-"></a><a name="noneOf-java.lang.Class-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>noneOf</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;noneOf(<a href="../../java/lang/Class.html" title="class in java.lang" target="_parent">Class</a>&lt;E&gt;&nbsp;elementType)</pre>
+<div class="block">Creates an empty enum set with the specified element type.         </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the elements in the set          </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>elementType</code> - the class object of the element type for this enum set             </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>An empty enum set of the specified type.       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>elementType</tt> is null      </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:allOf-java.lang.Class- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:allOf-java.lang.Class-"></a><a name="allOf-java.lang.Class-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>allOf</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;allOf(<a href="../../java/lang/Class.html" title="class in java.lang" target="_parent">Class</a>&lt;E&gt;&nbsp;elementType)</pre>
+<div class="block">Creates an enum set containing all of the elements in the specified element type.             </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the elements in the set          </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>elementType</code> - the class object of the element type for this enum set             </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>An enum set containing all the elements in the specified type.          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>elementType</tt> is null      </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:copyOf-java.util.EnumSet- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:copyOf-java.util.EnumSet-"></a><a name="copyOf-java.util.EnumSet-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>copyOf</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;copyOf(<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;s)</pre>
+<div class="block">Creates an enum set with the same element type as the specified enum set, initially containing the same elements (if any).                    </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the elements in the set          </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - the enum set from which to initialize this enum set            </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A copy of the specified enum set.      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>s</tt> is null      </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:copyOf-java.util.Collection- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:copyOf-java.util.Collection-"></a><a name="copyOf-java.util.Collection-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>copyOf</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;copyOf(<a href="../../java/util/Collection.html" title="interface in java.util" target="_parent">Collection</a>&lt;E&gt;&nbsp;c)</pre>
+<div class="block">Creates an enum set initialized from the specified collection. If the specified collection is an <tt>EnumSet</tt> instance, this static factory method behaves identically to <a href="../../java/util/EnumSet.html#copyOf-java.util.EnumSet-" target="_parent"><code>copyOf(EnumSet)</code></a>. Otherwise, the specified collection must contain at least one element (in order to determine the new enum set's element type).                                            </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the elements in the collection          </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>c</code> - the collection from which to initialize this enum set           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>An enum set initialized from the given collection.       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <tt>c</tt> is not an <tt>EnumSet</tt> instance and contains no elements             </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>c</tt> is null      </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:complementOf-java.util.EnumSet- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:complementOf-java.util.EnumSet-"></a><a name="complementOf-java.util.EnumSet-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>complementOf</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;complementOf(<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;s)</pre>
+<div class="block">Creates an enum set with the same element type as the specified enum set, initially containing all the elements of this type that are <i>not</i> contained in the specified set.                             </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the elements in the enum set           </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>s</code> - the enum set from whose complement to initialize this enum set             </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The complement of the specified set in this set        </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>s</tt> is null      </dd>    
+</dl>
+</li>
+</ul> 
+<a name="of-java.lang.Enum-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:of-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:of-E-"></a><a name="of-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;of(E&nbsp;e)</pre>
+<div class="block">Creates an enum set initially containing the specified element. Overloadings of this method exist to initialize an enum set with one through five elements. A sixth overloading is provided that uses the varargs feature. This overloading may be used to create an enum set initially containing an arbitrary number of elements, but is likely to run slower than the overloadings that do not use varargs.                                                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the specified element and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e</code> - the element that this set is to contain initially           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing the specified element       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>e</tt> is null      </dd>    
+</dl>
+</li>
+</ul> 
+<a name="of-java.lang.Enum-java.lang.Enum-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:of-E-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:of-E-E-"></a><a name="of-E-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;of(E&nbsp;e1,
+                                                E&nbsp;e2)</pre>
+<div class="block">Creates an enum set initially containing the specified elements. Overloadings of this method exist to initialize an enum set with one through five elements. A sixth overloading is provided that uses the varargs feature. This overloading may be used to create an enum set initially containing an arbitrary number of elements, but is likely to run slower than the overloadings that do not use varargs.                                                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the parameter elements and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e1</code> - an element that this set is to contain initially           </dd>
+<dd> 
+<code>e2</code> - another element that this set is to contain initially           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing the specified elements       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if any parameters are null       </dd>    
+</dl>
+</li>
+</ul> 
+<a name="of-java.lang.Enum-java.lang.Enum-java.lang.Enum-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:of-E-E-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:of-E-E-E-"></a><a name="of-E-E-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;of(E&nbsp;e1,
+                                                E&nbsp;e2,
+                                                E&nbsp;e3)</pre>
+<div class="block">Creates an enum set initially containing the specified elements. Overloadings of this method exist to initialize an enum set with one through five elements. A sixth overloading is provided that uses the varargs feature. This overloading may be used to create an enum set initially containing an arbitrary number of elements, but is likely to run slower than the overloadings that do not use varargs.                                                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the parameter elements and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e1</code> - an element that this set is to contain initially           </dd>
+<dd> 
+<code>e2</code> - another element that this set is to contain initially           </dd>
+<dd> 
+<code>e3</code> - another element that this set is to contain initially           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing the specified elements       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if any parameters are null       </dd>    
+</dl>
+</li>
+</ul> 
+<a name="of-java.lang.Enum-java.lang.Enum-java.lang.Enum-java.lang.Enum-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:of-E-E-E-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:of-E-E-E-E-"></a><a name="of-E-E-E-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;of(E&nbsp;e1,
+                                                E&nbsp;e2,
+                                                E&nbsp;e3,
+                                                E&nbsp;e4)</pre>
+<div class="block">Creates an enum set initially containing the specified elements. Overloadings of this method exist to initialize an enum set with one through five elements. A sixth overloading is provided that uses the varargs feature. This overloading may be used to create an enum set initially containing an arbitrary number of elements, but is likely to run slower than the overloadings that do not use varargs.                                                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the parameter elements and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e1</code> - an element that this set is to contain initially           </dd>
+<dd> 
+<code>e2</code> - another element that this set is to contain initially           </dd>
+<dd> 
+<code>e3</code> - another element that this set is to contain initially           </dd>
+<dd> 
+<code>e4</code> - another element that this set is to contain initially           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing the specified elements       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if any parameters are null       </dd>    
+</dl>
+</li>
+</ul> 
+<a name="of-java.lang.Enum-java.lang.Enum-java.lang.Enum-java.lang.Enum-java.lang.Enum-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:of-E-E-E-E-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:of-E-E-E-E-E-"></a><a name="of-E-E-E-E-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;of(E&nbsp;e1,
+                                                E&nbsp;e2,
+                                                E&nbsp;e3,
+                                                E&nbsp;e4,
+                                                E&nbsp;e5)</pre>
+<div class="block">Creates an enum set initially containing the specified elements. Overloadings of this method exist to initialize an enum set with one through five elements. A sixth overloading is provided that uses the varargs feature. This overloading may be used to create an enum set initially containing an arbitrary number of elements, but is likely to run slower than the overloadings that do not use varargs.                                                                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the parameter elements and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>e1</code> - an element that this set is to contain initially           </dd>
+<dd> 
+<code>e2</code> - another element that this set is to contain initially           </dd>
+<dd> 
+<code>e3</code> - another element that this set is to contain initially           </dd>
+<dd> 
+<code>e4</code> - another element that this set is to contain initially           </dd>
+<dd> 
+<code>e5</code> - another element that this set is to contain initially           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing the specified elements       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if any parameters are null       </dd>    
+</dl>
+</li>
+</ul> 
+<a name="of-java.lang.Enum-java.lang.Enum:A-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:of-E-E...- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:of-E-E...-"></a><a name="of-E-E...-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre>
+<a href="../../java/lang/SafeVarargs.html" title="annotation in java.lang" target="_parent">@SafeVarargs</a>
+public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;of(E&nbsp;first,
+                                                             E...&nbsp;rest)</pre>
+<div class="block">Creates an enum set initially containing the specified elements. This factory, whose parameter list uses the varargs feature, may be used to create an enum set initially containing an arbitrary number of elements, but it is likely to run slower than the overloadings that do not use varargs.                                               </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the parameter elements and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>first</code> - an element that the set is to contain initially           </dd>
+<dd> 
+<code>rest</code> - the remaining elements the set is to contain initially           </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing the specified elements       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if any of the specified elements are null, or if <tt>rest</tt> is null               </dd>    
+</dl>
+</li>
+</ul> 
+<a name="range-java.lang.Enum-java.lang.Enum-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:range-E-E- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:range-E-E-"></a><a name="range-E-E-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>range</h4>
+<pre>public static&nbsp;&lt;E extends <a href="../../java/lang/Enum.html" title="class in java.lang" target="_parent">Enum</a>&lt;E&gt;&gt;&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;E&gt;&nbsp;range(E&nbsp;from,
+                                                   E&nbsp;to)</pre>
+<div class="block">Creates an enum set initially containing all of the elements in the range defined by the two specified endpoints. The returned set will contain the endpoints themselves, which may be identical but must not be out of order.                                     </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Type Parameters: </span>   
+</dt>
+<dd> 
+<code>E</code> - The class of the parameter elements and of the set            </dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>from</code> - the first element in the range        </dd>
+<dd> 
+<code>to</code> - the last element in the range        </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enum set initially containing all of the elements in the range defined by the two specified endpoints                 </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <code>from</code> or <code>to</code> are null        </dd>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>from.compareTo(to) &gt; 0  </code>    
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:clone-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:clone--"></a><a name="clone--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>clone</h4>
+<pre>public&nbsp;<a href="../../java/util/EnumSet.html" title="class in java.util" target="_parent">EnumSet</a>&lt;<a href="../../java/util/EnumSet.html" title="type parameter in EnumSet" target="_parent">E</a>&gt;&nbsp;clone()</pre>
+<div class="block">Returns a copy of this set.     </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/Object.html#clone--" target="_parent">clone</a></code>&nbsp;in class&nbsp;<code><a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a copy of this set    </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Cloneable.html" title="interface in java.lang" target="_parent"><code>Cloneable</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

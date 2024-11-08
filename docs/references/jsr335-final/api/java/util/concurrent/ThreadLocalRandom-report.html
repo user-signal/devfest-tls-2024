@@ -1,0 +1,1502 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:ThreadLocalRandom [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:ThreadLocalRandom"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>All Implemented Interfaces:  </dt>
+<dd> 
+<a href="../../../java/io/Serializable.html" title="interface in java.io" target="_parent">Serializable</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">ThreadLocalRandom</span>
+extends <a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a>
+</pre>
+<div class="block">A random number generator isolated to the current thread. Like the global <a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><code>Random</code></a> generator used by the <a href="../../../java/lang/Math.html" title="class in java.lang" target="_parent"><code>Math</code></a> class, a <code>ThreadLocalRandom</code> is initialized with an internally generated seed that may not otherwise be modified. When applicable, use of <code>ThreadLocalRandom</code> rather than shared <code>Random</code> objects in concurrent programs will typically encounter much less overhead and contention. Use of <code>ThreadLocalRandom</code> is particularly appropriate when multiple tasks (for example, each a <a href="../../../java/util/concurrent/ForkJoinTask.html" title="class in java.util.concurrent" target="_parent"><code>ForkJoinTask</code></a>) use random numbers in parallel in thread pools.<p>Usages of this class should typically be of the form: <code>ThreadLocalRandom.current().nextX(...)</code> (where <code>X</code> is <code>Int</code>, <code>Long</code>, etc). When all usages are of this form, it is never possible to accidently share a <code>ThreadLocalRandom</code> across multiple threads.                                   </p>
+<p>This class also provides additional commonly used bounded random generation methods.          </p>
+<p>Instances of <code>ThreadLocalRandom</code> are not cryptographically secure. Consider instead using <a href="../../../java/security/SecureRandom.html" title="class in java.security" target="_parent"><code>SecureRandom</code></a> in security-sensitive applications. Additionally, default-constructed instances do not use a cryptographically random seed unless the <a href="../../../java/lang/System.html#getProperty-java.lang.String-" target="_parent">system property </a><code>java.util.secureRandomSeed</code> is set to <code>true</code>.                              </p>                                                                            
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.7</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../serialized-form.html#java.util.concurrent.ThreadLocalRandom" target="_parent">Serialized Form </a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:current-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:current--"></a><a name="current--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>current</h4>
+<pre>public static&nbsp;<a href="../../../java/util/concurrent/ThreadLocalRandom.html" title="class in java.util.concurrent" target="_parent">ThreadLocalRandom</a>&nbsp;current()</pre>
+<div class="block">Returns the current thread's <code>ThreadLocalRandom</code>.    </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the current thread's <code>ThreadLocalRandom</code>   
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:setSeed-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:setSeed-long-"></a><a name="setSeed-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSeed</h4>
+<pre>public&nbsp;void&nbsp;setSeed(long&nbsp;seed)</pre>
+<div class="block">Throws <code>UnsupportedOperationException</code>. Setting seeds in this generator is not supported.         </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#setSeed-long-" target="_parent">setSeed</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>seed</code> - the initial seed     </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/UnsupportedOperationException.html" title="class in java.lang" target="_parent">UnsupportedOperationException</a></code> - always   </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:next-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:next-int-"></a><a name="next-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>next</h4>
+<pre>protected&nbsp;int&nbsp;next(int&nbsp;bits)</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../java/util/Random.html#next-int-" target="_parent">Random</a></code>   </span> 
+</div>
+<div class="block">Generates the next pseudorandom number. Subclasses should override this, as this is used by all other methods.<p>The general contract of <code>next</code> is that it returns an <code>int</code> value and if the argument <code>bits</code> is between <code>1</code> and <code>32</code> (inclusive), then that many low-order bits of the returned value will be (approximately) independently chosen bit values, each of which is (approximately) equally likely to be <code>0</code> or <code>1</code>. The method <code>next</code> is implemented by class <code>Random</code> by atomically updating the seed to<pre>
+<code> (seed * 0x5DEECE66DL + 0xBL) &amp; ((1L &lt;&lt; 48) - 1)</code>
+</pre> and returning<pre>
+<code> (int)(seed &gt;&gt;&gt; (48 - bits))</code>.</pre> This is a linear congruential pseudorandom number generator, as defined by D. H. Lehmer and described by Donald E. Knuth in <i>The Art of Computer Programming,    </i> Volume 3: <i>Seminumerical Algorithms </i>, section 3.2.1.                                                                                             </p>                
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#next-int-" target="_parent">next</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>bits</code> - random bits    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the next pseudorandom value from this random number generator's sequence         </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextInt-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextInt--"></a><a name="nextInt--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextInt</h4>
+<pre>public&nbsp;int&nbsp;nextInt()</pre>
+<div class="block">Returns a pseudorandom <code>int</code> value.    </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextInt--" target="_parent">nextInt</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>int</code> value   </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextInt-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextInt-int-"></a><a name="nextInt-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextInt</h4>
+<pre>public&nbsp;int&nbsp;nextInt(int&nbsp;bound)</pre>
+<div class="block">Returns a pseudorandom <code>int</code> value between zero (inclusive) and the specified bound (exclusive).            </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextInt-int-" target="_parent">nextInt</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>bound</code> - the upper bound (exclusive). Must be positive.         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>int</code> value between zero (inclusive) and the bound (exclusive)          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>bound</code> is not positive       </dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextInt-int-int- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextInt-int-int-"></a><a name="nextInt-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextInt</h4>
+<pre>public&nbsp;int&nbsp;nextInt(int&nbsp;origin,
+                   int&nbsp;bound)</pre>
+<div class="block">Returns a pseudorandom <code>int</code> value between the specified origin (inclusive) and the specified bound (exclusive).              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>origin</code> - the least value returned      </dd>
+<dd> 
+<code>bound</code> - the upper bound (exclusive)      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>int</code> value between the origin (inclusive) and the bound (exclusive)           </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>origin</code> is greater than or equal to <code>bound</code>           
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextLong-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextLong--"></a><a name="nextLong--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextLong</h4>
+<pre>public&nbsp;long&nbsp;nextLong()</pre>
+<div class="block">Returns a pseudorandom <code>long</code> value.    </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextLong--" target="_parent">nextLong</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>long</code> value   </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextLong-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextLong-long-"></a><a name="nextLong-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextLong</h4>
+<pre>public&nbsp;long&nbsp;nextLong(long&nbsp;bound)</pre>
+<div class="block">Returns a pseudorandom <code>long</code> value between zero (inclusive) and the specified bound (exclusive).            </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>bound</code> - the upper bound (exclusive). Must be positive.         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>long</code> value between zero (inclusive) and the bound (exclusive)          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>bound</code> is not positive       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextLong-long-long- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextLong-long-long-"></a><a name="nextLong-long-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextLong</h4>
+<pre>public&nbsp;long&nbsp;nextLong(long&nbsp;origin,
+                     long&nbsp;bound)</pre>
+<div class="block">Returns a pseudorandom <code>long</code> value between the specified origin (inclusive) and the specified bound (exclusive).              </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>origin</code> - the least value returned      </dd>
+<dd> 
+<code>bound</code> - the upper bound (exclusive)      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>long</code> value between the origin (inclusive) and the bound (exclusive)           </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>origin</code> is greater than or equal to <code>bound</code>           
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextDouble-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextDouble--"></a><a name="nextDouble--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextDouble</h4>
+<pre>public&nbsp;double&nbsp;nextDouble()</pre>
+<div class="block">Returns a pseudorandom <code>double</code> value between zero (inclusive) and one (exclusive).          </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextDouble--" target="_parent">nextDouble</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>double</code> value between zero (inclusive) and one (exclusive)         </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../../java/lang/Math.html#random--" target="_parent"><code>Math.random()</code></a> 
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextDouble-double- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextDouble-double-"></a><a name="nextDouble-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextDouble</h4>
+<pre>public&nbsp;double&nbsp;nextDouble(double&nbsp;bound)</pre>
+<div class="block">Returns a pseudorandom <code>double</code> value between 0.0 (inclusive) and the specified bound (exclusive).            </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>bound</code> - the upper bound (exclusive). Must be positive.         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>double</code> value between zero (inclusive) and the bound (exclusive)          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>bound</code> is not positive       </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextDouble-double-double- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextDouble-double-double-"></a><a name="nextDouble-double-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextDouble</h4>
+<pre>public&nbsp;double&nbsp;nextDouble(double&nbsp;origin,
+                         double&nbsp;bound)</pre>
+<div class="block">Returns a pseudorandom <code>double</code> value between the specified origin (inclusive) and bound (exclusive).            </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>origin</code> - the least value returned      </dd>
+<dd> 
+<code>bound</code> - the upper bound (exclusive)      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>double</code> value between the origin (inclusive) and the bound (exclusive)           </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>origin</code> is greater than or equal to <code>bound</code>           
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextBoolean-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextBoolean--"></a><a name="nextBoolean--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextBoolean</h4>
+<pre>public&nbsp;boolean&nbsp;nextBoolean()</pre>
+<div class="block">Returns a pseudorandom <code>boolean</code> value.    </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextBoolean--" target="_parent">nextBoolean</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>boolean</code> value   </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextFloat-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextFloat--"></a><a name="nextFloat--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextFloat</h4>
+<pre>public&nbsp;float&nbsp;nextFloat()</pre>
+<div class="block">Returns a pseudorandom <code>float</code> value between zero (inclusive) and one (exclusive).          </div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextFloat--" target="_parent">nextFloat</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>a pseudorandom <code>float</code> value between zero (inclusive) and one (exclusive)         </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:nextGaussian-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:nextGaussian--"></a><a name="nextGaussian--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>nextGaussian</h4>
+<pre>public&nbsp;double&nbsp;nextGaussian()</pre>
+<div class="block"> 
+<span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../java/util/Random.html#nextGaussian--" target="_parent">Random</a></code>   </span> 
+</div>
+<div class="block">Returns the next pseudorandom, Gaussian ("normally") distributed <code>double</code> value with mean <code>0.0</code> and standard deviation <code>1.0</code> from this random number generator's sequence.<p> The general contract of <code>nextGaussian</code> is that one <code>double</code> value, chosen from (approximately) the usual normal distribution with mean <code>0.0</code> and standard deviation <code>1.0</code>, is pseudorandomly generated and returned.                             </p>
+<p>The method <code>nextGaussian</code> is implemented by class <code>Random</code> as if by a threadsafe version of the following:<pre> 
+
+<code>
+ private double nextNextGaussian;
+ private boolean haveNextNextGaussian = false;
+
+ public double nextGaussian() {
+   if (haveNextNextGaussian) {
+     haveNextNextGaussian = false;
+     return nextNextGaussian;
+   } else {
+     double v1, v2, s;
+     do {
+       v1 = 2 * nextDouble() - 1;   // between -1.0 and 1.0
+       v2 = 2 * nextDouble() - 1;   // between -1.0 and 1.0
+       s = v1 * v1 + v2 * v2;
+     } while (s &gt;= 1 || s == 0);
+     double multiplier = StrictMath.sqrt(-2 * StrictMath.log(s)/s);
+     nextNextGaussian = v2 * multiplier;
+     haveNextNextGaussian = true;
+     return v1 * multiplier;
+   }
+ }</code>
+</pre> This uses the <i>polar method </i> of G. E. P. Box, M. E. Muller, and G. Marsaglia, as described by Donald E. Knuth in <i>The Art of Computer Programming    </i>, Volume 3: <i>Seminumerical Algorithms </i>, section 3.4.1, subsection C, algorithm P. Note that it generates two independent values at the cost of only one call to <code>StrictMath.log</code> and one call to <code>StrictMath.sqrt</code>.                                                                     </p>                     
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel">Overrides:</span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#nextGaussian--" target="_parent">nextGaussian</a></code>&nbsp;in class&nbsp;<code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent">Random</a></code>  
+</dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the next pseudorandom, Gaussian ("normally") distributed <code>double</code> value with mean <code>0.0</code> and standard deviation <code>1.0</code> from this random number generator's sequence                    </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ints-long- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ints-long-"></a><a name="ints-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">ints</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/IntStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">IntStream</span></a><span class="diff-html-added">&nbsp;ints(long&nbsp;streamSize)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">producing</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values.</span>           
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#ints-long-" target="_parent"><span class="diff-html-added">ints</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">values</span> <span class="diff-html-added">to</span> <span class="diff-html-added">generate</span>        
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values</span>     
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">less</span> <span class="diff-html-added">than</span> <span class="diff-html-added">zero</span>        
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ints-- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ints--"></a><a name="ints--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">ints</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/IntStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">IntStream</span></a><span class="diff-html-added">&nbsp;ints()</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">an</span> <span class="diff-html-added">effectively</span> <span class="diff-html-added">unlimited</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values.</span>        
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#ints--" target="_parent"><span class="diff-html-added">ints</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Implementation</span> <span class="diff-html-added">Note:</span> </span>   
+</dt>
+<dd>
+<span class="diff-html-added">This</span> <span class="diff-html-added">method</span> <span class="diff-html-added">is</span> <span class="diff-html-added">implemented</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">equivalent</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">ints(Long.MAX_VALUE)</span></code><span class="diff-html-added">.</span>        
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values</span>     
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ints-long-int-int- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ints-long-int-int-"></a><a name="ints-long-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">ints</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/IntStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">IntStream</span></a><span class="diff-html-added">&nbsp;ints(long&nbsp;streamSize,</span>
+                      <span class="diff-html-added">int&nbsp;randomNumberOrigin,</span>
+                      <span class="diff-html-added">int&nbsp;randomNumberBound)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">producing</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">conforming</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive).</span>                     
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#ints-long-int-int-" target="_parent"><span class="diff-html-added">ints</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">values</span> <span class="diff-html-added">to</span> <span class="diff-html-added">generate</span>        
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberBound</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span>              
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">less</span> <span class="diff-html-added">than</span> <span class="diff-html-added">zero,</span> <span class="diff-html-added">or</span> <code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">greater</span> <span class="diff-html-added">than</span> <span class="diff-html-added">or</span> <span class="diff-html-added">equal</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">randomNumberBound</span></code>                 
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:ints-int-int- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:ints-int-int-"></a><a name="ints-int-int-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">ints</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/IntStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">IntStream</span></a><span class="diff-html-added">&nbsp;ints(int&nbsp;randomNumberOrigin,</span>
+                      <span class="diff-html-added">int&nbsp;randomNumberBound)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">an</span> <span class="diff-html-added">effectively</span> <span class="diff-html-added">unlimited</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">conforming</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive).</span>                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#ints-int-int-" target="_parent"><span class="diff-html-added">ints</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Implementation</span> <span class="diff-html-added">Note:</span> </span>   
+</dt>
+<dd>
+<span class="diff-html-added">This</span> <span class="diff-html-added">method</span> <span class="diff-html-added">is</span> <span class="diff-html-added">implemented</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">equivalent</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">ints(Long.MAX_VALUE,</span> <span class="diff-html-added">randomNumberOrigin,</span> <span class="diff-html-added">randomNumberBound)</span>  </code><span class="diff-html-added">.</span>        
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberBound</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">int</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span>              
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">greater</span> <span class="diff-html-added">than</span> <span class="diff-html-added">or</span> <span class="diff-html-added">equal</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">randomNumberBound</span></code>           
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>      
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:longs-long- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:longs-long-"></a><a name="longs-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">longs</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/LongStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">LongStream</span></a><span class="diff-html-added">&nbsp;longs(long&nbsp;streamSize)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">producing</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values.</span>           
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#longs-long-" target="_parent"><span class="diff-html-added">longs</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">values</span> <span class="diff-html-added">to</span> <span class="diff-html-added">generate</span>        
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values</span>     
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">less</span> <span class="diff-html-added">than</span> <span class="diff-html-added">zero</span>        
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:longs-- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:longs--"></a><a name="longs--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">longs</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/LongStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">LongStream</span></a><span class="diff-html-added">&nbsp;longs()</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">an</span> <span class="diff-html-added">effectively</span> <span class="diff-html-added">unlimited</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values.</span>        
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#longs--" target="_parent"><span class="diff-html-added">longs</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Implementation</span> <span class="diff-html-added">Note:</span> </span>   
+</dt>
+<dd>
+<span class="diff-html-added">This</span> <span class="diff-html-added">method</span> <span class="diff-html-added">is</span> <span class="diff-html-added">implemented</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">equivalent</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">longs(Long.MAX_VALUE)</span></code><span class="diff-html-added">.</span>        
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values</span>     
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:longs-long-long-long- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:longs-long-long-long-"></a><a name="longs-long-long-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">longs</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/LongStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">LongStream</span></a><span class="diff-html-added">&nbsp;longs(long&nbsp;streamSize,</span>
+                        <span class="diff-html-added">long&nbsp;randomNumberOrigin,</span>
+                        <span class="diff-html-added">long&nbsp;randomNumberBound)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">producing</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code><span class="diff-html-added">,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">conforming</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive).</span>                    
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#longs-long-long-long-" target="_parent"><span class="diff-html-added">longs</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">values</span> <span class="diff-html-added">to</span> <span class="diff-html-added">generate</span>        
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberBound</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span>              
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">less</span> <span class="diff-html-added">than</span> <span class="diff-html-added">zero,</span> <span class="diff-html-added">or</span> <code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">greater</span> <span class="diff-html-added">than</span> <span class="diff-html-added">or</span> <span class="diff-html-added">equal</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">randomNumberBound</span></code>                 
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:longs-long-long- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:longs-long-long-"></a><a name="longs-long-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">longs</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/LongStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">LongStream</span></a><span class="diff-html-added">&nbsp;longs(long&nbsp;randomNumberOrigin,</span>
+                        <span class="diff-html-added">long&nbsp;randomNumberBound)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">an</span> <span class="diff-html-added">effectively</span> <span class="diff-html-added">unlimited</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">conforming</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive).</span>                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#longs-long-long-" target="_parent"><span class="diff-html-added">longs</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Implementation</span> <span class="diff-html-added">Note:</span> </span>   
+</dt>
+<dd>
+<span class="diff-html-added">This</span> <span class="diff-html-added">method</span> <span class="diff-html-added">is</span> <span class="diff-html-added">implemented</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">equivalent</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">longs(Long.MAX_VALUE,</span> <span class="diff-html-added">randomNumberOrigin,</span> <span class="diff-html-added">randomNumberBound)</span>  </code><span class="diff-html-added">.</span>        
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberBound</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">long</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span>              
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">greater</span> <span class="diff-html-added">than</span> <span class="diff-html-added">or</span> <span class="diff-html-added">equal</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">randomNumberBound</span></code>           
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>      
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:doubles-long- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:doubles-long-"></a><a name="doubles-long-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">doubles</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/DoubleStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">DoubleStream</span></a><span class="diff-html-added">&nbsp;doubles(long&nbsp;streamSize)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">producing</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">between</span> <span class="diff-html-added">zero</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">one</span> <span class="diff-html-added">(exclusive).</span>                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#doubles-long-" target="_parent"><span class="diff-html-added">doubles</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">values</span> <span class="diff-html-added">to</span> <span class="diff-html-added">generate</span>        
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values</span>    
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">less</span> <span class="diff-html-added">than</span> <span class="diff-html-added">zero</span>        
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:doubles-- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:doubles--"></a><a name="doubles--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">doubles</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/DoubleStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">DoubleStream</span></a><span class="diff-html-added">&nbsp;doubles()</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">an</span> <span class="diff-html-added">effectively</span> <span class="diff-html-added">unlimited</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">between</span> <span class="diff-html-added">zero</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">one</span> <span class="diff-html-added">(exclusive).</span>               
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#doubles--" target="_parent"><span class="diff-html-added">doubles</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Implementation</span> <span class="diff-html-added">Note:</span> </span>   
+</dt>
+<dd>
+<span class="diff-html-added">This</span> <span class="diff-html-added">method</span> <span class="diff-html-added">is</span> <span class="diff-html-added">implemented</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">equivalent</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">doubles(Long.MAX_VALUE)</span></code><span class="diff-html-added">.</span>        
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values</span>     
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:doubles-long-double-double- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:doubles-long-double-double-"></a><a name="doubles-long-double-double-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">doubles</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/DoubleStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">DoubleStream</span></a><span class="diff-html-added">&nbsp;doubles(long&nbsp;streamSize,</span>
+                            <span class="diff-html-added">double&nbsp;randomNumberOrigin,</span>
+                            <span class="diff-html-added">double&nbsp;randomNumberBound)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">producing</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">conforming</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive).</span>                     
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#doubles-long-double-double-" target="_parent"><span class="diff-html-added">doubles</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">number</span> <span class="diff-html-added">of</span> <span class="diff-html-added">values</span> <span class="diff-html-added">to</span> <span class="diff-html-added">generate</span>        
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberBound</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span>              
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">streamSize</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">less</span> <span class="diff-html-added">than</span> <span class="diff-html-added">zero</span>        
+</dd>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">greater</span> <span class="diff-html-added">than</span> <span class="diff-html-added">or</span> <span class="diff-html-added">equal</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">randomNumberBound</span></code>           
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>     
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:doubles-double-double- [ADDED]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:doubles-double-double-"></a><a name="doubles-double-double-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>
+<span class="diff-html-added">doubles</span>
+</h4>
+<pre>
+<span class="diff-html-added">public&nbsp;</span><a href="../../../java/util/stream/DoubleStream.html" title="interface in java.util.stream" target="_parent"><span class="diff-html-added">DoubleStream</span></a><span class="diff-html-added">&nbsp;doubles(double&nbsp;randomNumberOrigin,</span>
+                            <span class="diff-html-added">double&nbsp;randomNumberBound)</span>
+</pre>
+<div class="block">
+<span class="diff-html-added">Returns</span> <span class="diff-html-added">an</span> <span class="diff-html-added">effectively</span> <span class="diff-html-added">unlimited</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">conforming</span> <span class="diff-html-added">to</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive).</span>                  
+</div>
+<dl> 
+<dt> 
+<span class="overrideSpecifyLabel"><span class="diff-html-added">Overrides:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/util/Random.html#doubles-double-double-" target="_parent"><span class="diff-html-added">doubles</span></a></code><span class="diff-html-added">&nbsp;in</span> <span class="diff-html-added">class&nbsp;</span><code><a href="../../../java/util/Random.html" title="class in java.util" target="_parent"><span class="diff-html-added">Random</span></a></code>  
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Implementation</span> <span class="diff-html-added">Note:</span> </span>   
+</dt>
+<dd>
+<span class="diff-html-added">This</span> <span class="diff-html-added">method</span> <span class="diff-html-added">is</span> <span class="diff-html-added">implemented</span> <span class="diff-html-added">to</span> <span class="diff-html-added">be</span> <span class="diff-html-added">equivalent</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">doubles(Long.MAX_VALUE,</span> <span class="diff-html-added">randomNumberOrigin,</span> <span class="diff-html-added">randomNumberBound)</span>  </code><span class="diff-html-added">.</span>        
+</dd> 
+<dt> 
+<span class="paramLabel"><span class="diff-html-added">Parameters:</span></span>   
+</dt>
+<dd> 
+<code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd>
+<dd> 
+<code><span class="diff-html-added">randomNumberBound</span></code> <span class="diff-html-added">-</span> <span class="diff-html-added">the</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span> <span class="diff-html-added">of</span> <span class="diff-html-added">each</span> <span class="diff-html-added">random</span> <span class="diff-html-added">value</span>         
+</dd> 
+<dt> 
+<span class="returnLabel"><span class="diff-html-added">Returns:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">a</span> <span class="diff-html-added">stream</span> <span class="diff-html-added">of</span> <span class="diff-html-added">pseudorandom</span> <code><span class="diff-html-added">double</span></code> <span class="diff-html-added">values,</span> <span class="diff-html-added">each</span> <span class="diff-html-added">with</span> <span class="diff-html-added">the</span> <span class="diff-html-added">given</span> <span class="diff-html-added">origin</span> <span class="diff-html-added">(inclusive)</span> <span class="diff-html-added">and</span> <span class="diff-html-added">bound</span> <span class="diff-html-added">(exclusive)</span>              
+</dd> 
+<dt> 
+<span class="throwsLabel"><span class="diff-html-added">Throws:</span></span>   
+</dt>
+<dd> 
+<code><a href="../../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent"><span class="diff-html-added">IllegalArgumentException</span></a></code> <span class="diff-html-added">-</span> <span class="diff-html-added">if</span> <code><span class="diff-html-added">randomNumberOrigin</span></code> <span class="diff-html-added">is</span> <span class="diff-html-added">greater</span> <span class="diff-html-added">than</span> <span class="diff-html-added">or</span> <span class="diff-html-added">equal</span> <span class="diff-html-added">to</span> <code><span class="diff-html-added">randomNumberBound</span></code>           
+</dd> 
+<dt> 
+<span class="simpleTagLabel"><span class="diff-html-added">Since:</span></span>   
+</dt>
+<dd>
+<span class="diff-html-added">1.8</span>
+</dd>      
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

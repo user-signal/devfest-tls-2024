@@ -1,0 +1,386 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Dictionary [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Dictionary"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>Direct Known Subclasses:  </dt>
+<dd> 
+<a href="../../java/util/Hashtable.html" title="class in java.util" target="_parent">Hashtable</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">Dictionary&lt;K,V&gt;</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">The <code>Dictionary</code> class is the abstract parent of any class, such as <code>Hashtable</code>, which maps keys to values. Every key and every value is an object. In any one <tt>Dictionary</tt> object, every key is associated with at most one value. Given a <tt>Dictionary</tt> and a key, the associated element can be looked up. Any non-<code>null</code> object can be used as a key and as a value.<p> As a rule, the <code>equals</code> method should be used by implementations of this class to decide if two keys are the same.                      </p>
+<p> 
+<strong>NOTE: This class is obsolete. New implementations should implement the Map interface, rather than extending this class.                </strong> 
+</p>                                                                 
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.0</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Map.html" title="interface in java.util" target="_parent"><code>Map</code></a>, <a href="../../java/lang/Object.html#equals-java.lang.Object-" target="_parent"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../java/lang/Object.html#hashCode--" target="_parent"><code>Object.hashCode()</code></a>, <a href="../../java/util/Hashtable.html" title="class in java.util" target="_parent"><code>Hashtable</code></a>    
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Dictionary-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Dictionary--"></a><a name="Dictionary--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Dictionary</h4>
+<pre>public&nbsp;Dictionary()</pre>
+<div class="block">Sole constructor. (For invocation by subclass constructors, typically implicit.)        </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:size-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:size--"></a><a name="size--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>size</h4>
+<pre>public abstract&nbsp;int&nbsp;size()</pre>
+<div class="block">Returns the number of entries (distinct keys) in this dictionary.         </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the number of keys in this dictionary.      </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:isEmpty-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:isEmpty--"></a><a name="isEmpty--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEmpty</h4>
+<pre>public abstract&nbsp;boolean&nbsp;isEmpty()</pre>
+<div class="block">Tests if this dictionary maps no keys to value. The general contract for the <tt>isEmpty</tt> method is that the result is true if and only if this dictionary contains no entries.                              </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if this dictionary maps no keys to values; <code>false</code> otherwise.           </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:keys-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:keys--"></a><a name="keys--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>keys</h4>
+<pre>public abstract&nbsp;<a href="../../java/util/Enumeration.html" title="interface in java.util" target="_parent">Enumeration</a>&lt;<a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">K</a>&gt;&nbsp;keys()</pre>
+<div class="block">Returns an enumeration of the keys in this dictionary. The general contract for the keys method is that an <tt>Enumeration</tt> object is returned that will generate all the keys for which this dictionary contains entries.                                  </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enumeration of the keys in this dictionary.       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Dictionary.html#elements--" target="_parent"><code>elements()</code></a>, <a href="../../java/util/Enumeration.html" title="interface in java.util" target="_parent"><code>Enumeration</code></a>  
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:elements-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:elements--"></a><a name="elements--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>elements</h4>
+<pre>public abstract&nbsp;<a href="../../java/util/Enumeration.html" title="interface in java.util" target="_parent">Enumeration</a>&lt;<a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">V</a>&gt;&nbsp;elements()</pre>
+<div class="block">Returns an enumeration of the values in this dictionary. The general contract for the <tt>elements</tt> method is that an <tt>Enumeration</tt> is returned that will generate all the elements contained in entries in this dictionary.                                 </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>an enumeration of the values in this dictionary.       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Dictionary.html#keys--" target="_parent"><code>keys()</code></a>, <a href="../../java/util/Enumeration.html" title="interface in java.util" target="_parent"><code>Enumeration</code></a>  
+</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:get-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:get-java.lang.Object-"></a><a name="get-java.lang.Object-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public abstract&nbsp;<a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">V</a>&nbsp;get(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;key)</pre>
+<div class="block">Returns the value to which the key is mapped in this dictionary. The general contract for the <tt>isEmpty</tt> method is that if this dictionary contains an entry for the specified key, the associated value is returned; otherwise, <tt>null</tt> is returned.                                       </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - a key in this dictionary. <code>null</code> if the key is not mapped to any value in this dictionary.                    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value to which the key is mapped in this dictionary;          </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the <tt>key</tt> is <tt>null</tt>.       </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Dictionary.html#put-K-V-" target="_parent"><code>put(java.lang.Object, java.lang.Object) </code></a> 
+</dd>    
+</dl>
+</li>
+</ul> 
+<a name="put-java.lang.Object-java.lang.Object-"></a>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:put-K-V- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:put-K-V-"></a><a name="put-K-V-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>public abstract&nbsp;<a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">V</a>&nbsp;put(<a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">K</a>&nbsp;key,
+                      <a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">V</a>&nbsp;value)</pre>
+<div class="block">Maps the specified <code>key</code> to the specified <code>value</code> in this dictionary. Neither the key nor the value can be <code>null</code>.<p> If this dictionary already contains an entry for the specified <tt>key</tt>, the value already in this dictionary for that <tt>key</tt> is returned, after modifying the entry to contain the new element.                               </p>
+<p>If this dictionary does not already have an entry for the specified <tt>key</tt>, an entry is created for the specified <tt>key</tt> and <tt>value</tt>, and <tt>null</tt> is returned.                          </p>
+<p> The <code>value</code> can be retrieved by calling the <code>get</code> method with a <code>key</code> that is equal to the original <code>key</code>.                    </p>                   
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the hashtable key.     </dd>
+<dd> 
+<code>value</code> - the value.    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the previous value to which the <code>key</code> was mapped in this dictionary, or <code>null</code> if the key did not have a previous mapping.                      </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if the <code>key</code> or <code>value</code> is <code>null</code>.         </dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/lang/Object.html#equals-java.lang.Object-" target="_parent"><code>Object.equals(java.lang.Object)</code></a>, <a href="../../java/util/Dictionary.html#get-java.lang.Object-" target="_parent"><code>get(java.lang.Object)</code></a>  
+</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:remove-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:remove-java.lang.Object-"></a><a name="remove-java.lang.Object-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>remove</h4>
+<pre>public abstract&nbsp;<a href="../../java/util/Dictionary.html" title="type parameter in Dictionary" target="_parent">V</a>&nbsp;remove(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;key)</pre>
+<div class="block">Removes the <code>key</code> (and its corresponding <code>value</code>) from this dictionary. This method does nothing if the <code>key</code> is not in this dictionary.                     </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>key</code> - the key that needs to be removed.         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the value to which the <code>key</code> had been mapped in this dictionary, or <code>null</code> if the key did not have a mapping.                     </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if <tt>key</tt> is <tt>null</tt>.      </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

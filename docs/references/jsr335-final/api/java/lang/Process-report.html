@@ -1,0 +1,422 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Process [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Process"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public abstract class <span class="typeNameLabel">Process</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">The <a href="../../java/lang/ProcessBuilder.html#start--" target="_parent"><code>ProcessBuilder.start()</code></a> and <a href="../../java/lang/Runtime.html#exec-java.lang.String:A-java.lang.String:A-java.io.File-" target="_parent"><code>Runtime.exec</code></a> methods create a native process and return an instance of a subclass of <code>Process</code> that can be used to control the process and obtain information about it. The class <code>Process</code> provides methods for performing input from the process, performing output to the process, waiting for the process to complete, checking the exit status of the process, and destroying (killing) the process.<p>The methods that create processes may not work well for special processes on certain native platforms, such as native windowing processes, daemon processes, Win16/DOS processes on Microsoft Windows, or shell scripts.                              </p>
+<p>By default, the created subprocess does not have its own terminal or console. All its standard I/O (i.e. stdin, stdout, stderr) operations will be redirected to the parent process, where they can be accessed via the streams obtained using the methods <a href="../../java/lang/Process.html#getOutputStream--" target="_parent"><code>getOutputStream()</code></a>, <a href="../../java/lang/Process.html#getInputStream--" target="_parent"><code>getInputStream()</code></a>, and <a href="../../java/lang/Process.html#getErrorStream--" target="_parent"><code>getErrorStream()</code></a>. The parent process uses these streams to feed input to and get output from the subprocess. Because some native platforms only provide limited buffer size for standard input and output streams, failure to promptly write the input stream or read the output stream of the subprocess may cause the subprocess to block, or even deadlock.                                                                                                   </p>
+<p>Where desired, <a href="ProcessBuilder.html#redirect-input" target="_parent"> subprocess I/O can also be redirected      </a> using methods of the <a href="../../java/lang/ProcessBuilder.html" title="class in java.lang" target="_parent"><code>ProcessBuilder</code></a> class.        </p>
+<p>The subprocess is not killed when there are no more references to the <code>Process</code> object, but rather the subprocess continues executing asynchronously.                     </p>
+<p>There is no requirement that a process represented by a <code>Process</code> object execute asynchronously or concurrently with respect to the Java process that owns the <code>Process</code> object.                          </p>
+<p>As of 1.5, <a href="../../java/lang/ProcessBuilder.html#start--" target="_parent"><code>ProcessBuilder.start()</code></a> is the preferred way to create a <code>Process</code>.           </p>                                                                
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.0</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">constructor:Process-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="constructor:Process--"></a><a name="Process--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Process</h4>
+<pre>public&nbsp;Process()</pre>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getOutputStream-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getOutputStream--"></a><a name="getOutputStream--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOutputStream</h4>
+<pre>public abstract&nbsp;<a href="../../java/io/OutputStream.html" title="class in java.io" target="_parent">OutputStream</a>&nbsp;getOutputStream()</pre>
+<div class="block">Returns the output stream connected to the normal input of the subprocess. Output to the stream is piped into the standard input of the process represented by this <code>Process</code> object.<p>If the standard input of the subprocess has been redirected using <a href="../../java/lang/ProcessBuilder.html#redirectInput-java.lang.ProcessBuilder.Redirect-" target="_parent"><code>ProcessBuilder.redirectInput</code></a> then this method will return a <a href="ProcessBuilder.html#redirect-input" target="_parent">null output stream  </a>.                  </p>
+<p>Implementation note: It is a good idea for the returned output stream to be buffered.              </p>                             
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the output stream connected to the normal input of the subprocess          </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getInputStream-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getInputStream--"></a><a name="getInputStream--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInputStream</h4>
+<pre>public abstract&nbsp;<a href="../../java/io/InputStream.html" title="class in java.io" target="_parent">InputStream</a>&nbsp;getInputStream()</pre>
+<div class="block">Returns the input stream connected to the normal output of the subprocess. The stream obtains data piped from the standard output of the process represented by this <code>Process</code> object.<p>If the standard output of the subprocess has been redirected using <a href="../../java/lang/ProcessBuilder.html#redirectOutput-java.lang.ProcessBuilder.Redirect-" target="_parent"><code>ProcessBuilder.redirectOutput</code></a> then this method will return a <a href="ProcessBuilder.html#redirect-output" target="_parent">null input stream  </a>.                  </p>
+<p>Otherwise, if the standard error of the subprocess has been redirected using <a href="../../java/lang/ProcessBuilder.html#redirectErrorStream-boolean-" target="_parent"><code>ProcessBuilder.redirectErrorStream</code></a> then the input stream returned by this method will receive the merged standard output and the standard error of the subprocess.                                 </p>
+<p>Implementation note: It is a good idea for the returned input stream to be buffered.              </p>                            
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the input stream connected to the normal output of the subprocess          </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:getErrorStream-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:getErrorStream--"></a><a name="getErrorStream--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getErrorStream</h4>
+<pre>public abstract&nbsp;<a href="../../java/io/InputStream.html" title="class in java.io" target="_parent">InputStream</a>&nbsp;getErrorStream()</pre>
+<div class="block">Returns the input stream connected to the error output of the subprocess. The stream obtains data piped from the error output of the process represented by this <code>Process</code> object.<p>If the standard error of the subprocess has been redirected using <a href="../../java/lang/ProcessBuilder.html#redirectError-java.lang.ProcessBuilder.Redirect-" target="_parent"><code>ProcessBuilder.redirectError</code></a> or <a href="../../java/lang/ProcessBuilder.html#redirectErrorStream-boolean-" target="_parent"><code>ProcessBuilder.redirectErrorStream</code></a> then this method will return a <a href="ProcessBuilder.html#redirect-output" target="_parent">null input stream  </a>.                    </p>
+<p>Implementation note: It is a good idea for the returned input stream to be buffered.              </p>                            
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the input stream connected to the error output of the subprocess          </dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:waitFor-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:waitFor--"></a><a name="waitFor--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>waitFor</h4>
+<pre>public abstract&nbsp;int&nbsp;waitFor()
+                     throws <a href="../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a>
+</pre>
+<div class="block">Causes the current thread to wait, if necessary, until the process represented by this <code>Process</code> object has terminated. This method returns immediately if the subprocess has already terminated. If the subprocess has not yet terminated, the calling thread will be blocked until the subprocess exits.                                            </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the exit value of the subprocess represented by this <code>Process</code> object. By convention, the value <code>0</code> indicates normal termination.                  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a></code> - if the current thread is <a href="../../java/lang/Thread.html#interrupt--" target="_parent">interrupted</a> by another thread while it is waiting, then the wait is ended and an <a href="../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent"><code>InterruptedException</code></a> is thrown.                         </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:waitFor-long-java.util.concurrent.TimeUnit- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:waitFor-long-java.util.concurrent.TimeUnit-"></a><a name="waitFor-long-java.util.concurrent.TimeUnit-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>waitFor</h4>
+<pre>public&nbsp;boolean&nbsp;waitFor(long&nbsp;timeout,
+                       <a href="../../java/util/concurrent/TimeUnit.html" title="enum in java.util.concurrent" target="_parent">TimeUnit</a>&nbsp;unit)
+                throws <a href="../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a>
+</pre>
+<div class="block">Causes the current thread to wait, if necessary, until the subprocess represented by this <code>Process</code> object has terminated, or the specified waiting time elapses.<p>If the subprocess has already terminated then this method returns immediately with the value <code>true</code>. If the process has not terminated and the timeout value is less than, or equal to, zero, then this method returns immediately with the value <code>false</code>.                                        </p>
+<p>The default implementation of this methods polls the <code>exitValue</code> to check if the process has terminated. Concrete implementations of this class are strongly encouraged to override this method with a more efficient implementation.                                </p>                       
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>timeout</code> - the maximum time to wait       </dd>
+<dd> 
+<code>unit</code> - the time unit of the <code>timeout</code> argument         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if the subprocess has exited and <code>false</code> if the waiting time elapsed before the subprocess has exited.                  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/InterruptedException.html" title="class in java.lang" target="_parent">InterruptedException</a></code> - if the current thread is interrupted while waiting.          </dd>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - if unit is null      </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd>    
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:exitValue-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:exitValue--"></a><a name="exitValue--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>exitValue</h4>
+<pre>public abstract&nbsp;int&nbsp;exitValue()</pre>
+<div class="block">Returns the exit value for the subprocess.      </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the exit value of the subprocess represented by this <code>Process</code> object. By convention, the value <code>0</code> indicates normal termination.                  </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalThreadStateException.html" title="class in java.lang" target="_parent">IllegalThreadStateException</a></code> - if the subprocess represented by this <code>Process</code> object has not yet terminated              </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:destroy-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:destroy--"></a><a name="destroy--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>destroy</h4>
+<pre>public abstract&nbsp;void&nbsp;destroy()</pre>
+<div class="block">Kills the subprocess. Whether the subprocess represented by this <code>Process</code> object is forcibly terminated or not is implementation dependent.                  </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:destroyForcibly-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:destroyForcibly--"></a><a name="destroyForcibly--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>destroyForcibly</h4>
+<pre>public&nbsp;<a href="../../java/lang/Process.html" title="class in java.lang" target="_parent">Process</a>&nbsp;destroyForcibly()</pre>
+<div class="block">Kills the subprocess. The subprocess represented by this <code>Process</code> object is forcibly terminated.<p>The default implementation of this method invokes <a href="../../java/lang/Process.html#destroy--" target="_parent"><code>destroy()</code></a> and so may not forcibly terminate the process. Concrete implementations of this class are strongly encouraged to override this method with a compliant implementation. Invoking this method on <code>Process</code> objects returned by <a href="../../java/lang/ProcessBuilder.html#start--" target="_parent"><code>ProcessBuilder.start()</code></a> and <a href="../../java/lang/Runtime.html#exec-java.lang.String-" target="_parent"><code>Runtime.exec(java.lang.String)</code></a> will forcibly terminate the process.                                               </p>
+<p>Note: The subprocess may not terminate immediately. i.e. <code>isAlive()</code> may return true for a brief period after <code>destroyForcibly()</code> is called. This method may be chained to <code>waitFor()</code> if needed.                            </p>            
+</div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the <code>Process</code> object representing the subprocess to be forcibly destroyed.         </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:isAlive-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:isAlive--"></a><a name="isAlive--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isAlive</h4>
+<pre>public&nbsp;boolean&nbsp;isAlive()</pre>
+<div class="block">Tests whether the subprocess represented by this <code>Process</code> is alive.         </div>
+<dl> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if the subprocess represented by this <code>Process</code> object has not yet terminated.             </dd> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

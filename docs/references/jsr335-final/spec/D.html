@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part D: Poly Expressions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_D_Poly_Expressions skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part D: Poly Expressions</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#D5">5</a>&nbsp;- <a href="#D5.2">5.2</a>&nbsp;- <a href="#D5.3">5.3</a>&nbsp;- <a href="#D5.4">5.4</a>&nbsp;- <a href="#D5.5">5.5</a>&nbsp;- <a href="#D5.5.1">5.5.1</a>&nbsp;- <a href="#D5.5.2">5.5.2</a>&nbsp;- <a href="#D5.6">5.6</a>&nbsp;- <a href="#D15.1">15.1</a>&nbsp;- <a href="#D15.2">15.2</a>&nbsp;- <a href="#D15.3">15.3</a>&nbsp;- <a href="#D15.8">15.8</a>&nbsp;- <a href="#D15.8.5">15.8.5</a>&nbsp;- <a href="#D15.9">15.9</a>&nbsp;- <a href="#D15.12">15.12</a>&nbsp;- <a href="#D15.16">15.16</a>&nbsp;- <a href="#D15.25">15.25</a>&nbsp;- <a href="#D15.25.1">15.25.1</a>&nbsp;- <a href="#D15.25.2">15.25.2</a>&nbsp;- <a href="#D15.25.3">15.25.3</a>&nbsp;- <a href="#D15.26">15.26</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>Every expression written in the Java programming language either produces no result (<code style="background-color:inherit;font-size:medium">void</code>) or has a type that can be deduced at compile time.  When an expression appears in most contexts, it must be <i>compatible</i> with a type expected in that context; this type is called the <i>target type</i>.  For convenience, compatibility of an expression with its surrounding context is facilitated by the language in two ways:
+</p>
+<ul><li> First, for some expressions, termed <i>poly expressions</i>, the deduced type can be influenced by the target type.  The same expression can have different types in different contexts.
+</li><li> Second, after the type of the expression has been deduced, an implicit <i>conversion</i> from the type of the expression to the target type can sometimes be performed.
+</li></ul>
+<p>If neither strategy is able to produce the appropriate type, an error occurs at compile time.
+</p><p>Given certain meanings of names, the type of a <i>standalone expression</i> (an expression that is not a poly expression) can be determined entirely from the contents of the expression.  In contrast, the type of a poly expression may be influenced by the expression's target type.
+</p><p>The following forms of expressions may be poly expressions:
+</p>
+<ul><li> Parenthesized expressions
+</li><li> Class instance creation expressions
+</li><li> Method invocation expressions
+</li><li> Conditional operator expressions
+</li><li> Lambda expressions
+</li><li> Method references
+</li></ul>
+<p>To determine whether an expression of one of these forms is a poly expression, we may consider the kind of context in which the expression appears and the content of the expression.
+</p><p>Generic method invocation expressions, along with class instance creation expressions that use a diamond <code style="background-color:inherit;font-size:medium">&lt;&gt;</code>, may be poly expressions when they appear in assignment or invocation contexts.  This allows type argument inference to depend on context.
+</p><p>Lambda expressions and method references are always poly expressions; their typing rules are covered by <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>.
+</p><p>Conditional operator expressions may be poly expressions if they appear in assignment or invocation contexts, unless both operands produce primitives (or boxed primitives).  When they are poly expressions, the target type is "pushed down" to each operand.
+</p><p>Similarly, parenthesized expressions that wrap poly subexpressions are poly expressions, passing the target type on to the subexpression.
+</p><p>Casts can be used to explicitly "tag" a lambda expression or a method reference with a particular target type.  To provide an appropriate degree of flexibility, the target type may be a list of types denoting an intersection type (as long as the intersection is also a functional interface type, typically meaning one element is a functional interface and the others are marker interfaces).  Since the feature is generally useful, we also support casts of arbitrary expressions to intersection types.
+</p>
+<div id="D5"></div>
+<h3> <span class="mw-headline" id="5_Conversions_and_Contexts_.5BModified.5D"> 5 Conversions and <u>Contexts</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5" class="external text" rel="nofollow">JLS 5</a></small>
+</p><p>Every expression written in the Java programming language <u>either produces no result (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.1" class="external text" rel="nofollow">15.1</a>) or</u> has a type that can be deduced <u>at compile time (<a href="D.html#D15.3" title="Lambda D" class="mw-redirect">15.3</a>)</u>.  <u>When an expression appears in most contexts, it must be <i>compatible</i> with a type expected in that context; this type is called the <i>target type</i>.  For convenience, compatibility of an expression with its surrounding context is facilitated by the language in two ways:</u>
+</p>
+<ul><li> <u>First, for some expressions, termed <i>poly expressions</i> (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>), the deduced type can be influenced by the target type.  The same expression can have different types in different contexts.</u>
+</li><li> <u>Second, after the type of the expression has been deduced</u>, an implicit <i>conversion</i> from the type of the expression to <u>the target type can sometimes be performed</u>.
+</li></ul>
+<p><u>If neither strategy is able to produce the appropriate type</u>, an error <u>occurs</u> at compile time.
+</p><p><u>The rules determining whether an expression is a poly expression, and if so, its type and compatibility in a particular context, vary depending on the kind of context and the form of the expression.  These rules are defined in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15" class="external text" rel="nofollow">Chapter 15</a>, "Expressions."  In addition to influencing the type of the expression, the target type may in some cases influence the run time behavior of the expression in order to produce a value of the appropriate type.</u>
+</p><p><u>Similarly, the rules determining when a target type allows an implicit conversion vary depending on the kind of context, the type of the expression, and, in one special case, the value of a <i>constant expression</i> (<a href="D.html#D15.29" title="Lambda D" class="mw-redirect">15.29</a>).</u>  A specific conversion from type <em>S</em> to type <em>T</em> allows an expression of type <em>S</em> to be treated at compile time as if it had type <em>T</em> instead.  In some cases this will require a corresponding action at <u>run time</u> to check the validity of the conversion or to translate the run-time value of the expression into a form appropriate for the new type <em>T</em>.
+</p><p>[Example, list of conversion categories] ...
+</p><p>There are <u>six kinds of</u> <i>conversion contexts</i> in which <u>poly expressions may be influenced by context or implicit conversions may occur.</u>  Each kind of context <u>has different rules for poly expression typing and</u> allows conversions in some of the categories above but not others.  <u>These contexts are:</u>
+</p>
+<ul><li> Assignment <u>contexts (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>), in which an expression's value is bound to a named variable.  Primitives and references are subject to widening, values may be boxed or unboxed, and some primitive constants may be subject to narrowing.  An unchecked conversion may also occur.</u>
+</li><li> <u>Strict invocation contexts (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>), in which an argument is bound to a formal parameter of a constructor or method.  Widening primitive, widening reference, and unchecked conversions may occur.</u>
+</li><li> <u>Loose invocation contexts (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>), in which, like strict invocation contexts, an argument is bound to a formal parameter.  Method or constructor invocations may provide this context if no applicable declaration can be found using only strict invocation contexts.  In addition to widening and unchecked conversions, this context allows boxing and unboxing to occur.</u>
+</li><li> String <u>contexts (<a href="D.html#D5.4" title="Lambda D" class="mw-redirect">5.4</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.18.1" class="external text" rel="nofollow">15.18.1</a>), in which a value of any type is converted to an object of</u> type <code style="background-color:inherit;font-size:medium">String</code>.
+</li><li> Casting <u>contexts (<a href="D.html#D5.5" title="Lambda D" class="mw-redirect">5.5</a>), in which an expression's value is converted</u> to a type explicitly specified by a cast operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.16" class="external text" rel="nofollow">15.16</a>).  <u>Casting contexts</u> are more inclusive than assignment or <u>loose invocation contexts</u>, allowing any specific conversion other than a string conversion, but certain casts to a reference type <u>are checked for correctness</u> at run time.
+</li><li> Numeric <u>contexts (<a href="D.html#D5.6" title="Lambda D" class="mw-redirect">5.6</a>), in which</u> the operands of a numeric operator <u>may be widened</u> to a common type so that an operation can be performed.
+</li></ul>
+<p>The term "conversion" is also used to describe, <u>without being specific, any conversions allowed in a particular context.</u>  For example, we say that an expression that is <u>the initializer of a local variable</u> is subject to "<u>assignment</u> conversion," meaning that a specific conversion will be implicitly chosen for that expression according to the rules for the <u>assignment context</u>.
+</p><p>Here are some examples of <u>conversions occuring in</u> various contexts.
+</p><p>[Example] ...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> Lambda expressions and method references may only appear in certain contexts, and their type and correctness are determined by this context.  Other kinds of expressions in the existing language have already introduced dependencies on context, and this is a trend that seems likely to continue.  Rather than treat each new feature in an ad-hoc manner, the introduction of <i>poly expression</i> and an explicit recognition that target types can influence expression types allows us to unify handling of context-dependent expressions under a single umbrella.
+<p>Requiring an expression to denote the same thing in all contexts is useful, but limiting.  In the past, the approach to the class of expressions that don't behave in this way has generally been to ignore them, as in statements like the following from the JLS 7 <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5" class="external text" rel="nofollow">Chapter 5</a> introduction:
+</p><p>"Every expression written in the Java programming language has a type that can be deduced from the structure of the expression and the types of the literals, variables, and methods mentioned in the expression."
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Deciding what contexts are allowed to support poly expressions is driven in large part by the practical need for such features:
+<ul><li> Assignment contexts (including return statements, etc.) are supported, because the target type is easy to determine.  In Java SE 7, this is the <i>only</i> context in which something like a poly expression got special treatment.
+</li><li> Invocation contexts are supported, because lambda expressions are a lot less useful if they can't be method arguments.  This implies that overload resolution needs to be overhauled (see <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>)—the targeted method must be determined <i>before</i> knowing the type of each method argument.  It would also be quite useful to allow nested polymorphic method invocations to be affected by the outer targeted method's signature.
+</li><li> Casting contexts are supported, because we want programmers to be able to use them to explicitly provide a lambda expression's target type.  This is particularly useful when a class has overloaded methods with functional interface argument types that are similar but unrelated (<code style="background-color:inherit;font-size:medium">FileFilter</code> and <code style="background-color:inherit;font-size:medium">Predicate&lt;File&gt;</code>, say); it is also useful when a targeted type is not a functional interface, but it has a functional subinterface.  However, generic method invocations are not poly expressions in casting contexts: the cast provides little useful information about the method's return type.
+</li><li> Numeric and boolean contexts (loop conditions, assert operands, binary expression operands) do <i>not</i> support poly expressions, because a lambda expression cannot target a primitive type, and working out proper inference for method invocations here would be quite complex without much payoff.
+</li><li> String contexts (such as <code style="background-color:inherit;font-size:medium">"a" + exp</code>) do not provide any useful information, because every value can be converted to a String.
+</li><li> The receiver in a method invocation, field access, etc. (<code style="background-color:inherit;font-size:medium">exp.foo()</code>) is <i>not</i> a poly expression because the target type is unknown—it would be impossible to enumerate every type that has a particular member (<code style="background-color:inherit;font-size:medium">foo</code>, in this case).  There has been some interest in allowing inference to "chain": in <code style="background-color:inherit;font-size:medium">a().b()</code>, passing type information from the invocation of <code style="background-color:inherit;font-size:medium">b</code> to the invocation of <code style="background-color:inherit;font-size:medium">a</code>.  This adds another dimension to the complexity of the inference algorithm, as partial information has to pass in both directions; it only works when the erasure of the return type of <code style="background-color:inherit;font-size:medium">a()</code> is fixed for all instantiations (e.g. <code style="background-color:inherit;font-size:medium">List&lt;T&gt;</code>).  This feature would not fit very well into the poly expression model, since the target type cannot be easily derived; but perhaps with additional enhancements it could be added in the future.
+</li><li> The expression in an enhanced for loop is <i>not</i> in a poly context because, as the construct is currently defined, it is as if the expression were a receiver: <code style="background-color:inherit;font-size:medium">exp.iterator()</code> (or, in the array case, <code style="background-color:inherit;font-size:medium">exp[i]</code>).  It is plausible that an Iterator could be wrapped as an Iterable in a <code style="background-color:inherit;font-size:medium">for</code> loop via a lambda expression (<code style="background-color:inherit;font-size:medium">for (String s&nbsp;: () -&gt; stringIterator)</code>), but this doesn't mesh very well with the semantics of Iterable.
+</li></ul>
+</div></li>
+<li style="margin-bottom:12px;"><div> A point of emphasis in this revision is to identify conversion contexts mainly as <i>contexts</i> rather than <i>conversions</i>, in order to generalize the way in which they are used <i>both</i> for typing of poly expressions and for generating implicit conversions.  ("Assignment conversion context" was existing terminology, but "assignment conversion" was almost always used as shorthand.)  <p>The "promotion" terminology (meaning the inference of certain conversions that happen in numeric contexts) seems relatively minor, so "Conversions and Contexts" is used as a revised chapter title.  "Conversions, Promotions, and Contexts" might also work.</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> Many of the adjustments made to this section (for example, the distinction between strict and loose invocation contexts) are principally to provide a consistent framework for talking about type inference, covered in <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>.
+</div></li>
+<li style="margin-bottom:12px;"><div> The old text outlined some (but not all) of the exceptions that could occur in particular contexts.  This seemed unnecessarily detailed for a chapter introduction, so has been dropped.  Similarly, the old text had a paragraph about numeric promotion that was unnecessarily detailed and no longer accurate.
+</div></li></ol></div></blockquote>
+<div id="D5.2"></div>
+<h3> <span class="mw-headline" id="5.2_Assignment_Contexts_.5BModified.5D"> 5.2 Assignment <u>Contexts</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.2" class="external text" rel="nofollow">JLS 5.2</a></small>
+</p><p><span class="norm-static">
+<u><i>Assignment contexts</i> allow</u> the value of an expression <u>to be</u> assigned (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>) to a variable: the type of the expression must be converted to the type of the variable.<span class="assertion-id"> [jls-5.2-100]</span></span>
+</p><p>...
+</p><p><u>If an expression is assignment-compatible with the type of a variable, we sometimes</u> say the expression is <i>assignable to</i> the variable.
+</p><p>...
+</p>
+<div id="D5.3"></div>
+<h3> <span class="mw-headline" id="5.3_Method_Invocation_Contexts_.5BModified.5D"> 5.3 <del>Method</del> Invocation <u>Contexts</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.3" class="external text" rel="nofollow">JLS 5.3</a></small>
+</p><p><span class="norm-static">
+<u>Both <i>strict invocation contexts</i> and <i>loose invocation contexts</i> allow an</u> argument value in a method or constructor invocation (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.7.1" class="external text" rel="nofollow">8.8.7.1</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) <u>to be assigned to a corresponding formal parameter.</u><span class="assertion-id"> [jls-5.3-100]</span></span>
+</p><p><span class="norm-static">
+<u>Loose invocation contexts allow a more permissive set of conversions; they are only used for a particular invocation if no applicable declaration can be found using strict invocation contexts.</u><span class="assertion-id"> [jsr335-5.3-101]</span></span>
+</p><p><span class="norm-static">
+<u>Both</u> invocation contexts allow the use of one of the following:<span class="assertion-id"> [jls-5.3-110]</span></span>
+</p>
+<ul><li> <span class="norm-static"> an identity conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.1" class="external text" rel="nofollow">5.1.1</a>)<span class="assertion-id"> [jls-5.3-110-A]</span></span>
+</li><li> <span class="norm-static"> a widening primitive conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2" class="external text" rel="nofollow">5.1.2</a>)<span class="assertion-id"> [jls-5.3-110-B]</span></span>
+</li><li> <span class="norm-static"> a widening reference conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.5" class="external text" rel="nofollow">5.1.5</a>)<span class="assertion-id"> [jls-5.3-110-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If, after the conversions listed above have been applied, the resulting type is a raw type (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.8" class="external text" rel="nofollow">4.8</a>), an unchecked conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.9" class="external text" rel="nofollow">5.1.9</a>) may then be applied.<span class="assertion-id"> [jls-5.3-120]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error if the chain of conversions contains two parameterized types that are not in the subtype relation.<span class="assertion-id"> [jls-5.3-200]</span></span>
+</p><p><span class="norm-static">
+A value of the null type (the null reference is the only such value) may be converted to any reference type.<span class="assertion-id"> [jls-5.3-300]</span></span>
+</p><p><span class="norm-static">
+<u>In addition, a <i>loose</i> invocation context allows the use of one of the following:</u><span class="assertion-id"> [jls-5.3-110']</span></span>
+</p>
+<ul><li> <span class="norm-static"> a boxing conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.7" class="external text" rel="nofollow">5.1.7</a>) optionally followed by a widening reference conversion<span class="assertion-id"> [jls-5.3-110-D]</span></span>
+</li><li> <span class="norm-static"> an unboxing conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.8" class="external text" rel="nofollow">5.1.8</a>) optionally followed by a widening primitive conversion<span class="assertion-id"> [jls-5.3-110-E]</span></span>
+</li></ul>
+<p><span class="norm-error">
+If the type of the expression cannot be converted to the type of the parameter by a conversion permitted in <u>a loose</u> <del>method</del> invocation context, then a compile-time error occurs.<span class="assertion-id"> [jls-5.3-310]</span></span>
+</p><p>...
+</p><p><u>By design, neither strict nor loose invocation contexts</u> include the implicit narrowing of integer constants which is <u>allowed in assignment contexts (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>)</u>.  The designers of the Java programming language felt that ...
+</p><p>...
+</p>
+<div id="D5.4"></div>
+<h3> <span class="mw-headline" id="5.4_String_Contexts_.5BModified.5D"> 5.4 String <u>Contexts</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.4" class="external text" rel="nofollow">JLS 5.4</a></small>
+</p><p><span class="norm-static">
+<u><i>String contexts</i> apply</u> only to an operand of the binary <code style="background-color:inherit;font-size:medium">+</code> operator which is not a <code style="background-color:inherit;font-size:medium">String</code> when the other operand is a <code style="background-color:inherit;font-size:medium">String</code>.<span class="assertion-id"> [jls-5.4-100]</span></span>
+</p><p><span class="norm-static">
+<u>The target type in these contexts is always <code style="background-color:inherit;font-size:medium">String</code>, and a string conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.11" class="external text" rel="nofollow">5.1.11</a>) always occurs</u>; evaluation of the <code style="background-color:inherit;font-size:medium">+</code> operator <u>then</u> proceeds as specified in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.1" class="external text" rel="nofollow">15.8.1</a>.<span class="assertion-id"> [jls-5.4-110]</span></span>
+</p>
+<div id="D5.5"></div>
+<h3> <span class="mw-headline" id="5.5_Casting_Contexts_.5BModified.5D"> 5.5 Casting <u>Contexts</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.5" class="external text" rel="nofollow">JLS 5.5</a></small>
+</p><p><span class="norm-static">
+<u><i>Casting contexts</i> allow</u> the operand of a cast operator (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.16" class="external text" rel="nofollow">15.16</a>) <u>to be</u> converted to the type explicitly named by the cast operator.<span class="assertion-id"> [jls-5.5-100]</span></span>
+</p><p>...
+</p>
+<div id="D5.5.1"></div>
+<h3> <span class="mw-headline" id="5.5.1_Reference_Type_Casting_.5BModified.5D"> 5.5.1 Reference Type Casting [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.5.1" class="external text" rel="nofollow">JLS 5.5.1</a></small>
+</p><p><span class="norm-static">
+Given a compile-time reference type <em>S</em> (source) and a compile-time reference type <em>T</em> (target), a casting conversion exists from <em>S</em> to <em>T</em> if no compile-time errors occur due to the following rules.<span class="assertion-id"> [jls-5.5.1-100]</span></span>
+</p><p><span class="norm-static">
+If <em>S</em> is a class type:<span class="assertion-id"> [jls-5.5.1-200]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is a class type, ...<span class="assertion-id"> [jls-5.5.1-200-A]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is an interface type: ...<span class="assertion-id"> [jls-5.5.1-200-B]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a type variable, then this algorithm is applied recursively, using the upper bound of <em>T</em> in place of <em>T</em>.<span class="assertion-id"> [jls-5.5.1-200-C]</span></span>
+</li><li> <span class="norm-static"> <u>If <em>T</em> is an intersection type, <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em>, then it is a compile-time error if there exists a <em>T<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>) such that <em>S</em> cannot be cast to <em>T<sub>i</sub></em> by this algorithm.  That is, the success of the cast is determined by the most restrictive component of the intersection type.</u><span class="assertion-id"> [jsr335-5.5.1-200-E]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is an array type, ...<span class="assertion-id"> [jls-5.5.1-200-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If <em>S</em> is an interface type:<span class="assertion-id"> [jls-5.5.1-300]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is an array type, ...<span class="assertion-id"> [jls-5.5.1-300-A]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a <u>class or interface</u> type that is not <code style="background-color:inherit;font-size:medium">final</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.1" class="external text" rel="nofollow">8.1.1</a>), ...<span class="assertion-id"> [jls-5.5.1-300-B]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a <u>class</u> type that is <code style="background-color:inherit;font-size:medium">final</code>, ...<span class="assertion-id"> [jls-5.5.1-300-C]</span></span>
+</li><li> <span class="norm-static"> <u>If <em>T</em> is a type variable, then this algorithm is applied recursively, using the upper bound of <em>T</em> in place of <em>T</em>.</u><span class="assertion-id"> [jsr335-5.5.1-300-D]</span></span>
+</li><li> <span class="norm-static"> <u>If <em>T</em> is an intersection type, <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em>, then it is a compile-time error if there exists a <em>T<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>) such that <em>S</em> cannot be cast to <em>T<sub>i</sub></em> by this algorithm.</u><span class="assertion-id"> [jsr335-5.5.1-300-E]</span></span>
+</li></ul>
+<p><span class="norm-static">
+If <em>S</em> is a type variable, then this algorithm is applied recursively, using the upper bound of <em>S</em> in place of <em>S</em>.<span class="assertion-id"> [jls-5.5.1-400]</span></span>
+</p><p><span class="norm-static">
+If <em>S</em> is an intersection type, <em>A<sub>1</sub> &amp; ... &amp; A<sub>n</sub></em>, then it is a compile-time error if there exists an <em>A<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>) such that <del><em>S</em></del> <u><em>A<sub>i</sub></em></u> cannot be cast to <del><em>A<sub>i</sub></em></del> <u><em>T</em></u> by this algorithm.  That is, the success of the cast is determined by the most restrictive component of the intersection type.<span class="assertion-id"> [jls-5.5.1-500]</span></span>
+</p><p><span class="norm-static">
+If <em>S</em> is an array type <em>SC<code style="background-color:inherit;font-size:medium">[]</code></em>, that is, an array of components of type <em>SC</em>:<span class="assertion-id"> [jls-5.5.1-600]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If <em>T</em> is a class type, ...<span class="assertion-id"> [jls-5.5.1-600-A]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is an interface type, ...<span class="assertion-id"> [jls-5.5.1-600-B]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is a type variable, then <u>this algorithm is applied recursively, using the upper bound of <em>T</em> in place of <em>T</em>.</u><span class="assertion-id"> [jls-5.5.1-600-C]</span></span>
+</li><li> <span class="norm-static"> <u>If <em>T</em> is an intersection type, <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em>, then it is a compile-time error if there exists a <em>T<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>) such that <em>S</em> cannot be cast to <em>T<sub>i</sub></em> by this algorithm.</u><span class="assertion-id"> [jsr335-5.5.1-600-E]</span></span>
+</li><li> <span class="norm-static"> If <em>T</em> is an array type ...<span class="assertion-id"> [jls-5.5.1-600-D]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+Casts can be used to explicitly "tag" a lambda expression or a method reference with a particular target type.  To provide an appropriate degree of flexibility, the target type may be a list of types denoting an intersection type (as long as the intersection is also a functional interface type (<a href="A.html#A9.8" title="Lambda A" class="mw-redirect">9.8</a>)).  Since the feature is generally useful, these rules also support casts of arbitrary expressions to intersection types.</div></blockquote>
+<div id="D5.5.2"></div>
+<h3> <span class="mw-headline" id="5.5.2_Checked_Casts_and_Unchecked_Casts_.5BModified.5D"> 5.5.2 Checked Casts and Unchecked Casts [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.5.2" class="external text" rel="nofollow">JLS 5.5.2</a></small>
+</p><p><span class="norm-static">
+A cast from a type <em>S</em> to a type <em>T</em> is <i>statically known to be correct</i> if and only if <em>S &lt;: T</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.10" class="external text" rel="nofollow">4.10</a>).<span class="assertion-id"> [jls-5.5.2-100]</span></span>
+</p><p><span class="norm-static">
+A cast from a type <em>S</em> to a parameterized type (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.5" class="external text" rel="nofollow">4.5</a>) is <i>unchecked</i> unless ...<span class="assertion-id"> [jls-5.5.2-200]</span></span>
+</p><p><span class="norm-static">
+A cast from a type <em>S</em> to a type variable <em>T</em> is unchecked unless <em>S &lt;: T</em>.<span class="assertion-id"> [jls-5.5.2-300]</span></span>
+</p><p><span class="norm-static">
+<u>A cast from a type <em>S</em> to an intersection type <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em> is unchecked if there exists a <em>T<sub>i</sub></em> (<em>1 ≤ i ≤ n</em>) such that a cast from <em>S</em> to <em>T<sub>i</sub></em> is unchecked.</u><span class="assertion-id"> [jsr335-5.5.2-350]</span></span>
+</p><p><span class="norm-static">
+An unchecked cast from <em>S</em> to <u>a non-intersection type</u> <em>T</em> is <i>completely unchecked</i> if the cast from <em>|S|</em> to <em>|T|</em> is statically known to be correct.  Otherwise, it is <i>partially unchecked</i>.<span class="assertion-id"> [jls-5.5.2-400]</span></span>
+</p><p><span class="norm-static">
+<u>An unchecked cast from <em>S</em> to an intersection type <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em> is <i>completely unchecked</i> if, for all <em>i</em>, <em>1 ≤ i ≤ n</em>, a cast from <em>S</em> to <em>T<sub>i</sub></em> is either statically known to be correct or completely unchecked.  Otherwise, it is <i>partially unchecked</i>.</u><span class="assertion-id"> [jsr335-5.5.2-410]</span></span>
+</p><p><span class="norm-error">
+An unchecked cast causes a compile-time unchecked warning, unless suppressed by the <code style="background-color:inherit;font-size:medium">SuppressWarnings</code> annotation (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-9.html#jls-9.6.3.5" class="external text" rel="nofollow">9.6.3.5</a>).<span class="assertion-id"> [jls-5.5.2-500]</span></span>
+</p><p><span class="norm-static">
+A cast is <i>checked</i> if it is not statically known to be correct and it is not unchecked.<span class="assertion-id"> [jls-5.5.2-600]</span></span>
+</p><p><span class="norm-static">
+If a cast to a reference type is not a compile-time error, there are several cases:<span class="assertion-id"> [jls-5.5.2-700]</span></span>
+</p>
+<ul><li> <span class="norm-static"> The cast is statically known to be correct.<span class="assertion-id"> [jls-5.5.2-700-A]</span></span><p><span class="norm-static"> No run-time action is performed for such a cast.<span class="assertion-id"> [jls-5.5.2-700-A.1]</span></span></p>
+</li><li> <span class="norm-static"> The cast is a completely unchecked cast.<span class="assertion-id"> [jls-5.5.2-700-B]</span></span><p><span class="norm-static"> No run-time action is performed for such a cast.<span class="assertion-id"> [jls-5.5.2-700-B.1]</span></span></p>
+</li><li> <u><span class="norm-static"> The cast is a partially unchecked or checked cast to an intersection type.<span class="assertion-id"> [jsr335-5.5.2-700-E]</span></span></u><p><u><span class="norm-static"> Where the intersection type is <em>T<sub>1</sub> &amp; ... &amp; T<sub>n</sub></em>, then for all <em>i</em> (<em>1 ≤ i ≤ n</em>), any run-time check required for a cast from <em>S</em> to <em>T<sub>i</sub></em> is also required for the cast to the intersection type.<span class="assertion-id"> [jsr335-5.5.2-700-E.1]</span></span></u></p>
+</li><li> <span class="norm-static"> The cast is a partially unchecked cast <u>to a non-intersection type</u>.<span class="assertion-id"> [jls-5.5.2-700-C]</span></span><p><span class="norm-static"> Such a cast requires a run-time validity check.  The check is performed as if the cast had been a checked cast between <em>|S|</em> and <em>|T|</em>, as described below.<span class="assertion-id"> [jls-5.5.2-700-C.1]</span></span></p>
+</li><li> <span class="norm-static"> The cast is a checked cast <u>to a non-intersection type</u>.<span class="assertion-id"> [jls-5.5.2-700-D]</span></span><p><span class="norm-static"> Such a cast requires a run-time validity check.  If the value at run-time is <code style="background-color:inherit;font-size:medium">null</code>, then the cast is allowed.  Otherwise, let <em>R</em> be the class of the object referred to by the run-time reference value, and let <em>T</em> be the erasure of the type named in the cast operator.  A cast conversion must check, at run-time, that the class <em>R</em> is assignment compatible with the type <em>T</em>, via the algorithm in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.5.3" class="external text" rel="nofollow">5.5.3</a>.<span class="assertion-id"> [jls-5.5.2-700-D.1]</span></span></p><p>Note that <em>R</em> cannot be an interface when these rules are first applied for any given cast, but <em>R</em> may be an interface if the rules are applied recursively because the run-time reference value may refer to an array whose element type is an interface type.</p>
+</li></ul>
+<div id="D5.6"></div>
+<h3> <span class="mw-headline" id="5.6_Numeric_Contexts_.5BModified.5D"> 5.6 Numeric <u>Contexts</u> [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6" class="external text" rel="nofollow">JLS 5.6</a></small>
+</p><p><span class="norm-static">
+<u><i>Numeric contexts</i> apply</u> to the operands of an arithmetic operator.<span class="assertion-id"> [jls-5.6-100]</span></span>
+</p><p><span class="norm-static">
+Numeric <del>promotion</del> contexts allow the use of:<span class="assertion-id"> [jls-5.6-110]</span></span>
+</p>
+<ul><li> <span class="norm-static"> an identity conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.1" class="external text" rel="nofollow">5.1.1</a>)<span class="assertion-id"> [jls-5.6-110-A]</span></span>
+</li><li> <span class="norm-static"> a widening primitive conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.2" class="external text" rel="nofollow">5.1.2</a>)<span class="assertion-id"> [jls-5.6-110-B]</span></span>
+</li><li> <span class="norm-static"> an unboxing conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.8" class="external text" rel="nofollow">5.1.8</a>) <u>optionally followed by a widening primitive conversion</u><span class="assertion-id"> [jls-5.6-110-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+<u>A <i>numeric promotion</i> is a process by which, given a numeric operator and its argument expressions, the arguments are converted to an inferred target type <em>T</em>.  <em>T</em> is chosen during promotion such that each argument expression can be converted to <em>T</em> and the operation is defined for values of type <em>T</em>.</u><span class="assertion-id"> [jls-5.6-200]</span></span>
+</p><p>The two kinds of numeric promotion are unary numeric promotion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.1" class="external text" rel="nofollow">5.6.1</a>) and binary numeric promotion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.2" class="external text" rel="nofollow">5.6.2</a>).
+</p>
+<div id="D15.1"></div>
+<h3> <span class="mw-headline" id="15.1_Evaluation.2C_Denotation.2C_and_Result_.5BAddendum.5D"> 15.1 Evaluation, Denotation, and Result [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.1" class="external text" rel="nofollow">JLS 15.1</a></small>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The following from section 15.2 is merged into 15.1, in order to make room for a new section.</div></blockquote>
+<p><span class="norm-static">
+If an expression denotes a variable, and a value is required for use in further evaluation, then the value of that variable is used.  In this context, if the expression denotes a variable or a value, we may speak simply of the <i>value</i> of the expression.<span class="assertion-id"> [jls-15.2-100]</span></span>
+</p><p><span class="norm-dynamic">
+If the value of a variable of type <code style="background-color:inherit;font-size:medium">float</code> or <code style="background-color:inherit;font-size:medium">double</code> is used in this manner, then value set conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.13" class="external text" rel="nofollow">5.1.13</a>) is applied to the value of the variable.<span class="assertion-id"> [jls-15.2-110]</span></span>
+</p>
+<div id="D15.2"></div>
+<h3> <span class="mw-headline" id="15.2_Forms_of_Expressions_.5BNew.5D"> 15.2 Forms of Expressions [New] </span></h3>
+<p>Expressions can be broadly categorized into one of the following syntactic forms:
+</p>
+<ul><li> Expression names (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.5.6" class="external text" rel="nofollow">6.5.6</a>)
+</li><li> Primaries (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8" class="external text" rel="nofollow">15.8-15.13</a>
+</li><li> Unary operator expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.14" class="external text" rel="nofollow">15.14-15.16</a>)
+</li><li> Binary operator expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.17" class="external text" rel="nofollow">15.17-15.24</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>)
+</li><li> Conditional operator expressions (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.25" class="external text" rel="nofollow">15.25</a>)
+</li><li> Lambda expressions (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>)
+</li></ul>
+<p>Precedence among operators is managed by a hierarchy of grammar productions.  The lowest-precedence operator is the arrow, <code style="background-color:inherit;font-size:medium">-&gt;</code>, of a lambda expression (<a href="B.html#B15.27" title="Lambda B" class="mw-redirect">15.27</a>), followed by the assignment operators (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.26" class="external text" rel="nofollow">15.26</a>).  So all expressions are syntactically derived from one of these productions:
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+Expression:
+  LambdaExpression
+  AssignmentExpression
+</pre>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>This production was moved from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.27" class="external text" rel="nofollow">15.27</a>.</div></blockquote>
+<p><span class="norm-static">
+When some expressions appear in certain contexts (<a href="D.html#D5" title="Lambda D" class="mw-redirect">5</a>), they are considered <i>poly expressions</i>.  Expressions that are not poly expressions are <i>standalone expressions.</i><span class="assertion-id"> [jsr335-15.2-10]</span></span>
+</p><p><span class="norm-static">
+The following forms of expressions may be poly expressions:<span class="assertion-id"> [jsr335-15.2-12]</span></span>
+</p>
+<ul><li> <span class="norm-static"> Parenthesized expressions (<a href="D.html#D15.8.5" title="Lambda D" class="mw-redirect">15.8.5</a>)<span class="assertion-id"> [jsr335-15.2-12-A]</span></span>
+</li><li> <span class="norm-static"> Class instance creation expressions (<a href="D.html#D15.9" title="Lambda D" class="mw-redirect">15.9</a>)<span class="assertion-id"> [jsr335-15.2-12-B]</span></span>
+</li><li> <span class="norm-static"> Method invocation expressions (<a href="D.html#D15.12" title="Lambda D" class="mw-redirect">15.12</a>)<span class="assertion-id"> [jsr335-15.2-12-C]</span></span>
+</li><li> <span class="norm-static"> Conditional operator expressions (<a href="D.html#D15.25" title="Lambda D" class="mw-redirect">15.25</a>)<span class="assertion-id"> [jsr335-15.2-12-D]</span></span>
+</li><li> <span class="norm-static"> Lambda expressions (<a href="E.html#E15.27" title="Lambda E" class="mw-redirect">15.27</a>)<span class="assertion-id"> [jsr335-15.2-12-E]</span></span>
+</li><li> <span class="norm-static"> Method reference expressions (<a href="E.html#E15.13" title="Lambda E" class="mw-redirect">15.13</a>)<span class="assertion-id"> [jsr335-15.2-12-F]</span></span>
+</li></ul>
+<p><span class="norm-static">
+The rules determining whether an expression of one of these forms is a poly expression are explained separately below for each form of expression.<span class="assertion-id"> [jsr335-15.2-11]</span></span>
+</p><p><span class="norm-static">
+All other forms of expressions are said to have a <i>standalone form</i>, and are always standalone expressions.<span class="assertion-id"> [jsr335-15.2-13]</span></span>
+</p><p><span class="norm-static">
+Some expressions have a value that can be determined at compile time.  These are <i>constant expressions</i> (<a href="D.html#D15.29" title="Lambda D" class="mw-redirect">15.29</a>).<span class="assertion-id"> [jsr335-15.2-20]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> This new section is a preview of the rest of the chapter.  Its most important role is to describe the kinds of poly expressions, but more generally it's a convenient place to outline the different approaches to categorizing expressions.  It also gives an up front definition of the term <i>expression</i> (this previously was withheld until the very end of the chapter).
+</div></li>
+<li style="margin-bottom:12px;"><div> A lambda expression seems conceptually like a primary, but the fact that its body can be an arbitrary, undelimited expression means that, syntactically, it must be treated as the highest-precedence operator.  For example, the body of <code style="background-color:inherit;font-size:medium">() -&gt; x + 1</code> should be interpreted as <code style="background-color:inherit;font-size:medium">() -&gt; (x + 1)</code>.
+</div></li>
+<li style="margin-bottom:12px;"><div> Special collection literal syntax is an anticipated future Java feature.  These would fit in nicely as poly expressions (and perhaps as standalone expressions, too, like method invocations).
+<p>Array initializers (<code style="background-color:inherit;font-size:medium">int[] x = {1,2,3}</code>; see <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html#jls-10.6" class="external text" rel="nofollow">10.6</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-14.html#jls-14.4" class="external text" rel="nofollow">14.4</a>) are not expressions at all, as a sort of hack in the original language design to allow a very restricted context dependency.  (Despite this, the initializer of a variable is often refered to generically as an "expression.")  It would make sense to take advantage of poly expressions as a way to eliminate this special case, bring them under the same umbrella, and allow more flexibility in their use.  But this would best be addressed in conjunction with any new collection syntax.
+</p>
+</div></li></ol></div></blockquote>
+<p><br />
+</p>
+<div id="D15.3"></div>
+<h3> <span class="mw-headline" id="15.3_Type_of_an_Expression_.5BModified.5D"> 15.3 Type of an Expression [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.3" class="external text" rel="nofollow">JLS 15.3</a></small>
+</p><p>If an expresion denotes a variable or a value, then the expression has a type known at compile time.
+</p><p><u>Given certain meanings of names (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.5" class="external text" rel="nofollow">6.5</a>), the type of a standalone expression can be determined entirely from the contents of the expression.  In contrast, the type of a poly expression may be influenced by the expression's target type (<a href="D.html#D5" title="Lambda D" class="mw-redirect">5</a>).</u>
+</p><p>The rules for determining the type of an expression are explained separately below for each kind of expression.
+</p><p>...
+</p>
+<div id="D15.8"></div>
+<h3> <span class="mw-headline" id="15.8_Primary_Expressions_.5BModified.5D"> 15.8 Primary Expressions [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8" class="external text" rel="nofollow">JLS 15.8</a></small>
+</p><p>...
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+Primary:
+  PrimaryNoNewArray
+  ArrayCreationExpression
+
+PrimaryNoNewArray:
+  Literal
+  Type '.' 'class'
+  'void' '.' 'class'
+  'this'
+  ClassName '.' 'this'
+  '(' Expression ')'
+  ClassInstanceCreationExpression
+  FieldAccess
+  MethodInvocation
+  ArrayAccess
+  <u>MethodReference</u>
+</pre>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+Despite strict restrictions on where they can appear, method references are most naturally described as primaries.  The restrictions on context are therefore enforced outside the grammar.</div></blockquote>
+<div id="D15.8.5"></div>
+<h3> <span class="mw-headline" id="15.8.5_Parenthesized_Expressions_.5BAddendum.5D"> 15.8.5 Parenthesized Expressions [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.5" class="external text" rel="nofollow">JLS 15.8.5</a></small>
+</p><p><span class="norm-static">
+If a parenthesized expression appears in a context of a particular kind with target type <em>T</em> (<a href="D.html#D5" title="Lambda D" class="mw-redirect">5</a>), its contained expression similarly appears in a context of the same kind with target type <em>T</em>.<span class="assertion-id"> [jsr335-15.8.5-10]</span></span>
+</p><p><span class="norm-static">
+If the contained expression is a poly expression (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>), the parenthesized expression is also a poly expression.  Otherwise, it is a standalone expression.<span class="assertion-id"> [jsr335-15.8.5-20]</span></span>
+</p>
+<div id="D15.9"></div>
+<h3> <span class="mw-headline" id="15.9_Class_Instance_Creation_Expressions_.5BAddendum.5D"> 15.9 Class Instance Creation Expressions [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">JLS 15.9</a></small>
+</p><p><span class="norm-static">
+A class instance creation expression is a poly expression (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) if i) it uses a diamond '<code style="background-color:inherit;font-size:medium">&lt;&gt;</code>' in place of type arguments, and ii) it appears in an assignment context (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>) or an invocation context (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>).  Otherwise, it is a standalone expression.<span class="assertion-id"> [jsr335-15.9-10]</span></span>
+</p>
+<div id="D15.12"></div>
+<h3> <span class="mw-headline" id="15.12_Method_Invocation_Expressions_.5BAddendum.5D"> 15.12 Method Invocation Expressions [Addendum] </span></h3>
+<p><small>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">JLS 15.12</a></small>
+</p><p><span class="norm-static">
+A method invocation expression is a poly expression if all of the following are true:<span class="assertion-id"> [jsr335-15.12-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> The invocation appears in an assignment context (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>) or an invocation context (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>).<span class="assertion-id"> [jsr335-15.12-10-A]</span></span>
+</li><li> <span class="norm-static"> The invocation elides <em>NonWildTypeArguments</em>.<span class="assertion-id"> [jsr335-15.12-10-B]</span></span>
+</li><li> <span class="norm-static"> The method to be invoked, as determined by the following subsections, is a generic method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.4.4" class="external text" rel="nofollow">8.4.4</a>).<span class="assertion-id"> [jsr335-15.12-10-C]</span></span>
+</li><li> <span class="norm-static"> The return type of the method to be invoked mentions at least one of the method's type parameters.<span class="assertion-id"> [jsr335-15.12-10-D]</span></span>
+</li></ul>
+<p><span class="norm-static">
+Otherwise, the method invocation expression is a standalone expression.<span class="assertion-id"> [jsr335-15.12-11]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>Class instance creations and method invocations may be poly expressions because type argument inference (including "diamond" inference) may depend on context.
+</p>
+Given that adjustments must be made to inference in order to support lambda expressions, this document also seeks to improve the algorithm's interaction with context in general, which is currently very ad hoc.  See <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a> for details.</div></blockquote>
+<div id="D15.16"></div>
+<h3> <span class="mw-headline" id="15.16_Cast_Expressions_.5BModified.5D"> 15.16 Cast Expressions [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.16" class="external text" rel="nofollow">JLS 15.16</a></small>
+</p><p>A cast expression converts, at run-time, a value of one numeric type to a similar value of another numeric type; or confirms, at compile-time, that the type of an expression is <code style="background-color:inherit;font-size:medium">boolean</code>; or checks, at run-time, that a reference value refers to an object whose class is compatible with a specified reference type <u>or list of reference types</u>.
+</p><p>The parentheses and the type <u>or list of types</u> they contain are sometimes called the <i>cast operator</i>.
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+CastExpression:
+  '(' PrimitiveType ')' UnaryExpression
+  '(' ReferenceType ')' <del>UnaryExpressionNotPlusMinus</del> <u>ReferenceCastOperand</u>
+  <u>'(' ClassOrInterfaceType AdditionalBoundList ')' ReferenceCastOperand</u>
+
+<u>ReferenceCastOperand:</u>
+  <u>UnaryExpressionNotPlusMinus</u>
+  <u>LambdaExpression</u>
+</pre>
+<p>See <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.15" class="external text" rel="nofollow">15.15</a> for a discussion of the distinction between <em>UnaryExpression</em> and <em>UnaryExpressionNotPlusMinus</em>.
+</p><p><u>The following productions from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.4" class="external text" rel="nofollow">4.4</a> are repeated here for convenience:</u>
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+<u>AdditionalBoundList:</u>
+  <u>AdditionalBound AdditionalBoundList</u>
+  <u>AdditionalBound</u>
+
+<u>AdditionalBound:</u>
+  <u>'&amp;' InterfaceType</u>
+</pre>
+<p><span class="norm-error">
+<u>If the cast expression has an <em>AdditionalBoundList</em>, then the following conditions must hold for the listed types (including the <em>ClassOrInterfaceType</em> and each additional <em>InterfaceType</em>), or a compile-time error occurs:</u><span class="assertion-id"> [jsr335-15.16-5]</span></span>
+</p>
+<ul><li> <span class="norm-error"> <u>The erasures (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.6" class="external text" rel="nofollow">4.6</a>) of all the listed types are pairwise different.</u><span class="assertion-id"> [jsr335-15.16-5-A]</span></span>
+</li><li> <span class="norm-error"> <u>No two listed types are subtypes of different parameterizations of the same generic interface.</u><span class="assertion-id"> [jsr335-15.16-5-B]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>These conditions mimic those in <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.4" class="external text" rel="nofollow">4.4</a>.</div></blockquote>
+<p><span class="norm-static">
+<u>The target type for the casting context (<a href="D.html#D5.5" title="Lambda D" class="mw-redirect">5.5</a>) introduced by the cast expression is, when an <em>AdditionalBoundList</em> is absent, the type appearing within the parentheses; or, when an <em>AdditionalBoundList</em> is present, the intersection type expressed by <em>ClassOrInterfaceType AdditionalBoundList</em>.</u><span class="assertion-id"> [jsr335-15.16-10]</span></span>
+</p><p><span class="norm-static">
+The type of a cast expression is the result of applying capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) to <u>this target type</u>.<span class="assertion-id"> [jls-15.16-200]</span></span>
+</p>
+<div id="D15.25"></div>
+<h3> <span class="mw-headline" id="15.25_Conditional_Operator_.3F_:_.5BModified.5D"> 15.25 Conditional Operator&nbsp;?&nbsp;: [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.25" class="external text" rel="nofollow">JLS 15.25</a></small>
+</p><p>...
+</p><p><span class="norm-static">
+The conditional operator has three operand expressions.  <code style="background-color:inherit;font-size:medium">?</code> appears between the first and second expressions, and <code style="background-color:inherit;font-size:medium">:</code> appears between the second and third expressions.<span class="assertion-id"> [jls-15.25-200]</span></span>
+</p><p><span class="norm-error">
+The first expression must be of type <code style="background-color:inherit;font-size:medium">boolean</code> or <code style="background-color:inherit;font-size:medium">Boolean</code>, or a compile-time error occurs.<span class="assertion-id"> [jls-15.25-210]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error for either the second or the third operand expression to be an invocation of a <code style="background-color:inherit;font-size:medium">void</code> method.<span class="assertion-id"> [jls-15.25-220]</span></span>
+</p><p><span class="norm-static">
+<u>There are three kinds of conditional expressions, classified according to the second and third operand expressions: <i>boolean conditional expressions</i>, <i>numeric conditional expressions</i>, and <i>reference conditional expressions</i>.</u><span class="assertion-id"> [jsr335-15.25-10]</span></span>
+</p>
+<ul><li> <span class="norm-static"> <u>If both the second and the third operand expressions are <i>boolean expressions</i>, the conditional expression is a boolean conditional.  For the purpose of classifying a conditional, the following expressions are <i>boolean expressions</i>:</u><span class="assertion-id"> [jsr335-15.25-10-A]</span></span>
+<ul><li> <span class="norm-static"> <u>An expression of a standalone form (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) that has type <code style="background-color:inherit;font-size:medium">boolean</code> or <code style="background-color:inherit;font-size:medium">Boolean</code>.</u><span class="assertion-id"> [jsr335-15.25-10-A1]</span></span>
+</li><li> <span class="norm-static"> <u>A parenthesized (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.5" class="external text" rel="nofollow">15.8.5</a>) boolean expression.</u><span class="assertion-id"> [jsr335-15.25-10-A2]</span></span>
+</li><li> <span class="norm-static"> <u>A class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>) for class <code style="background-color:inherit;font-size:medium">Boolean</code>.</u><span class="assertion-id"> [jsr335-15.25-10-A3]</span></span>
+</li><li> <span class="norm-static"> <u>A method invocation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) for which the chosen most-specific method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.5" class="external text" rel="nofollow">15.12.2.5</a>) has return type <code style="background-color:inherit;font-size:medium">boolean</code> or <code style="background-color:inherit;font-size:medium">Boolean</code>.</u><span class="assertion-id"> [jsr335-15.25-10-A4]</span></span><p><u>Note that, for a generic method, this is the type <i>before</i> instantiating the method's type arguments.</u></p>
+</li><li> <span class="norm-static"> <u>A boolean conditional expression.</u><span class="assertion-id"> [jsr335-15.25-10-A5]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> <u>Similarly, if both the second and the third operand expressions are <i>numeric expressions</i>, the conditional expression is a numeric conditional.  For the purpose of classifying a conditional, the following expressions are <i>numeric expressions</i>:</u><span class="assertion-id"> [jsr335-15.25-10-B]</span></span>
+<ul><li> <span class="norm-static"> <u>An expression of a standalone form (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>) with a type that is convertible to a numeric type (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2" class="external text" rel="nofollow">4.2</a>, <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.8" class="external text" rel="nofollow">5.1.8</a>).</u><span class="assertion-id"> [jsr335-15.25-10-B1]</span></span>
+</li><li> <span class="norm-static"> <u>A parenthesized (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.8.5" class="external text" rel="nofollow">15.8.5</a>) numeric expression.</u><span class="assertion-id"> [jsr335-15.25-10-B2]</span></span>
+</li><li> <span class="norm-static"> <u>A class instance creation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>) for a class that is convertible to a numeric type.</u><span class="assertion-id"> [jsr335-15.25-10-B3]</span></span>
+</li><li> <span class="norm-static"> <u>A method invocation expression (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12" class="external text" rel="nofollow">15.12</a>) for which the chosen most-specific method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.5" class="external text" rel="nofollow">15.12.2.5</a>) has a return type that is convertible to a numeric type.</u><span class="assertion-id"> [jsr335-15.25-10-B4]</span></span><p><u>Note that, for a generic method, this is the type <i>before</i> instantiating the method's type arguments.</u></p>
+</li><li> <span class="norm-static"> <u>A numeric conditional expression.</u><span class="assertion-id"> [jsr335-15.25-10-B5]</span></span>
+</li></ul>
+</li><li> <span class="norm-static"> <u>Otherwise, the conditional expression is a reference conditional.</u><span class="assertion-id"> [jsr335-15.25-10-C]</span></span>
+</li></ul>
+<p><span class="norm-static">
+<u>The process for determining</u> the type of a conditional expression <u>depends on the kind of conditional, as outlined in the following sections.</u><span class="assertion-id"> [jls-15.25-300]</span></span>
+</p><p><span class="norm-dynamic">
+At run-time, the first operand expression of the conditional expression is evaluated first.  If necessary, unboxing conversion is performed on the result.<span class="assertion-id"> [jls-15.25-400]</span></span>
+</p><p><span class="norm-dynamic">
+The resulting <code style="background-color:inherit;font-size:medium">boolean</code> value is then used to choose either the second or the third operand expression:<span class="assertion-id"> [jls-15.25-410]</span></span>
+</p>
+<ul><li> <span class="norm-dynamic"> If the value of the first operand is <code style="background-color:inherit;font-size:medium">true</code>, then the second operand expression is chosen.<span class="assertion-id"> [jls-15.25-410-A]</span></span>
+</li><li> <span class="norm-dynamic"> If the value of the first operand is <code style="background-color:inherit;font-size:medium">false</code>, then the third operand expression is chosen.<span class="assertion-id"> [jls-15.25-410-B]</span></span>
+</li></ul>
+<p><span class="norm-dynamic">
+The chosen operand expression is then evaluated and the resulting value is converted to the type of the conditional expression as determined by the rules stated <del>above</del> <u>below</u>.<span class="assertion-id"> [jls-15.25-420]</span></span>
+</p><p><span class="norm-dynamic">
+This conversion may include boxing (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.7" class="external text" rel="nofollow">5.1.7</a>) or unboxing (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.8" class="external text" rel="nofollow">5.1.8</a>) conversion.<span class="assertion-id"> [jls-15.25-430]</span></span>
+</p><p><span class="norm-dynamic">
+The operand expression not chosen is not evaluated for that particular evaluation of the conditional expression.<span class="assertion-id"> [jls-15.25-440]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p><p>We classify conditional expressions here in order to enhance the typing rules of reference conditionals (<a href="D.html#D15.25.3" title="Lambda D" class="mw-redirect">15.25.3</a>) while preserving existing behavior of boolean and numeric conditionals.  If we tried to treat all conditionals uniformly, there would be a variety of unwanted incompatible changes, including changes in overload resolution and boxing/unboxing behavior.
+</p>
+This also simplifies the presentation of the typing rules by separating the rules for handling primitives from the rules for handling references.</div></blockquote>
+<div id="D15.25.1"></div>
+<h3> <span class="mw-headline" id="15.25.1_Boolean_Conditional_Expressions_.5BNew.5D"> 15.25.1 Boolean Conditional Expressions [New] </span></h3>
+<p><span class="norm-static">
+Boolean conditional expressions are standalone expressions (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>).<span class="assertion-id"> [jsr335-15.25.1-10]</span></span>
+</p><p><span class="norm-static">
+The type of a boolean conditional expression is determined as follows:<span class="assertion-id"> [jsr335-15.25.1-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If both the second and the third operands are of type <code style="background-color:inherit;font-size:medium">Boolean</code>, the conditional has type <code style="background-color:inherit;font-size:medium">Boolean</code>.<span class="assertion-id"> [jsr335-15.25.1-20-A]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the conditional has type <code style="background-color:inherit;font-size:medium">boolean</code>.<span class="assertion-id"> [jsr335-15.25.1-20-B]</span></span>
+</li></ul>
+<div id="D15.25.2"></div>
+<h3> <span class="mw-headline" id="15.25.2_Numeric_Conditional_Expressions_.5BNew.5D"> 15.25.2 Numeric Conditional Expressions [New] </span></h3>
+<p><span class="norm-static">
+Numeric conditional expressions are standalone expressions (<a href="D.html#D15.2" title="Lambda D" class="mw-redirect">15.2</a>).<span class="assertion-id"> [jsr335-15.25.2-10]</span></span>
+</p><p><span class="norm-static">
+The type of a numeric conditional expression is determined as follows:<span class="assertion-id"> [jsr335-15.25.2-20]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If both the second and the third operands have the same type, then that is the type of the conditional expression.<span class="assertion-id"> [jsr335-15.25.2-20-A]</span></span>
+</li><li> <span class="norm-static"> If one of the second and third operands is of primitive type <em>T</em>, and the type of the other is the result of applying boxing conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.7" class="external text" rel="nofollow">5.1.7</a>) to <em>T</em>, then the type of the conditional expression is <em>T</em>.<span class="assertion-id"> [jls-15.25-300-B]</span></span>
+</li><li> <span class="norm-static"> If one of the operands is of type <code style="background-color:inherit;font-size:medium">byte</code> or <code style="background-color:inherit;font-size:medium">Byte</code> and the other is of type <code style="background-color:inherit;font-size:medium">short</code> or <code style="background-color:inherit;font-size:medium">Short</code>, then the type of the conditional expression is <code style="background-color:inherit;font-size:medium">short</code>.<span class="assertion-id"> [jls-15.25-300-D-1]</span></span>
+</li><li> <span class="norm-static"> If one of the operands is of type <em>T</em>, where <em>T</em> is <code style="background-color:inherit;font-size:medium">byte</code>, <code style="background-color:inherit;font-size:medium">short</code>, or <code style="background-color:inherit;font-size:medium">char</code>, and the other operand is a constant expression of type <code style="background-color:inherit;font-size:medium">int</code> whose value is representable in type <em>T</em>, then the type of the conditional expression is <em>T</em>.<span class="assertion-id"> [jls-15.25-300-D-2]</span></span>
+</li><li> <span class="norm-static"> If one of the operands is of type <em>T</em>, where <em>T</em> is <code style="background-color:inherit;font-size:medium">Byte</code>, <code style="background-color:inherit;font-size:medium">Short</code>, or <code style="background-color:inherit;font-size:medium">Character</code>, and the other operand is a constant expression of type <code style="background-color:inherit;font-size:medium">int</code> whose value is representable in the type <em>U</em> which is the result of applying unboxing conversion to <em>T</em>, then the type of the conditional expression is <em>U</em>.<span class="assertion-id"> [jls-15.25-300-D-3]</span></span>
+</li><li> <span class="norm-static"> Otherwise, binary numeric promotion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.2" class="external text" rel="nofollow">5.6.2</a>) is applied to the operand types, and the type of the conditional expression is the promoted type of the second and third operands.<span class="assertion-id"> [jls-15.25-300-D-4]</span></span><p>Note that binary numeric promotion performs value set conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.13" class="external text" rel="nofollow">5.1.13</a>) and may perform unboxing conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.8" class="external text" rel="nofollow">5.1.8</a>).</p>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The typing rules are lifted directly from the relevant parts of <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.25" class="external text" rel="nofollow">15.25</a>.</div></blockquote>
+<div id="D15.25.3"></div>
+<h3> <span class="mw-headline" id="15.25.3_Reference_Conditional_Expressions_.5BNew.5D"> 15.25.3 Reference Conditional Expressions [New] </span></h3>
+<p><span class="norm-static">
+A reference conditional expression is a poly expression if it appears in an assignment context (<a href="D.html#D5.2" title="Lambda D" class="mw-redirect">5.2</a>) or an invocation context (<a href="D.html#D5.3" title="Lambda D" class="mw-redirect">5.3</a>).  Otherwise, it is a standalone expression.<span class="assertion-id"> [jsr335-15.25.3-10]</span></span>
+</p><p><span class="norm-static">
+Where a poly reference conditional expression appears in a context of a particular kind with target type <em>T</em> (<a href="D.html#D5" title="Lambda D" class="mw-redirect">5</a>), its second and third operand expressions similarly appear in a context of the same kind with target type <em>T</em>.<span class="assertion-id"> [jsr335-15.25.3-20]</span></span>
+</p><p><span class="norm-static">
+The type of a poly reference conditional expression is the same as its target type.<span class="assertion-id"> [jsr335-15.25.3-30]</span></span>
+</p><p><span class="norm-static">
+The type of a standalone reference conditional expression is determined as follows:<span class="assertion-id"> [jsr335-15.25.3-35]</span></span>
+</p>
+<ul><li> <span class="norm-static"> If both the second and the third operands have the same type (which may be the null type), then that is the type of the conditional expression.<span class="assertion-id"> [jls-15.25-300-A]</span></span>
+</li><li> <span class="norm-static"> If one of the second and third operands is of the null type and the type of the other is a reference type, then the type of the conditional expression is that reference type.<span class="assertion-id"> [jls-15.25-300-C]</span></span>
+</li><li> <span class="norm-static"> Otherwise, the second and third operands are of types <em>S<sub>1</sub></em> and <em>S<sub>2</sub></em> respectively.  Let <em>T<sub>1</sub></em> be the type that results from applying boxing conversion to <em>S<sub>1</sub></em>, and let <em>T<sub>2</sub></em> be the type that results from applying boxing conversion to <em>S<sub>2</sub></em>.<span class="assertion-id"> [jls-15.25-300-E]</span></span><p><span class="norm-static"> The type of the conditional expression is the result of applying capture conversion (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.10" class="external text" rel="nofollow">5.1.10</a>) to <em>lub(T<sub>1</sub>, T<sub>2</sub>)</em> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.2.7" class="external text" rel="nofollow">15.12.2.7</a>).<span class="assertion-id"> [jls-15.25-300-E.1]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The standalone typing rules are lifted directly from the relevant parts of <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.25" class="external text" rel="nofollow">15.25</a>.</div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> By making conditional operator expressions poly expressions, we allow them to "pass down" context to their arguments.  This allows lambda expressions and method references to appear as subexpressions.
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">return condition ? (x -&gt; x) : (x -&gt; -x);</pre>
+<p>It also allows us to use the extra information to improve type checking of generic method invocations.  In Java SE 7, this is well-typed:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">List&lt;String&gt; l = Arrays.asList();</pre>
+<p>While this is not:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">List&lt;String&gt; l = condition ? Arrays.asList() : Arrays.asList(&quot;a&quot;,&quot;b&quot;);</pre>
+<p>These rules allow both expressions to be considered well-typed.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div>
+<p>A reference conditional expression does not have to <i>contain</i> a poly expression as an operand in order to <i>be</i> a poly expression.  It is a poly expression simply by virtue of the context in which it appears.
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+Class&lt;? super Integer&gt; choose(boolean b,
+                              Class&lt;Integer&gt; c1,
+                              Class&lt;Number&gt; c2) {
+  return b ? c1 : c2;
+}
+</pre>
+<p>Even though <em>lub(<code style="background-color:inherit;font-size:medium">Class&lt;Number&gt;</code>, <code style="background-color:inherit;font-size:medium">Class&lt;Integer&gt;</code>)</em> is defined as <code style="background-color:inherit;font-size:medium">Class&lt;? extends Number&gt;</code>, there is no compile-time error in the declaration of <code style="background-color:inherit;font-size:medium">choose</code>: the conditional expression is a poly expression, and so rather than computing a <em>lub</em>, each operand is considered to be in an assignment context targeting <code style="background-color:inherit;font-size:medium">Class&lt;? super Integer&gt;</code>.
+</p>
+</div></li></ol></div></blockquote>
+<div id="D15.26"></div>
+<h3> <span class="mw-headline" id="15.26_Assignment_Operators_.5BNew.5D"> 15.26 Assignment Operators [New] </span></h3>
+<p>...
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+Assignment:
+  LeftHandSide AssignmentOperator <del>AssignmentExpression</del> <u>Expression</u>
+</pre>
+<p>...
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+The right-hand side of an assignment may be a <em>LambdaExpression</em>.</div></blockquote></p>
+
+
+
+</body></html>

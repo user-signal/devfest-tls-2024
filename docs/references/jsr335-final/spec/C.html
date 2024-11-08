@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" dir="ltr">
+<head>
+<title>Lambda Specification, Part C: Method References</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="MediaWiki 1.16.5" />
+
+<style type="text/css">
+p,li,dd,dt,tr { line-height:120%; }
+li { margin-top:4pt; }
+a { text-decoration:none; }
+dt { font-weight:bold; margin-top:8pt; }
+dd { margin-left:0pt; }
+.assertion-id { visibility:hidden; font-style:italic; }
+</style>
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Lambda_Specification_Part_C_Method_References skin-monobook">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Lambda Specification, Part C: Method References</h1>
+									<p><small>
+Navigation: <a href="index.html" title="Lambda Specification" class="mw-redirect">Overview</a>&nbsp;- <a href="A.html" title="Lambda A" class="mw-redirect">Part A</a>&nbsp;- <a href="B.html" title="Lambda B" class="mw-redirect">Part B</a>&nbsp;- <a href="C.html" title="Lambda C" class="mw-redirect">Part C</a>&nbsp;- <a href="D.html" title="Lambda D" class="mw-redirect">Part D</a>&nbsp;- <a href="E.html" title="Lambda E" class="mw-redirect">Part E</a>&nbsp;- <a href="F.html" title="Lambda F" class="mw-redirect">Part F</a>&nbsp;- <a href="G.html" title="Lambda G" class="mw-redirect">Part G</a>&nbsp;- <a href="H.html" title="Lambda H" class="mw-redirect">Part H</a>&nbsp;- <a href="J.html" title="Lambda J" class="mw-redirect">Part J</a>
+<br />
+Sections: <a href="#C15.13">15.13</a>&nbsp;- <a href="#C3.11">3.11</a>
+<br />
+Version 0.9.3.  Copyright © 2014 Oracle America, Inc.  <a href="index.html#Legal_Notice" title="Lambda Specification" class="mw-redirect">Legal Notice</a>.
+</small>
+</p>
+<h3> <span class="mw-headline" id="Summary"> Summary </span></h3>
+<p>A method reference is used to refer to the invocation of a method without actually performing the invocation.  Certain forms of method references also allow class instance creation or array creation to be treated as if it were a method invocation.
+</p><p>Examples of method references:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+System::getProperty
+&quot;abc&quot;::length
+System.out::println
+String::length
+super::toString
+ArrayList::new
+int[]::new
+</pre>
+<p>The target reference (i.e., the "receiver") of an instance method may be provided by the method reference expression or it may be provided later when the method is invoked.  The immediately enclosing instance of a new inner class instance must be provided by a lexically enclosing instance of <code style="background-color:inherit;font-size:medium">this</code>.
+</p><p>When more than one member method of a type has the same name, or when a class has more than one constructor, the appropriate method or constructor is selected based on the functional interface type targeted by the expression.
+</p>
+<div id="C15.13"></div>
+<h3> <span class="mw-headline" id="15.13_Method_Reference_Expressions_.5BNew.5D"> 15.13 Method Reference Expressions [New] </span></h3>
+<p>A method reference is used to refer to the invocation of a method without actually performing the invocation.  Certain forms of method references also allow class instance creation (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>) or array creation (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.10" class="external text" rel="nofollow">15.10</a>) to be treated as if it were a method invocation.
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+MethodReference:
+ ExpressionName '::' NonWildTypeArguments<sub>opt</sub> Identifier
+ Primary '::' NonWildTypeArguments<sub>opt</sub> Identifier
+ 'super' '::' NonWildTypeArguments<sub>opt</sub> Identifier
+ TypeName '.' 'super' '::' NonWildTypeArguments<sub>opt</sub> Identifier
+ ReferenceType '::' NonWildTypeArguments<sub>opt</sub> Identifier
+ ClassType '::' NonWildTypeArguments<sub>opt</sub> 'new'
+ ArrayType '::' 'new'
+</pre>
+<p>The following productions from <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.8.7.1" class="external text" rel="nofollow">8.8.7.1</a> are repeated here for convenience:
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+NonWildTypeArguments:
+ '&lt;' ReferenceTypeList '&gt;'
+
+ReferenceTypeList:
+ ReferenceType
+ ReferenceTypeList ',' ReferenceType
+</pre>
+<p><span class="norm-error">
+It is a compile-time error if a method reference has the form <em>ExpressionName <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> or <em>Primary <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, and the type of the <em>ExpressionName</em> or <em>Primary</em> is not a reference type.<span class="assertion-id"> [jsr335-15.28-5]</span></span>
+</p><p><span class="norm-error">
+If a method reference has the form <em><code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, let <em>T</em> be the type declaration immediately enclosing the method reference. It is a compile-time error if <em>T</em> is the class <code style="background-color:inherit;font-size:medium">Object</code> or <em>T</em> is an interface.<span class="assertion-id"> [jsr335-15.28-21]</span></span>
+</p><p><span class="norm-error">
+If a method reference has the form <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em>, then:<span class="assertion-id"> [jsr335-15.28-22]</span></span>
+</p>
+<ul><li> <span class="norm-error"> If <em>TypeName</em> denotes a class, <em>C</em>, it is a compile-time error if <em>C</em> is not a lexically enclosing class of the current class, or if <em>C</em> is the class <code style="background-color:inherit;font-size:medium">Object</code>.<span class="assertion-id"> [jsr335-15.28-22-A]</span></span>
+</li><li> <span class="norm-error"> If <em>TypeName</em> denotes an interface, <em>I</em>, let <em>T</em> be the type declaration immediately enclosing the method reference.  It is a compile-time error if <em>I</em> is not a direct superinterface of <em>T</em>, or if there exists some other direct superclass or direct superinterface of <em>T</em>, <em>J</em>, such that <em>J</em> is a subtype of <em>I</em>.<span class="assertion-id"> [jsr335-15.28-22-B]</span></span>
+</li><li> <span class="norm-error"> If <em>TypeName</em> denotes neither a class nor an interface, a compile-time error occurs.<span class="assertion-id"> [jsr335-15.28-22-C]</span></span>
+</li></ul>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The above restrictions mimic <a href="H.html#H15.12.1" title="Lambda H" class="mw-redirect">15.12.1</a> (as modified by this specification).  (We could avoid stating them here, because <a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a> is defined in terms of <a href="H.html#H15.12.1" title="Lambda H" class="mw-redirect">15.12.1</a>, but it's more straightforward to be explicit about it.)</div></blockquote>
+<p><span class="norm-error">
+It is a compile-time error if a method reference of the form <em><code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> or of the form <em>TypeName <code style="background-color:inherit;font-size:medium">.</code> <code style="background-color:inherit;font-size:medium">super</code> <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> Identifier</em> occurs in a static context.<span class="assertion-id"> [jsr335-15.28-20]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The above restriction mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.3" class="external text" rel="nofollow">15.12.3</a>.</div></blockquote>
+<p><span class="norm-error">
+If a method reference has the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> <code style="background-color:inherit;font-size:medium">new</code></em>, the <em>ClassType</em> must denote a class that is accessible (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-6.html#jls-6.6" class="external text" rel="nofollow">6.6</a>) and is not an enum type and not <code style="background-color:inherit;font-size:medium">abstract</code>, or a compile-time error occurs.<span class="assertion-id"> [jsr335-15.28-10]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The above restriction mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.1" class="external text" rel="nofollow">15.9.1</a>.</div></blockquote>
+<p><span class="norm-error">
+In addition, if a method reference has the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments<sub>opt</sub> <code style="background-color:inherit;font-size:medium">new</code></em>, it is a compile-time error if any of the type arguments used in the <em>ClassType</em> are wildcard type arguments (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.5.1" class="external text" rel="nofollow">4.5.1</a>).<span class="assertion-id"> [jsr335-15.28-11]</span></span>
+</p><p><span class="norm-error">
+It is a compile-time error If a method reference has the form <em>ClassType <code style="background-color:inherit;font-size:medium">::</code> NonWildTypeArguments <code style="background-color:inherit;font-size:medium">new</code></em>, where a constructor type argument list is provided, but the <em>ClassType</em> is a raw type.<span class="assertion-id"> [jsr335-15.28-12]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The above restrictions mimic <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9" class="external text" rel="nofollow">15.9</a>.</div></blockquote>
+<p><span class="norm-error">
+If a method reference has the form <em>ArrayType <code style="background-color:inherit;font-size:medium">::</code> <code style="background-color:inherit;font-size:medium">new</code></em>, the <em>ArrayType</em> must denote a type that is reifiable (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.7" class="external text" rel="nofollow">4.7</a>), or a compile-time error occurs.<span class="assertion-id"> [jsr335-15.28.15]</span></span>
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>The above restriction mimics <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.10" class="external text" rel="nofollow">15.10</a>.</div></blockquote>
+<p>The target reference of an instance method (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.12.4.1" class="external text" rel="nofollow">15.12.4.1</a>) may be provided by the method reference expression—using an <em>ExpressionName</em>, a <em>Primary</em>, or <code style="background-color:inherit;font-size:medium">super</code>—or it may be provided later when the method is invoked.  The immediately enclosing instance of a new inner class instance (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.9.2" class="external text" rel="nofollow">15.9.2</a>) must be provided by a lexically enclosing instance of <code style="background-color:inherit;font-size:medium">this</code> (<a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-8.html#jls-8.1.3" class="external text" rel="nofollow">8.1.3</a>).
+</p><p>When more than one member method of a type has the same name, or when a class has more than one constructor, the appropriate method or constructor is selected based on the functional interface type targeted by the expression, as described in <a href="E.html#E15.13.1" title="Lambda E" class="mw-redirect">15.13.1</a>.
+</p><p>If a method or constructor is generic, the appropriate type arguments may either be inferred or provided explicitly.  Similarly, the type arguments of a generic type mentioned by the method reference may be provided explicitly or inferred.
+</p>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Examples of method reference expressions:
+</p>
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">
+System::getProperty
+String::length
+List&lt;String&gt;::size   // explicit class type args
+List::size           // inferred class type args
+int[]::clone
+T::tvarMember
+
+&quot;abc&quot;::length
+System.out::println
+foo[x]::bar
+(test ? stream.map(String::trim) : stream)::toArray
+super::toString
+
+String::valueOf      // overload resolution needed     
+Arrays::sort         // type args inferred from context
+Arrays::&lt;String&gt;sort // explicit type args
+
+ArrayList&lt;String&gt;::new    // constructor for parameterized type
+ArrayList::new            // inferred class type args
+Foo::&lt;Integer&gt;new         // explicit generic constructor type arguments
+Bar&lt;String&gt;::&lt;Integer&gt;new // generic class, generic constructor
+Outer.Inner::new          // inner class constructor
+int[]::new                // array creation
+</pre></div></blockquote>
+<blockquote style="background:whitesmoke; border:1px dotted;padding:5px;"><div>
+<p>Discussion and motivation:
+</p>
+<ol>
+<li style="margin-bottom:12px;"><div> The term "method reference" is imprecise, but captures the typical usage of the feature.  In full generality, method references are shorthand to describe certain expressions that should not be evaluated until a future point.  Hence, the same method can be referenced via a standard invocation or a <code style="background-color:inherit;font-size:medium">super</code> invocation—properties of the implicit invocation expression, not the method itself.  Similarly, class instance creation and array creation can be referenced, even though there is no actual corresponding method that returns a class instance or an array.
+</div></li>
+<li style="margin-bottom:12px;"><div> There is no support for specifying a particular signature to be matched:
+<pre style="border:none;background-color:inherit;color:inherit;font-size:medium;padding:0px;margin-left:20px">Arrays::sort(int[])</pre>
+<p>Instead, the functional interface provides argument types that are used as input to the overload resolution algorithm (<a href="F.html#F15.12.2" title="Lambda F" class="mw-redirect">15.12.2</a>).  This should satisfy the vast majority of use cases; when the rare need arises for more precise control, a lambda expression can be used.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The method reference delimiter is infix; this seems useful because it clearly separates the "evaluated now" portion of the expression from the "evaluated on invocation" part.  It also conveys the useful model that a method reference is sort of like a new kind of member of an object or class.
+<p>Other languages simply use a method name as a method reference—the delimiter would be '<code style="background-color:inherit;font-size:medium">.</code>'.  But this introduces ambiguities with field names, so it is useful to have a unique delimiter to differentiate.
+</p>
+</div></li>
+<li style="margin-bottom:12px;"><div> The use of type argument syntax in the class name before a delimiter (<code style="background-color:inherit;font-size:medium">List&lt;String&gt;::size</code>) raises the parsing problem of distinguishing between '<code style="background-color:inherit;font-size:medium">&lt;</code>' as a type argument bracket and '<code style="background-color:inherit;font-size:medium">&lt;</code>' as a less-than operator; this problem does not arise in a static method invocation.  In theory, this is no worse than allowing type arguments in cast expressions; however, the difference is that the cast case only comes up when a '<code style="background-color:inherit;font-size:medium">(</code>' token is encountered; with the addition of method references, the start of <i>every</i> expression is potentially a parameterized type.
+</div></li>
+<li style="margin-bottom:12px;"><div> Section <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.13" class="external text" rel="nofollow">15.13</a> currently addresses array access expressions.  To make room for method reference expressions, this section has been merged with <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.10" class="external text" rel="nofollow">15.10</a>.
+</div></li></ol></div></blockquote>
+<div id="C3.11"></div>
+<h3> <span class="mw-headline" id="3.11_Separators_.5BModified.5D"> 3.11 Separators [Modified] </span></h3>
+<p><small>Compare <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.11" class="external text" rel="nofollow">JLS 3.11</a></small>
+</p><p><span class="norm-static">
+<del>Nine</del> <u>Ten tokens, formed from</u> ASCII characters<u>,</u> are the <i>separators</i> (punctuators).<span class="assertion-id"> [jls-3.11-100]</span></span>
+</p>
+<pre style="border:none;background-color:inherit;font-size:medium;">
+Separator: one of
+  ...
+  ','
+  '.'
+  <u>'::'</u>
+</pre>
+
+
+
+</body></html>

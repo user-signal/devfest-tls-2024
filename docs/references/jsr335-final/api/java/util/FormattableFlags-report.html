@@ -1,0 +1,177 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:FormattableFlags [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:FormattableFlags"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public class <span class="typeNameLabel">FormattableFlags</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">FomattableFlags are passed to the <a href="../../java/util/Formattable.html#formatTo-java.util.Formatter-int-int-int-" target="_parent"><code>Formattable.formatTo()</code></a> method and modify the output format for <a href="../../java/util/Formattable.html" title="interface in java.util" target="_parent">Formattables</a>. Implementations of <a href="../../java/util/Formattable.html" title="interface in java.util" target="_parent"><code>Formattable</code></a> are responsible for interpreting and validating any flags.                        </div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.5</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:LEFT_JUSTIFY [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:LEFT_JUSTIFY"></a><a name="LEFT_JUSTIFY"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LEFT_JUSTIFY</h4>
+<pre>public static final&nbsp;int LEFT_JUSTIFY</pre>
+<div class="block">Left-justifies the output. Spaces (<tt>'\u0020'</tt>) will be added at the end of the converted value as required to fill the minimum width of the field. If this flag is not set then the output will be right-justified.<p> This flag corresponds to <tt>'-'</tt> (<tt>'\u002d'</tt>) in the format specifier.          </p>                                    
+</div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../constant-values.html#java.util.FormattableFlags.LEFT_JUSTIFY" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:UPPERCASE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:UPPERCASE"></a><a name="UPPERCASE"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>UPPERCASE</h4>
+<pre>public static final&nbsp;int UPPERCASE</pre>
+<div class="block">Converts the output to upper case according to the rules of the <a href="../../java/util/Locale.html" title="class in java.util" target="_parent">locale</a> given during creation of the <tt>formatter</tt> argument of the <a href="../../java/util/Formattable.html#formatTo-java.util.Formatter-int-int-int-" target="_parent"><code>formatTo()</code></a> method. The output should be equivalent the following invocation of <a href="../../java/lang/String.html#toUpperCase-java.util.Locale-" target="_parent"><code>String.toUpperCase(java.util.Locale)</code></a>
+<pre>
+     out.toUpperCase() </pre>
+<p> This flag corresponds to <tt>'S'</tt> (<tt>'\u0053'</tt>) in the format specifier.          </p>                                 
+</div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../constant-values.html#java.util.FormattableFlags.UPPERCASE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">field:ALTERNATE [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="field:ALTERNATE"></a><a name="ALTERNATE"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ALTERNATE</h4>
+<pre>public static final&nbsp;int ALTERNATE</pre>
+<div class="block">Requires the output to use an alternate form. The definition of the form is specified by the <tt>Formattable</tt>.<p> This flag corresponds to <tt>'#'</tt> (<tt>'\u0023'</tt>) in the format specifier.          </p>                 
+</div>
+<dl> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../constant-values.html#java.util.FormattableFlags.ALTERNATE" target="_parent">Constant Field Values  </a> 
+</dd> 
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Compiler [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Compiler"></a>
+<ul class="blockList">
+<li class="blockList"> 
+<hr> 
+<br>
+<pre>public final class <span class="typeNameLabel">Compiler</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">The <code>Compiler</code> class is provided to support Java-to-native-code compilers and related services. By design, the <code>Compiler</code> class does nothing; it serves as a placeholder for a JIT compiler implementation.<p> When the Java Virtual Machine first starts, it determines if the system property <code>java.compiler</code> exists. (System properties are accessible through <a href="../../java/lang/System.html#getProperty-java.lang.String-" target="_parent"><code>System.getProperty(String)</code></a> and <a href="../../java/lang/System.html#getProperty-java.lang.String-java.lang.String-" target="_parent"><code>System.getProperty(String, String) </code></a>. If so, it is assumed to be the name of a library (with a platform-dependent exact location and type); <a href="../../java/lang/System.html#loadLibrary-java.lang.String-" target="_parent"><code>System.loadLibrary(java.lang.String)</code></a> is called to load that library. If this loading succeeds, the function named <code>java_lang_Compiler_start()</code> in that library is called.                                                              </p>
+<p> If no compiler is available, these methods do nothing.         </p>                            
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>JDK1.0</dd> 
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:compileClass-java.lang.Class- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:compileClass-java.lang.Class-"></a><a name="compileClass-java.lang.Class-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compileClass</h4>
+<pre>public static&nbsp;boolean&nbsp;compileClass(<a href="../../java/lang/Class.html" title="class in java.lang" target="_parent">Class</a>&lt;?&gt;&nbsp;clazz)</pre>
+<div class="block">Compiles the specified class.   </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>clazz</code> - A class    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if the compilation succeeded; <code>false</code> if the compilation failed or no compiler is available               </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If <code>clazz</code> is <code>null</code>      
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:compileClasses-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:compileClasses-java.lang.String-"></a><a name="compileClasses-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compileClasses</h4>
+<pre>public static&nbsp;boolean&nbsp;compileClasses(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;string)</pre>
+<div class="block">Compiles all classes whose name matches the specified string.        </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>string</code> - The name of the classes to compile         </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd> 
+<code>true</code> if the compilation succeeded; <code>false</code> if the compilation failed or no compiler is available               </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If <code>string</code> is <code>null</code>      
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:command-java.lang.Object- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:command-java.lang.Object-"></a><a name="command-java.lang.Object-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>command</h4>
+<pre>public static&nbsp;<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;command(<a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>&nbsp;any)</pre>
+<div class="block">Examines the argument type and its fields and perform some documented operation. No specific operations are required.                </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>any</code> - An argument    </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A compiler-specific value, or <code>null</code> if no compiler is available         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent">NullPointerException</a></code> - If <code>any</code> is <code>null</code>      
+</dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:enable-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:enable--"></a><a name="enable--"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>enable</h4>
+<pre>public static&nbsp;void&nbsp;enable()</pre>
+<div class="block">Cause the Compiler to resume operation.     </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:disable-- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:disable--"></a><a name="disable--"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>disable</h4>
+<pre>public static&nbsp;void&nbsp;disable()</pre>
+<div class="block">Cause the Compiler to cease operation.     </div>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>

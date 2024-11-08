@@ -1,0 +1,297 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style><!--
+                        h3.ctxid {
+                        padding-top:10;
+                        margin: 0;
+                        font-size: 12;
+                        color: darkblue;
+                        }
+                        .diff-html-added {
+                        font-size: 120%;
+                        color: darkgreen;
+                        background-color: #ccffcc;
+                        cursor: pointer;
+                        }
+                        .diff-html-removed {
+                        font-size: 100%;
+                        text-decoration: line-through;
+                        background-color: #fdc6c6;
+                        cursor: pointer;
+                        }
+                        span.diff-html-added img{
+                        border: 2px solid #ccffcc;
+                        }
+                        span.diff-html-removed img{
+                        border: 2px solid #fdc6c6;
+                        }
+                        -->
+                    </style>
+</head>
+<body>
+<table cellpadding="1" cellspacing="0" border="0" width="100%">
+<tr>
+<td><a href="package-summary.html" target="_parent">Package Summary</a>&nbsp;&nbsp;<a href="../../overview-summary.html" target="_parent">Overview Summary</a></td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">class:Base64.Decoder [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1">
+<div class="description"> 
+<a name="class:Base64.Decoder"></a>
+<ul class="blockList">
+<li class="blockList">
+<dl> 
+<dt>Enclosing class: </dt>
+<dd> 
+<a href="../../java/util/Base64.html" title="class in java.util" target="_parent">Base64</a> 
+</dd> 
+</dl> 
+<hr> 
+<br>
+<pre>public static class <span class="typeNameLabel">Base64.Decoder</span>
+extends <a href="../../java/lang/Object.html" title="class in java.lang" target="_parent">Object</a>
+</pre>
+<div class="block">This class implements a decoder for decoding byte data using the Base64 encoding scheme as specified in RFC 4648 and RFC 2045.<p> The Base64 padding character <code>'='</code> is accepted and interpreted as the end of the encoded byte data, but is not required. So if the final unit of the encoded byte data only has two or three Base64 characters (without the corresponding padding character(s) padded), they are decoded as if followed by padding character(s). If there is a padding character present in the final unit, the correct number of padding character(s) must be present, otherwise <code>IllegalArgumentException</code> ( <code>IOException</code> when reading from a Base64 stream) is thrown during decoding.                                                                                       </p>
+<p> Instances of <a href="../../java/util/Base64.Decoder.html" title="class in java.util" target="_parent"><code>Base64.Decoder</code></a> class are safe for use by multiple concurrent threads.            </p>
+<p> Unless otherwise noted, passing a <code>null</code> argument to a method of this class will cause a <a href="../../java/lang/NullPointerException.html" title="class in java.lang" target="_parent"><code>NullPointerException</code></a> to be thrown.                    </p>                     
+</div>
+<dl> 
+<dt> 
+<span class="simpleTagLabel">Since:</span>   
+</dt>
+<dd>1.8</dd> 
+<dt> 
+<span class="seeLabel">See Also: </span>   
+</dt>
+<dd> 
+<a href="../../java/util/Base64.Encoder.html" title="class in java.util" target="_parent"><code>Base64.Encoder</code></a> 
+</dd>  
+</dl>  
+</li>
+</ul> 
+</div>  
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:decode-byte:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:decode-byte:A-"></a><a name="decode-byte:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre>public&nbsp;byte[]&nbsp;decode(byte[]&nbsp;src)</pre>
+<div class="block">Decodes all bytes from the input byte array using the <a href="../../java/util/Base64.html" title="class in java.util" target="_parent"><code>Base64</code></a> encoding scheme, writing the results into a newly-allocated output byte array. The returned byte array is of the length of the resulting bytes.                                 </div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>src</code> - the byte array to decode       </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A newly-allocated byte array containing the decoded bytes.       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>src</code> is not in valid Base64 scheme          </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:decode-java.lang.String- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:decode-java.lang.String-"></a><a name="decode-java.lang.String-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre>public&nbsp;byte[]&nbsp;decode(<a href="../../java/lang/String.html" title="class in java.lang" target="_parent">String</a>&nbsp;src)</pre>
+<div class="block">Decodes a Base64 encoded String into a newly-allocated byte array using the <a href="../../java/util/Base64.html" title="class in java.util" target="_parent"><code>Base64</code></a> encoding scheme.<p> An invocation of this method has exactly the same effect as invoking <code>decode(src.getBytes(StandardCharsets.ISO_8859_1))</code>             
+</p>              
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>src</code> - the string to decode      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A newly-allocated byte array containing the decoded bytes.       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>src</code> is not in valid Base64 scheme          </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:decode-byte:A-byte:A- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:decode-byte:A-byte:A-"></a><a name="decode-byte:A-byte:A-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre>public&nbsp;int&nbsp;decode(byte[]&nbsp;src,
+                  byte[]&nbsp;dst)</pre>
+<div class="block">Decodes all bytes from the input byte array using the <a href="../../java/util/Base64.html" title="class in java.util" target="_parent"><code>Base64</code></a> encoding scheme, writing the results into the given output byte array, starting at offset 0.<p> It is the responsibility of the invoker of this method to make sure the output byte array <code>dst</code> has enough space for decoding all bytes from the input byte array. No bytes will be be written to the output byte array if the output byte array is not big enough.                                                  </p>
+<p> If the input byte array is not in valid Base64 encoding scheme then some bytes may have been written to the output byte array before IllegalargumentException is thrown.                            </p>                         
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>src</code> - the byte array to decode       </dd>
+<dd> 
+<code>dst</code> - the output byte array      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>The number of bytes written to the output byte array         </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>src</code> is not in valid Base64 scheme, or <code>dst</code> does not have enough space for decoding all input bytes.                      </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:decode-java.nio.ByteBuffer- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:decode-java.nio.ByteBuffer-"></a><a name="decode-java.nio.ByteBuffer-"></a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre>public&nbsp;<a href="../../java/nio/ByteBuffer.html" title="class in java.nio" target="_parent">ByteBuffer</a>&nbsp;decode(<a href="../../java/nio/ByteBuffer.html" title="class in java.nio" target="_parent">ByteBuffer</a>&nbsp;buffer)</pre>
+<div class="block">Decodes all bytes from the input byte buffer using the <a href="../../java/util/Base64.html" title="class in java.util" target="_parent"><code>Base64</code></a> encoding scheme, writing the results into a newly-allocated ByteBuffer.<p> Upon return, the source buffer's position will be updated to its limit; its limit will not have been changed. The returned output buffer's position will be zero and its limit will be the number of resulting decoded bytes                                      </p>
+<p> 
+<code>IllegalArgumentException</code> is thrown if the input buffer is not in valid Base64 encoding scheme. The position of the input buffer will not be advanced in this case.                           </p>                   
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>buffer</code> - the ByteBuffer to decode      </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>A newly-allocated byte buffer containing the decoded bytes       </dd> 
+<dt> 
+<span class="throwsLabel">Throws:</span>   
+</dt>
+<dd> 
+<code><a href="../../java/lang/IllegalArgumentException.html" title="class in java.lang" target="_parent">IllegalArgumentException</a></code> - if <code>src</code> is not in valid Base64 scheme.          </dd>   
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tr>
+<td>
+<h3 class="ctxid">method:wrap-java.io.InputStream- [NONE]</h3>
+</td>
+</tr>
+<tr>
+<td>
+<table border="0" cellpadding="5" cellspacing="1" bgcolor="black" width="100%">
+<tr valign="top">
+<td bgcolor="#FFFFFF" colspan="1"> <a name="method:wrap-java.io.InputStream-"></a><a name="wrap-java.io.InputStream-"></a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>wrap</h4>
+<pre>public&nbsp;<a href="../../java/io/InputStream.html" title="class in java.io" target="_parent">InputStream</a>&nbsp;wrap(<a href="../../java/io/InputStream.html" title="class in java.io" target="_parent">InputStream</a>&nbsp;is)</pre>
+<div class="block">Returns an input stream for decoding <a href="../../java/util/Base64.html" title="class in java.util" target="_parent"><code>Base64</code></a> encoded byte stream.<p> The <code>read</code> methods of the returned <code>InputStream</code> will throw <code>IOException</code> when reading bytes that cannot be decoded.                 </p>
+<p> Closing the returned input stream will close the underlying input stream.           </p>         
+</div>
+<dl> 
+<dt> 
+<span class="paramLabel">Parameters:</span>   
+</dt>
+<dd> 
+<code>is</code> - the input stream     </dd> 
+<dt> 
+<span class="returnLabel">Returns:</span>   
+</dt>
+<dd>the input stream for decoding the specified Base64 encoded byte stream          </dd>  
+</dl>
+</li>
+</ul>   
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</body>
+</html>
